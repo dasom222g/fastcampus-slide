@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b1017" />
+    <title>FastCampus Slides</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: #0b1017;
+        color: #f3f6fa;
+      }
+      * { box-sizing: border-box; }
+      body {
+        min-height: 100vh;
+        margin: 0;
+        display: grid;
+        place-items: center;
+        background:
+          linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px),
+          #0b1017;
+        background-size: 28px 28px;
+      }
+      main { width: min(880px, calc(100% - 40px)); }
+      .eyebrow {
+        color: #fc1c49;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: .18em;
+        text-transform: uppercase;
+      }
+      h1 { margin: 14px 0 8px; font-size: clamp(42px, 7vw, 76px); letter-spacing: -.055em; }
+      p { margin: 0 0 44px; color: #97a2b1; font-size: 18px; }
+      a {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 26px 28px;
+        border: 1px solid rgba(252,28,73,.35);
+        border-radius: 18px;
+        background: rgba(252,28,73,.07);
+        color: inherit;
+        text-decoration: none;
+        transition: transform .2s ease, border-color .2s ease, background .2s ease;
+      }
+      a:hover {
+        transform: translateY(-2px);
+        border-color: #fc1c49;
+        background: rgba(252,28,73,.12);
+      }
+      strong { font-size: 24px; }
+      span { color: #fc1c49; font-weight: 800; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="eyebrow">FastCampus · Course Materials</div>
+      <h1>강의 슬라이드</h1>
+      <p>패스트캠퍼스 강의에서 사용하는 공개 자료입니다.</p>
+      <a href="/orca-setup">
+        <strong>Orca 설치 전 준비물</strong>
+        <span>열기 →</span>
+      </a>
+    </main>
+  </body>
+</html>

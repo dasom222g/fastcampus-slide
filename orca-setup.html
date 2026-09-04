@@ -1,0 +1,1292 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Orca 설치 전 준비물</title>
+    <!-- 허용된 외부 의존은 아래 웹폰트 2개뿐. 그 외 모든 것은 인라인/로컬 -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSans.css"
+    />
+    <style>
+      :root {
+        --bg: #0d1117;
+        --bg-card: #161b22;
+        --bg-code: #1e2430;
+        --bg-inset: #252d3a;
+        --text: #e6edf3;
+        --text-dim: #8b949e;
+        --text-muted: #484f58;
+        --teal: #fc1c49;
+        --orange: #ff6d3b;
+        --yellow: #f0b429;
+        --purple: #9188ff;
+        --green: #4ade80;
+        --gray: #8b949e;
+        --border: rgba(255, 255, 255, 0.08);
+        --border-teal: rgba(252, 28, 73, 0.3);
+        --border-orange: rgba(255, 109, 59, 0.25);
+        --border-purple: rgba(145, 136, 255, 0.28);
+        --border-yellow: rgba(240, 180, 41, 0.28);
+        --border-green: rgba(74, 222, 128, 0.25);
+        --border-gray: rgba(139, 148, 158, 0.22);
+        --dot: rgba(255, 255, 255, 0.055);
+        --ease: 0.36s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        font-family:
+          "Pretendard",
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        font-size: clamp(12px, 1.35vw, 15px);
+        background: var(--bg);
+        color: var(--text);
+        word-break: keep-all; /* 한국어 어절 단위 줄바꿈 */
+      }
+      body {
+        overflow: hidden;
+      }
+
+      .slide-deck {
+        position: fixed;
+        inset: 0;
+      }
+
+      .slide {
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(
+          circle,
+          var(--dot) 1px,
+          transparent 1px
+        );
+        background-size: 26px 26px;
+        background-color: var(--bg);
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        padding: clamp(2.5rem, 5.5vh, 4.5rem) clamp(3.5rem, 9vw, 8rem);
+        gap: clamp(1.5rem, 3.75vh, 3rem);
+        overflow: hidden;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity var(--ease);
+      }
+      .slide.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      /* ── 공통 헤더 / 푸터 ─────────────────────────────────── */
+      .slide__header {
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+        padding-bottom: clamp(0.9rem, 2.2vh, 1.6rem);
+        border-bottom: 1px solid var(--border);
+      }
+      .slide__label {
+        font-size: clamp(0.58rem, 0.85vw, 0.72rem);
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--teal);
+      }
+      .slide__title {
+        font-size: clamp(2rem, 5.2vw, 3.8rem);
+        font-weight: 800;
+        line-height: 1.08;
+        letter-spacing: -0.015em;
+      }
+      .slide__title .hl {
+        color: var(--teal);
+      }
+      .slide__title .hl-orange {
+        color: var(--orange);
+      }
+      .slide__title .hl-yellow {
+        color: var(--yellow);
+      }
+      .slide__title .hl-purple {
+        color: var(--purple);
+      }
+      .slide__sub {
+        font-size: clamp(1rem, 1.65vw, 1.15rem);
+        font-weight: 400;
+        color: var(--text-dim);
+        line-height: 1.5;
+      }
+
+      .slide__body {
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        gap: clamp(1.2rem, 2.7vh, 2.1rem);
+        min-height: 0;
+        justify-content: center;
+      }
+      .slide__body > .grid-3 {
+        flex: 0 0 auto;
+        align-items: stretch;
+      }
+      .slide__body > .grid-2 {
+        flex: 0 0 auto;
+      }
+      .slide__body > .timeline {
+        width: 100%;
+        align-self: center;
+      }
+
+      .slide__footer {
+        border-top: 1px solid var(--border);
+        padding-top: clamp(0.5rem, 1.3vh, 0.9rem);
+        display: flex;
+        align-items: center;
+        font-size: clamp(0.58rem, 0.85vw, 0.7rem);
+        font-weight: 400;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+      .fastcampus-logo {
+        display: block;
+        width: clamp(7.2rem, 9vw, 8.5rem);
+        height: auto;
+      }
+
+      /* ── 공통 타이포 ──────────────────────────────────────── */
+      .display {
+        font-family: "GmarketSans", "Pretendard", sans-serif;
+        font-size: clamp(2.8rem, 7vw, 5.5rem);
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: -0.03em;
+      }
+      .caption {
+        font-size: clamp(0.9rem, 1.45vw, 1.15rem);
+        line-height: 1.5;
+        color: var(--text-dim);
+      }
+      .kw-teal {
+        color: var(--teal);
+      }
+      .kw-orange {
+        color: var(--orange);
+        font-weight: 600;
+      }
+      .kw-yellow {
+        color: var(--yellow);
+        font-weight: 600;
+      }
+      .kw-purple {
+        color: var(--purple);
+      }
+
+      code {
+        font-family: "Monaco", "Menlo", "Consolas", monospace;
+        font-size: 0.85em;
+        background: rgba(252, 28, 73, 0.1);
+        color: var(--teal);
+        padding: 2px 6px;
+        border-radius: 3px;
+      }
+
+      /* ── 불릿 리스트 (✓/✕) ───────────────────────────────── */
+      .bullet-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+      }
+      .bullet-list li {
+        display: flex;
+        align-items: baseline;
+        gap: 0.9rem;
+        font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+        line-height: 1.55;
+      }
+      .bullet-list li.no::before {
+        content: "✕";
+        color: var(--orange);
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+      .bullet-list li.ok::before {
+        content: "✓";
+        color: var(--green);
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+      .bullet-list li.no {
+        color: var(--text-dim);
+      }
+
+      /* ── tip: 슬라이드 하단 한 줄 정리 ────────────────────── */
+      .tip {
+        background: rgba(252, 28, 73, 0.05);
+        border: 1px solid rgba(252, 28, 73, 0.18);
+        border-radius: 3px;
+        padding: 0.975rem 1.5rem;
+        font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+        color: var(--text-dim);
+        line-height: 1.6;
+      }
+      .tip::before {
+        content: "→  ";
+        color: var(--teal);
+        font-weight: 700;
+      }
+      .tip--yellow {
+        background: rgba(240, 180, 41, 0.05);
+        border-color: rgba(240, 180, 41, 0.22);
+      }
+      .tip--yellow::before {
+        color: var(--yellow);
+      }
+
+      /* ── TEXT(표지) — cover ───────────────────────────────── */
+      .cover-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: clamp(1.1rem, 2.6vh, 2rem);
+      }
+      .cover-emoji {
+        font-size: clamp(3.6rem, 9vw, 7rem);
+        line-height: 1;
+      }
+      .cover-stmt {
+        font-family: "GmarketSans", "Pretendard", sans-serif;
+        font-size: clamp(1.9rem, 4.4vw, 3.6rem);
+        font-weight: 900;
+        line-height: 1.35;
+        letter-spacing: -0.025em;
+      }
+      .cover-axis {
+        display: flex;
+        align-items: center;
+        gap: clamp(0.6rem, 1.4vw, 1.1rem);
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(0.7rem, 1.1vw, 0.9rem);
+        letter-spacing: 0.1em;
+        color: var(--text-muted);
+        text-transform: uppercase;
+      }
+      .cover-axis b {
+        color: var(--teal);
+        font-weight: 700;
+      }
+
+      /* ── CARD_GRID — grid-3 + col-card ────────────────────── */
+      .grid-3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: clamp(1.2rem, 3vw, 2.1rem);
+      }
+      .col-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: clamp(1.5rem, 2.7vw, 2.25rem);
+        display: flex;
+        flex-direction: column;
+        gap: 1.1rem;
+      }
+      .col-card__title-row {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+      }
+      .col-card__emoji {
+        font-size: clamp(1.5rem, 2.4vw, 2rem);
+        line-height: 1;
+        flex-shrink: 0;
+      }
+      .col-card__title {
+        font-size: clamp(1.4rem, 2.8vw, 2rem);
+        font-weight: 700;
+        line-height: 1.2;
+        letter-spacing: -0.01em;
+      }
+      .col-card__body {
+        font-size: clamp(0.88rem, 1.35vw, 1.08rem);
+        line-height: 1.55;
+        color: var(--text-dim);
+      }
+      .col-card--teal {
+        border-color: var(--border-teal) !important;
+        background: rgba(252, 28, 73, 0.05);
+      }
+      .col-card--orange {
+        border-color: var(--border-orange) !important;
+        background: rgba(255, 109, 59, 0.05);
+      }
+      .col-card--purple {
+        border-color: var(--border-purple) !important;
+        background: rgba(145, 136, 255, 0.05);
+      }
+      .col-card--gray {
+        border-color: var(--border-gray) !important;
+        background: rgba(139, 148, 158, 0.05);
+      }
+      /* 변형: 카드 6장(3열 2행)일 때 — grid-3에 함께 붙인다 */
+      .grid-3--tight {
+        gap: clamp(0.9rem, 1.8vw, 1.5rem);
+      }
+      .grid-3--tight .col-card {
+        padding: clamp(1rem, 1.9vw, 1.5rem);
+        gap: 0.7rem;
+      }
+      .grid-3--tight .col-card__title {
+        font-size: clamp(1.1rem, 2vw, 1.5rem);
+        font-family: "Monaco", "Menlo", monospace;
+        letter-spacing: -0.01em;
+      }
+      .grid-3--tight .col-card__emoji {
+        font-size: clamp(1.2rem, 2vw, 1.6rem);
+      }
+      /* 변형: 설명이 긴 카드 6장 — 높이·패딩·타이포를 줄이지 않는다 */
+      .grid-3--spacious {
+        min-height: clamp(24rem, 52vh, 30rem);
+        gap: clamp(1rem, 2vw, 1.6rem);
+      }
+      .grid-3--spacious .col-card {
+        justify-content: center;
+        padding: clamp(1.35rem, 2.2vw, 1.85rem);
+        gap: clamp(0.85rem, 1.7vh, 1.15rem);
+      }
+      .grid-3--spacious .col-card__title {
+        font-size: clamp(1.2rem, 1.85vw, 1.55rem);
+      }
+      .grid-3--spacious .col-card__body {
+        font-size: clamp(0.96rem, 1.3vw, 1.1rem);
+        line-height: 1.55;
+      }
+      /* 변형: 카드 상단 정체 배지 (역할·소속 구분) */
+      .role-badge {
+        align-self: flex-start;
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(0.66rem, 1vw, 0.8rem);
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        padding: 0.32rem 0.7rem;
+        border-radius: 3px;
+        border: 1px solid var(--border);
+      }
+      .role-badge--teal {
+        color: var(--teal);
+        border-color: var(--border-teal);
+        background: rgba(252, 28, 73, 0.08);
+      }
+      .role-badge--purple {
+        color: var(--purple);
+        border-color: var(--border-purple);
+        background: rgba(145, 136, 255, 0.08);
+      }
+      .role-badge--gray {
+        color: var(--gray);
+        border-color: var(--border-gray);
+        background: rgba(139, 148, 158, 0.08);
+      }
+      .role-sub {
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(0.7rem, 1.05vw, 0.85rem);
+        color: var(--text-muted);
+        letter-spacing: 0.03em;
+      }
+
+      /* ── 좌우 2분할 — grid-2 · vs-grid(대비 비교) ─────────── */
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1.05fr 1fr;
+        gap: clamp(1.5rem, 3.5vw, 2.8rem);
+        align-items: center;
+      }
+      .vs-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: clamp(1.2rem, 3vw, 2.4rem);
+        width: 100%;
+      }
+      .vs-col {
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: clamp(1.2rem, 2.4vw, 2rem);
+        display: flex;
+        flex-direction: column;
+        gap: clamp(0.8rem, 1.8vh, 1.3rem);
+      }
+      .vs-col--blocked {
+        border-color: var(--border-orange);
+        background: rgba(255, 109, 59, 0.04);
+      }
+      .vs-col--pass {
+        border-color: var(--border-teal);
+        background: rgba(252, 28, 73, 0.05);
+      }
+      .vs-badge {
+        align-self: flex-start;
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(0.64rem, 1vw, 0.78rem);
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 0.3rem 0.65rem;
+        border-radius: 3px;
+        border: 1px solid var(--border);
+      }
+      .vs-badge--blocked {
+        color: var(--orange);
+        border-color: var(--border-orange);
+        background: rgba(255, 109, 59, 0.08);
+      }
+      .vs-badge--pass {
+        color: var(--teal);
+        border-color: var(--border-teal);
+        background: rgba(252, 28, 73, 0.08);
+      }
+      .vs-headline {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        font-size: clamp(1.35rem, 2.7vw, 2.1rem);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.015em;
+      }
+      .vs-headline span {
+        font-size: clamp(1.5rem, 2.7vw, 2.1rem);
+        line-height: 1;
+        flex-shrink: 0;
+      }
+      .vs-col--blocked .vs-headline {
+        color: var(--orange);
+      }
+      .vs-col--pass .vs-headline {
+        color: var(--teal);
+      }
+
+      /* ── LIST — 번호 원 + 제목 + 부연 나열 (카드 박스 없음) ── */
+      .list {
+        display: flex;
+        flex-direction: column;
+        gap: clamp(2.4rem, 7vh, 5.5rem);
+        align-self: center;
+        width: min(52rem, 100%);
+      }
+      .list-item {
+        display: flex;
+        align-items: flex-start;
+        gap: clamp(1rem, 2vw, 1.6rem);
+      }
+      .list-item.num {
+        align-items: center;
+      }
+      .list-num {
+        width: clamp(3.2rem, 5.5vw, 4.6rem);
+        height: clamp(3.2rem, 5.5vw, 4.6rem);
+        flex-shrink: 0;
+        border-radius: 50%;
+        border: 1.5px solid var(--text);
+        background: var(--bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(1.1rem, 1.9vw, 1.5rem);
+        font-weight: 700;
+        color: var(--text);
+      }
+      /* 변형: 번호 대신 점 마커 (순서 없는 나열) */
+      .list-dot {
+        width: clamp(0.75rem, 1.1vw, 0.95rem);
+        height: clamp(0.75rem, 1.1vw, 0.95rem);
+        margin-top: 0.55em;
+        border-radius: 50%;
+        background: var(--text);
+        flex-shrink: 0;
+      }
+      .list-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: clamp(0.3rem, 0.8vh, 0.55rem);
+      }
+      .list-title {
+        font-size: clamp(1.3rem, 2.5vw, 1.95rem);
+        font-weight: 700;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
+      }
+      .list-sub {
+        font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+        color: var(--text-dim);
+        line-height: 1.45;
+      }
+
+      /* ── ICON_ROW — timeline (가로 파이프라인) ────────────── */
+      .timeline {
+        display: grid;
+        /* 카드 5장 기준. 카드 수가 다르면 timeline--4 처럼 columns를 맞춘다 */
+        grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr auto 1fr;
+        gap: 0;
+        align-items: stretch;
+      }
+      .timeline--4 {
+        grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+      }
+      .timeline--3 {
+        grid-template-columns: 1fr auto 1fr auto 1fr;
+      }
+      .timeline-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: clamp(1rem, 1.9vw, 1.6rem) clamp(0.6rem, 1.2vw, 1rem);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: clamp(0.6rem, 1.5vh, 1.1rem);
+        text-align: center;
+        justify-content: flex-start;
+      }
+      .timeline-card--plain {
+        border-color: var(--border);
+      }
+      .timeline-card--gray {
+        border-color: var(--border-gray);
+        background: rgba(139, 148, 158, 0.06);
+      }
+      .timeline-card--teal {
+        border-color: var(--border-teal);
+        background: rgba(252, 28, 73, 0.07);
+      }
+      .timeline-card--purple {
+        border-color: var(--border-purple);
+        background: rgba(145, 136, 255, 0.07);
+      }
+      .timeline-card--yellow {
+        border-color: var(--border-yellow);
+        background: rgba(240, 180, 41, 0.08);
+      }
+      .timeline-card--orange {
+        border-color: var(--border-orange);
+        background: rgba(255, 109, 59, 0.08);
+      }
+      .timeline-card--green {
+        border-color: var(--border-green);
+        background: rgba(74, 222, 128, 0.08);
+      }
+      .timeline-card__step {
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(0.62rem, 0.95vw, 0.8rem);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        padding: 0.3rem 0.7rem;
+        border-radius: 3px;
+        background: rgba(255, 255, 255, 0.04);
+      }
+      .step--gray {
+        color: var(--gray);
+      }
+      .step--teal {
+        color: var(--teal);
+      }
+      .step--purple {
+        color: var(--purple);
+      }
+      .step--yellow {
+        color: var(--yellow);
+      }
+      .step--orange {
+        color: var(--orange);
+      }
+      .step--green {
+        color: var(--green);
+      }
+      .step--muted {
+        color: var(--text-dim);
+      }
+      .timeline-emoji-wrap {
+        width: clamp(4.2rem, 8.5vw, 7rem);
+        height: clamp(4.2rem, 8.5vw, 7rem);
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1.5px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .timeline-emoji-wrap span {
+        font-size: clamp(1.9rem, 4vw, 3.2rem);
+        line-height: 1;
+      }
+      .timeline-card__title {
+        font-size: clamp(1.15rem, 2.1vw, 1.7rem);
+        font-weight: 700;
+        line-height: 1.2;
+      }
+      .timeline-card__body {
+        font-size: clamp(0.82rem, 1.25vw, 1.02rem);
+        line-height: 1.5;
+        color: var(--text-dim);
+      }
+      .timeline-arrow {
+        position: relative;
+        flex-shrink: 0;
+        width: clamp(1.4rem, 2.6vw, 2.4rem);
+        height: clamp(1rem, 2vh, 1.5rem);
+        align-self: center;
+      }
+      .timeline-arrow::before {
+        content: "";
+        position: absolute;
+        left: 10%;
+        right: 28%;
+        top: 50%;
+        height: 2px;
+        background: var(--border-purple);
+        transform: translateY(-50%);
+      }
+      .timeline-arrow::after {
+        content: "";
+        position: absolute;
+        right: 10%;
+        top: 50%;
+        border-top: 0.36rem solid transparent;
+        border-bottom: 0.36rem solid transparent;
+        border-left: 0.5rem solid var(--purple);
+        transform: translateY(-50%);
+      }
+      .flow-quote {
+        color: var(--text);
+        font-style: normal;
+      }
+
+      /* ── TREE — fan (부모 1 → 자식 여럿) ──────────────────── */
+      .fan {
+        --fan-gap: clamp(1.5rem, 4vw, 3rem);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: min(58rem, 100%);
+        align-self: center;
+      }
+      .fan-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: clamp(1rem, 2vw, 1.6rem) clamp(1.2rem, 2.4vw, 2rem);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        text-align: center;
+      }
+      .fan-card--teal {
+        border-color: var(--border-teal);
+        background: rgba(252, 28, 73, 0.06);
+      }
+      .fan-card--purple {
+        border-color: var(--border-purple);
+        background: rgba(145, 136, 255, 0.06);
+      }
+      .fan-card--orange {
+        border-color: var(--border-orange);
+        background: rgba(255, 109, 59, 0.06);
+      }
+      .fan-card__emoji {
+        font-size: clamp(1.8rem, 3.4vw, 2.8rem);
+        line-height: 1;
+      }
+      .fan-card__title {
+        font-size: clamp(1.2rem, 2.2vw, 1.75rem);
+        font-weight: 700;
+        line-height: 1.2;
+      }
+      .fan-card__body {
+        font-size: clamp(0.85rem, 1.3vw, 1.05rem);
+        color: var(--text-dim);
+        line-height: 1.5;
+      }
+      .fan-root {
+        width: clamp(14rem, 26vw, 20rem);
+      }
+      .fan-stem {
+        width: 2px;
+        height: clamp(1.4rem, 3vh, 2.4rem);
+        background: var(--border-teal);
+      }
+      .fan-bar-wrap {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+      .fan-bar {
+        position: relative;
+        /* 자식 카드의 중심과 세로선을 맞춘다 (열 중심 간격 = 50% + gap/2) */
+        width: calc(50% + var(--fan-gap) / 2);
+        height: 2px;
+        background: var(--border-teal);
+      }
+      .fan-bar::before,
+      .fan-bar::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        width: 2px;
+        height: clamp(1.4rem, 3vh, 2.4rem);
+        background: var(--border-teal);
+      }
+      .fan-bar::before {
+        left: 0;
+      }
+      .fan-bar::after {
+        right: 0;
+      }
+      .fan-kids {
+        margin-top: clamp(1.4rem, 3vh, 2.4rem);
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--fan-gap);
+      }
+
+      /* ── METRIC — 대형 수치 (소스에 실제 수치가 있을 때만) ── */
+      .metric-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: clamp(1.2rem, 3vw, 2.4rem);
+      }
+      .metric {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: clamp(0.55rem, 1.3vh, 0.95rem);
+        padding: clamp(1.6rem, 3.4vh, 2.6rem) clamp(1rem, 2vw, 1.6rem);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        background: var(--bg-card);
+      }
+      .metric--star {
+        border-color: var(--border-yellow);
+        background: rgba(240, 180, 41, 0.06);
+      }
+      .metric__icon {
+        font-size: clamp(1.6rem, 3vw, 2.4rem);
+        line-height: 1;
+        margin-bottom: clamp(0.3rem, 0.9vh, 0.7rem);
+      }
+      .metric__num {
+        font-family: "GmarketSans", "Pretendard", sans-serif;
+        font-size: clamp(2.6rem, 6.5vw, 5rem);
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: -0.03em;
+      }
+      .metric--star .metric__num {
+        color: var(--yellow);
+      }
+      .metric__cap {
+        font-size: clamp(0.8rem, 1.2vw, 1rem);
+        color: var(--text-dim);
+      }
+
+      /* ── 이번 덱 전용 변형 — 큰 로고와 2열 준비 카드 ─────── */
+      .slide--cover {
+        gap: clamp(1.1rem, 2.4vh, 1.8rem);
+        padding-inline: clamp(3rem, 7vw, 6rem);
+      }
+      .slide--cover .slide__body {
+        gap: clamp(1.2rem, 2.8vh, 2rem);
+      }
+      .cover-logo-shell {
+        width: clamp(15rem, 29vw, 23rem);
+        min-height: clamp(10rem, 23vh, 14rem);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: clamp(1.2rem, 2.6vw, 2rem);
+        border: 1px solid var(--border-teal);
+        border-radius: 10px;
+        background: rgba(252, 28, 73, 0.055);
+        box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.32);
+      }
+      .cover-logo {
+        width: 100%;
+        max-height: clamp(7rem, 17vh, 10.5rem);
+        object-fit: contain;
+      }
+      .cover-stmt--large {
+        font-size: clamp(2.35rem, 5vw, 4rem);
+        line-height: 1.24;
+      }
+      .duo-grid {
+        width: min(70rem, 100%);
+        align-self: center;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: clamp(1.6rem, 4vw, 3rem);
+      }
+      .tool-card {
+        min-height: clamp(20rem, 45vh, 28rem);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: clamp(1rem, 2.2vh, 1.6rem);
+        padding: clamp(1.7rem, 3vw, 2.5rem);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: var(--bg-card);
+        text-align: center;
+      }
+      .tool-card--teal {
+        border-color: var(--border-teal);
+        background: rgba(252, 28, 73, 0.055);
+      }
+      .tool-card--purple {
+        border-color: var(--border-purple);
+        background: rgba(145, 136, 255, 0.055);
+      }
+      .tool-card__badge {
+        padding: clamp(0.42rem, 0.9vh, 0.62rem) clamp(0.9rem, 1.7vw, 1.25rem);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(0.78rem, 1.1vw, 0.92rem);
+        font-weight: 800;
+        letter-spacing: 0.1em;
+      }
+      .tool-card--teal .tool-card__badge {
+        color: var(--teal);
+        border-color: var(--border-teal);
+        background: rgba(252, 28, 73, 0.08);
+      }
+      .tool-card--purple .tool-card__badge {
+        color: var(--purple);
+        border-color: var(--border-purple);
+        background: rgba(145, 136, 255, 0.08);
+      }
+      .tool-card__logo {
+        width: clamp(8.5rem, 15vw, 12rem);
+        height: clamp(8.5rem, 15vw, 12rem);
+        object-fit: contain;
+      }
+      .tool-card__title {
+        font-family: "GmarketSans", "Pretendard", sans-serif;
+        font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: -0.035em;
+      }
+      .login-grid .tool-card {
+        min-height: clamp(16rem, 34vh, 21rem);
+      }
+      .login-grid .tool-card__logo {
+        width: clamp(6.4rem, 11vw, 9rem);
+        height: clamp(6.4rem, 11vw, 9rem);
+      }
+      .login-grid .tool-card__title {
+        font-size: clamp(1.9rem, 3.5vw, 2.9rem);
+      }
+      .login-complete {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        padding: clamp(0.5rem, 1vh, 0.72rem) clamp(0.95rem, 1.8vw, 1.35rem);
+        border: 1px solid var(--border-green);
+        border-radius: 4px;
+        background: rgba(74, 222, 128, 0.08);
+        color: var(--green);
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(0.8rem, 1.15vw, 0.98rem);
+        font-weight: 800;
+        letter-spacing: 0.08em;
+      }
+      .login-complete::before {
+        content: "✓";
+        font-family: "Pretendard", sans-serif;
+        font-size: 1.15em;
+      }
+      .ready-statement {
+        width: min(70rem, 100%);
+        align-self: center;
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        gap: clamp(0.8rem, 2.2vw, 1.6rem);
+        padding: clamp(1rem, 2vh, 1.4rem) clamp(1.2rem, 2.3vw, 1.8rem);
+        border: 1px solid var(--border-green);
+        border-radius: 7px;
+        background: rgba(74, 222, 128, 0.055);
+        font-family: "GmarketSans", "Pretendard", sans-serif;
+        font-size: clamp(1.35rem, 2.6vw, 2.15rem);
+        font-weight: 900;
+        line-height: 1.25;
+        text-align: center;
+      }
+      .ready-statement strong {
+        color: var(--green);
+      }
+      .ready-arrow::before {
+        background: var(--border-green);
+      }
+      .ready-arrow::after {
+        border-left-color: var(--green);
+      }
+
+      @media (max-width: 820px) {
+        .duo-grid {
+          gap: 1rem;
+        }
+        .tool-card {
+          min-height: clamp(17rem, 40vh, 22rem);
+        }
+        .ready-statement {
+          gap: 0.5rem;
+        }
+      }
+
+      /* ── Navigation ───────────────────────────────────────── */
+      .progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        z-index: 200;
+        background: rgba(255, 255, 255, 0.04);
+        user-select: none;
+      }
+      .progress-fill {
+        height: 100%;
+        background: var(--teal);
+        transition: width 0.3s ease-out;
+      }
+      .nav-btn {
+        position: fixed;
+        top: 50%;
+        z-index: 150;
+        transform: translateY(-50%);
+        user-select: none;
+        width: clamp(1.9rem, 2.8vw, 2.5rem);
+        height: clamp(1.9rem, 2.8vw, 2.5rem);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 3px;
+        color: var(--text-muted);
+        font-size: 0.8rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+      }
+      .nav-btn:hover:not(:disabled) {
+        background: rgba(255, 255, 255, 0.08);
+        color: var(--text);
+      }
+      .nav-btn:disabled {
+        opacity: 0.08;
+        cursor: not-allowed;
+      }
+      #btn-prev {
+        left: clamp(0.4rem, 1.2vw, 1.1rem);
+      }
+      #btn-next {
+        right: clamp(0.4rem, 1.2vw, 1.1rem);
+      }
+      .dot-nav {
+        position: fixed;
+        bottom: 1.3rem;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 150;
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        user-select: none;
+      }
+      .dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.18);
+        cursor: pointer;
+        border: none;
+        transition: all 0.22s ease;
+      }
+      .dot.active {
+        width: 22px;
+        border-radius: 3px;
+        background: var(--teal);
+      }
+      .slide-counter {
+        position: fixed;
+        bottom: 1.2rem;
+        right: 1.8rem;
+        z-index: 150;
+        font-family: "Monaco", monospace;
+        font-size: 0.62em;
+        color: var(--text-muted);
+        letter-spacing: 0.07em;
+        user-select: none;
+      }
+
+      /* ── Animations ───────────────────────────────────────── */
+      @keyframes s-fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .anim-item {
+        opacity: 0;
+      }
+      .anim-item.do-fadeinup {
+        animation: s-fadeInUp 0.48s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress"></div>
+    </div>
+    <button class="nav-btn" id="btn-prev" aria-label="이전 슬라이드">
+      &#8592;
+    </button>
+    <button class="nav-btn" id="btn-next" aria-label="다음 슬라이드">
+      &#8594;
+    </button>
+    <div class="dot-nav" id="dot-nav"></div>
+    <div class="slide-counter">
+      <span id="cur">1</span> / <span id="tot">3</span>
+    </div>
+
+    <div class="slide-deck" id="deck">
+      <!-- 1 / 3 · 발표 노트: Orca부터 바로 설치하기 전에 준비할 것이 있습니다. Orca가 실행할 AI 코딩 CLI를 먼저 설치해 두고, 각 CLI에서 로그인까지 끝낸 상태로 시작하겠습니다. -->
+      <article class="slide slide--cover active" data-index="0">
+        <header class="slide__header">
+          <span class="slide__label">Orca Setup · 설치 전 준비</span>
+          <h1 class="slide__title">Orca 설치 전 <span class="hl">준비물</span></h1>
+          <p class="slide__sub">Orca를 설치하기 전에 연결할 CLI부터 준비한다</p>
+        </header>
+        <main class="slide__body cover-body">
+          <figure class="cover-logo-shell anim-item">
+            <img class="cover-logo" src="./assets/orca-logo.svg" alt="Orca 로고" />
+          </figure>
+          <p class="cover-stmt cover-stmt--large anim-item">
+            Orca보다 먼저<br />
+            <span class="kw-teal">AI CLI부터 준비</span>
+          </p>
+          <div class="cover-axis anim-item">
+            <b>Claude Code</b><span>·</span><b>Codex</b>
+          </div>
+        </main>
+        <footer class="slide__footer">
+          <img class="fastcampus-logo" src="./assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스" />
+        </footer>
+      </article>
+
+      <!-- 2 / 3 · 발표 노트: 준비물은 두 가지입니다. Claude Code와 Codex를 모두 설치해 주세요. 다음 화면에서 설치 여부보다 먼저 확인할 것은 각 CLI의 로그인 상태입니다. -->
+      <article class="slide" data-index="1">
+        <header class="slide__header">
+          <span class="slide__label">Prerequisites · 준비물</span>
+          <h1 class="slide__title">준비물 <span class="hl">두 가지</span></h1>
+          <p class="slide__sub">이번 실습에서는 Claude Code와 Codex를 Orca에 연결한다</p>
+        </header>
+        <main class="slide__body">
+          <div class="duo-grid">
+            <section class="tool-card tool-card--teal anim-item">
+              <span class="tool-card__badge">CLI 01</span>
+              <img class="tool-card__logo" src="./assets/claude-code-logo.png" alt="Claude Code 로고" />
+              <h2 class="tool-card__title">Claude Code</h2>
+            </section>
+            <section class="tool-card tool-card--purple anim-item">
+              <span class="tool-card__badge">CLI 02</span>
+              <img class="tool-card__logo" src="./assets/codex-logo.svg" alt="Codex 로고" />
+              <h2 class="tool-card__title">Codex</h2>
+            </section>
+          </div>
+        </main>
+        <footer class="slide__footer">
+          <img class="fastcampus-logo" src="./assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스" />
+        </footer>
+      </article>
+
+      <!-- 3 / 3 · 발표 노트: 설치만 되어 있으면 끝이 아닙니다. Claude Code와 Codex를 각각 한 번 실행해서 로그인을 마쳐 주세요. 두 CLI 모두 로그인된 상태여야 Orca에서 바로 연결해 사용할 수 있습니다. -->
+      <article class="slide" data-index="2">
+        <header class="slide__header">
+          <span class="slide__label">Account Login · 로그인</span>
+          <h1 class="slide__title">로그인까지 <span class="hl">완료</span></h1>
+          <p class="slide__sub">각 CLI에 로그인된 상태여야 Orca에서 연결할 수 있다</p>
+        </header>
+        <main class="slide__body">
+          <div class="duo-grid login-grid">
+            <section class="tool-card tool-card--teal anim-item">
+              <img class="tool-card__logo" src="./assets/claude-code-logo.png" alt="Claude Code 로고" />
+              <h2 class="tool-card__title">Claude Code</h2>
+              <span class="login-complete">LOGIN COMPLETE</span>
+            </section>
+            <section class="tool-card tool-card--purple anim-item">
+              <img class="tool-card__logo" src="./assets/codex-logo.svg" alt="Codex 로고" />
+              <h2 class="tool-card__title">Codex</h2>
+              <span class="login-complete">LOGIN COMPLETE</span>
+            </section>
+          </div>
+          <div class="ready-statement anim-item">
+            <span>각 CLI 로그인 완료</span>
+            <span class="timeline-arrow ready-arrow" aria-hidden="true"></span>
+            <strong>Orca 연결 준비 완료</strong>
+          </div>
+        </main>
+        <footer class="slide__footer">
+          <img class="fastcampus-logo" src="./assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스" />
+        </footer>
+      </article>
+    </div>
+    <!-- /.slide-deck -->
+
+    <script>
+      /* 조작 규칙 (성공 기준):
+         페이지 이동은 좌우 nav-btn · 하단 dot · 키보드(←/→/스페이스)로만.
+         #deck/body/.slide에 이동용 click 리스너를 절대 달지 않는다 —
+         강의 중 화면을 가리키며 클릭해도 슬라이드가 넘어가면 안 된다. */
+      class SlidePresentation {
+        constructor() {
+          this.slides = Array.from(document.querySelectorAll(".slide"));
+          this.total = this.slides.length;
+          const requested = Number.parseInt(
+            new URLSearchParams(window.location.search).get("slide"),
+            10,
+          );
+          this.current =
+            Number.isInteger(requested) && requested >= 1 && requested <= this.total
+              ? requested - 1
+              : 0;
+          this.isAnimating = false;
+          this._init();
+        }
+        _init() {
+          this.slides.forEach((slide, i) =>
+            slide.classList.toggle("active", i === this.current),
+          );
+          document.getElementById("tot").textContent = this.total;
+          this._buildDots();
+          this._bindKeys();
+          this._bindButtons();
+          this._update();
+          this._runSlide(this.current);
+        }
+        /* 슬라이드 진입 시 .anim-item 을 순차 등장시킨다.
+           스토리보드의 "애니메이션 순서" = DOM 순서 */
+        _runSlide(i) {
+          const items = this.slides[i].querySelectorAll(".anim-item");
+          items.forEach((el) => {
+            el.classList.remove("do-fadeinup");
+            void el.offsetWidth; /* reflow — 재진입 시 재생 */
+          });
+          items.forEach((el, n) => {
+            setTimeout(() => el.classList.add("do-fadeinup"), 150 + n * 260);
+          });
+        }
+        next() {
+          if (!this.isAnimating) this._go(this.current + 1);
+        }
+        prev() {
+          if (!this.isAnimating) this._go(this.current - 1);
+        }
+        _go(i) {
+          if (
+            i < 0 ||
+            i >= this.total ||
+            i === this.current ||
+            this.isAnimating
+          )
+            return;
+          this.isAnimating = true;
+          this.slides[this.current].classList.remove("active");
+          this.slides[i].classList.add("active");
+          this.current = i;
+          const url = new URL(window.location.href);
+          url.searchParams.set("slide", this.current + 1);
+          window.history.replaceState({}, "", url);
+          this._runSlide(i);
+          setTimeout(() => {
+            this.isAnimating = false;
+            this._update();
+          }, 420);
+          this._update();
+        }
+        _update() {
+          const pct = ((this.current + 1) / this.total) * 100;
+          document.getElementById("progress").style.width = pct + "%";
+          document.getElementById("cur").textContent = this.current + 1;
+          document.getElementById("btn-prev").disabled = this.current === 0;
+          document.getElementById("btn-next").disabled =
+            this.current === this.total - 1;
+          document
+            .querySelectorAll(".dot")
+            .forEach((d, i) =>
+              d.classList.toggle("active", i === this.current),
+            );
+        }
+        _buildDots() {
+          const nav = document.getElementById("dot-nav");
+          this.slides.forEach((_, i) => {
+            const b = document.createElement("button");
+            b.className = "dot" + (i === 0 ? " active" : "");
+            b.setAttribute("aria-label", `슬라이드 ${i + 1}`);
+            b.addEventListener("click", () => this._go(i));
+            nav.appendChild(b);
+          });
+        }
+        _bindButtons() {
+          document
+            .getElementById("btn-prev")
+            .addEventListener("click", () => this.prev());
+          document
+            .getElementById("btn-next")
+            .addEventListener("click", () => this.next());
+        }
+        _bindKeys() {
+          document.addEventListener("keydown", (e) => {
+            if (this.isAnimating) return;
+            if (e.key === "ArrowRight" || e.key === " ") {
+              e.preventDefault();
+              this.next();
+            }
+            if (e.key === "ArrowLeft") {
+              e.preventDefault();
+              this.prev();
+            }
+          });
+        }
+      }
+      new SlidePresentation();
+    </script>
+  </body>
+</html>
