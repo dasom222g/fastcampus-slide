@@ -22,14 +22,15 @@
         --text: #e6edf3;
         --text-dim: #8b949e;
         --text-muted: #484f58;
-        --teal: #fc1c49;
+        --brand: #fc1c49; /* 패스트캠퍼스 시그니처 레드 — 덱의 기본 강조색 */
+        --brand-rgb: 252, 28, 73;
         --orange: #ff6d3b;
         --yellow: #f0b429;
         --purple: #9188ff;
         --green: #4ade80;
         --gray: #8b949e;
         --border: rgba(255, 255, 255, 0.08);
-        --border-teal: rgba(252, 28, 73, 0.3);
+        --border-brand: rgba(var(--brand-rgb), 0.3);
         --border-orange: rgba(255, 109, 59, 0.25);
         --border-purple: rgba(145, 136, 255, 0.28);
         --border-yellow: rgba(240, 180, 41, 0.28);
@@ -104,7 +105,7 @@
         font-weight: 700;
         letter-spacing: 0.2em;
         text-transform: uppercase;
-        color: var(--teal);
+        color: var(--brand);
       }
       .slide__title {
         font-size: clamp(2rem, 5.2vw, 3.8rem);
@@ -113,7 +114,7 @@
         letter-spacing: -0.015em;
       }
       .slide__title .hl {
-        color: var(--teal);
+        color: var(--brand);
       }
       .slide__title .hl-orange {
         color: var(--orange);
@@ -162,6 +163,7 @@
         text-transform: uppercase;
         color: var(--text-muted);
       }
+      /* 모든 슬라이드 푸터는 패스트캠퍼스 로고 하나다 — 텍스트를 넣지 않는다 */
       .fastcampus-logo {
         display: block;
         width: clamp(7.2rem, 9vw, 8.5rem);
@@ -181,8 +183,8 @@
         line-height: 1.5;
         color: var(--text-dim);
       }
-      .kw-teal {
-        color: var(--teal);
+      .kw-brand {
+        color: var(--brand);
       }
       .kw-orange {
         color: var(--orange);
@@ -199,8 +201,8 @@
       code {
         font-family: "Monaco", "Menlo", "Consolas", monospace;
         font-size: 0.85em;
-        background: rgba(252, 28, 73, 0.1);
-        color: var(--teal);
+        background: rgba(var(--brand-rgb), 0.1);
+        color: var(--brand);
         padding: 2px 6px;
         border-radius: 3px;
       }
@@ -237,8 +239,8 @@
 
       /* ── tip: 슬라이드 하단 한 줄 정리 ────────────────────── */
       .tip {
-        background: rgba(252, 28, 73, 0.05);
-        border: 1px solid rgba(252, 28, 73, 0.18);
+        background: rgba(var(--brand-rgb), 0.05);
+        border: 1px solid rgba(var(--brand-rgb), 0.18);
         border-radius: 3px;
         padding: 0.975rem 1.5rem;
         font-size: clamp(0.95rem, 1.4vw, 1.15rem);
@@ -247,7 +249,7 @@
       }
       .tip::before {
         content: "→  ";
-        color: var(--teal);
+        color: var(--brand);
         font-weight: 700;
       }
       .tip--yellow {
@@ -289,7 +291,7 @@
         text-transform: uppercase;
       }
       .cover-axis b {
-        color: var(--teal);
+        color: var(--brand);
         font-weight: 700;
       }
 
@@ -329,9 +331,9 @@
         line-height: 1.55;
         color: var(--text-dim);
       }
-      .col-card--teal {
-        border-color: var(--border-teal) !important;
-        background: rgba(252, 28, 73, 0.05);
+      .col-card--brand {
+        border-color: var(--border-brand) !important;
+        background: rgba(var(--brand-rgb), 0.05);
       }
       .col-card--orange {
         border-color: var(--border-orange) !important;
@@ -389,10 +391,10 @@
         border-radius: 3px;
         border: 1px solid var(--border);
       }
-      .role-badge--teal {
-        color: var(--teal);
-        border-color: var(--border-teal);
-        background: rgba(252, 28, 73, 0.08);
+      .role-badge--brand {
+        color: var(--brand);
+        border-color: var(--border-brand);
+        background: rgba(var(--brand-rgb), 0.08);
       }
       .role-badge--purple {
         color: var(--purple);
@@ -437,8 +439,8 @@
         background: rgba(255, 109, 59, 0.04);
       }
       .vs-col--pass {
-        border-color: var(--border-teal);
-        background: rgba(252, 28, 73, 0.05);
+        border-color: var(--border-brand);
+        background: rgba(var(--brand-rgb), 0.05);
       }
       .vs-badge {
         align-self: flex-start;
@@ -457,9 +459,9 @@
         background: rgba(255, 109, 59, 0.08);
       }
       .vs-badge--pass {
-        color: var(--teal);
-        border-color: var(--border-teal);
-        background: rgba(252, 28, 73, 0.08);
+        color: var(--brand);
+        border-color: var(--border-brand);
+        background: rgba(var(--brand-rgb), 0.08);
       }
       .vs-headline {
         display: flex;
@@ -479,7 +481,7 @@
         color: var(--orange);
       }
       .vs-col--pass .vs-headline {
-        color: var(--teal);
+        color: var(--brand);
       }
 
       /* ── LIST — 번호 원 + 제목 + 부연 나열 (카드 박스 없음) ── */
@@ -573,9 +575,9 @@
         border-color: var(--border-gray);
         background: rgba(139, 148, 158, 0.06);
       }
-      .timeline-card--teal {
-        border-color: var(--border-teal);
-        background: rgba(252, 28, 73, 0.07);
+      .timeline-card--brand {
+        border-color: var(--border-brand);
+        background: rgba(var(--brand-rgb), 0.07);
       }
       .timeline-card--purple {
         border-color: var(--border-purple);
@@ -606,8 +608,8 @@
       .step--gray {
         color: var(--gray);
       }
-      .step--teal {
-        color: var(--teal);
+      .step--brand {
+        color: var(--brand);
       }
       .step--purple {
         color: var(--purple);
@@ -701,9 +703,9 @@
         gap: 0.5rem;
         text-align: center;
       }
-      .fan-card--teal {
-        border-color: var(--border-teal);
-        background: rgba(252, 28, 73, 0.06);
+      .fan-card--brand {
+        border-color: var(--border-brand);
+        background: rgba(var(--brand-rgb), 0.06);
       }
       .fan-card--purple {
         border-color: var(--border-purple);
@@ -733,7 +735,7 @@
       .fan-stem {
         width: 2px;
         height: clamp(1.4rem, 3vh, 2.4rem);
-        background: var(--border-teal);
+        background: var(--border-brand);
       }
       .fan-bar-wrap {
         width: 100%;
@@ -745,7 +747,7 @@
         /* 자식 카드의 중심과 세로선을 맞춘다 (열 중심 간격 = 50% + gap/2) */
         width: calc(50% + var(--fan-gap) / 2);
         height: 2px;
-        background: var(--border-teal);
+        background: var(--border-brand);
       }
       .fan-bar::before,
       .fan-bar::after {
@@ -754,7 +756,7 @@
         top: 0;
         width: 2px;
         height: clamp(1.4rem, 3vh, 2.4rem);
-        background: var(--border-teal);
+        background: var(--border-brand);
       }
       .fan-bar::before {
         left: 0;
@@ -825,9 +827,9 @@
         align-items: center;
         justify-content: center;
         padding: clamp(1.2rem, 2.6vw, 2rem);
-        border: 1px solid var(--border-teal);
+        border: 1px solid var(--border-brand);
         border-radius: 10px;
-        background: rgba(252, 28, 73, 0.055);
+        background: rgba(var(--brand-rgb), 0.055);
         box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.32);
       }
       .cover-logo {
@@ -859,9 +861,9 @@
         background: var(--bg-card);
         text-align: center;
       }
-      .tool-card--teal {
-        border-color: var(--border-teal);
-        background: rgba(252, 28, 73, 0.055);
+      .tool-card--brand {
+        border-color: var(--border-brand);
+        background: rgba(var(--brand-rgb), 0.055);
       }
       .tool-card--purple {
         border-color: var(--border-purple);
@@ -876,10 +878,10 @@
         font-weight: 800;
         letter-spacing: 0.1em;
       }
-      .tool-card--teal .tool-card__badge {
-        color: var(--teal);
-        border-color: var(--border-teal);
-        background: rgba(252, 28, 73, 0.08);
+      .tool-card--brand .tool-card__badge {
+        color: var(--brand);
+        border-color: var(--border-brand);
+        background: rgba(var(--brand-rgb), 0.08);
       }
       .tool-card--purple .tool-card__badge {
         color: var(--purple);
@@ -979,7 +981,7 @@
       }
       .progress-fill {
         height: 100%;
-        background: var(--teal);
+        background: var(--brand);
         transition: width 0.3s ease-out;
       }
       .nav-btn {
@@ -1038,7 +1040,7 @@
       .dot.active {
         width: 22px;
         border-radius: 3px;
-        background: var(--teal);
+        background: var(--brand);
       }
       .slide-counter {
         position: fixed;
@@ -1096,18 +1098,18 @@
         </header>
         <main class="slide__body cover-body">
           <figure class="cover-logo-shell anim-item">
-            <img class="cover-logo" src="./assets/orca-logo.svg" alt="Orca 로고" />
+            <img class="cover-logo" src="/assets/orca-logo.svg" alt="Orca 로고" />
           </figure>
           <p class="cover-stmt cover-stmt--large anim-item">
             Orca보다 먼저<br />
-            <span class="kw-teal">AI CLI부터 준비</span>
+            <span class="kw-brand">AI CLI부터 준비</span>
           </p>
           <div class="cover-axis anim-item">
             <b>Claude Code</b><span>·</span><b>Codex</b>
           </div>
         </main>
         <footer class="slide__footer">
-          <img class="fastcampus-logo" src="./assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스" />
+          <img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스" />
         </footer>
       </article>
 
@@ -1120,20 +1122,20 @@
         </header>
         <main class="slide__body">
           <div class="duo-grid">
-            <section class="tool-card tool-card--teal anim-item">
+            <section class="tool-card tool-card--brand anim-item">
               <span class="tool-card__badge">CLI 01</span>
-              <img class="tool-card__logo" src="./assets/claude-code-logo.png" alt="Claude Code 로고" />
+              <img class="tool-card__logo" src="/assets/claude-code-logo.png" alt="Claude Code 로고" />
               <h2 class="tool-card__title">Claude Code</h2>
             </section>
             <section class="tool-card tool-card--purple anim-item">
               <span class="tool-card__badge">CLI 02</span>
-              <img class="tool-card__logo" src="./assets/codex-logo.svg" alt="Codex 로고" />
+              <img class="tool-card__logo" src="/assets/codex-logo.svg" alt="Codex 로고" />
               <h2 class="tool-card__title">Codex</h2>
             </section>
           </div>
         </main>
         <footer class="slide__footer">
-          <img class="fastcampus-logo" src="./assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스" />
+          <img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스" />
         </footer>
       </article>
 
@@ -1146,13 +1148,13 @@
         </header>
         <main class="slide__body">
           <div class="duo-grid login-grid">
-            <section class="tool-card tool-card--teal anim-item">
-              <img class="tool-card__logo" src="./assets/claude-code-logo.png" alt="Claude Code 로고" />
+            <section class="tool-card tool-card--brand anim-item">
+              <img class="tool-card__logo" src="/assets/claude-code-logo.png" alt="Claude Code 로고" />
               <h2 class="tool-card__title">Claude Code</h2>
               <span class="login-complete">LOGIN COMPLETE</span>
             </section>
             <section class="tool-card tool-card--purple anim-item">
-              <img class="tool-card__logo" src="./assets/codex-logo.svg" alt="Codex 로고" />
+              <img class="tool-card__logo" src="/assets/codex-logo.svg" alt="Codex 로고" />
               <h2 class="tool-card__title">Codex</h2>
               <span class="login-complete">LOGIN COMPLETE</span>
             </section>
@@ -1164,7 +1166,7 @@
           </div>
         </main>
         <footer class="slide__footer">
-          <img class="fastcampus-logo" src="./assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스" />
+          <img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스" />
         </footer>
       </article>
     </div>

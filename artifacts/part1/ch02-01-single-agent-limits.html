@@ -1,0 +1,1404 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>에이전트 하나로 되는 일과 안 되는 일 — 나 대신 일하는 AI 팀</title>
+    <!-- 허용된 외부 의존은 아래 웹폰트 2개뿐. 그 외 모든 것은 인라인/로컬 -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSans.css"
+    />
+    <style>
+      :root {
+        --bg: #0d1117;
+        --bg-card: #161b22;
+        --bg-code: #1e2430;
+        --bg-inset: #252d3a;
+        --text: #e6edf3;
+        --text-dim: #8b949e;
+        --text-muted: #484f58;
+        --brand: #fc1c49; /* 패스트캠퍼스 시그니처 레드 — 덱의 기본 강조색 */
+        --brand-rgb: 252, 28, 73;
+        --orange: #ff6d3b;
+        --yellow: #f0b429;
+        --purple: #9188ff;
+        --green: #4ade80;
+        --gray: #8b949e;
+        --border: rgba(255, 255, 255, 0.08);
+        --border-brand: rgba(var(--brand-rgb), 0.3);
+        --border-orange: rgba(255, 109, 59, 0.25);
+        --border-purple: rgba(145, 136, 255, 0.28);
+        --border-yellow: rgba(240, 180, 41, 0.28);
+        --border-green: rgba(74, 222, 128, 0.25);
+        --border-gray: rgba(139, 148, 158, 0.22);
+        --dot: rgba(255, 255, 255, 0.055);
+        --ease: 0.36s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        font-family:
+          "Pretendard",
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        font-size: clamp(12px, 1.35vw, 15px);
+        background: var(--bg);
+        color: var(--text);
+        word-break: keep-all; /* 한국어 어절 단위 줄바꿈 */
+      }
+      body {
+        overflow: hidden;
+      }
+
+      .slide-deck {
+        position: fixed;
+        inset: 0;
+      }
+
+      .slide {
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(
+          circle,
+          var(--dot) 1px,
+          transparent 1px
+        );
+        background-size: 26px 26px;
+        background-color: var(--bg);
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        padding: clamp(2.5rem, 5.5vh, 4.5rem) clamp(3.5rem, 9vw, 8rem);
+        gap: clamp(1.5rem, 3.75vh, 3rem);
+        overflow: hidden;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity var(--ease);
+      }
+      .slide.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      /* ── 공통 헤더 / 푸터 ─────────────────────────────────── */
+      .slide__header {
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+        padding-bottom: clamp(0.9rem, 2.2vh, 1.6rem);
+        border-bottom: 1px solid var(--border);
+      }
+      .slide__label {
+        font-size: clamp(0.58rem, 0.85vw, 0.72rem);
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--brand);
+      }
+      .slide__title {
+        font-size: clamp(2rem, 5.2vw, 3.8rem);
+        font-weight: 800;
+        line-height: 1.08;
+        letter-spacing: -0.015em;
+      }
+      .slide__title .hl {
+        color: var(--brand);
+      }
+      .slide__title .hl-orange {
+        color: var(--orange);
+      }
+      .slide__title .hl-yellow {
+        color: var(--yellow);
+      }
+      .slide__title .hl-purple {
+        color: var(--purple);
+      }
+      .slide__sub {
+        font-size: clamp(1rem, 1.65vw, 1.15rem);
+        font-weight: 400;
+        color: var(--text-dim);
+        line-height: 1.5;
+      }
+
+      .slide__body {
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        gap: clamp(1.2rem, 2.7vh, 2.1rem);
+        min-height: 0;
+        justify-content: center;
+      }
+      .slide__body > .grid-3 {
+        flex: 0 0 auto;
+        align-items: stretch;
+      }
+      .slide__body > .grid-2 {
+        flex: 0 0 auto;
+      }
+      .slide__body > .timeline {
+        width: 100%;
+        align-self: center;
+      }
+
+      .slide__footer {
+        border-top: 1px solid var(--border);
+        padding-top: clamp(0.5rem, 1.3vh, 0.9rem);
+        display: flex;
+        align-items: center;
+        font-size: clamp(0.58rem, 0.85vw, 0.7rem);
+        font-weight: 400;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+      /* 모든 슬라이드 푸터는 패스트캠퍼스 로고 하나다 — 텍스트를 넣지 않는다 */
+      .fastcampus-logo {
+        display: block;
+        width: clamp(7.2rem, 9vw, 8.5rem);
+        height: auto;
+      }
+
+      /* ── 공통 타이포 ──────────────────────────────────────── */
+      .display {
+        font-family: "GmarketSans", "Pretendard", sans-serif;
+        font-size: clamp(2.8rem, 7vw, 5.5rem);
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: -0.03em;
+      }
+      .caption {
+        font-size: clamp(0.9rem, 1.45vw, 1.15rem);
+        line-height: 1.5;
+        color: var(--text-dim);
+      }
+      .kw-brand {
+        color: var(--brand);
+      }
+      .kw-orange {
+        color: var(--orange);
+        font-weight: 600;
+      }
+      .kw-yellow {
+        color: var(--yellow);
+        font-weight: 600;
+      }
+      .kw-purple {
+        color: var(--purple);
+      }
+
+      code {
+        font-family: "Monaco", "Menlo", "Consolas", monospace;
+        font-size: 0.85em;
+        background: rgba(var(--brand-rgb), 0.1);
+        color: var(--brand);
+        padding: 2px 6px;
+        border-radius: 3px;
+      }
+
+      /* ── 불릿 리스트 (✓/✕) ───────────────────────────────── */
+      .bullet-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+      }
+      .bullet-list li {
+        display: flex;
+        align-items: baseline;
+        gap: 0.9rem;
+        font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+        line-height: 1.55;
+      }
+      .bullet-list li.no::before {
+        content: "✕";
+        color: var(--orange);
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+      .bullet-list li.ok::before {
+        content: "✓";
+        color: var(--green);
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+      .bullet-list li.no {
+        color: var(--text-dim);
+      }
+
+      /* ── tip: 슬라이드 하단 한 줄 정리 ────────────────────── */
+      .tip {
+        background: rgba(var(--brand-rgb), 0.05);
+        border: 1px solid rgba(var(--brand-rgb), 0.18);
+        border-radius: 3px;
+        padding: 0.975rem 1.5rem;
+        font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+        color: var(--text-dim);
+        line-height: 1.6;
+      }
+      .tip::before {
+        content: "→  ";
+        color: var(--brand);
+        font-weight: 700;
+      }
+      .tip--yellow {
+        background: rgba(240, 180, 41, 0.05);
+        border-color: rgba(240, 180, 41, 0.22);
+      }
+      .tip--yellow::before {
+        color: var(--yellow);
+      }
+
+      /* ── TEXT(표지) — cover ───────────────────────────────── */
+      .cover-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: clamp(1.1rem, 2.6vh, 2rem);
+      }
+      .cover-emoji {
+        font-size: clamp(3.6rem, 9vw, 7rem);
+        line-height: 1;
+      }
+      .cover-stmt {
+        font-family: "GmarketSans", "Pretendard", sans-serif;
+        font-size: clamp(1.9rem, 4.4vw, 3.6rem);
+        font-weight: 900;
+        line-height: 1.35;
+        letter-spacing: -0.025em;
+      }
+      .cover-axis {
+        display: flex;
+        align-items: center;
+        gap: clamp(0.6rem, 1.4vw, 1.1rem);
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(0.7rem, 1.1vw, 0.9rem);
+        letter-spacing: 0.1em;
+        color: var(--text-muted);
+        text-transform: uppercase;
+      }
+      .cover-axis b {
+        color: var(--brand);
+        font-weight: 700;
+      }
+
+      /* ── CARD_GRID — grid-3 + col-card ────────────────────── */
+      .grid-3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: clamp(1.2rem, 3vw, 2.1rem);
+      }
+      .col-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: clamp(1.5rem, 2.7vw, 2.25rem);
+        display: flex;
+        flex-direction: column;
+        gap: 1.1rem;
+      }
+      .col-card__title-row {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+      }
+      .col-card__emoji {
+        font-size: clamp(1.5rem, 2.4vw, 2rem);
+        line-height: 1;
+        flex-shrink: 0;
+      }
+      .col-card__title {
+        font-size: clamp(1.4rem, 2.8vw, 2rem);
+        font-weight: 700;
+        line-height: 1.2;
+        letter-spacing: -0.01em;
+      }
+      .col-card__body {
+        font-size: clamp(0.88rem, 1.35vw, 1.08rem);
+        line-height: 1.55;
+        color: var(--text-dim);
+      }
+      .col-card--brand {
+        border-color: var(--border-brand) !important;
+        background: rgba(var(--brand-rgb), 0.05);
+      }
+      .col-card--orange {
+        border-color: var(--border-orange) !important;
+        background: rgba(255, 109, 59, 0.05);
+      }
+      .col-card--purple {
+        border-color: var(--border-purple) !important;
+        background: rgba(145, 136, 255, 0.05);
+      }
+      .col-card--gray {
+        border-color: var(--border-gray) !important;
+        background: rgba(139, 148, 158, 0.05);
+      }
+      /* 변형: 카드 6장(3열 2행)일 때 — grid-3에 함께 붙인다 */
+      .grid-3--tight {
+        gap: clamp(0.9rem, 1.8vw, 1.5rem);
+      }
+      .grid-3--tight .col-card {
+        padding: clamp(1rem, 1.9vw, 1.5rem);
+        gap: 0.7rem;
+      }
+      .grid-3--tight .col-card__title {
+        font-size: clamp(1.1rem, 2vw, 1.5rem);
+        font-family: "Monaco", "Menlo", monospace;
+        letter-spacing: -0.01em;
+      }
+      .grid-3--tight .col-card__emoji {
+        font-size: clamp(1.2rem, 2vw, 1.6rem);
+      }
+      /* 변형: 설명이 긴 카드 6장 — 높이·패딩·타이포를 줄이지 않는다 */
+      .grid-3--spacious {
+        min-height: clamp(24rem, 52vh, 30rem);
+        gap: clamp(1rem, 2vw, 1.6rem);
+      }
+      .grid-3--spacious .col-card {
+        justify-content: center;
+        padding: clamp(1.35rem, 2.2vw, 1.85rem);
+        gap: clamp(0.85rem, 1.7vh, 1.15rem);
+      }
+      .grid-3--spacious .col-card__title {
+        font-size: clamp(1.2rem, 1.85vw, 1.55rem);
+      }
+      .grid-3--spacious .col-card__body {
+        font-size: clamp(0.96rem, 1.3vw, 1.1rem);
+        line-height: 1.55;
+      }
+      /* 변형: 카드 상단 정체 배지 (역할·소속 구분) */
+      .role-badge {
+        align-self: flex-start;
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(0.66rem, 1vw, 0.8rem);
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        padding: 0.32rem 0.7rem;
+        border-radius: 3px;
+        border: 1px solid var(--border);
+      }
+      .role-badge--brand {
+        color: var(--brand);
+        border-color: var(--border-brand);
+        background: rgba(var(--brand-rgb), 0.08);
+      }
+      .role-badge--purple {
+        color: var(--purple);
+        border-color: var(--border-purple);
+        background: rgba(145, 136, 255, 0.08);
+      }
+      .role-badge--gray {
+        color: var(--gray);
+        border-color: var(--border-gray);
+        background: rgba(139, 148, 158, 0.08);
+      }
+      .role-sub {
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(0.7rem, 1.05vw, 0.85rem);
+        color: var(--text-muted);
+        letter-spacing: 0.03em;
+      }
+
+      /* ── 좌우 2분할 — grid-2 · vs-grid(대비 비교) ─────────── */
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1.05fr 1fr;
+        gap: clamp(1.5rem, 3.5vw, 2.8rem);
+        align-items: center;
+      }
+      .vs-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: clamp(1.2rem, 3vw, 2.4rem);
+        width: 100%;
+      }
+      .vs-col {
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: clamp(1.2rem, 2.4vw, 2rem);
+        display: flex;
+        flex-direction: column;
+        gap: clamp(0.8rem, 1.8vh, 1.3rem);
+      }
+      .vs-col--blocked {
+        border-color: var(--border-orange);
+        background: rgba(255, 109, 59, 0.04);
+      }
+      .vs-col--pass {
+        border-color: var(--border-brand);
+        background: rgba(var(--brand-rgb), 0.05);
+      }
+      .vs-badge {
+        align-self: flex-start;
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(0.64rem, 1vw, 0.78rem);
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 0.3rem 0.65rem;
+        border-radius: 3px;
+        border: 1px solid var(--border);
+      }
+      .vs-badge--blocked {
+        color: var(--orange);
+        border-color: var(--border-orange);
+        background: rgba(255, 109, 59, 0.08);
+      }
+      .vs-badge--pass {
+        color: var(--brand);
+        border-color: var(--border-brand);
+        background: rgba(var(--brand-rgb), 0.08);
+      }
+      .vs-headline {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        font-size: clamp(1.35rem, 2.7vw, 2.1rem);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.015em;
+      }
+      .vs-headline span {
+        font-size: clamp(1.5rem, 2.7vw, 2.1rem);
+        line-height: 1;
+        flex-shrink: 0;
+      }
+      .vs-col--blocked .vs-headline {
+        color: var(--orange);
+      }
+      .vs-col--pass .vs-headline {
+        color: var(--brand);
+      }
+
+      /* ── LIST — 번호 원 + 제목 + 부연 나열 (카드 박스 없음) ── */
+      .list {
+        display: flex;
+        flex-direction: column;
+        gap: clamp(2.4rem, 7vh, 5.5rem);
+        align-self: center;
+        width: min(52rem, 100%);
+      }
+      .list-item {
+        display: flex;
+        align-items: flex-start;
+        gap: clamp(1rem, 2vw, 1.6rem);
+      }
+      .list-item.num {
+        align-items: center;
+      }
+      .list-num {
+        width: clamp(3.2rem, 5.5vw, 4.6rem);
+        height: clamp(3.2rem, 5.5vw, 4.6rem);
+        flex-shrink: 0;
+        border-radius: 50%;
+        border: 1.5px solid var(--text);
+        background: var(--bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(1.1rem, 1.9vw, 1.5rem);
+        font-weight: 700;
+        color: var(--text);
+      }
+      /* 변형: 번호 대신 점 마커 (순서 없는 나열) */
+      .list-dot {
+        width: clamp(0.75rem, 1.1vw, 0.95rem);
+        height: clamp(0.75rem, 1.1vw, 0.95rem);
+        margin-top: 0.55em;
+        border-radius: 50%;
+        background: var(--text);
+        flex-shrink: 0;
+      }
+      .list-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: clamp(0.3rem, 0.8vh, 0.55rem);
+      }
+      .list-title {
+        font-size: clamp(1.3rem, 2.5vw, 1.95rem);
+        font-weight: 700;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
+      }
+      .list-sub {
+        font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+        color: var(--text-dim);
+        line-height: 1.45;
+      }
+
+      /* ── ICON_ROW — timeline (가로 파이프라인) ────────────── */
+      .timeline {
+        display: grid;
+        /* 카드 5장 기준. 카드 수가 다르면 timeline--4 처럼 columns를 맞춘다 */
+        grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr auto 1fr;
+        gap: 0;
+        align-items: stretch;
+      }
+      .timeline--4 {
+        grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+      }
+      .timeline--3 {
+        grid-template-columns: 1fr auto 1fr auto 1fr;
+      }
+      .timeline-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: clamp(1rem, 1.9vw, 1.6rem) clamp(0.6rem, 1.2vw, 1rem);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: clamp(0.6rem, 1.5vh, 1.1rem);
+        text-align: center;
+        justify-content: flex-start;
+      }
+      .timeline-card--plain {
+        border-color: var(--border);
+      }
+      .timeline-card--gray {
+        border-color: var(--border-gray);
+        background: rgba(139, 148, 158, 0.06);
+      }
+      .timeline-card--brand {
+        border-color: var(--border-brand);
+        background: rgba(var(--brand-rgb), 0.07);
+      }
+      .timeline-card--purple {
+        border-color: var(--border-purple);
+        background: rgba(145, 136, 255, 0.07);
+      }
+      .timeline-card--yellow {
+        border-color: var(--border-yellow);
+        background: rgba(240, 180, 41, 0.08);
+      }
+      .timeline-card--orange {
+        border-color: var(--border-orange);
+        background: rgba(255, 109, 59, 0.08);
+      }
+      .timeline-card--green {
+        border-color: var(--border-green);
+        background: rgba(74, 222, 128, 0.08);
+      }
+      .timeline-card__step {
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(0.62rem, 0.95vw, 0.8rem);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        padding: 0.3rem 0.7rem;
+        border-radius: 3px;
+        background: rgba(255, 255, 255, 0.04);
+      }
+      .step--gray {
+        color: var(--gray);
+      }
+      .step--brand {
+        color: var(--brand);
+      }
+      .step--purple {
+        color: var(--purple);
+      }
+      .step--yellow {
+        color: var(--yellow);
+      }
+      .step--orange {
+        color: var(--orange);
+      }
+      .step--green {
+        color: var(--green);
+      }
+      .step--muted {
+        color: var(--text-dim);
+      }
+      .timeline-emoji-wrap {
+        width: clamp(4.2rem, 8.5vw, 7rem);
+        height: clamp(4.2rem, 8.5vw, 7rem);
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1.5px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .timeline-emoji-wrap span {
+        font-size: clamp(1.9rem, 4vw, 3.2rem);
+        line-height: 1;
+      }
+      .timeline-card__title {
+        font-size: clamp(1.15rem, 2.1vw, 1.7rem);
+        font-weight: 700;
+        line-height: 1.2;
+      }
+      .timeline-card__body {
+        font-size: clamp(0.82rem, 1.25vw, 1.02rem);
+        line-height: 1.5;
+        color: var(--text-dim);
+      }
+      .timeline-arrow {
+        position: relative;
+        flex-shrink: 0;
+        width: clamp(1.4rem, 2.6vw, 2.4rem);
+        height: clamp(1rem, 2vh, 1.5rem);
+        align-self: center;
+      }
+      .timeline-arrow::before {
+        content: "";
+        position: absolute;
+        left: 10%;
+        right: 28%;
+        top: 50%;
+        height: 2px;
+        background: var(--border-purple);
+        transform: translateY(-50%);
+      }
+      .timeline-arrow::after {
+        content: "";
+        position: absolute;
+        right: 10%;
+        top: 50%;
+        border-top: 0.36rem solid transparent;
+        border-bottom: 0.36rem solid transparent;
+        border-left: 0.5rem solid var(--purple);
+        transform: translateY(-50%);
+      }
+      .flow-quote {
+        color: var(--text);
+        font-style: normal;
+      }
+
+      /* ── TREE — fan (부모 1 → 자식 여럿) ──────────────────── */
+      .fan {
+        --fan-gap: clamp(1.5rem, 4vw, 3rem);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: min(58rem, 100%);
+        align-self: center;
+      }
+      .fan-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: clamp(1rem, 2vw, 1.6rem) clamp(1.2rem, 2.4vw, 2rem);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        text-align: center;
+      }
+      .fan-card--brand {
+        border-color: var(--border-brand);
+        background: rgba(var(--brand-rgb), 0.06);
+      }
+      .fan-card--purple {
+        border-color: var(--border-purple);
+        background: rgba(145, 136, 255, 0.06);
+      }
+      .fan-card--orange {
+        border-color: var(--border-orange);
+        background: rgba(255, 109, 59, 0.06);
+      }
+      .fan-card__emoji {
+        font-size: clamp(1.8rem, 3.4vw, 2.8rem);
+        line-height: 1;
+      }
+      .fan-card__title {
+        font-size: clamp(1.2rem, 2.2vw, 1.75rem);
+        font-weight: 700;
+        line-height: 1.2;
+      }
+      .fan-card__body {
+        font-size: clamp(0.85rem, 1.3vw, 1.05rem);
+        color: var(--text-dim);
+        line-height: 1.5;
+      }
+      .fan-root {
+        width: clamp(14rem, 26vw, 20rem);
+      }
+      .fan-stem {
+        width: 2px;
+        height: clamp(1.4rem, 3vh, 2.4rem);
+        background: var(--border-brand);
+      }
+      .fan-bar-wrap {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+      .fan-bar {
+        position: relative;
+        /* 자식 카드의 중심과 세로선을 맞춘다 (열 중심 간격 = 50% + gap/2) */
+        width: calc(50% + var(--fan-gap) / 2);
+        height: 2px;
+        background: var(--border-brand);
+      }
+      .fan-bar::before,
+      .fan-bar::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        width: 2px;
+        height: clamp(1.4rem, 3vh, 2.4rem);
+        background: var(--border-brand);
+      }
+      .fan-bar::before {
+        left: 0;
+      }
+      .fan-bar::after {
+        right: 0;
+      }
+      .fan-kids {
+        margin-top: clamp(1.4rem, 3vh, 2.4rem);
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--fan-gap);
+      }
+
+      /* ── METRIC — 대형 수치 (소스에 실제 수치가 있을 때만) ── */
+      .metric-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: clamp(1.2rem, 3vw, 2.4rem);
+      }
+      .metric {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: clamp(0.55rem, 1.3vh, 0.95rem);
+        padding: clamp(1.6rem, 3.4vh, 2.6rem) clamp(1rem, 2vw, 1.6rem);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        background: var(--bg-card);
+      }
+      .metric--star {
+        border-color: var(--border-yellow);
+        background: rgba(240, 180, 41, 0.06);
+      }
+      .metric__icon {
+        font-size: clamp(1.6rem, 3vw, 2.4rem);
+        line-height: 1;
+        margin-bottom: clamp(0.3rem, 0.9vh, 0.7rem);
+      }
+      .metric__num {
+        font-family: "GmarketSans", "Pretendard", sans-serif;
+        font-size: clamp(2.6rem, 6.5vw, 5rem);
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: -0.03em;
+      }
+      .metric--star .metric__num {
+        color: var(--yellow);
+      }
+      .metric__cap {
+        font-size: clamp(0.8rem, 1.2vw, 1rem);
+        color: var(--text-dim);
+      }
+
+      /* ── Navigation ───────────────────────────────────────── */
+      .progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        z-index: 200;
+        background: rgba(255, 255, 255, 0.04);
+        user-select: none;
+      }
+      .progress-fill {
+        height: 100%;
+        background: var(--brand);
+        transition: width 0.3s ease-out;
+      }
+      .nav-btn {
+        position: fixed;
+        top: 50%;
+        z-index: 150;
+        transform: translateY(-50%);
+        user-select: none;
+        width: clamp(1.9rem, 2.8vw, 2.5rem);
+        height: clamp(1.9rem, 2.8vw, 2.5rem);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 3px;
+        color: var(--text-muted);
+        font-size: 0.8rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+      }
+      .nav-btn:hover:not(:disabled) {
+        background: rgba(255, 255, 255, 0.08);
+        color: var(--text);
+      }
+      .nav-btn:disabled {
+        opacity: 0.08;
+        cursor: not-allowed;
+      }
+      #btn-prev {
+        left: clamp(0.4rem, 1.2vw, 1.1rem);
+      }
+      #btn-next {
+        right: clamp(0.4rem, 1.2vw, 1.1rem);
+      }
+      .dot-nav {
+        position: fixed;
+        bottom: 1.3rem;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 150;
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        user-select: none;
+      }
+      .dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.18);
+        cursor: pointer;
+        border: none;
+        transition: all 0.22s ease;
+      }
+      .dot.active {
+        width: 22px;
+        border-radius: 3px;
+        background: var(--brand);
+      }
+      .slide-counter {
+        position: fixed;
+        bottom: 1.2rem;
+        right: 1.8rem;
+        z-index: 150;
+        font-family: "Monaco", monospace;
+        font-size: 0.62em;
+        color: var(--text-muted);
+        letter-spacing: 0.07em;
+        user-select: none;
+      }
+
+      /* ── Animations ───────────────────────────────────────── */
+      @keyframes s-fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .anim-item {
+        opacity: 0;
+      }
+      .anim-item.do-fadeinup {
+        animation: s-fadeInUp 0.48s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      }
+    
+      /* ══════════════════════════════════════════════════════════
+         이번 덱 전용 — 변형표에 있는 것과 카드 안 도형 크기뿐.
+         레이아웃은 내장 타입 4종(list · grid-3 · fan · vs-grid)을 쓴다.
+      ══════════════════════════════════════════════════════════ */
+
+      /* 변형표: 자식 3갈래 트리 — .fan-kids를 3열로.
+         기본 .fan-bar는 자식 2개 기준(50% + gap/2)이라 3열에서는 바깥 자식 중심에
+         닿지 않는다. 3열의 양끝 중심 간격은 (2W + 2gap)/3 이므로 아래처럼 맞춘다. */
+      .fan-kids--3 {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+      .fan--3 .fan-bar {
+        width: calc(66.667% + var(--fan-gap) * 2 / 3);
+      }
+      /* 가운데 자식으로 내려가는 세로선 */
+      .fan--3 .fan-bar .fan-bar__mid {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 2px;
+        height: clamp(1.4rem, 3vh, 2.4rem);
+        background: var(--border-brand);
+      }
+
+      /* col-card 안에 들어가는 실패 도형 (레이아웃이 아니라 내용물) */
+      .fail-shape {
+        width: 100%;
+        max-width: 9rem;
+        align-self: center;
+        margin: 0.15rem 0 0.35rem;
+      }
+      .fail-shape svg {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      /* vs-col 안에 LIST를 넣을 때 간격만 좁힌다 (list 기본은 슬라이드 전체용) */
+      .vs-col .list {
+        width: 100%;
+        gap: clamp(0.9rem, 2.1vh, 1.5rem);
+      }
+      /* 자식 3개는 2개보다 좁으므로 카드 안쪽 여백과 분기 간격을 조금 줄인다 */
+      .fan-kids--3 .fan-card {
+        padding: clamp(0.8rem, 1.5vw, 1.15rem) clamp(0.85rem, 1.7vw, 1.3rem);
+      }
+      .fan--3 .fan-kids {
+        margin-top: clamp(0.8rem, 1.7vh, 1.3rem);
+      }
+      /* vs-col 안쪽 여백도 LIST가 들어가면 한 단계 줄인다 */
+      .vs-grid .vs-col {
+        padding: clamp(0.9rem, 1.8vw, 1.4rem);
+        gap: clamp(0.5rem, 1.1vh, 0.85rem);
+      }
+
+      .tip--orange {
+        background: rgba(255, 109, 59, 0.05);
+        border-color: rgba(255, 109, 59, 0.22);
+      }
+      .tip--orange::before { color: var(--orange); }
+
+      .spine-stmt {
+        width: min(70rem, 100%);
+        align-self: center;
+        margin-top: clamp(0.3rem, 1vh, 0.8rem);
+        padding: clamp(0.85rem, 1.9vh, 1.25rem) clamp(1.2rem, 2.4vw, 1.9rem);
+        border: 1px solid var(--border-brand);
+        border-radius: 8px;
+        background: rgba(var(--brand-rgb), 0.055);
+        font-family: "GmarketSans", "Pretendard", sans-serif;
+        font-size: clamp(1.1rem, 2vw, 1.65rem);
+        font-weight: 900;
+        line-height: 1.35;
+        text-align: center;
+      }
+
+      @media (max-width: 900px) {
+        .fan-kids--3 { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress"></div>
+    </div>
+    <button class="nav-btn" id="btn-prev" aria-label="이전 슬라이드">
+      &#8592;
+    </button>
+    <button class="nav-btn" id="btn-next" aria-label="다음 슬라이드">
+      &#8594;
+    </button>
+    <div class="dot-nav" id="dot-nav"></div>
+    <div class="slide-counter">
+      <span id="cur">1</span> / <span id="tot">4</span>
+    </div>
+
+    <div class="slide-deck" id="deck">
+      <!-- ═══ 1 / 4 — 되는 일 ═══  타입: LIST (카드 박스 없음)
+       발표 노트: 팀 얘기를 하기 전에 에이전트 하나로 잘 되는 일부터 짚고 가겠습니다.
+       한 번에 하나씩 시키고 결과를 확인하는 작업은 잘 됩니다. 대화하면서 고쳐 나가는
+       작업도 잘 됩니다. 짧고 명확한 작업도 마찬가지입니다. 이 범위 안에서는 에이전트를
+       여럿 띄우는 게 오히려 번거롭습니다. 하나가 가장 빠르고 정확합니다.
+       ※ 인정하는 장이다. 다음 장이 카드라서 여기는 박스 없는 나열로 연다. orange 금지.
+  ═══════════════════════════════════════════════════════════ -->
+      <article class="slide active" data-index="0">
+        <header class="slide__header">
+          <span class="slide__label">Section 1 · What Works</span>
+          <h1 class="slide__title">에이전트 하나로 <span class="hl">되는 일</span></h1>
+          <p class="slide__sub">잘 되는 것부터 짚고 간다</p>
+        </header>
+        <main class="slide__body">
+          <div class="list">
+            <div class="list-item num anim-item">
+              <div class="list-num">1</div>
+              <div class="list-body">
+                <div class="list-title">한 번에 하나씩 시키는 작업</div>
+                <div class="list-sub">결과를 확인하고 다음을 시키면 어긋나지 않는다</div>
+              </div>
+            </div>
+            <div class="list-item num anim-item">
+              <div class="list-num">2</div>
+              <div class="list-body">
+                <div class="list-title">대화하며 고쳐 나가는 작업</div>
+                <div class="list-sub">주고받으며 다듬는 일은 한 명일 때 가장 빠르다</div>
+              </div>
+            </div>
+            <div class="list-item num anim-item">
+              <div class="list-num">3</div>
+              <div class="list-body">
+                <div class="list-title">짧고 명확한 작업</div>
+                <div class="list-sub">범위가 좁으면 나눌 이유가 없다</div>
+              </div>
+            </div>
+          </div>
+          <div class="tip anim-item">
+            이 범위 안에서는 에이전트 하나가 가장 빠르고 정확하다
+          </div>
+        </main>
+        <footer class="slide__footer">
+          <img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스" />
+        </footer>
+      </article>
+
+      <!-- ═══ 2 / 4 — 안 되는 일 ═══  타입: CARD_GRID (grid-3 + col-card)
+       발표 노트: 그런데 여기서부터는 맡길수록 결과가 나빠집니다. 첫째, 여러 산출물을
+       동시에 만드는 일입니다. 블로그 글과 카드뉴스와 SNS 글을 한 번에 부탁하면 셋 다
+       어정쩡하게 나옵니다. 둘째, 긴 공정을 한 번에 끝내는 일입니다. 조사부터
+       기획서까지 시키면 뒤로 갈수록 앞에서 준 조건을 잊습니다. 셋째, 자기가 만든 걸
+       스스로 검증하는 일입니다. 다시 확인해 달라고 하면 대부분 문제없다고 답합니다.
+       세 가지 모두 에이전트가 부족해서가 아닙니다.
+       ※ 그림이 들어가야 해서 카드를 쓴다. 번호 01·02·03은 3·4번 장까지 이어진다.
+  ═══════════════════════════════════════════════════════════ -->
+      <article class="slide" data-index="1">
+        <header class="slide__header">
+          <span class="slide__label">Section 2 · What Breaks</span>
+          <h1 class="slide__title"><span class="hl-orange">안 되는 일</span></h1>
+          <p class="slide__sub">여기부터는 맡길수록 결과가 나빠진다</p>
+        </header>
+        <main class="slide__body">
+          <div class="grid-3">
+            <div class="col-card col-card--orange anim-item">
+              <div class="col-card__title-row">
+                <span class="col-card__emoji">🤹</span>
+                <div class="col-card__title">여러 산출물을 동시에</div>
+              </div>
+              <div class="fail-shape" aria-hidden="true">
+                <!-- 하나에서 셋이 나오지만 셋 다 흐리다 -->
+                <svg viewBox="0 0 160 84" fill="none" style="color: var(--orange)">
+                  <circle cx="24" cy="42" r="12" fill="currentColor" fill-opacity=".2" stroke="currentColor" stroke-width="2" />
+                  <path d="M38 42h14M52 42V16h26M52 42h26M52 42v26h26" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" />
+                  <rect x="86" y="6" width="52" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="2" stroke-opacity=".3" stroke-dasharray="5 5" />
+                  <rect x="86" y="32" width="52" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="2" stroke-opacity=".3" stroke-dasharray="5 5" />
+                  <rect x="86" y="58" width="52" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="2" stroke-opacity=".3" stroke-dasharray="5 5" />
+                </svg>
+              </div>
+              <ul class="bullet-list">
+                <li class="no">한 번에 부탁하면 셋 다 어정쩡하게 나온다</li>
+              </ul>
+            </div>
+            <div class="col-card col-card--orange anim-item">
+              <div class="col-card__title-row">
+                <span class="col-card__emoji">🧵</span>
+                <div class="col-card__title">긴 공정을 한 번에</div>
+              </div>
+              <div class="fail-shape" aria-hidden="true">
+                <!-- 사슬이 갈수록 흐려진다 -->
+                <svg viewBox="0 0 160 84" fill="none" style="color: var(--orange)">
+                  <circle cx="20" cy="42" r="13" fill="currentColor" fill-opacity=".22" stroke="currentColor" stroke-width="2" />
+                  <path d="M35 42h16" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" />
+                  <circle cx="66" cy="42" r="13" fill="currentColor" fill-opacity=".12" stroke="currentColor" stroke-width="2" stroke-opacity=".62" />
+                  <path d="M81 42h16" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" stroke-opacity=".6" />
+                  <circle cx="112" cy="42" r="13" fill="none" stroke="currentColor" stroke-width="2" stroke-opacity=".34" stroke-dasharray="5 5" />
+                  <path d="M127 42h14" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" stroke-opacity=".22" />
+                  <circle cx="150" cy="42" r="6" fill="none" stroke="currentColor" stroke-width="2" stroke-opacity=".18" />
+                </svg>
+              </div>
+              <ul class="bullet-list">
+                <li class="no">뒤로 갈수록 앞의 조건을 잊는다</li>
+              </ul>
+            </div>
+            <div class="col-card col-card--orange anim-item">
+              <div class="col-card__title-row">
+                <span class="col-card__emoji">🪞</span>
+                <div class="col-card__title">자기가 만든 걸 검증</div>
+              </div>
+              <div class="fail-shape" aria-hidden="true">
+                <!-- 자기 자신으로 되돌아오는 화살표 -->
+                <svg viewBox="0 0 160 84" fill="none" style="color: var(--orange)">
+                  <circle cx="80" cy="46" r="17" fill="currentColor" fill-opacity=".2" stroke="currentColor" stroke-width="2" />
+                  <path d="M63 22a26 26 0 0 1 34 0" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" />
+                  <path d="M97 22l1-8-7 4z" fill="currentColor" />
+                  <path d="M63 22a26 26 0 0 0-8 24" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" />
+                  <path d="M55 46l4 7-8 1z" fill="currentColor" />
+                </svg>
+              </div>
+              <ul class="bullet-list">
+                <li class="no">다시 확인해 달라고 하면 문제없다고 답한다</li>
+              </ul>
+            </div>
+          </div>
+          <div class="tip tip--orange anim-item">
+            세 가지 모두 에이전트가 부족해서가 아니다
+          </div>
+        </main>
+        <footer class="slide__footer">
+          <img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스" />
+        </footer>
+      </article>
+
+      <!-- ═══ 3 / 4 — 왜 안 되는가 ═══  타입: TREE (fan, 자식 3)
+       발표 노트: 왜 안 되는지 원인을 보겠습니다. 첫째, 한 번에 하나만 처리합니다.
+       순서대로 기다려야 하니 시간이 곱절로 듭니다. 둘째, 대화가 길어지면 앞의 조건이
+       흐려집니다. 처음에 준 기준이 뒤로 갈수록 반영되지 않습니다. 셋째, 만든 사람이
+       검사하면 문제를 놓칩니다. 자기 결과물을 후하게 평가하는 성향이 있습니다.
+       세 가지 모두 능력이 아니라 구조에서 오는 문제입니다. 그래서 더 좋은 에이전트를
+       쓴다고 풀리지 않습니다.
+       ※ 이 장은 트리여야 한다. 뿌리 '구조'에서 셋이 갈라지는 그림이 곧 주장이다.
+  ═══════════════════════════════════════════════════════════ -->
+      <article class="slide" data-index="2">
+        <header class="slide__header">
+          <span class="slide__label">Section 3 · Why</span>
+          <h1 class="slide__title"><span class="hl-orange">왜</span> 안 되는가</h1>
+          <p class="slide__sub">세 가지 모두 하나의 뿌리에서 나온다</p>
+        </header>
+        <main class="slide__body">
+          <div class="fan fan--3">
+            <div class="fan-card fan-root anim-item">
+              <span class="fan-card__emoji">🧱</span>
+              <div class="fan-card__title">구조</div>
+              <div class="fan-card__body">능력의 문제가 아니다</div>
+            </div>
+            <div class="fan-stem anim-item"></div>
+            <div class="fan-bar-wrap anim-item">
+              <div class="fan-bar"><span class="fan-bar__mid"></span></div>
+            </div>
+            <div class="fan-kids fan-kids--3">
+              <div class="fan-card fan-card--orange anim-item">
+                <span class="fan-card__emoji">⏳</span>
+                <div class="fan-card__title">한 번에 하나만 처리한다</div>
+                <div class="fan-card__body">순서대로 기다려야 하니 시간이 곱절로 든다</div>
+              </div>
+              <div class="fan-card fan-card--orange anim-item">
+                <span class="fan-card__emoji">🌫️</span>
+                <div class="fan-card__title">앞의 조건이 흐려진다</div>
+                <div class="fan-card__body">처음에 준 기준이 뒤로 갈수록 반영되지 않는다</div>
+              </div>
+              <div class="fan-card fan-card--orange anim-item">
+                <span class="fan-card__emoji">🪞</span>
+                <div class="fan-card__title">만든 사람이 검사한다</div>
+                <div class="fan-card__body">자기 결과물을 후하게 평가하는 성향이 있다</div>
+              </div>
+            </div>
+          </div>
+          <div class="tip tip--orange anim-item">
+            원인이 구조에 있으니 더 좋은 에이전트를 쓴다고 풀리지 않는다
+          </div>
+        </main>
+        <footer class="slide__footer">
+          <img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스" />
+        </footer>
+      </article>
+
+      <!-- ═══ 4 / 4 — 그래서 나눈다 ═══  타입: vs-grid + LIST 조합
+       발표 노트: 그래서 나눕니다. 원인 하나하나에 나누는 방법이 하나씩 붙습니다.
+       한 번에 하나만 처리한다는 문제는 작업을 쪼개면 동시에 돌릴 수 있습니다. 대화가
+       길어지면 조건이 흐려진다는 문제는 역할을 나누면 각자 자기 조건만 지키면 되니까
+       풀립니다. 만든 사람이 검사하면 놓친다는 문제는 만드는 쪽과 검증하는 쪽을
+       분리하면 됩니다. 이게 이 강의 전체의 뼈대입니다.
+
+       (슬라이드 없이 말로 마무리) 그런데 나누기만 하면 끝일까요. 쪼갠 일을 각자에게
+       넘기고 결과를 받아 다음으로 옮기는 일이 남습니다. 그걸 사람이 손으로 하면 아까
+       본 두 번째 단계, 멀티 에이전트로 돌아갑니다. 창은 여러 개인데 자료 나르는 사람은
+       나 하나인 그 상태 말입니다. 그래서 나누고 넘기고 모으는 일까지 대신해 주는
+       도구가 필요합니다. 그게 Orca입니다.
+       ※ 양쪽 LIST의 같은 번호가 짝을 잇는다. 화살표를 손으로 그리지 않는다.
+  ═══════════════════════════════════════════════════════════ -->
+      <article class="slide" data-index="3">
+        <header class="slide__header">
+          <span class="slide__label">Section 4 · The Answer</span>
+          <h1 class="slide__title">그래서 <span class="hl">나눈다</span></h1>
+          <p class="slide__sub">원인 하나에 나누는 방법 하나가 붙는다</p>
+        </header>
+        <main class="slide__body">
+          <div class="vs-grid">
+            <div class="vs-col vs-col--blocked anim-item">
+              <span class="vs-badge vs-badge--blocked">원인</span>
+              <div class="vs-headline"><span>🧱</span>구조</div>
+              <div class="list">
+                <div class="list-item num">
+                  <div class="list-num">1</div>
+                  <div class="list-body">
+                    <div class="list-title">한 번에 하나만 처리한다</div>
+                  </div>
+                </div>
+                <div class="list-item num">
+                  <div class="list-num">2</div>
+                  <div class="list-body">
+                    <div class="list-title">앞의 조건이 흐려진다</div>
+                  </div>
+                </div>
+                <div class="list-item num">
+                  <div class="list-num">3</div>
+                  <div class="list-body">
+                    <div class="list-title">만든 사람이 검사한다</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="vs-col vs-col--pass anim-item">
+              <span class="vs-badge vs-badge--pass">나누면</span>
+              <div class="vs-headline"><span>✂️</span>분리</div>
+              <div class="list">
+                <div class="list-item num">
+                  <div class="list-num">1</div>
+                  <div class="list-body">
+                    <div class="list-title">작업을 쪼개면 동시에 돌릴 수 있다</div>
+                  </div>
+                </div>
+                <div class="list-item num">
+                  <div class="list-num">2</div>
+                  <div class="list-body">
+                    <div class="list-title">역할을 나누면 각자 자기 조건만 지키면 된다</div>
+                  </div>
+                </div>
+                <div class="list-item num">
+                  <div class="list-num">3</div>
+                  <div class="list-body">
+                    <div class="list-title">만드는 쪽과 검증하는 쪽을 분리할 수 있다</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="spine-stmt anim-item">
+            이것이 이 강의 전체의 <span class="kw-brand">뼈대</span>다
+          </p>
+        </main>
+        <footer class="slide__footer">
+          <img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스" />
+        </footer>
+      </article>
+
+    </div>
+    <!-- /.slide-deck -->
+
+    <script>
+      /* 조작 규칙 (성공 기준):
+         페이지 이동은 좌우 nav-btn · 하단 dot · 키보드(←/→/스페이스)로만.
+         #deck/body/.slide에 이동용 click 리스너를 절대 달지 않는다 —
+         강의 중 화면을 가리키며 클릭해도 슬라이드가 넘어가면 안 된다. */
+      class SlidePresentation {
+        constructor() {
+          this.slides = Array.from(document.querySelectorAll(".slide"));
+          this.total = this.slides.length;
+          const requested = Number.parseInt(
+            new URLSearchParams(window.location.search).get("slide"),
+            10,
+          );
+          this.current =
+            Number.isInteger(requested) && requested >= 1 && requested <= this.total
+              ? requested - 1
+              : 0;
+          this.isAnimating = false;
+          this._init();
+        }
+        _init() {
+          this.slides.forEach((slide, i) =>
+            slide.classList.toggle("active", i === this.current),
+          );
+          document.getElementById("tot").textContent = this.total;
+          this._buildDots();
+          this._bindKeys();
+          this._bindButtons();
+          this._update();
+          this._runSlide(this.current);
+        }
+        /* 슬라이드 진입 시 .anim-item 을 순차 등장시킨다.
+           스토리보드의 "애니메이션 순서" = DOM 순서 */
+        _runSlide(i) {
+          const items = this.slides[i].querySelectorAll(".anim-item");
+          items.forEach((el) => {
+            el.classList.remove("do-fadeinup");
+            void el.offsetWidth; /* reflow — 재진입 시 재생 */
+          });
+          items.forEach((el, n) => {
+            setTimeout(() => el.classList.add("do-fadeinup"), 150 + n * 260);
+          });
+        }
+        next() {
+          if (!this.isAnimating) this._go(this.current + 1);
+        }
+        prev() {
+          if (!this.isAnimating) this._go(this.current - 1);
+        }
+        _go(i) {
+          if (
+            i < 0 ||
+            i >= this.total ||
+            i === this.current ||
+            this.isAnimating
+          )
+            return;
+          this.isAnimating = true;
+          this.slides[this.current].classList.remove("active");
+          this.slides[i].classList.add("active");
+          this.current = i;
+          const url = new URL(window.location.href);
+          url.searchParams.set("slide", this.current + 1);
+          window.history.replaceState({}, "", url);
+          this._runSlide(i);
+          setTimeout(() => {
+            this.isAnimating = false;
+            this._update();
+          }, 420);
+          this._update();
+        }
+        _update() {
+          const pct = ((this.current + 1) / this.total) * 100;
+          document.getElementById("progress").style.width = pct + "%";
+          document.getElementById("cur").textContent = this.current + 1;
+          document.getElementById("btn-prev").disabled = this.current === 0;
+          document.getElementById("btn-next").disabled =
+            this.current === this.total - 1;
+          document
+            .querySelectorAll(".dot")
+            .forEach((d, i) =>
+              d.classList.toggle("active", i === this.current),
+            );
+        }
+        _buildDots() {
+          const nav = document.getElementById("dot-nav");
+          this.slides.forEach((_, i) => {
+            const b = document.createElement("button");
+            b.className = "dot" + (i === 0 ? " active" : "");
+            b.setAttribute("aria-label", `슬라이드 ${i + 1}`);
+            b.addEventListener("click", () => this._go(i));
+            nav.appendChild(b);
+          });
+        }
+        _bindButtons() {
+          document
+            .getElementById("btn-prev")
+            .addEventListener("click", () => this.prev());
+          document
+            .getElementById("btn-next")
+            .addEventListener("click", () => this.next());
+        }
+        _bindKeys() {
+          document.addEventListener("keydown", (e) => {
+            if (this.isAnimating) return;
+            if (e.key === "ArrowRight" || e.key === " ") {
+              e.preventDefault();
+              this.next();
+            }
+            if (e.key === "ArrowLeft") {
+              e.preventDefault();
+              this.prev();
+            }
+          });
+        }
+      }
+      new SlidePresentation();
+    </script>
+  </body>
+</html>

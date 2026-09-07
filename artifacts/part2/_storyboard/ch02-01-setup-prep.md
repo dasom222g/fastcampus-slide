@@ -1,10 +1,9 @@
 # Orca 설치 전 준비물 스토리보드
 
-**소스:** 채팅으로 받은 3장 구성 초안 + `edu-slide/source/ORCA_ORCHESTRATION_NOTES.md` 「1. Orca — Agent Development Environment」
-**참고 덱:** `edu-slide/output/hermes-bot.html`
-**출력 슬라이드:** `edu-slide/output/orca-install-prep.html`
+**소스:** 채팅으로 받은 3장 구성 초안 + `artifacts/part2/_source/ch02-01-setup-prep.md` 「1. Orca — Agent Development Environment」
+**출력 슬라이드:** `artifacts/part2/ch02-01-setup-prep.html` (공개 주소 `/part2/ch02-01-setup-prep`)
 **총 슬라이드:** 3장 (표지 1장 + 본문 2장)
-**디자인 기준:** edu-slide 스킬 `assets/base-template.html` (다크 · 컬러 팔레트)
+**디자인 기준:** fastcampus-slide 스킬 `assets/base-template.html` (다크 · 패스트캠퍼스 레드)
 
 ---
 
@@ -43,8 +42,8 @@
 
 | 대상 | 색 |
 |---|---|
-| Orca · 덱 기본 축 | teal |
-| Claude Code 카드 | teal (로고 고유 주황은 유지) |
+| Orca · 덱 기본 축 | brand |
+| Claude Code 카드 | brand (로고 고유 주황은 유지) |
 | Codex 카드 | blue-violet |
 | 로그인 완료 상태 | green |
 | 보조 라벨·설명 | gray |
@@ -74,8 +73,8 @@
 | slide__label | Orca Setup · 설치 전 준비 |
 | slide__title | Orca 설치 전 **준비물** |
 | slide__sub | Orca를 설치하기 전에 연결할 CLI부터 준비한다 |
-| 대형 로고 (teal) | `../images/orca-logo.svg` / Orca 로고 |
-| 선언문 (teal) | `Orca보다 먼저` / `AI CLI부터 준비` |
+| 대형 로고 (brand) | `/assets/orca-logo.svg` / Orca 로고 |
+| 선언문 (brand) | `Orca보다 먼저` / `AI CLI부터 준비` |
 | 축 라벨 (gray) | `CLAUDE CODE · CODEX` |
 
 > `hermes-bot.html`의 큰 표지 프레임과 본문 높이를 참고하되, 별도 생성 이미지 없이 Orca 로고와 선언문을 화면 중앙에 가까이 붙인다.
@@ -104,8 +103,8 @@
 | slide__label | Prerequisites · 준비물 |
 | slide__title | 준비물 **두 가지** |
 | slide__sub | 이번 실습에서는 Claude Code와 Codex를 Orca에 연결한다 |
-| 카드 1 (teal) | 딱지 `CLI 01` / 대형 `../images/claude-code-logo.png` / 제목 `Claude Code` |
-| 카드 2 (blue-violet) | 딱지 `CLI 02` / 대형 `../images/codex-logo.svg` / 제목 `Codex` |
+| 카드 1 (brand) | 딱지 `CLI 01` / 대형 `/assets/claude-code-logo.png` / 제목 `Claude Code` |
+| 카드 2 (blue-violet) | 딱지 `CLI 02` / 대형 `/assets/codex-logo.svg` / 제목 `Codex` |
 
 **애니메이션 순서**
 
@@ -130,8 +129,8 @@
 | slide__label | Account Login · 로그인 |
 | slide__title | 로그인까지 **완료** |
 | slide__sub | 각 CLI에 로그인된 상태여야 Orca에서 연결할 수 있다 |
-| 상태 카드 1 (teal + green) | 대형 `../images/claude-code-logo.png` / 제목 `Claude Code` / 상태 딱지 `LOGIN COMPLETE` |
-| 상태 카드 2 (blue-violet + green) | 대형 `../images/codex-logo.svg` / 제목 `Codex` / 상태 딱지 `LOGIN COMPLETE` |
+| 상태 카드 1 (brand + green) | 대형 `/assets/claude-code-logo.png` / 제목 `Claude Code` / 상태 딱지 `LOGIN COMPLETE` |
+| 상태 카드 2 (blue-violet + green) | 대형 `/assets/codex-logo.svg` / 제목 `Codex` / 상태 딱지 `LOGIN COMPLETE` |
 | 대형 결론 (green) | `각 CLI 로그인 완료` / `Orca 연결 준비 완료` |
 
 **애니메이션 순서**

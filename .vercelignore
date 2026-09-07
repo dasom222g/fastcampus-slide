@@ -1,0 +1,6 @@
+# 배포에 올리지 않는 것 — 슬라이드가 런타임에 쓰지 않는 작업 문서
+docs
+.claude
+artifacts/*/_storyboard
+artifacts/*/_feedback
+artifacts/*/_source
