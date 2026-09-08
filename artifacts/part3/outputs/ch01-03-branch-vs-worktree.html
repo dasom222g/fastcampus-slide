@@ -1,0 +1,717 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>브랜치와 워크트리 차이</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css"><style>
+      :root {
+        --bg: #0d1117;
+        --bg-card: #161b22;
+        --text: #e6edf3;
+        --text-dim: #8b949e;
+        --text-muted: #59636e;
+        --brand: #fc1c49;
+        --purple: #9188ff;
+        --orange: #ff6d3b;
+        --yellow: #f0b429;
+        --green: #4ade80;
+        --gray: #8b949e;
+        --border: rgba(255, 255, 255, 0.08);
+        --dot: rgba(255, 255, 255, 0.055);
+        --title: clamp(2rem, 5.2vw, 3.8rem);
+        --statement: clamp(2rem, 3.8vw, 3.7rem);
+        --heading: clamp(1.5rem, 2.2vw, 2.25rem);
+        --body: clamp(1.1rem, 1.6vw, 1.42rem);
+        --gap: clamp(1.5rem, 3vw, 3rem);
+        --content-width: 86rem;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        font-family:
+          Pretendard,
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        font-size: clamp(13px, 1.35vw, 16px);
+        background: var(--bg);
+        color: var(--text);
+        word-break: keep-all;
+      }
+      body {
+        overflow: hidden;
+      }
+      button {
+        font: inherit;
+      }
+      .slide-deck {
+        position: fixed;
+        inset: 0;
+      }
+      .slide {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr) auto;
+        gap: clamp(1.5rem, 3.75vh, 3rem);
+        padding: clamp(2.6rem, 5.5vh, 4.2rem) clamp(4rem, 7.5vw, 7rem);
+        background:
+          radial-gradient(circle, var(--dot) 1px, transparent 1px) 0 0/26px 26px,
+          var(--bg);
+        overflow: hidden;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.36s ease;
+      }
+      .slide.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .slide__header {
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+        padding-bottom: clamp(0.9rem, 2.2vh, 1.6rem);
+        border-bottom: 1px solid var(--border);
+      }
+      .slide__label {
+        font-size: clamp(0.58rem, 0.85vw, 0.72rem);
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--brand);
+      }
+      .slide__title {
+        font-size: var(--title);
+        font-weight: 800;
+        line-height: 1.08;
+        letter-spacing: -0.015em;
+      }
+      .slide__sub {
+        font-size: clamp(1.05rem, 1.6vw, 1.28rem);
+        line-height: 1.5;
+        color: var(--text-dim);
+      }
+      .slide__body {
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: var(--gap);
+        overflow: hidden;
+        container-type: size;
+      }
+      .slide__footer {
+        border-top: 1px solid var(--border);
+        padding-top: clamp(0.5rem, 1.3vh, 0.9rem);
+      }
+      .fastcampus-logo {
+        display: block;
+        width: clamp(7.2rem, 9vw, 8.5rem);
+        height: auto;
+      }
+      .hl,
+      .tone-brand {
+        color: var(--brand);
+      }
+      .tone-purple {
+        color: var(--purple);
+      }
+      .tone-gray {
+        color: var(--gray);
+      }
+      .tone-yellow {
+        color: var(--yellow);
+      }
+      .tone-orange {
+        color: var(--orange);
+      }
+      .tone-green {
+        color: var(--green);
+      }
+      /* Shared roles: cover and split layouts inherit exactly the same type. */
+      .statement {
+        font-family: inherit;
+        font-size: var(--statement);
+        font-weight: 850;
+        line-height: 1.35;
+        letter-spacing: -0.035em;
+      }
+      .statement strong {
+        display: block;
+        color: var(--brand);
+        font-weight: 900;
+      }
+      .heading {
+        font-size: var(--heading);
+        font-weight: 800;
+        line-height: 1.35;
+        letter-spacing: -0.025em;
+      }
+      .copy {
+        font-size: var(--body);
+        line-height: 1.6;
+        color: var(--text-dim);
+      }
+      .eyebrow {
+        font-size: clamp(1rem, 1.5vw, 1.3rem);
+        line-height: 1.5;
+        color: var(--text-dim);
+      }
+      .diagram {
+        display: block;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+        color: var(--gray);
+      }
+      .symbols {
+        position: absolute;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+        pointer-events: none;
+      }
+      .content {
+        width: min(100%, var(--content-width));
+        margin-inline: auto;
+      }
+      /* Image slots are borderless. Replace the SVG slot with the clip's image. */
+      .scene {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.65fr);
+        gap: var(--gap);
+        align-items: center;
+        width: min(100%, 92rem);
+      }
+      .scene--visual-first {
+        grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+      }
+      .scene__copy {
+        display: flex;
+        flex-direction: column;
+        gap: clamp(1.3rem, 3vh, 2.5rem);
+      }
+      .scene__visual {
+        width: 100%;
+        height: min(52cqh, 28rem);
+        min-height: 15rem;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+      }
+      .scene--cover .scene__visual,
+      .scene--image .scene__visual {
+        height: min(78cqh, 34rem);
+      }
+      .scene__visual > img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border: 0;
+        box-shadow: none;
+      }
+      .scene__visual > .diagram {
+        min-height: 0;
+        flex: 1;
+      }
+      .scene__visual figcaption {
+        font-size: var(--body);
+        color: var(--text-dim);
+        text-align: center;
+      }
+      /* Open parallel concepts: diagram, heading, caption; no card shells. */
+      .triptych {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--gap);
+        align-items: start;
+      }
+      .concept {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: clamp(1rem, 2.6vh, 2rem);
+        min-width: 0;
+      }
+      .concept > .diagram {
+        height: clamp(11rem, 25vh, 19rem);
+      }
+      .concept .copy {
+        max-width: 17em;
+      }
+      /* Optional transition copy, never wrapped in a banner or bordered box. */
+      .handoff {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1.25rem;
+        color: var(--text-dim);
+        font-size: var(--body);
+        line-height: 1.5;
+      }
+      .handoff strong {
+        color: var(--text);
+        font-weight: 800;
+      }
+      .progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        z-index: 200;
+        background: var(--border);
+      }
+      .progress-fill {
+        height: 100%;
+        background: var(--brand);
+        transition: width 0.3s ease;
+      }
+      .nav-btn {
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 150;
+        width: clamp(1.9rem, 2.8vw, 2.5rem);
+        height: clamp(1.9rem, 2.8vw, 2.5rem);
+        display: grid;
+        place-items: center;
+        border: 1px solid var(--border);
+        border-radius: 3px;
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--text-dim);
+        cursor: pointer;
+      }
+      .nav-btn:hover:not(:disabled) {
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .nav-btn:disabled {
+        opacity: 0.1;
+        cursor: default;
+      }
+      #btn-prev {
+        left: clamp(0.4rem, 1.2vw, 1.1rem);
+      }
+      #btn-next {
+        right: clamp(0.4rem, 1.2vw, 1.1rem);
+      }
+      .dot-nav {
+        position: fixed;
+        bottom: 1.3rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        z-index: 150;
+      }
+      .dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.18);
+        border: 0;
+        cursor: pointer;
+        transition: all 0.22s ease;
+      }
+      .dot.active {
+        width: 22px;
+        border-radius: 3px;
+        background: var(--brand);
+      }
+      .slide-counter {
+        position: fixed;
+        bottom: 1.2rem;
+        right: 1.8rem;
+        font:
+          0.62rem Monaco,
+          monospace;
+        color: var(--text-muted);
+        z-index: 150;
+      }
+      @keyframes s-fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .anim-item {
+        opacity: 0;
+      }
+      .anim-item.do-fadeinup {
+        animation: s-fadeInUp 0.48s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .slide,
+        .progress-fill {
+          transition: none;
+        }
+        .anim-item.do-fadeinup {
+          animation-duration: 0.001s;
+        }
+      }
+
+      .status-one-line {
+        white-space: nowrap;
+        max-width: none;
+      }
+
+
+/* Existing approved workspace scene. */
+
+.git-heading{font-family:Pretendard,sans-serif;font-size:clamp(1.5rem,2.2vw,2.25rem);font-weight:800;line-height:1.35;letter-spacing:-.025em}
+.git-copy{font-size:clamp(1.1rem,1.6vw,1.42rem);line-height:1.6;color:var(--text-dim)}
+.git-workspaces{width:min(100%,72rem);align-self:center;display:flex;flex-direction:column;align-items:center}
+.git-workspaces__root{display:flex;align-items:center;justify-content:center;gap:1rem;color:var(--gray)}
+.git-workspaces__root>.diagram{width:6rem;height:5rem}
+.git-workspaces__stem{height:2rem;border-left:2px solid var(--gray)}
+.git-workspaces__children{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));position:relative;width:100%}
+.git-workspaces__children::before{content:"";position:absolute;left:16.6667%;right:16.6667%;top:0;border-top:2px solid var(--gray)}
+.git-workspace{position:relative;display:flex;flex-direction:column;align-items:center;gap:1rem;padding:2rem 1rem 0;text-align:center;min-width:0;color:var(--accent)}
+.git-workspace::before{content:"";position:absolute;top:0;left:50%;height:1.4rem;border-left:2px solid var(--gray)}
+.git-workspace>.diagram{height:clamp(8rem,17vh,12rem);width:100%}
+.git-workspace .git-heading{white-space:nowrap}
+.git-workspaces>.git-copy{margin-top:2rem;text-align:center}
+
+/* Clip diagrams: history, actual folders, and their relationship. */
+.bw-wide{width:min(100%,86rem);display:flex;flex-direction:column;align-items:center;gap:clamp(1.4rem,3vh,2.4rem)}
+.bw-center{text-align:center}
+.bw-scene-note{max-width:22em}
+.bw-cover-art{color:var(--gray)}
+.bw-history{width:min(100%,78rem);gap:1.4rem}
+.bw-legend{align-self:flex-end;display:flex;align-items:center;gap:.7rem}
+.bw-commit-dot{width:.8rem;height:.8rem;border:2px solid var(--gray);border-radius:50%;display:inline-block}
+.bw-chart{width:100%;aspect-ratio:1000/320;position:relative}
+.bw-chart-layer{position:absolute;inset:0}
+.bw-chart-label{position:absolute;font-size:var(--heading);font-weight:800;line-height:1.35;background:var(--bg)}
+.bw-chart-label--main{left:4.5%;top:0;color:var(--gray)}
+.bw-chart-label--task{left:37%;bottom:1%;color:var(--purple)}
+.bw-chart-mark{position:absolute;font-size:var(--body);line-height:1.5;padding:.15rem .4rem;background:var(--bg)}
+.bw-chart-mark--split{left:23%;top:39%;color:var(--gray)}
+.bw-chart-mark--merge{left:83%;top:33%;color:var(--green)}
+@keyframes bw-appear{from{opacity:0}to{opacity:1}}
+.bw-chart-layer.do-fadeinup{animation-name:bw-appear}
+.bw-map{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(1.5rem,4vw,4rem);width:100%;align-items:start}
+.bw-map-node{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.4rem;min-width:0}
+.bw-map-node .heading{white-space:nowrap;color:var(--folder-color)}
+.bw-folder{position:relative;width:min(100%,21rem);aspect-ratio:260/180;color:var(--folder-color,var(--gray))}
+.bw-folder>.diagram{color:inherit}
+.bw-folder-branch{position:absolute;left:10%;right:10%;top:39%;display:flex;gap:.55rem;justify-content:center;align-items:center;color:inherit;font-size:clamp(1rem,1.45vw,1.3rem);font-weight:650;line-height:1.4}
+.bw-folder-branch>.diagram{height:1.2em;width:1.2em;color:inherit}
+.bw-shared{display:flex;flex-direction:column;align-items:center;width:100%;margin-top:-.6rem;gap:.7rem;color:var(--gray)}
+.bw-map-lines{width:100%;height:clamp(2.8rem,7vh,4.6rem)}
+.bw-shared-label{display:flex;align-items:center;justify-content:center;gap:1rem}
+.bw-shared-label>.diagram{width:3.5rem;height:3.5rem;color:var(--gray)}
+.bw-shared-label .heading{font-size:var(--body);font-weight:700;color:var(--gray)}
+.bw-mapping-note{margin-top:.3rem}
+.bw-compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;gap:clamp(2.5rem,5vw,5rem)}
+.bw-compare-side{display:grid;grid-template-rows:auto auto clamp(11rem,25vh,18rem) auto;gap:1.25rem;justify-items:center;align-items:center;text-align:center;min-width:0}
+.bw-compare-side .diagram{height:100%;width:100%;max-width:26rem}
+.bw-compare-side>.copy{white-space:nowrap}
+.bw-compare-folder{width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+.bw-compare-folder>.bw-folder{width:min(100%,22rem)}
+.bw-orca-art{display:grid;grid-template-columns:minmax(0,1fr) 4rem minmax(0,1.35fr);gap:1.1rem;align-items:center;width:100%}
+.bw-orca-logo{display:flex;flex-direction:column;align-items:center;gap:1.1rem}
+.bw-orca-logo img{width:clamp(6rem,11vw,10rem);height:clamp(4rem,9vw,7rem);object-fit:contain}
+.bw-orca-link{display:flex;flex-direction:column;gap:.6rem;align-items:center;color:var(--gray)}
+.bw-orca-link>.diagram{height:2rem;width:100%;color:var(--gray)}
+.bw-orca-folder{display:flex;flex-direction:column;gap:1rem;align-items:center;text-align:center}
+.bw-orca-folder>.bw-folder{width:100%;--folder-color:var(--gray)}
+.bw-orca-folder>.copy{white-space:nowrap}
+.git-workspace>.diagram{color:var(--accent)}
+.slide[data-motion="none"]{transition:none}.slide[data-motion="none"] .anim-item{opacity:1;animation:none;transform:none}
+@media(max-height:850px){.bw-wide{gap:1.4rem}.bw-history{gap:1rem}.bw-compare-side{gap:1rem}.bw-map-node{gap:1rem}.bw-shared{gap:.3rem}}
+
+/* One traveler: revisit a past age, then follow a new life branch. */
+.tm-journey{--tm-move-ease:cubic-bezier(0.77,0,0.175,1);width:min(100%,78rem,calc(76cqh * 1000 / 460));aspect-ratio:1000/460;position:relative;flex-shrink:0}
+.tm-journey>.tm-timeline{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.tm-age{position:absolute;transform:translateX(-50%);font-size:var(--heading);font-weight:800;line-height:1.35;color:var(--gray);white-space:nowrap;top:35.87%}
+.tm-age--10{left:18%}.tm-age--20{left:48%}.tm-age--30{left:78%}
+.tm-age--new{left:78%;top:84.565%;color:var(--purple)}
+.tm-life-label{position:absolute;top:32.6087%;left:87%;transform:translateY(-50%);font-size:var(--body);font-weight:650;line-height:1.5;color:var(--gray);white-space:nowrap}
+.tm-life-label--new{top:79.3478%;left:87%;color:var(--purple)}
+.tm-traveler{transform:translate(780px,365px);color:var(--brand)}
+.tm-machine-image{display:block;width:100%;height:100%;object-fit:contain;border:0;box-shadow:none}
+.tm-journey-note{text-align:center}
+.tm-life-branch{clip-path:inset(0)}
+.slide[data-visual="bw-time-machine"].active .tm-traveler{animation:tm-travel-life 8s linear both}
+.slide[data-visual="bw-time-machine"].active .tm-life-branch{animation:tm-reveal-life 2.56s linear 4.4s both}
+.slide[data-visual="bw-time-machine"].active .tm-new-label{animation:bw-appear .35s cubic-bezier(0.23,1,0.32,1) 6.4s both}
+@keyframes tm-reveal-life{from{clip-path:inset(0 52% 0 0)}to{clip-path:inset(0 14% 0 0)}}
+@keyframes tm-travel-life{0%,18%{transform:translate(780px,150px);animation-timing-function:var(--tm-move-ease)}42%,55%{transform:translate(480px,150px);animation-timing-function:linear}56.33333%{transform:translate(496.0189px,151.0887px)}57.66667%{transform:translate(510.4427px,154.2303px)}59.00000%{transform:translate(523.4473px,159.2383px)}60.33333%{transform:translate(535.2083px,165.9259px)}61.66667%{transform:translate(545.9017px,174.1066px)}63.00000%{transform:translate(555.7031px,183.5938px)}64.33333%{transform:translate(564.7884px,194.2007px)}65.66667%{transform:translate(573.3333px,205.7407px)}67.00000%{transform:translate(581.5137px,218.0273px)}68.33333%{transform:translate(589.5052px,230.8738px)}69.66667%{transform:translate(597.4837px,244.0936px)}71.00000%{transform:translate(605.6250px,257.5000px)}72.33333%{transform:translate(614.1048px,270.9064px)}73.66667%{transform:translate(623.0990px,284.1262px)}75.00000%{transform:translate(632.7832px,296.9727px)}76.33333%{transform:translate(643.3333px,309.2593px)}77.66667%{transform:translate(654.9251px,320.7993px)}79.00000%{transform:translate(667.7344px,331.4062px)}80.33333%{transform:translate(681.9368px,340.8934px)}81.66667%{transform:translate(697.7083px,349.0741px)}83.00000%{transform:translate(715.2246px,355.7617px)}84.33333%{transform:translate(734.6615px,360.7697px)}85.66667%{transform:translate(756.1947px,363.9113px)}87.00000%{transform:translate(780.0000px,365.0000px)}100%{transform:translate(780px,365px)}}
+@media(prefers-reduced-motion:reduce){.slide[data-visual="bw-time-machine"].active .tm-traveler,.slide[data-visual="bw-time-machine"].active .tm-life-branch,.slide[data-visual="bw-time-machine"].active .tm-new-label{animation:none}.tm-traveler{transform:translate(780px,365px)}.tm-life-branch{clip-path:inset(0)}.tm-new-label{opacity:1}}
+
+/* Alternative creation flow: small source above larger workspaces. */
+.slide[data-visual="bw-origin-alternative"]>.slide__body{display:grid;grid-template-rows:minmax(0,1fr) auto;gap:1rem;justify-content:normal;align-items:stretch;align-self:center;width:100%;height:100%;max-height:40rem}
+.bw-origin{--origin-main-size:11rem;position:relative;width:min(100%,60rem);justify-self:center;height:100%;min-height:0;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);row-gap:3.5rem;align-items:stretch;flex:1}
+.bw-origin-source{display:grid;grid-template-columns:minmax(0,1fr) var(--origin-main-size) minmax(0,1fr);align-items:center;gap:1.4rem}
+.bw-origin-source>.bw-folder{grid-column:2;width:var(--origin-main-size)}
+.bw-origin-source-caption{display:flex;flex-direction:column;gap:.3rem;align-items:flex-start}
+.bw-origin .heading{white-space:nowrap}
+.bw-origin-link{position:absolute;inset:0;pointer-events:none}
+.bw-origin-connections{display:block;width:100%;height:100%;overflow:visible}
+.bw-origin-connection--a{stroke:var(--brand)}
+.bw-origin-connection--b{stroke:var(--purple)}
+.bw-origin-link.do-fadeinup{animation-name:bw-appear}
+.bw-origin-targets{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch;min-height:0}
+.bw-origin-target{display:grid;grid-template-rows:minmax(0,1fr) auto;align-items:stretch;gap:.7rem;min-width:0;min-height:0}
+.bw-origin-workspace-art{min-width:0;min-height:0;display:flex;align-items:center;justify-content:center}
+.bw-origin-workspace-art>.bw-folder{width:min(21rem,calc((min(100cqw,86rem) - 2 * clamp(1.5rem,4vw,4rem)) / 3));flex-shrink:0}
+.bw-origin-caption{display:flex;flex-direction:column;align-items:center;gap:.25rem;min-width:0}
+.bw-origin-caption>.heading{color:var(--folder-color)}
+.bw-origin-caption>.copy{white-space:nowrap}
+.bw-origin-note{text-align:center}
+@media(max-height:850px){.slide[data-visual="bw-origin-alternative"]>.slide__body{gap:.5rem}.bw-origin{--origin-main-size:10rem;row-gap:3rem}.bw-origin-target{gap:.25rem}.bw-origin-caption{flex-direction:row;align-items:baseline;justify-content:center;gap:1rem}}
+
+/* Physical workspaces paired with the branch history used in each. */
+.bw-relation{width:min(100%,72rem);height:min(80cqh,36rem);display:grid;grid-template-rows:auto repeat(2,minmax(0,1fr));gap:1rem;flex-shrink:0}
+.bw-relation-head,.bw-relation-row{display:grid;grid-template-columns:minmax(0,1fr) clamp(7rem,12vw,11rem) minmax(0,1fr);align-items:center;min-height:0}
+.bw-relation-head>div{display:flex;flex-direction:column;gap:.3rem;text-align:center}
+.bw-relation-head>div:last-child{grid-column:3}
+.bw-relation-space{display:flex;align-items:center;justify-content:center;min-height:0}
+.bw-relation-space>.bw-folder{width:clamp(12rem,30cqh,16rem)}
+.bw-relation-space .bw-folder-branch{white-space:nowrap}
+.bw-relation-row.do-fadeinup{animation-name:bw-appear}
+.bw-relation-link{height:2.5rem;width:calc(100% + 8rem);margin-inline:-4rem;color:var(--gray)}
+.bw-relation-history{display:flex;flex-direction:column;align-items:center;gap:.5rem;min-height:0}
+.bw-relation-history>p{color:var(--relation-color);font-weight:650}
+.bw-relation-history>svg{width:min(100%,24rem);height:clamp(4rem,10cqh,6rem)}
+.bw-relation-note{width:min(100%,86rem);text-align:center}
+
+/* Alternative comparison: one branching history with a worktree at each endpoint. */
+.bw-bf{width:min(100%,78rem);height:min(82cqh,36rem);display:grid;grid-template-rows:auto minmax(0,1fr);gap:1.4rem;flex-shrink:0}
+.bw-bf-head,.bw-bf-map{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(0,1fr);column-gap:3rem;min-height:0}
+.bw-bf-head>div{display:flex;flex-direction:column;gap:.3rem;text-align:center}
+.bw-bf-map{position:relative}
+.bw-bf-lines{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.bw-bf-worktrees{grid-column:2;display:grid;grid-template-rows:repeat(2,minmax(0,1fr));gap:1.5rem;min-height:0}
+.bw-bf-space{display:flex;align-items:center;justify-content:center;min-height:0}
+.bw-bf-space>.bw-folder{width:clamp(12rem,30cqh,16rem);flex-shrink:0}
+.bw-bf-space .bw-folder-branch{white-space:nowrap}
+.bw-bf-label{position:absolute;transform:translate(-50%,-100%);font-weight:650;white-space:nowrap}
+.bw-bf-label--task{color:var(--purple)}
+</style></head><body><div class="progress-bar"><div class="progress-fill" id="progress"></div></div><button class="nav-btn" id="btn-prev" aria-label="이전 슬라이드">&#8592;</button><button class="nav-btn" id="btn-next" aria-label="다음 슬라이드">&#8594;</button><div class="dot-nav" id="dot-nav"></div><div class="slide-counter"><span id="cur">1</span> / <span id="tot">10</span></div><div class="slide-deck" id="deck"><article class="slide active" data-index="0" data-visual="bw-cover"><header class="slide__header"><span class="slide__label">Part 3 · Ch01-03 · 브랜치와 워크트리 차이</span><h1 class="slide__title">브랜치와 <span class="hl">워크트리 차이</span></h1><p class="slide__sub">이력의 줄기와 실제 작업 폴더를 구분합니다.</p></header><main class="slide__body"><div class="scene scene--cover"><div class="scene__copy anim-item"><p class="statement">작업의 줄기,<strong>작업하는 공간</strong></p></div><div class="scene__visual anim-item"><svg class="diagram bw-cover-art" viewBox="0 0 540 355" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M35 85H190" stroke="var(--gray)"/>
+<path d="M190 85H347" stroke="var(--brand)"/><path d="M190 85C249 85 225 260 289 260H347" stroke="var(--purple)"/>
+<circle cx="35" cy="85" r="8" fill="var(--bg)" stroke="var(--gray)"/><circle cx="113" cy="85" r="8" fill="var(--bg)" stroke="var(--gray)"/><circle cx="190" cy="85" r="8" fill="var(--bg)" stroke="var(--gray)"/><circle cx="292" cy="85" r="8" fill="var(--bg)" stroke="var(--brand)"/><circle cx="292" cy="260" r="8" fill="var(--bg)" stroke="var(--purple)"/>
+<g transform="translate(370 31) scale(.77)" stroke="var(--brand)"><path d="M0 24V0H61L82 24H185V126H0ZM0 42H185"/><path d="M61 59H94L112 77V110H61ZM94 59V77H112M72 88H100M72 99H93" stroke-width="2"/></g>
+<g transform="translate(370 210) scale(.77)" stroke="var(--purple)"><path d="M0 24V0H61L82 24H185V126H0ZM0 42H185"/><path d="M61 59H94L112 77V110H61ZM94 59V77H112M72 88H100M72 99H93" stroke-width="2"/></g></svg></div></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article><article class="slide" data-index="1" data-visual="bw-shared-file-problem"><header class="slide__header"><span class="slide__label">Part 3 · Ch01-03 · 브랜치와 워크트리 차이</span><h1 class="slide__title">한 폴더에서 <span class="hl">겹치는 작업</span></h1><p class="slide__sub">같은 파일을 동시에 수정하면, 서로의 작업을 덮어쓸 수 있습니다.</p></header><main class="slide__body"><div class="scene scene--image"><div class="scene__copy anim-item"><p class="statement">에이전트는 둘,<strong>작업 폴더는 하나</strong></p><p class="copy bw-scene-note">동시에 일하려면, 각자의 작업 공간이 필요합니다.</p></div><div class="scene__visual anim-item"><img src="/artifacts/part3/_images/shared-desk-transparent.png" alt="하나의 책상에서 같은 문서를 펼쳐 놓은 두 에이전트"></div></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article><article class="slide" data-index="2" data-visual="bw-branch"><header class="slide__header"><span class="slide__label">Part 3 · Ch01-03 · 브랜치와 워크트리 차이</span><h1 class="slide__title">따로 이어가는 <span class="hl">작업 이력</span></h1><p class="slide__sub">브랜치는 작업을 나누어 이어가는 이력의 줄기입니다.</p></header><main class="slide__body"><div class="bw-wide bw-history"><p class="copy bw-legend"><span class="bw-commit-dot" aria-hidden="true"></span>점 하나 = 커밋 하나</p><div class="bw-chart"><div class="bw-chart-layer anim-item"><svg class="diagram" viewBox="0 0 1000 320" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M60 75H560"/><circle cx="60" cy="75" r="8" fill="var(--bg)" stroke="var(--gray)"/><circle cx="220" cy="75" r="8" fill="var(--bg)" stroke="var(--gray)"/><circle cx="560" cy="75" r="8" fill="var(--bg)" stroke="var(--gray)"/></svg><p class="bw-chart-label bw-chart-label--main">기준 브랜치</p></div><div class="bw-chart-layer anim-item"><svg class="diagram" viewBox="0 0 1000 320" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M220 75C300 75 290 220 375 220H695" stroke="var(--purple)"/><circle cx="375" cy="220" r="8" fill="var(--bg)" stroke="var(--purple)"/><circle cx="535" cy="220" r="8" fill="var(--bg)" stroke="var(--purple)"/><circle cx="695" cy="220" r="8" fill="var(--bg)" stroke="var(--purple)"/></svg><p class="bw-chart-label bw-chart-label--task">작업 브랜치</p><p class="bw-chart-mark bw-chart-mark--split">분기</p></div><div class="bw-chart-layer anim-item"><svg class="diagram" viewBox="0 0 1000 320" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M560 75H880" stroke="var(--gray)"/><path d="M695 220C795 220 775 75 880 75" stroke="var(--green)" stroke-dasharray="8 7"/><circle cx="880" cy="75" r="8" fill="var(--bg)" stroke="var(--green)"/></svg><p class="bw-chart-mark bw-chart-mark--merge">병합</p></div></div><p class="copy bw-center anim-item">완성한 작업은 병합해 반영할 수 있습니다.</p></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article><article class="slide" data-index="3" data-visual="bw-time-machine"><header class="slide__header"><span class="slide__label">Part 3 · Ch01-03 · 브랜치와 워크트리 차이</span><h1 class="slide__title">한 번에 <span class="hl">한 시점만</span></h1><p class="slide__sub">타임머신으로 20살의 나에게 돌아가, 새로운 삶을 시작한다면</p></header><main class="slide__body"><div class="tm-journey"><svg class="tm-timeline" viewBox="0 0 1000 460" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M80 150H850" stroke="var(--gray)" stroke-width="3"/><g fill="var(--bg)" stroke="var(--gray)" stroke-width="3"><circle cx="180" cy="150" r="8"/><circle cx="480" cy="150" r="8"/><circle cx="780" cy="150" r="8"/></g></svg><svg class="tm-timeline tm-life-branch" viewBox="0 0 1000 460" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="var(--purple)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M480 150C615 150 580 365 780 365H850"/><circle cx="780" cy="365" r="8" fill="var(--bg)"/></svg><p class="tm-age tm-age--10">10살</p><p class="tm-age tm-age--20">20살</p><p class="tm-age tm-age--30">30살</p><p class="tm-life-label">원래의 삶</p><p class="tm-age tm-age--new tm-new-label">30살</p><p class="tm-life-label tm-life-label--new tm-new-label">새로운 삶</p><svg class="tm-timeline tm-vehicle-layer" viewBox="0 0 1000 460" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g class="tm-traveler" aria-label="타임머신 한 대"><path d="M0 -20V-13" stroke="var(--brand)" stroke-width="2.5"/><circle class="tm-current-point" r="13" stroke="var(--brand)" stroke-width="3" fill="var(--bg)"/><foreignObject x="-65" y="-148" width="130" height="130"><img xmlns="http://www.w3.org/1999/xhtml" class="tm-machine-image" src="/artifacts/part3/_images/ch01-03-branch-vs-worktree--time-machine.png" alt="탑승실과 시간 이동 장치가 있는 타임머신"/></foreignObject></g></svg></div><p class="copy tm-journey-note">한 폴더에서는 한 번에 하나의 시점만 엽니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article><article class="slide" data-index="4" data-visual="bw-mapping"><header class="slide__header"><span class="slide__label">Part 3 · Ch01-03 · 브랜치와 워크트리 차이</span><h1 class="slide__title">같은 저장소, <span class="hl">서로 다른 폴더</span></h1><p class="slide__sub">워크트리는 같은 Git 저장소에 연결된 실제 작업 폴더입니다.</p></header><main class="slide__body"><div class="bw-wide"><div class="bw-map"><section class="bw-map-node anim-item" style="--folder-color:var(--gray)"><div class="bw-folder" style="--folder-color:var(--gray)"><svg class="diagram" viewBox="0 0 260 180" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M10 42V15H94L118 42H250V168H10ZM10 60H250"/><g stroke="var(--gray)" stroke-width="2"><path d="M80 111H95L103 119V151H80ZM95 111V119H103M86 130H97M86 139H97"/><path d="M119 111H134L142 119V151H119ZM134 111V119H142M125 130H136M125 139H136"/><path d="M158 111H173L181 119V151H158ZM173 111V119H181M164 130H175M164 139H175"/></g></svg><span class="bw-folder-branch"><svg class="diagram" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="stroke-width:1.8"><circle cx="6" cy="4" r="2"/><circle cx="6" cy="20" r="2"/><circle cx="18" cy="4" r="2"/><path d="M6 6V18M18 6V9Q18 13 13 13H6"/></svg>main</span></div><h2 class="heading">원래 작업 폴더</h2></section><section class="bw-map-node anim-item" style="--folder-color:var(--brand)"><div class="bw-folder" style="--folder-color:var(--brand)"><svg class="diagram" viewBox="0 0 260 180" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M10 42V15H94L118 42H250V168H10ZM10 60H250"/><g stroke="var(--gray)" stroke-width="2"><path d="M80 111H95L103 119V151H80ZM95 111V119H103M86 130H97M86 139H97"/><path d="M119 111H134L142 119V151H119ZM134 111V119H142M125 130H136M125 139H136"/><path d="M158 111H173L181 119V151H158ZM173 111V119H181M164 130H175M164 139H175" stroke="var(--brand)"/></g></svg><span class="bw-folder-branch"><svg class="diagram" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="stroke-width:1.8"><circle cx="6" cy="4" r="2"/><circle cx="6" cy="20" r="2"/><circle cx="18" cy="4" r="2"/><path d="M6 6V18M18 6V9Q18 13 13 13H6"/></svg>작업 A</span></div><h2 class="heading">작업 폴더 A</h2></section><section class="bw-map-node anim-item" style="--folder-color:var(--purple)"><div class="bw-folder" style="--folder-color:var(--purple)"><svg class="diagram" viewBox="0 0 260 180" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M10 42V15H94L118 42H250V168H10ZM10 60H250"/><g stroke="var(--gray)" stroke-width="2"><path d="M80 111H95L103 119V151H80ZM95 111V119H103M86 130H97M86 139H97"/><path d="M119 111H134L142 119V151H119ZM134 111V119H142M125 130H136M125 139H136"/><path d="M158 111H173L181 119V151H158ZM173 111V119H181M164 130H175M164 139H175" stroke="var(--purple)"/></g></svg><span class="bw-folder-branch"><svg class="diagram" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="stroke-width:1.8"><circle cx="6" cy="4" r="2"/><circle cx="6" cy="20" r="2"/><circle cx="18" cy="4" r="2"/><path d="M6 6V18M18 6V9Q18 13 13 13H6"/></svg>작업 B</span></div><h2 class="heading">작업 폴더 B</h2></section></div><div class="bw-shared anim-item"><svg class="diagram bw-map-lines" viewBox="0 0 1000 80" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" preserveAspectRatio="none"><path d="M167 0V30H833V0M500 30V78" stroke="var(--gray)"/></svg><div class="bw-shared-label"><svg class="diagram" viewBox="0 0 130 70" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M15 35H115"/><circle cx="15" cy="35" r="6" fill="var(--bg)" stroke="var(--gray)"/><circle cx="65" cy="35" r="6" fill="var(--bg)" stroke="var(--gray)"/><circle cx="115" cy="35" r="6" fill="var(--bg)" stroke="var(--gray)"/></svg><h2 class="heading">공유하는 Git 저장소</h2></div></div><p class="copy bw-center bw-mapping-note anim-item">워크트리는 물리적으로 분리된 작업 폴더이므로, 각 폴더의 작업 파일은 서로 영향을 받지 않습니다.</p></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article><article class="slide" data-index="5" data-visual="bw-origin-alternative"><header class="slide__header"><span class="slide__label">Part 3 · Ch01-03 · 브랜치와 워크트리 차이</span><h1 class="slide__title"><span class="hl">워크트리</span>란</h1><p class="slide__sub">Git 저장소에 연결된 실제 작업 폴더입니다.</p></header><main class="slide__body"><div class="bw-origin"><section class="bw-origin-source anim-item"><div class="bw-folder" style="--folder-color:var(--gray)"><svg class="diagram" viewBox="0 0 260 180" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M10 42V15H94L118 42H250V168H10ZM10 60H250"/><g stroke="var(--gray)" stroke-width="2" transform="translate(0 8)"><path d="M80 111H95L103 119V151H80ZM95 111V119H103M86 130H97M86 139H97"/><path d="M119 111H134L142 119V151H119ZM134 111V119H142M125 130H136M125 139H136"/><path d="M158 111H173L181 119V151H158ZM173 111V119H181M164 130H175M164 139H175"/></g></svg><span class="bw-folder-branch"><svg class="diagram" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="stroke-width:1.8"><circle cx="6" cy="4" r="2"/><circle cx="6" cy="20" r="2"/><circle cx="18" cy="4" r="2"/><path d="M6 6V18M18 6V9Q18 13 13 13H6"/></svg>main</span></div><div class="bw-origin-source-caption"><p class="eyebrow">v1 시점</p></div></section><div class="bw-origin-link anim-item" aria-hidden="true"><svg class="bw-origin-connections" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="var(--gray)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" preserveAspectRatio="none"><path class="bw-origin-trunk"/><path class="bw-origin-connection--a"/><path class="bw-origin-connection--b"/></svg></div><div class="bw-origin-targets"><section class="bw-origin-target anim-item" style="--folder-color:var(--brand)"><div class="bw-origin-workspace-art"><div class="bw-folder" style="--folder-color:var(--brand)"><svg class="diagram" viewBox="0 0 260 180" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M10 42V15H94L118 42H250V168H10ZM10 60H250"/><g stroke="var(--gray)" stroke-width="2"><path d="M80 111H95L103 119V151H80ZM95 111V119H103M86 130H97M86 139H97"/><path d="M119 111H134L142 119V151H119ZM134 111V119H142M125 130H136M125 139H136"/><path d="M158 111H173L181 119V151H158ZM173 111V119H181M164 130H175M164 139H175" stroke="var(--brand)"/></g></svg><span class="bw-folder-branch"><svg class="diagram" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="stroke-width:1.8"><circle cx="6" cy="4" r="2"/><circle cx="6" cy="20" r="2"/><circle cx="18" cy="4" r="2"/><path d="M6 6V18M18 6V9Q18 13 13 13H6"/></svg>작업 A</span></div></div><div class="bw-origin-caption"><h2 class="heading">작업 폴더 A</h2></div></section><section class="bw-origin-target anim-item" style="--folder-color:var(--purple)"><div class="bw-origin-workspace-art"><div class="bw-folder" style="--folder-color:var(--purple)"><svg class="diagram" viewBox="0 0 260 180" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M10 42V15H94L118 42H250V168H10ZM10 60H250"/><g stroke="var(--gray)" stroke-width="2"><path d="M80 111H95L103 119V151H80ZM95 111V119H103M86 130H97M86 139H97"/><path d="M119 111H134L142 119V151H119ZM134 111V119H142M125 130H136M125 139H136"/><path d="M158 111H173L181 119V151H158ZM173 111V119H181M164 130H175M164 139H175" stroke="var(--purple)"/></g></svg><span class="bw-folder-branch"><svg class="diagram" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="stroke-width:1.8"><circle cx="6" cy="4" r="2"/><circle cx="6" cy="20" r="2"/><circle cx="18" cy="4" r="2"/><path d="M6 6V18M18 6V9Q18 13 13 13H6"/></svg>작업 B</span></div></div><div class="bw-origin-caption"><h2 class="heading">작업 폴더 B</h2></div></section></div></div><p class="copy bw-origin-note anim-item">각 워크트리의 작업 파일은 서로 영향을 받지 않습니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article><article class="slide" data-index="6" data-visual="bw-worktree-branch-relation"><header class="slide__header"><span class="slide__label">Part 3 · Ch01-03 · 브랜치와 워크트리 차이</span><h1 class="slide__title">브랜치와 워크트리의 <span class="hl">관계</span></h1><p class="slide__sub">서로 다른 브랜치를 각자의 워크트리에서 열어두고 동시에 작업합니다.</p></header><main class="slide__body"><div class="bw-relation"><div class="bw-relation-head anim-item"><div><h2 class="heading">워크트리</h2><p class="eyebrow">실제 작업 공간</p></div><div><h2 class="heading">브랜치</h2><p class="eyebrow">작업 이력</p></div></div><div class="bw-relation-row anim-item" style="--relation-color:var(--brand)"><div class="bw-relation-space"><div class="bw-folder" style="--folder-color:var(--brand)"><svg class="diagram" viewBox="0 0 260 180" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M10 42V15H94L118 42H250V168H10ZM10 60H250"/><g stroke="var(--gray)" stroke-width="2"><path d="M80 111H95L103 119V151H80ZM95 111V119H103M86 130H97M86 139H97"/><path d="M119 111H134L142 119V151H119ZM134 111V119H142M125 130H136M125 139H136"/><path d="M158 111H173L181 119V151H158ZM173 111V119H181M164 130H175M164 139H175" stroke="var(--brand)"/></g></svg><span class="bw-folder-branch">작업 폴더 A</span></div></div><svg class="diagram bw-relation-link" viewBox="0 0 160 40" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M0 20H160" stroke="var(--gray)"/></svg><div class="bw-relation-history"><p class="eyebrow">작업 A</p><svg class="diagram" viewBox="0 0 400 90" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M28 45H145" stroke="var(--gray)"/><path d="M145 45H372" stroke="var(--brand)"/><circle cx="28" cy="45" r="8" fill="var(--bg)" stroke="var(--gray)"/><circle cx="145" cy="45" r="8" fill="var(--bg)" stroke="var(--gray)"/><circle cx="258" cy="45" r="8" fill="var(--bg)" stroke="var(--brand)"/><circle cx="372" cy="45" r="8" fill="var(--bg)" stroke="var(--brand)"/></svg></div></div><div class="bw-relation-row anim-item" style="--relation-color:var(--purple)"><div class="bw-relation-space"><div class="bw-folder" style="--folder-color:var(--purple)"><svg class="diagram" viewBox="0 0 260 180" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M10 42V15H94L118 42H250V168H10ZM10 60H250"/><g stroke="var(--gray)" stroke-width="2"><path d="M80 111H95L103 119V151H80ZM95 111V119H103M86 130H97M86 139H97"/><path d="M119 111H134L142 119V151H119ZM134 111V119H142M125 130H136M125 139H136"/><path d="M158 111H173L181 119V151H158ZM173 111V119H181M164 130H175M164 139H175" stroke="var(--purple)"/></g></svg><span class="bw-folder-branch">작업 폴더 B</span></div></div><svg class="diagram bw-relation-link" viewBox="0 0 160 40" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M0 20H160" stroke="var(--gray)"/></svg><div class="bw-relation-history"><p class="eyebrow">작업 B</p><svg class="diagram" viewBox="0 0 400 90" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M28 45H145" stroke="var(--gray)"/><path d="M145 45H372" stroke="var(--purple)"/><circle cx="28" cy="45" r="8" fill="var(--bg)" stroke="var(--gray)"/><circle cx="145" cy="45" r="8" fill="var(--bg)" stroke="var(--gray)"/><circle cx="258" cy="45" r="8" fill="var(--bg)" stroke="var(--purple)"/><circle cx="372" cy="45" r="8" fill="var(--bg)" stroke="var(--purple)"/></svg></div></div></div><p class="copy bw-relation-note anim-item">파일은 각자의 폴더에서 수정하고, 기록은 각자의 브랜치에 남깁니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article><article class="slide" data-index="7" data-visual="bw-branch-folder-alternative"><header class="slide__header"><span class="slide__label">Part 3 · Ch01-03 · 브랜치와 워크트리 차이</span><h1 class="slide__title">브랜치와 워크트리의 <span class="hl">관계</span></h1><p class="slide__sub">서로 다른 브랜치를 각자의 워크트리에서 열어두고 동시에 작업합니다.</p></header><main class="slide__body"><div class="bw-bf"><div class="bw-bf-head"><div><h2 class="heading">브랜치</h2><p class="eyebrow">작업 이력</p></div><div><h2 class="heading">워크트리</h2><p class="eyebrow">실제 작업 공간</p></div></div><div class="bw-bf-map"><svg class="bw-bf-lines" xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="bw-bf-main" stroke="var(--gray)"/><path class="bw-bf-fork" stroke="var(--purple)"/><g class="bw-bf-commits" fill="var(--bg)"></g></svg><p class="eyebrow bw-bf-label bw-bf-label--main">main</p><p class="eyebrow bw-bf-label bw-bf-label--task">작업 브랜치</p><div class="bw-bf-worktrees"><div class="bw-bf-space"><div class="bw-folder" style="--folder-color:var(--gray)"><svg class="diagram" viewBox="0 0 260 180" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M10 42V15H94L118 42H250V168H10ZM10 60H250"/><g stroke="var(--gray)" stroke-width="2"><path d="M80 111H95L103 119V151H80ZM95 111V119H103M86 130H97M86 139H97"/><path d="M119 111H134L142 119V151H119ZM134 111V119H142M125 130H136M125 139H136"/><path d="M158 111H173L181 119V151H158ZM173 111V119H181M164 130H175M164 139H175" stroke="var(--gray)"/></g></svg><span class="bw-folder-branch">원래 작업 폴더</span></div></div><div class="bw-bf-space"><div class="bw-folder" style="--folder-color:var(--purple)"><svg class="diagram" viewBox="0 0 260 180" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M10 42V15H94L118 42H250V168H10ZM10 60H250"/><g stroke="var(--gray)" stroke-width="2"><path d="M80 111H95L103 119V151H80ZM95 111V119H103M86 130H97M86 139H97"/><path d="M119 111H134L142 119V151H119ZM134 111V119H142M125 130H136M125 139H136"/><path d="M158 111H173L181 119V151H158ZM173 111V119H181M164 130H175M164 139H175" stroke="var(--purple)"/></g></svg><span class="bw-folder-branch">추가 작업 폴더</span></div></div></div></div></div><p class="copy bw-relation-note">파일은 각자의 폴더에서 수정하고, 기록은 각자의 브랜치에 남깁니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article><article class="slide" data-index="8" data-visual="git-workspaces"><header class="slide__header"><span class="slide__label">Part 3 · Ch01-03 · 브랜치와 워크트리 차이</span><h1 class="slide__title">각자의 <span class="hl">작업 공간</span></h1><p class="slide__sub">Orca는 Git의 기능으로 작업 폴더를 나눕니다.</p></header><main class="slide__body"><div class="git-workspaces"><div class="git-workspaces__root anim-item"><svg class="diagram" viewBox="0 0 300 150" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(85 35) scale(1.7)"><path d="M0 9V0H27L37 9H75V53H0ZM0 17H75" stroke="var(--gray)" stroke-width="3"/></g><g transform="translate(118 62) scale(0.75)"><path d="M0 0H30L42 12V54H0ZM30 0V12H42M9 24H31M9 33H28M9 42H23" stroke="currentColor" stroke-width="2.5"/></g></svg><h2 class="git-heading">공유하는 Git 이력</h2></div><div class="git-workspaces__stem anim-item" aria-hidden="true"></div><div class="git-workspaces__children anim-item"><section class="git-workspace" style="--accent:var(--brand)"><svg class="diagram" viewBox="70 0 170 140" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(101 50) scale(1.3)"><path d="M0 9V0H27L37 9H75V53H0ZM0 17H75" stroke="currentColor" stroke-width="3"/></g><g transform="translate(124 13) scale(0.65)"><rect x="0" y="0" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)" stroke-width="2"/><rect x="8" y="13" width="34" height="11" rx="5.5" fill="var(--bg)"/><path d="M15 18.5H35" stroke="currentColor" stroke-width="3.5"/><path d="M10 39C4 42 4 49 4 52H46C46 49 46 42 40 39" stroke="currentColor" stroke-width="2.5"/></g></svg><h2 class="git-heading">작업 폴더 A</h2><p class="git-copy">에이전트 A</p></section><section class="git-workspace" style="--accent:var(--purple)"><svg class="diagram" viewBox="70 0 170 140" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(101 50) scale(1.3)"><path d="M0 9V0H27L37 9H75V53H0ZM0 17H75" stroke="currentColor" stroke-width="3"/></g><g transform="translate(124 13) scale(0.65)"><rect x="0" y="0" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)" stroke-width="2"/><rect x="8" y="13" width="34" height="11" rx="5.5" fill="var(--bg)"/><path d="M15 18.5H35" stroke="currentColor" stroke-width="3.5"/><path d="M10 39C4 42 4 49 4 52H46C46 49 46 42 40 39" stroke="currentColor" stroke-width="2.5"/></g></svg><h2 class="git-heading">작업 폴더 B</h2><p class="git-copy">에이전트 B</p></section><section class="git-workspace" style="--accent:var(--gray)"><svg class="diagram" viewBox="70 0 170 140" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(101 50) scale(1.3)"><path d="M0 9V0H27L37 9H75V53H0ZM0 17H75" stroke="currentColor" stroke-width="3"/></g><g transform="translate(124 13) scale(0.65)"><rect x="0" y="0" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)" stroke-width="2"/><rect x="8" y="13" width="34" height="11" rx="5.5" fill="var(--bg)"/><path d="M15 18.5H35" stroke="currentColor" stroke-width="3.5"/><path d="M10 39C4 42 4 49 4 52H46C46 49 46 42 40 39" stroke="currentColor" stroke-width="2.5"/></g></svg><h2 class="git-heading">작업 폴더 C</h2><p class="git-copy">에이전트 C</p></section></div><p class="git-copy anim-item">같은 프로젝트를 각자의 폴더에서 작업합니다.</p></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article><article class="slide" data-index="9" data-visual="bw-orca"><header class="slide__header"><span class="slide__label">Part 3 · Ch01-03 · 브랜치와 워크트리 차이</span><h1 class="slide__title">Orca의 <span class="hl">작업 폴더</span></h1><p class="slide__sub">Part 2에서 본 작업별 공간의 정체가 워크트리입니다.</p></header><main class="slide__body"><div class="scene scene--visual-first"><div class="scene__visual"><div class="bw-orca-art"><div class="bw-orca-logo anim-item"><img src="/assets/orca-logo.svg" alt=""><h2 class="heading">Orca</h2></div><div class="bw-orca-link anim-item"><p class="copy">생성</p><svg class="diagram" viewBox="0 0 100 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M3 12H96M86 4L96 12L86 20"/></svg></div><div class="bw-orca-folder anim-item"><div class="bw-folder" style="--folder-color:var(--gray)"><svg class="diagram" viewBox="0 0 260 180" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M10 42V15H94L118 42H250V168H10ZM10 60H250"/><g stroke="var(--gray)" stroke-width="2"><path d="M80 111H95L103 119V151H80ZM95 111V119H103M86 130H97M86 139H97"/><path d="M119 111H134L142 119V151H119ZM134 111V119H142M125 130H136M125 139H136"/><path d="M158 111H173L181 119V151H158ZM173 111V119H181M164 130H175M164 139H175"/></g></svg></div><p class="copy">Git 워크트리</p></div></div></div><div class="scene__copy anim-item"><p class="statement">클릭으로 만드는<strong>독립된 작업 폴더</strong></p></div></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article></div><script>
+      /* 조작 규칙 (성공 기준):
+         페이지 이동은 좌우 nav-btn · 하단 dot · 키보드(←/→/스페이스)로만.
+         #deck/body/.slide에 이동용 click 리스너를 절대 달지 않는다 —
+         강의 중 화면을 가리키며 클릭해도 슬라이드가 넘어가면 안 된다. */
+      class SlidePresentation {
+        constructor() {
+          this.slides = Array.from(document.querySelectorAll(".slide"));
+          this.total = this.slides.length;
+          const requested = Number.parseInt(
+            new URLSearchParams(window.location.search).get("slide"),
+            10,
+          );
+          this.current =
+            Number.isInteger(requested) && requested >= 1 && requested <= this.total
+              ? requested - 1
+              : 0;
+          this.isAnimating = false;
+          this._init();
+        }
+        _init() {
+          this.slides.forEach((slide, i) =>
+            slide.classList.toggle("active", i === this.current),
+          );
+          document.getElementById("tot").textContent = this.total;
+          this._buildDots();
+          this._bindKeys();
+          this._bindButtons();
+          this._update();
+          this._runSlide(this.current);
+        }
+        /* 슬라이드 진입 시 .anim-item 을 순차 등장시킨다.
+           스토리보드의 "애니메이션 순서" = DOM 순서 */
+        _runSlide(i) {
+          const slide = this.slides[i];
+          if (slide.dataset.motion === "none") return;
+          const items = [...slide.querySelectorAll(".anim-item")];
+          items.forEach(el => el.classList.remove("do-fadeinup"));
+          void slide.offsetWidth;
+          const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          items.forEach((el, n) => {
+            el.style.animationDelay = reduced ? "0ms" : `${150 + n * 260}ms`;
+            el.classList.add("do-fadeinup");
+          });
+        }
+        next() {
+          if (!this.isAnimating) this._go(this.current + 1);
+        }
+        prev() {
+          if (!this.isAnimating) this._go(this.current - 1);
+        }
+        _go(i) {
+          if (
+            i < 0 ||
+            i >= this.total ||
+            i === this.current ||
+            this.isAnimating
+          )
+            return;
+          this.isAnimating = true;
+          const instant = this.slides[i].dataset.motion === "none";
+          document.getElementById("deck").classList.toggle("instant-transition", instant);
+          this.slides[this.current].classList.remove("active");
+          this.slides[i].classList.add("active");
+          this.current = i;
+          const url = new URL(window.location.href);
+          url.searchParams.set("slide", this.current + 1);
+          window.history.replaceState({}, "", url);
+          this._runSlide(i);
+          if (instant) {
+            this.isAnimating = false;
+          } else {
+            setTimeout(() => {
+              this.isAnimating = false;
+              this._update();
+            }, 420);
+          }
+          this._update();
+        }
+        _update() {
+          const pct = ((this.current + 1) / this.total) * 100;
+          document.getElementById("progress").style.width = pct + "%";
+          document.getElementById("cur").textContent = this.current + 1;
+          document.getElementById("btn-prev").disabled = this.current === 0;
+          document.getElementById("btn-next").disabled =
+            this.current === this.total - 1;
+          document
+            .querySelectorAll(".dot")
+            .forEach((d, i) =>
+              d.classList.toggle("active", i === this.current),
+            );
+        }
+        _buildDots() {
+          const nav = document.getElementById("dot-nav");
+          this.slides.forEach((_, i) => {
+            const b = document.createElement("button");
+            b.className = "dot" + (i === 0 ? " active" : "");
+            b.setAttribute("aria-label", `슬라이드 ${i + 1}`);
+            b.addEventListener("click", () => this._go(i));
+            nav.appendChild(b);
+          });
+        }
+        _bindButtons() {
+          document
+            .getElementById("btn-prev")
+            .addEventListener("click", () => this.prev());
+          document
+            .getElementById("btn-next")
+            .addEventListener("click", () => this.next());
+        }
+        _bindKeys() {
+          document.addEventListener("keydown", (e) => {
+            if (this.isAnimating) return;
+            if (e.key === "ArrowRight" || e.key === " ") {
+              e.preventDefault();
+              this.next();
+            }
+            if (e.key === "ArrowLeft") {
+              e.preventDefault();
+              this.prev();
+            }
+          });
+        }
+      }
+      // Resolve root asset paths when opening this file directly.
+      if (window.location.protocol === "file:") {
+        const projectRoot = new URL("../../../", window.location.href);
+        document.querySelectorAll('img[src^="/"]').forEach((img) => {
+          const assetPath = img.getAttribute("src");
+          if (assetPath && !assetPath.startsWith("//")) img.src = new URL(assetPath.slice(1), projectRoot).href;
+        });
+      }
+      // Anchor the branch arrows to the visible folder outlines, including on resize.
+      function connectWorktreeFolders() {
+        const root = document.querySelector('.bw-origin');
+        if (!root) return;
+        const overlay = root.querySelector('.bw-origin-connections');
+        const source = root.querySelector('.bw-origin-source > .bw-folder > svg');
+        const targets = [...root.querySelectorAll('.bw-origin-workspace-art > .bw-folder > svg')];
+        const trunk = overlay.querySelector('.bw-origin-trunk');
+        const branches = [overlay.querySelector('.bw-origin-connection--a'), overlay.querySelector('.bw-origin-connection--b')];
+        let frame = 0;
+        const schedule = () => { if (!frame) frame = requestAnimationFrame(draw); };
+        const draw = () => {
+          frame = 0;
+          const bounds = root.getBoundingClientRect();
+          if (!bounds.width || !bounds.height) return;
+          overlay.setAttribute('viewBox', `0 0 ${bounds.width} ${bounds.height}`);
+          const anchor = (svg, x, y) => {
+            const point = new DOMPoint(x, y).matrixTransform(svg.getScreenCTM());
+            return { x: point.x - bounds.left, y: point.y - bounds.top };
+          };
+          // Folder art uses viewBox 0 0 260 180: lower edge y=168, upper edge at its center y=42.
+          const from = anchor(source, 130, 168);
+          const to = targets.map(svg => anchor(svg, 130, 42));
+          from.y += 8;
+          to.forEach(point => { point.y -= 12; });
+          const available = Math.max(0, Math.min(...to.map(point => point.y)) - from.y);
+          const railY = from.y + Math.min(24, available * 0.35);
+          const f = n => Number(n.toFixed(2));
+          trunk.setAttribute('d', `M${f(from.x)} ${f(from.y)}V${f(railY)}M${f(to[0].x)} ${f(railY)}H${f(to[1].x)}`);
+          to.forEach((point, i) => {
+            branches[i].setAttribute('d', `M${f(point.x)} ${f(railY)}V${f(point.y)}M${f(point.x - 6)} ${f(point.y - 7)}L${f(point.x)} ${f(point.y)}L${f(point.x + 6)} ${f(point.y - 7)}`);
+          });
+          if (root.getAnimations({subtree: true}).some(animation => animation.playState === 'running')) schedule();
+        };
+        const observer = new ResizeObserver(schedule);
+        [root, source, ...targets].forEach(element => observer.observe(element));
+        root.addEventListener('animationstart', schedule);
+        root.addEventListener('animationend', schedule);
+        window.addEventListener('resize', schedule);
+        document.fonts.ready.then(schedule);
+        schedule();
+      }
+      // Draw the history from the actual folder endpoints, so the relationship stays attached.
+      function connectBranchWorktrees() {
+        const root = document.querySelector('.bw-bf-map');
+        if (!root) return;
+        const svg = root.querySelector('.bw-bf-lines');
+        const folders = [...root.querySelectorAll('.bw-folder > svg')];
+        const labels = [...root.querySelectorAll('.bw-bf-label')];
+        let frame = 0;
+        const draw = () => {
+          frame = 0;
+          const box = root.getBoundingClientRect();
+          if (!box.width || !box.height) return;
+          svg.setAttribute('viewBox', `0 0 ${box.width} ${box.height}`);
+          const endpoints = folders.map(folder => {
+            const p = new DOMPoint(10, 100).matrixTransform(folder.getScreenCTM());
+            return {x: p.x - box.left - 12, y: p.y - box.top};
+          });
+          const [a,b] = endpoints;
+          const start = Math.max(24,box.width * .03), span = a.x - start;
+          const split = start + span * .30, bendEnd = start + span * .64;
+          svg.querySelector('.bw-bf-main').setAttribute('d', `M${start} ${a.y}H${a.x}`);
+          svg.querySelector('.bw-bf-fork').setAttribute('d', `M${split} ${a.y}C${split+span*.16} ${a.y} ${bendEnd-span*.19} ${b.y} ${bendEnd} ${b.y}H${b.x}`);
+          const dots = [[start,a.y,'gray'],[split,a.y,'gray'],[split+(a.x-split)*.6,a.y,'gray'],[bendEnd,b.y,'purple'],[bendEnd+(b.x-bendEnd)*.6,b.y,'purple']];
+          svg.querySelector('.bw-bf-commits').innerHTML = dots.map(([x,y,c]) => `<circle cx="${x}" cy="${y}" r="6" stroke="var(--${c})"/>`).join('');
+          labels[0].style.left = `${split+(a.x-split)*.5}px`; labels[0].style.top = `${a.y-18}px`;
+          labels[1].style.left = `${bendEnd+(b.x-bendEnd)*.45}px`; labels[1].style.top = `${b.y-18}px`;
+        };
+        const schedule = () => { if (!frame) frame = requestAnimationFrame(draw); };
+        const observer = new ResizeObserver(schedule);
+        [root,...folders].forEach(element => observer.observe(element));
+        document.fonts.ready.then(schedule);
+        window.addEventListener('resize',schedule);
+        schedule();
+      }
+      connectBranchWorktrees();
+      connectWorktreeFolders();
+      new SlidePresentation();
+    </script></body></html>

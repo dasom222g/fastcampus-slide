@@ -1,0 +1,1503 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>저장소와 작업흐름</title>
+    <!-- 허용된 외부 의존은 아래 웹폰트 2개뿐. 그 외 모든 것은 인라인/로컬 -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSans.css"
+    />
+    <style>
+      :root {
+        --bg: #0d1117;
+        --bg-card: #161b22;
+        --bg-code: #1e2430;
+        --bg-inset: #252d3a;
+        --text: #e6edf3;
+        --text-dim: #8b949e;
+        --text-muted: #484f58;
+        --brand: #fc1c49; /* 패스트캠퍼스 시그니처 레드 — 덱의 기본 강조색 */
+        --brand-rgb: 252, 28, 73;
+        --orange: #ff6d3b;
+        --yellow: #f0b429;
+        --purple: #9188ff;
+        --green: #4ade80;
+        --gray: #8b949e;
+        --border: rgba(255, 255, 255, 0.08);
+        --border-brand: rgba(var(--brand-rgb), 0.3);
+        --border-orange: rgba(255, 109, 59, 0.25);
+        --border-purple: rgba(145, 136, 255, 0.28);
+        --border-yellow: rgba(240, 180, 41, 0.28);
+        --border-green: rgba(74, 222, 128, 0.25);
+        --border-gray: rgba(139, 148, 158, 0.22);
+        --dot: rgba(255, 255, 255, 0.055);
+        --ease: 0.36s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        font-family:
+          "Pretendard",
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        font-size: clamp(13px, 1.35vw, 16px); /* 기준 덱과 동일 — 이보다 낮추지 않는다 */
+        background: var(--bg);
+        color: var(--text);
+        word-break: keep-all; /* 한국어 어절 단위 줄바꿈 */
+      }
+      body {
+        overflow: hidden;
+      }
+
+      .slide-deck {
+        position: fixed;
+        inset: 0;
+      }
+
+      .slide {
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(
+          circle,
+          var(--dot) 1px,
+          transparent 1px
+        );
+        background-size: 26px 26px;
+        background-color: var(--bg);
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        /* 좌우 여백을 키우면 본문이 좁아져 모든 게 작아 보인다. 7.5vw/7rem을 넘기지 않는다 */
+        padding: clamp(2.6rem, 5.5vh, 4.2rem) clamp(4rem, 7.5vw, 7rem);
+        gap: clamp(1.5rem, 3.75vh, 3rem);
+        overflow: hidden;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity var(--ease);
+      }
+      .slide.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      /* ── 공통 헤더 / 푸터 ─────────────────────────────────── */
+      .slide__header {
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+        padding-bottom: clamp(0.9rem, 2.2vh, 1.6rem);
+        border-bottom: 1px solid var(--border);
+      }
+      .slide__label {
+        font-size: clamp(0.58rem, 0.85vw, 0.72rem);
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--brand);
+      }
+      .slide__title {
+        font-size: clamp(2rem, 5.2vw, 3.8rem);
+        font-weight: 800;
+        line-height: 1.08;
+        letter-spacing: -0.015em;
+      }
+      .slide__title .hl {
+        color: var(--brand);
+      }
+      .slide__title .hl-orange {
+        color: var(--orange);
+      }
+      .slide__title .hl-yellow {
+        color: var(--yellow);
+      }
+      .slide__title .hl-purple {
+        color: var(--purple);
+      }
+      .slide__sub {
+        font-size: clamp(1.05rem, 1.6vw, 1.28rem);
+        font-weight: 400;
+        color: var(--text-dim);
+        line-height: 1.5;
+      }
+
+      .slide__body {
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        gap: clamp(1.2rem, 2.7vh, 2.1rem);
+        min-height: 0;
+        justify-content: center;
+      }
+      .slide__body > .grid-3 {
+        flex: 0 0 auto;
+        align-items: stretch;
+      }
+      .slide__body > .grid-2 {
+        flex: 0 0 auto;
+      }
+      .slide__body > .timeline {
+        width: 100%;
+        align-self: center;
+      }
+
+      .slide__footer {
+        border-top: 1px solid var(--border);
+        padding-top: clamp(0.5rem, 1.3vh, 0.9rem);
+        display: flex;
+        align-items: center;
+        font-size: clamp(0.58rem, 0.85vw, 0.7rem);
+        font-weight: 400;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+      /* 모든 슬라이드 푸터는 패스트캠퍼스 로고 하나다 — 텍스트를 넣지 않는다 */
+      .fastcampus-logo {
+        display: block;
+        width: clamp(7.2rem, 9vw, 8.5rem);
+        height: auto;
+      }
+
+      /* ══════════════════════════════════════════════════════════
+         시각 장치 — 기준 덱(hermes-bot · orca-competition-pattern)에서 가져온 것.
+         **거의 모든 슬라이드에 이 중 하나가 들어가야 한다.** 기준 덱은 12장 중
+         11장에 이미지나 SVG가 있다. 글자만 있는 장을 연속으로 두지 않는다.
+      ══════════════════════════════════════════════════════════ */
+
+      /* 큰 설명 이미지 — 본문 높이를 실제로 쓴다. 작게 넣지 않는다 */
+      .illustration-frame {
+        width: min(48rem, 100%);
+        align-self: center;
+        overflow: hidden;
+        border: 1px solid var(--border-brand);
+        border-radius: 10px;
+        background: rgba(var(--brand-rgb), 0.035);
+      }
+      .illustration-frame img {
+        display: block;
+        width: 100%;
+        height: clamp(15rem, 38vh, 22rem);
+        object-fit: cover;
+        object-position: center;
+      }
+      /* 여백이 이미 있는 그림(로고·다이어그램)은 잘라내지 않고 담는다 */
+      .illustration-frame--contain {
+        width: auto;
+        border-color: var(--border-gray);
+        background: rgba(139, 148, 158, 0.05);
+      }
+      .illustration-frame--contain img {
+        width: auto;
+        max-width: 100%;
+        object-fit: contain;
+      }
+
+      /* 이미지가 남는 본문 높이를 전부 먹는 변형 — 그림이 주인공인 장 */
+      .slide--visual .slide__body {
+        justify-content: stretch;
+        gap: 0;
+      }
+      .slide--visual .illustration-frame {
+        flex: 1 1 auto;
+        min-height: 0;
+      }
+      .slide--visual .illustration-frame img {
+        width: 100%;
+        height: 100%;
+      }
+      .slide--visual .statement {
+        margin-top: clamp(1.25rem, 2.8vh, 2rem);
+      }
+
+      /* 이미지 주도 표지 — 이미지가 본문 전체를 채우고 글자를 그 위에 얹는다.
+         이미지 안에 네거티브 스페이스가 있으면 별도 텍스트 열을 만들지 않는다 */
+      .cover-hero {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        align-self: center;
+        overflow: hidden;
+        border: 1px solid var(--border-brand);
+        border-radius: 12px;
+        background: rgba(var(--brand-rgb), 0.04);
+        box-shadow: 0 1.6rem 4.5rem rgba(0, 0, 0, 0.34);
+      }
+      .cover-hero img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .cover-hero__copy {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: clamp(0.6rem, 1.4vh, 1rem);
+        padding: clamp(1.6rem, 4vw, 3.4rem);
+      }
+
+      /* SVG 커넥터 — 분기·합류선을 손으로 CSS 계산하지 말고 이걸 쓴다.
+         non-scaling-stroke라 폭이 변해도 선 두께가 유지된다 */
+      .svg-connectors {
+        display: block;
+        width: 78%;
+        height: clamp(2.5rem, 5.5vh, 3.6rem);
+        overflow: visible;
+        align-self: center;
+      }
+      .svg-connectors path {
+        fill: none;
+        stroke: var(--border-brand);
+        stroke-width: 1.8;
+        vector-effect: non-scaling-stroke;
+      }
+      .svg-connectors--gray path { stroke: var(--border-gray); }
+      .svg-connectors--orange path { stroke: var(--border-orange); }
+
+      /* 로고 — 제품을 가르치는 덱이라 로고가 자주 나온다. 작게 넣지 않는다 */
+      .logo {
+        width: clamp(4.5rem, 7vw, 6.3rem);
+        height: clamp(4.5rem, 7vw, 6.3rem);
+        object-fit: contain;
+      }
+      .logo--small {
+        width: clamp(2.8rem, 4vw, 3.7rem);
+        height: clamp(2.8rem, 4vw, 3.7rem);
+      }
+      .logo--wide {
+        width: clamp(8rem, 14vw, 12rem);
+        height: clamp(5rem, 9vw, 7.5rem);
+      }
+
+      /* 로고·그림을 담는 카드. min-height로 높이를 먼저 확보한다 */
+      .media-card {
+        min-width: 0;
+        min-height: clamp(9rem, 20vh, 12.5rem);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: clamp(0.5rem, 1.2vh, 0.85rem);
+        padding: clamp(1.1rem, 2.2vw, 1.7rem);
+        border: 1.5px solid var(--border);
+        border-radius: 10px;
+        background: var(--bg-card);
+        text-align: center;
+      }
+      .media-card--brand  { border-color: var(--border-brand);  background: rgba(var(--brand-rgb), 0.05); }
+      .media-card--purple { border-color: var(--border-purple); background: rgba(145, 136, 255, 0.05); }
+      .media-card--yellow { border-color: var(--border-yellow); background: rgba(240, 180, 41, 0.05); }
+      .media-card--green  { border-color: var(--border-green);  background: rgba(74, 222, 128, 0.05); }
+      .media-card--gray   { border-color: var(--border-gray);   background: rgba(139, 148, 158, 0.05); }
+      .media-card--tall   { min-height: clamp(14rem, 32vh, 18rem); }
+
+      /* 큰 본문 타이포 — 기준 덱은 본문도 1.4rem까지 간다. 작게 쓰지 않는다 */
+      .name {
+        font-size: clamp(1.35rem, 2.1vw, 1.85rem);
+        font-weight: 800;
+        line-height: 1.16;
+      }
+      .body-copy {
+        color: var(--text-dim);
+        font-size: clamp(1.16rem, 1.75vw, 1.42rem);
+        line-height: 1.45;
+      }
+      .file-name {
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(1rem, 1.55vw, 1.25rem);
+        font-weight: 700;
+        color: var(--text);
+      }
+      .statement {
+        align-self: center;
+        font-size: clamp(1.3rem, 2vw, 1.65rem);
+        font-weight: 800;
+        color: var(--text);
+        text-align: center;
+        line-height: 1.4;
+      }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        align-self: center;
+        gap: 0.5rem;
+        padding: clamp(0.48rem, 0.9vh, 0.7rem) clamp(1rem, 1.7vw, 1.45rem);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(0.8rem, 1.15vw, 0.98rem);
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        color: var(--text-dim);
+      }
+      .badge--brand  { color: var(--brand);  border-color: var(--border-brand);  background: rgba(var(--brand-rgb), 0.08); }
+      .badge--orange { color: var(--orange); border-color: var(--border-orange); background: rgba(255, 109, 59, 0.08); }
+      .badge--green  { color: var(--green);  border-color: var(--border-green);  background: rgba(74, 222, 128, 0.08); }
+
+      /* ── 공통 타이포 ──────────────────────────────────────── */
+      .display {
+        font-family: "GmarketSans", "Pretendard", sans-serif;
+        font-size: clamp(2.8rem, 7vw, 5.5rem);
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: -0.03em;
+      }
+      .caption {
+        font-size: clamp(0.9rem, 1.45vw, 1.15rem);
+        line-height: 1.5;
+        color: var(--text-dim);
+      }
+      .kw-brand {
+        color: var(--brand);
+      }
+      .kw-orange {
+        color: var(--orange);
+        font-weight: 600;
+      }
+      .kw-yellow {
+        color: var(--yellow);
+        font-weight: 600;
+      }
+      .kw-purple {
+        color: var(--purple);
+      }
+
+      code {
+        font-family: "Monaco", "Menlo", "Consolas", monospace;
+        font-size: 0.85em;
+        background: rgba(var(--brand-rgb), 0.1);
+        color: var(--brand);
+        padding: 2px 6px;
+        border-radius: 3px;
+      }
+
+      /* ── 불릿 리스트 (✓/✕) ───────────────────────────────── */
+      .bullet-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+      }
+      .bullet-list li {
+        display: flex;
+        align-items: baseline;
+        gap: 0.9rem;
+        font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+        line-height: 1.55;
+      }
+      .bullet-list li.no::before {
+        content: "✕";
+        color: var(--orange);
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+      .bullet-list li.ok::before {
+        content: "✓";
+        color: var(--green);
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+      .bullet-list li.no {
+        color: var(--text-dim);
+      }
+
+      /* ── tip: 슬라이드 하단 한 줄 정리 ────────────────────── */
+      .tip {
+        background: rgba(var(--brand-rgb), 0.05);
+        border: 1px solid rgba(var(--brand-rgb), 0.18);
+        border-radius: 3px;
+        padding: 0.975rem 1.5rem;
+        font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+        color: var(--text-dim);
+        line-height: 1.6;
+      }
+      .tip::before {
+        content: "→  ";
+        color: var(--brand);
+        font-weight: 700;
+      }
+      .tip--yellow {
+        background: rgba(240, 180, 41, 0.05);
+        border-color: rgba(240, 180, 41, 0.22);
+      }
+      .tip--yellow::before {
+        color: var(--yellow);
+      }
+
+      /* ── TEXT(표지) — cover ───────────────────────────────── */
+      .cover-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: clamp(1.1rem, 2.6vh, 2rem);
+      }
+      .cover-emoji {
+        font-size: clamp(3.6rem, 9vw, 7rem);
+        line-height: 1;
+      }
+      .cover-stmt {
+        font-family: "GmarketSans", "Pretendard", sans-serif;
+        font-size: clamp(2.4rem, 4.5vw, 3.9rem);
+        font-weight: 900;
+        line-height: 1.3;
+        letter-spacing: -0.025em;
+      }
+      .cover-axis {
+        display: flex;
+        align-items: center;
+        gap: clamp(0.6rem, 1.4vw, 1.1rem);
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(0.7rem, 1.1vw, 0.9rem);
+        letter-spacing: 0.1em;
+        color: var(--text-muted);
+        text-transform: uppercase;
+      }
+      .cover-axis b {
+        color: var(--brand);
+        font-weight: 700;
+      }
+
+      /* ── CARD_GRID — grid-3 + col-card ────────────────────── */
+      .grid-3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: clamp(1.2rem, 3vw, 2.1rem);
+      }
+      .col-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: clamp(1.5rem, 2.7vw, 2.25rem);
+        display: flex;
+        flex-direction: column;
+        gap: 1.1rem;
+      }
+      .col-card__title-row {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+      }
+      .col-card__emoji {
+        font-size: clamp(1.5rem, 2.4vw, 2rem);
+        line-height: 1;
+        flex-shrink: 0;
+      }
+      .col-card__title {
+        font-size: clamp(1.4rem, 2.8vw, 2rem);
+        font-weight: 700;
+        line-height: 1.2;
+        letter-spacing: -0.01em;
+      }
+      .col-card__body {
+        font-size: clamp(0.88rem, 1.35vw, 1.08rem);
+        line-height: 1.55;
+        color: var(--text-dim);
+      }
+      .col-card--brand {
+        border-color: var(--border-brand) !important;
+        background: rgba(var(--brand-rgb), 0.05);
+      }
+      .col-card--orange {
+        border-color: var(--border-orange) !important;
+        background: rgba(255, 109, 59, 0.05);
+      }
+      .col-card--purple {
+        border-color: var(--border-purple) !important;
+        background: rgba(145, 136, 255, 0.05);
+      }
+      .col-card--gray {
+        border-color: var(--border-gray) !important;
+        background: rgba(139, 148, 158, 0.05);
+      }
+      /* 변형: 카드 6장(3열 2행)일 때 — grid-3에 함께 붙인다 */
+      .grid-3--tight {
+        gap: clamp(0.9rem, 1.8vw, 1.5rem);
+      }
+      .grid-3--tight .col-card {
+        padding: clamp(1rem, 1.9vw, 1.5rem);
+        gap: 0.7rem;
+      }
+      .grid-3--tight .col-card__title {
+        font-size: clamp(1.1rem, 2vw, 1.5rem);
+        font-family: "Monaco", "Menlo", monospace;
+        letter-spacing: -0.01em;
+      }
+      .grid-3--tight .col-card__emoji {
+        font-size: clamp(1.2rem, 2vw, 1.6rem);
+      }
+      /* 변형: 설명이 긴 카드 6장 — 높이·패딩·타이포를 줄이지 않는다 */
+      .grid-3--spacious {
+        min-height: clamp(24rem, 52vh, 30rem);
+        gap: clamp(1rem, 2vw, 1.6rem);
+      }
+      .grid-3--spacious .col-card {
+        justify-content: center;
+        padding: clamp(1.35rem, 2.2vw, 1.85rem);
+        gap: clamp(0.85rem, 1.7vh, 1.15rem);
+      }
+      .grid-3--spacious .col-card__title {
+        font-size: clamp(1.2rem, 1.85vw, 1.55rem);
+      }
+      .grid-3--spacious .col-card__body {
+        font-size: clamp(0.96rem, 1.3vw, 1.1rem);
+        line-height: 1.55;
+      }
+      /* 변형: 카드 상단 정체 배지 (역할·소속 구분) */
+      .role-badge {
+        align-self: flex-start;
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(0.66rem, 1vw, 0.8rem);
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        padding: 0.32rem 0.7rem;
+        border-radius: 3px;
+        border: 1px solid var(--border);
+      }
+      .role-badge--brand {
+        color: var(--brand);
+        border-color: var(--border-brand);
+        background: rgba(var(--brand-rgb), 0.08);
+      }
+      .role-badge--purple {
+        color: var(--purple);
+        border-color: var(--border-purple);
+        background: rgba(145, 136, 255, 0.08);
+      }
+      .role-badge--gray {
+        color: var(--gray);
+        border-color: var(--border-gray);
+        background: rgba(139, 148, 158, 0.08);
+      }
+      .role-sub {
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(0.7rem, 1.05vw, 0.85rem);
+        color: var(--text-muted);
+        letter-spacing: 0.03em;
+      }
+
+      /* ── 좌우 2분할 — grid-2 · vs-grid(대비 비교) ─────────── */
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1.05fr 1fr;
+        gap: clamp(1.5rem, 3.5vw, 2.8rem);
+        align-items: center;
+      }
+      .vs-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: clamp(1.2rem, 3vw, 2.4rem);
+        width: 100%;
+      }
+      .vs-col {
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: clamp(1.2rem, 2.4vw, 2rem);
+        display: flex;
+        flex-direction: column;
+        gap: clamp(0.8rem, 1.8vh, 1.3rem);
+      }
+      .vs-col--blocked {
+        border-color: var(--border-orange);
+        background: rgba(255, 109, 59, 0.04);
+      }
+      .vs-col--pass {
+        border-color: var(--border-brand);
+        background: rgba(var(--brand-rgb), 0.05);
+      }
+      .vs-badge {
+        align-self: flex-start;
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(0.64rem, 1vw, 0.78rem);
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 0.3rem 0.65rem;
+        border-radius: 3px;
+        border: 1px solid var(--border);
+      }
+      .vs-badge--blocked {
+        color: var(--orange);
+        border-color: var(--border-orange);
+        background: rgba(255, 109, 59, 0.08);
+      }
+      .vs-badge--pass {
+        color: var(--brand);
+        border-color: var(--border-brand);
+        background: rgba(var(--brand-rgb), 0.08);
+      }
+      .vs-headline {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        font-size: clamp(1.35rem, 2.7vw, 2.1rem);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.015em;
+      }
+      .vs-headline span {
+        font-size: clamp(1.5rem, 2.7vw, 2.1rem);
+        line-height: 1;
+        flex-shrink: 0;
+      }
+      .vs-col--blocked .vs-headline {
+        color: var(--orange);
+      }
+      .vs-col--pass .vs-headline {
+        color: var(--brand);
+      }
+
+      /* ── LIST — 번호 원 + 제목 + 부연 나열 (카드 박스 없음) ── */
+      .list {
+        display: flex;
+        flex-direction: column;
+        gap: clamp(2.4rem, 7vh, 5.5rem);
+        align-self: center;
+        width: min(52rem, 100%);
+      }
+      .list-item {
+        display: flex;
+        align-items: flex-start;
+        gap: clamp(1rem, 2vw, 1.6rem);
+      }
+      .list-item.num {
+        align-items: center;
+      }
+      .list-num {
+        width: clamp(3.2rem, 5.5vw, 4.6rem);
+        height: clamp(3.2rem, 5.5vw, 4.6rem);
+        flex-shrink: 0;
+        border-radius: 50%;
+        border: 1.5px solid var(--text);
+        background: var(--bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(1.1rem, 1.9vw, 1.5rem);
+        font-weight: 700;
+        color: var(--text);
+      }
+      /* 변형: 번호 대신 점 마커 (순서 없는 나열) */
+      .list-dot {
+        width: clamp(0.75rem, 1.1vw, 0.95rem);
+        height: clamp(0.75rem, 1.1vw, 0.95rem);
+        margin-top: 0.55em;
+        border-radius: 50%;
+        background: var(--text);
+        flex-shrink: 0;
+      }
+      .list-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: clamp(0.3rem, 0.8vh, 0.55rem);
+      }
+      .list-title {
+        font-size: clamp(1.3rem, 2.5vw, 1.95rem);
+        font-weight: 700;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
+      }
+      .list-sub {
+        font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+        color: var(--text-dim);
+        line-height: 1.45;
+      }
+
+      /* ── ICON_ROW — timeline (가로 파이프라인) ────────────── */
+      .timeline {
+        display: grid;
+        /* 카드 5장 기준. 카드 수가 다르면 timeline--4 처럼 columns를 맞춘다 */
+        grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr auto 1fr;
+        gap: 0;
+        align-items: stretch;
+      }
+      .timeline--4 {
+        grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+      }
+      .timeline--3 {
+        grid-template-columns: 1fr auto 1fr auto 1fr;
+      }
+      .timeline-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: clamp(1rem, 1.9vw, 1.6rem) clamp(0.6rem, 1.2vw, 1rem);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: clamp(0.6rem, 1.5vh, 1.1rem);
+        text-align: center;
+        justify-content: flex-start;
+      }
+      .timeline-card--plain {
+        border-color: var(--border);
+      }
+      .timeline-card--gray {
+        border-color: var(--border-gray);
+        background: rgba(139, 148, 158, 0.06);
+      }
+      .timeline-card--brand {
+        border-color: var(--border-brand);
+        background: rgba(var(--brand-rgb), 0.07);
+      }
+      .timeline-card--purple {
+        border-color: var(--border-purple);
+        background: rgba(145, 136, 255, 0.07);
+      }
+      .timeline-card--yellow {
+        border-color: var(--border-yellow);
+        background: rgba(240, 180, 41, 0.08);
+      }
+      .timeline-card--orange {
+        border-color: var(--border-orange);
+        background: rgba(255, 109, 59, 0.08);
+      }
+      .timeline-card--green {
+        border-color: var(--border-green);
+        background: rgba(74, 222, 128, 0.08);
+      }
+      .timeline-card__step {
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(0.62rem, 0.95vw, 0.8rem);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        padding: 0.3rem 0.7rem;
+        border-radius: 3px;
+        background: rgba(255, 255, 255, 0.04);
+      }
+      .step--gray {
+        color: var(--gray);
+      }
+      .step--brand {
+        color: var(--brand);
+      }
+      .step--purple {
+        color: var(--purple);
+      }
+      .step--yellow {
+        color: var(--yellow);
+      }
+      .step--orange {
+        color: var(--orange);
+      }
+      .step--green {
+        color: var(--green);
+      }
+      .step--muted {
+        color: var(--text-dim);
+      }
+      .timeline-emoji-wrap {
+        width: clamp(4.2rem, 8.5vw, 7rem);
+        height: clamp(4.2rem, 8.5vw, 7rem);
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1.5px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .timeline-emoji-wrap span {
+        font-size: clamp(1.9rem, 4vw, 3.2rem);
+        line-height: 1;
+      }
+      .timeline-card__title {
+        font-size: clamp(1.15rem, 2.1vw, 1.7rem);
+        font-weight: 700;
+        line-height: 1.2;
+      }
+      .timeline-card__body {
+        font-size: clamp(0.82rem, 1.25vw, 1.02rem);
+        line-height: 1.5;
+        color: var(--text-dim);
+      }
+      .timeline-arrow {
+        position: relative;
+        flex-shrink: 0;
+        width: clamp(1.4rem, 2.6vw, 2.4rem);
+        height: clamp(1rem, 2vh, 1.5rem);
+        align-self: center;
+      }
+      .timeline-arrow::before {
+        content: "";
+        position: absolute;
+        left: 10%;
+        right: 28%;
+        top: 50%;
+        height: 2px;
+        background: var(--border-purple);
+        transform: translateY(-50%);
+      }
+      .timeline-arrow::after {
+        content: "";
+        position: absolute;
+        right: 10%;
+        top: 50%;
+        border-top: 0.36rem solid transparent;
+        border-bottom: 0.36rem solid transparent;
+        border-left: 0.5rem solid var(--purple);
+        transform: translateY(-50%);
+      }
+      .flow-quote {
+        color: var(--text);
+        font-style: normal;
+      }
+
+      /* ── TREE — fan (부모 1 → 자식 여럿) ──────────────────── */
+      .fan {
+        --fan-gap: clamp(1.5rem, 4vw, 3rem);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: min(58rem, 100%);
+        align-self: center;
+      }
+      .fan-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: clamp(1rem, 2vw, 1.6rem) clamp(1.2rem, 2.4vw, 2rem);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        text-align: center;
+      }
+      .fan-card--brand {
+        border-color: var(--border-brand);
+        background: rgba(var(--brand-rgb), 0.06);
+      }
+      .fan-card--purple {
+        border-color: var(--border-purple);
+        background: rgba(145, 136, 255, 0.06);
+      }
+      .fan-card--orange {
+        border-color: var(--border-orange);
+        background: rgba(255, 109, 59, 0.06);
+      }
+      .fan-card__emoji {
+        font-size: clamp(1.8rem, 3.4vw, 2.8rem);
+        line-height: 1;
+      }
+      .fan-card__title {
+        font-size: clamp(1.2rem, 2.2vw, 1.75rem);
+        font-weight: 700;
+        line-height: 1.2;
+      }
+      .fan-card__body {
+        font-size: clamp(0.85rem, 1.3vw, 1.05rem);
+        color: var(--text-dim);
+        line-height: 1.5;
+      }
+      .fan-root {
+        width: clamp(14rem, 26vw, 20rem);
+      }
+      .fan-stem {
+        width: 2px;
+        height: clamp(1.4rem, 3vh, 2.4rem);
+        background: var(--border-brand);
+      }
+      .fan-bar-wrap {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+      .fan-bar {
+        position: relative;
+        /* 자식 카드의 중심과 세로선을 맞춘다 (열 중심 간격 = 50% + gap/2) */
+        width: calc(50% + var(--fan-gap) / 2);
+        height: 2px;
+        background: var(--border-brand);
+      }
+      .fan-bar::before,
+      .fan-bar::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        width: 2px;
+        height: clamp(1.4rem, 3vh, 2.4rem);
+        background: var(--border-brand);
+      }
+      .fan-bar::before {
+        left: 0;
+      }
+      .fan-bar::after {
+        right: 0;
+      }
+      .fan-kids {
+        margin-top: clamp(1.4rem, 3vh, 2.4rem);
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--fan-gap);
+      }
+
+      /* ── METRIC — 대형 수치 (소스에 실제 수치가 있을 때만) ── */
+      .metric-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: clamp(1.2rem, 3vw, 2.4rem);
+      }
+      .metric {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: clamp(0.55rem, 1.3vh, 0.95rem);
+        padding: clamp(1.6rem, 3.4vh, 2.6rem) clamp(1rem, 2vw, 1.6rem);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        background: var(--bg-card);
+      }
+      .metric--star {
+        border-color: var(--border-yellow);
+        background: rgba(240, 180, 41, 0.06);
+      }
+      .metric__icon {
+        font-size: clamp(1.6rem, 3vw, 2.4rem);
+        line-height: 1;
+        margin-bottom: clamp(0.3rem, 0.9vh, 0.7rem);
+      }
+      .metric__num {
+        font-family: "GmarketSans", "Pretendard", sans-serif;
+        font-size: clamp(2.6rem, 6.5vw, 5rem);
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: -0.03em;
+      }
+      .metric--star .metric__num {
+        color: var(--yellow);
+      }
+      .metric__cap {
+        font-size: clamp(0.8rem, 1.2vw, 1rem);
+        color: var(--text-dim);
+      }
+
+      /* ── Navigation ───────────────────────────────────────── */
+      .progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        z-index: 200;
+        background: rgba(255, 255, 255, 0.04);
+        user-select: none;
+      }
+      .progress-fill {
+        height: 100%;
+        background: var(--brand);
+        transition: width 0.3s ease-out;
+      }
+      .nav-btn {
+        position: fixed;
+        top: 50%;
+        z-index: 150;
+        transform: translateY(-50%);
+        user-select: none;
+        width: clamp(1.9rem, 2.8vw, 2.5rem);
+        height: clamp(1.9rem, 2.8vw, 2.5rem);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 3px;
+        color: var(--text-muted);
+        font-size: 0.8rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+      }
+      .nav-btn:hover:not(:disabled) {
+        background: rgba(255, 255, 255, 0.08);
+        color: var(--text);
+      }
+      .nav-btn:disabled {
+        opacity: 0.08;
+        cursor: not-allowed;
+      }
+      #btn-prev {
+        left: clamp(0.4rem, 1.2vw, 1.1rem);
+      }
+      #btn-next {
+        right: clamp(0.4rem, 1.2vw, 1.1rem);
+      }
+      .dot-nav {
+        position: fixed;
+        bottom: 1.3rem;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 150;
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        user-select: none;
+      }
+      .dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.18);
+        cursor: pointer;
+        border: none;
+        transition: all 0.22s ease;
+      }
+      .dot.active {
+        width: 22px;
+        border-radius: 3px;
+        background: var(--brand);
+      }
+      .slide-counter {
+        position: fixed;
+        bottom: 1.2rem;
+        right: 1.8rem;
+        z-index: 150;
+        font-family: "Monaco", monospace;
+        font-size: 0.62em;
+        color: var(--text-muted);
+        letter-spacing: 0.07em;
+        user-select: none;
+      }
+
+      /* ── Animations ───────────────────────────────────────── */
+      @keyframes s-fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .anim-item {
+        opacity: 0;
+      }
+      .anim-item.do-fadeinup {
+        animation: s-fadeInUp 0.48s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      }
+    
+/* Semantic diagrams only; base-template owns slide geometry, tokens and common grids/cards. */
+.media-card .name{color:var(--text);font-size:clamp(1.45rem,2.25vw,2.15rem);line-height:1.3}
+.media-card .body-copy{color:var(--text-dim)}
+.media-card--orange{border-color:var(--border-orange);background:rgba(255,109,59,.04)}
+.diagram{width:100%;height:clamp(8rem,19vh,13rem);flex:none;overflow:visible}
+.eyebrow{font-family:Monaco,Pretendard,sans-serif;font-size:1.02rem;line-height:1.5;align-self:flex-start}
+.micro{font-size:1.13rem;color:var(--accent,var(--text-dim));line-height:1.4}
+.diagram-caption{text-align:center;color:var(--text-dim);font-size:1.5rem;line-height:1.5}
+.hero-statement{font-family:GmarketSans,Pretendard,sans-serif;font-size:clamp(2rem,3.1vw,3.2rem);font-weight:700;line-height:1.5;letter-spacing:-.04em}
+.hero-statement strong{color:var(--brand);font-weight:700}
+.hero-note{font-size:clamp(1.2rem,1.65vw,1.55rem);line-height:1.55;color:var(--text-dim);max-width:21em}
+.hero-point{font-size:clamp(1.5rem,2.3vw,2.4rem);font-weight:750;line-height:1.5;display:flex;gap:1.1rem;align-items:baseline}
+.hero-number{font-family:Monaco,monospace;font-size:.52em;color:var(--brand)}
+.cause-list{display:flex;flex-direction:column;gap:1rem}
+.cause-row{display:grid;grid-template-columns:3.5rem 30% 4rem 1fr;align-items:center;gap:1.5rem;border-bottom:1px solid var(--border);padding:1rem 0}
+.cause-number{font-family:Monaco,monospace;font-size:1.8rem;color:var(--orange)}
+.cause-phenomenon{display:flex;align-items:center;gap:1rem}.cause-phenomenon .diagram{width:8rem;height:5.3rem;color:var(--orange)}
+.cause-row .name{font-size:1.55rem}.cause-row .body-copy{margin-top:.55rem}
+.cause-arrow{color:var(--orange);font-size:2.5rem;text-align:center}
+.terminal{border:1.5px solid var(--accent);border-radius:10px;background:var(--bg-card);min-width:0;overflow:hidden}
+.terminal__bar{border-bottom:1px solid var(--border);padding:1rem;font-size:1.2rem;color:var(--text);display:flex;gap:1.5rem;align-items:center}
+.terminal__bar span{font-size:.6rem;color:var(--accent);letter-spacing:.25em}
+.terminal__screen{position:relative;padding:1.3rem;color:var(--accent)}.terminal__art{width:100%;height:9rem}
+.window-evolution{display:grid;grid-template-columns:1fr 6rem 1.2fr;align-items:center;gap:2rem}.window-evolution .diagram-caption{margin-top:1.8rem}.big-arrow{text-align:center;font-size:4rem;color:var(--gray)}
+.window-stack{display:flex;flex-direction:column;gap:1rem}.window-stack .terminal__screen{padding:.3rem 1.3rem}.window-stack .terminal__art{height:4.2rem}.window-stack .terminal__bar{padding:.65rem 1rem}.window-stack .terminal:nth-child(2){margin-left:1.5rem}.window-stack .terminal:nth-child(3){margin-left:3rem}
+.question{position:absolute;right:10%;top:20%;background:var(--bg-card);font-size:3.8rem;color:var(--yellow);padding:0 .5rem}
+.inspection-route{position:relative;color:var(--yellow);height:4rem}.inspection-route svg{width:100%;height:3rem}.route-label{position:absolute;left:40%;top:0;background:var(--bg);padding:0 2rem;font-size:1.4rem}
+.person-memory{display:flex;align-items:center;justify-content:center;gap:2rem}.person-memory .diagram{width:8rem;height:6rem}.person-memory .name{font-size:2.3rem}.statement{font-size:2rem;line-height:1.4}
+.handoff-map .media-card{min-height:22vh}.handoff-map .diagram{height:12vh}.handoff-map .person-memory .diagram{height:6rem}.fan-lines{display:block;width:100%;height:6.5vh;flex:none}
+.environment{border:1.5px solid var(--border-gray);border-radius:12px;padding:clamp(1.3rem,2.5vw,2.5rem);background:rgba(139,148,158,.025)}
+.environment__label{display:flex;gap:1.2rem;align-items:center;margin-bottom:1.8rem}.environment__label .name{font-size:2rem}.inline-logo{width:3.4rem;height:3.4rem;object-fit:contain;flex:none}.agent-logo{width:5.5rem;height:5.5rem;object-fit:contain}.environment .agent-logo{margin:1.5rem 0}
+.steps{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;font-size:1.2rem;color:var(--text-dim);line-height:1.5}.step-arrow{color:var(--accent)}
+.layer-model{max-width:70rem;width:100%;align-self:center}.orchestration-band{border:1px solid var(--border-yellow);background:rgba(240,180,41,.035);border-radius:10px;padding:1.2rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:2rem}.orchestration-band .name{color:var(--yellow);margin-bottom:.5rem}.orchestration-band .diagram{width:13rem;height:7rem;color:var(--yellow)}.layer-link{text-align:center;color:var(--yellow);font-size:2rem;line-height:1.7}.actor-line{display:flex;align-items:center;justify-content:center;gap:2rem}.actor-line .body-copy{margin-top:.5rem}.layer-model .environment__label{margin-bottom:0}
+.pattern-grid{grid-template-rows:1fr 1fr;gap:1.2rem;flex:1!important;min-height:0}.pattern-card{display:grid;grid-template-columns:32% 1fr;text-align:left;gap:1.6rem;padding:1.7rem;min-height:0}.pattern-card .diagram{height:8.5rem}.pattern-card .name{margin-bottom:.85rem}.pattern-card .body-copy{font-size:1.3rem}
+.version-list{display:flex;flex-direction:column;gap:1rem;width:100%;max-width:75rem;align-self:center}.version-file{display:flex;align-items:center;gap:1.4rem;border:1px solid var(--border-orange);background:rgba(255,109,59,.025);padding:1rem 1.6rem;border-radius:6px;color:var(--orange)}.version-file svg{width:2.4rem;height:2.8rem;flex:none}.version-filename{font-size:clamp(1.2rem,1.9vw,1.9rem);color:var(--text);font-weight:600;white-space:nowrap}.version-unknown{margin-left:auto;color:var(--orange);font-size:1.8rem;padding-left:1rem}
+.worktree-diagram{width:100%;display:flex;flex-direction:column}.root-node{display:flex;justify-content:center;align-items:center;gap:1.2rem;color:var(--gray)}.root-node .diagram{width:7rem;height:5rem}.root-node .name{font-size:1.7rem}.folder-node{padding:1rem;min-height:0}.folder-node .diagram{height:14vh}.folder-node .name{font-size:1.5rem}.worktree-diagram .diagram-caption{margin-top:1.4rem}
+.repository-boundary{position:relative;border:2px solid var(--border-gray);border-radius:0 18px 18px 18px;padding:2rem 2.4rem;margin-top:2.8rem}.repository-tab{position:absolute;top:-2.8rem;left:-2px;border:2px solid var(--border-gray);border-bottom:0;border-radius:12px 12px 0 0;padding:.6rem 1.7rem;height:2.8rem;background:var(--bg-card);font-family:Monaco,monospace;font-size:1rem;color:var(--gray)}.repository-heading{font-size:2rem;margin-bottom:1.5rem}.repository-boundary .media-card{border:0}
+.remote-flow{display:grid;grid-template-columns:1fr 11rem 1fr;align-items:center;gap:1rem}.remote-flow .media-card{min-height:38vh}.transfer{display:flex;flex-direction:column;gap:2.2rem;text-align:center}.transfer svg{width:100%;height:2.5rem}.transfer .body-copy{font-size:1.4rem}
+.area-model{padding:1.5rem}.area-model .grid-3{gap:1.2rem}.area-model .media-card{padding:1.2rem;justify-content:flex-start}.area-model .diagram{height:12vh}.area-english{font-family:Monaco,monospace;font-size:1.3rem;min-height:3.2rem;display:flex;align-items:center;justify-content:center;line-height:1.3}.area-verb{font-size:2.1rem;font-weight:800;margin:.7rem 0 .3rem}.area-model .body-copy{font-size:1.2rem}.area-model .name{font-size:1.6rem}
+.command-flow{display:grid;grid-template-columns:1fr .75fr 1fr .75fr 1fr .75fr 1fr;align-items:center;gap:.3rem}.command-node{text-align:center}.command-node .diagram{height:20vh}.command-node .name{font-size:1.3rem;color:var(--text)}.command-arrow{text-align:center;color:var(--brand)}.command-arrow svg{width:100%;height:3rem}.command-arrow code{white-space:nowrap;font-size:1.12rem;background:none;padding:0}.command-arrow .body-copy{font-size:1.1rem}.pull-flow{align-self:flex-end;display:flex;align-items:center;gap:1.8rem;padding:1.2rem 2rem;margin-top:2rem;border-top:1px solid var(--border);width:100%;color:var(--gray)}.pull-flow code{font-size:1.2rem;color:var(--gray);background:rgba(139,148,158,.08)}.pull-flow span{font-size:2rem}.pull-flow span:first-child{margin-right:auto}.pull-flow span:last-child{margin-left:auto}
+.commit-record{display:grid;grid-template-columns:36% 1fr;border:1px solid var(--border-gray);border-radius:10px;overflow:hidden}.commit-record__spine{background:var(--bg-card);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:2rem;color:var(--brand)}.commit-record__spine .diagram{height:12rem}.commit-record__spine .display{font-size:3rem}.commit-record__fields{padding:2rem 3rem;display:flex;flex-direction:column;gap:1.7rem}.commit-record__fields>div{display:flex;align-items:center;gap:1.5rem}.commit-record__fields svg{width:2rem;height:2.3rem;color:var(--gray)}.commit-record__fields .name{font-size:1.65rem}
+.branch-board{position:relative;width:100%;height:100%;min-height:38vh}.branch-art{position:absolute;width:100%;height:100%}.branch-label{position:absolute;left:54%;font-size:1.8rem;font-weight:700;background:var(--bg);padding:.2rem .8rem}.branch-label.original{top:20%;color:var(--brand)}.branch-label.separate{top:85%;color:var(--purple)}.branch-term{position:absolute;top:5%;left:6%;font-size:2.4rem;font-weight:800}.branch-term span{font-family:Monaco,monospace;font-size:1.2rem;color:var(--gray);margin-left:.6rem}.branch-mark{position:absolute;font-size:1.3rem;color:var(--gray);top:52%;background:var(--bg);padding:.2rem .5rem}.branch-mark.split{left:27%}.branch-mark.merge{left:78%;color:var(--green)}
+.comparison-art{width:100%;height:28vh}.comparison-conclusion{font-size:1.45rem;font-weight:700;color:var(--accent)}
+.orca-creation{display:flex;align-items:center;justify-content:center;gap:1.5rem}.orca-creation span{font-size:2rem;color:var(--gray)}
+@media(prefers-reduced-motion:reduce){.slide{transition:none}.anim-item{animation-duration:1ms!important}}
+
+.area-model .grid-3{position:relative}.area-model .grid-3::before,.area-model .grid-3::after{content:"→";position:absolute;top:48%;color:var(--gray);font-size:1.25rem;z-index:2;transform:translateX(-50%)}.area-model .grid-3::before{left:calc((100% - 2.4rem)/3 + .6rem)}.area-model .grid-3::after{left:calc((100% - 2.4rem)*2/3 + 1.8rem)}
+
+/* Preserve the complete human + three-terminal composition. */
+.scene:has(img[src*="three-terminals"]) .scene__image{left:35%;width:65%;mask-image:none;object-position:center}
+.scene:has(img[src*="three-terminals"]) .scene__copy{width:29%;left:3%}
+.scene:has(img[src*="three-terminals"]) .hero-statement{font-size:clamp(1.8rem,2.7vw,2.8rem)}
+.scene:has(img[src*="three-terminals"]) .hero-note{font-size:1.3rem}
+
+/* Diagrams for case-based v2 and concept-based v3. Base geometry and palette are shared. */
+.pair-title{font-family:GmarketSans,Pretendard,sans-serif;font-size:clamp(1.9rem,3vw,3rem);font-weight:700;line-height:1.3;color:var(--accent,var(--text))}
+.comparison-panel{min-height:38vh}.comparison-panel .diagram{height:20vh}
+.concept-fan .grid-2{align-items:stretch}.concept-fan .diagram-caption{margin-top:1.7rem}
+.artifact-project .root-node .diagram{width:6rem;height:5.7rem}.artifact-project .media-card{min-height:25vh}.artifact-project .diagram-caption{margin-top:1.6rem}
+.diagnosis{display:flex;flex-direction:column;gap:1.5rem}.diagnosis-row{display:grid;grid-template-columns:3.5rem 35% 1fr;align-items:center;gap:2rem;padding:1rem 0;border-bottom:1px solid var(--border)}
+.row-number{font-family:Monaco,monospace;color:var(--orange);font-size:1.5rem}.diagnosis-row>div:nth-child(2){display:flex;align-items:center;gap:1.2rem}.diagnosis-row .diagram{width:9rem;height:6rem;color:var(--orange)}.diagnosis-row .name{font-size:1.7rem}.diagnosis-cause{font-size:1.75rem;color:var(--text-dim);line-height:1.5}
+.lane-diagram{display:grid;grid-template-columns:17% 1fr 18%;align-items:center;gap:1rem}.lane-source,.lane-review{text-align:center}.lane-source .diagram,.lane-review .diagram{height:8rem;color:var(--gray)}.lane-source .name,.lane-review .name{font-size:1.5rem;line-height:1.4}.lane-rows{display:flex;flex-direction:column;gap:1rem}.lane{display:grid;grid-template-columns:8% 22% 1fr 8%;align-items:center;gap:.5rem;padding:1rem 0;border-bottom:1px solid var(--border)}.lane svg{width:100%;height:3rem}.lane .diagram{height:5.5rem}.lane .name{color:var(--text);font-size:1.55rem;margin-bottom:.45rem}.lane .body-copy{font-size:1.2rem}
+.handoff-gap{display:grid;grid-template-columns:1fr 30% 1fr;align-items:center;gap:1.3rem}.handoff-gap .media-card{min-height:32vh}.handoff-gap .name{font-size:1.7rem;line-height:1.4}.handoff-human{color:var(--orange);text-align:center}.handoff-human .diagram{height:9rem}.handoff-human svg:last-child{width:100%;height:3rem;margin-top:1rem}
+.inspection-checks{display:flex;align-items:center;gap:3rem;justify-content:center}.inspection-checks .diagram{height:7rem;width:9rem}.inspection-checks>div{display:flex;gap:2.5rem}.check-question{font-size:1.45rem;color:var(--yellow);line-height:1.4}
+.collision-target{display:flex;justify-content:center;align-items:center;gap:2.5rem;color:var(--orange)}.collision-target .diagram{width:14rem;height:8rem}.collision-target .name{font-size:1.8rem;margin-bottom:.5rem}.collision-diagram .terminal__art{height:6rem}
+.workflows{display:flex;flex-direction:column;gap:1.8rem}.workflow-row{display:grid;grid-template-columns:18% 1fr;gap:2rem;align-items:center;padding:1.3rem 0;border-bottom:1px solid var(--border)}.workflow-label{text-align:center}.workflow-label .diagram{height:5.7rem}.workflow-label .pair-title{color:inherit}.workflow-stages{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}.workflow-stages>div{position:relative;border-top:3px solid currentColor;padding-top:1.5rem}.workflow-stages .name{font-size:1.65rem;color:var(--text);line-height:1.4}.workflow-stages>div:not(:last-child)::after{content:'→';position:absolute;right:-1.5rem;top:1.3rem;font-size:1.5rem}
+.prerequisite-diagram{width:min(64rem,100%);align-self:center}.prerequisite-top,.prerequisite-base{display:flex;align-items:center;gap:2.5rem;padding:2rem;border:1px solid var(--border-gray);border-radius:10px;background:var(--bg-card)}.prerequisite-top{border-color:var(--border-yellow);background:rgba(240,180,41,.03);color:var(--yellow)}.prerequisite-top .diagram{width:13rem;height:8rem}.prerequisite-top .name{color:var(--yellow)}.prerequisite-diagram .name{font-size:1.85rem;margin-bottom:.7rem}.prerequisite-base .inline-logo{width:5.5rem;height:5.5rem}
+.pattern-routing{display:flex;flex-direction:column;gap:.6rem}.pattern-route{display:grid;grid-template-columns:18% 24% 1fr;align-items:center;gap:2rem;padding:.55rem 1rem;border-bottom:1px solid var(--border)}.pattern-route .diagram{height:5.5rem}.pattern-route .name{color:inherit;font-size:1.65rem;line-height:1.3}.pattern-route .body-copy{font-size:1.35rem}
+.record-evidence{display:grid;grid-template-columns:42% 1fr;gap:3rem;align-items:center}.record-art{text-align:center}.record-art .diagram{height:28vh}.record-art .name{font-size:2rem;margin-top:1.2rem}.record-rows{display:flex;flex-direction:column;gap:1.6rem}.record-row{border-bottom:1px solid var(--border);padding-bottom:1.5rem}.record-row .micro{color:var(--yellow);font-size:1.2rem;margin-bottom:.6rem}.record-row .name{font-size:1.8rem}
+.history-return{position:relative;height:38vh}.history-return__art{position:absolute;width:100%;height:100%}.history-states{position:absolute;left:0;right:0;top:6%;display:flex;justify-content:space-between;padding:0 5%}.history-states .name{font-size:1.55rem}.history-return__label{position:absolute;left:50%;bottom:8%;transform:translateX(-50%);background:var(--bg);padding:0 1rem;color:var(--green);font-size:1.6rem}
+.tool-place .media-card .name{font-size:1.65rem;margin-top:.8rem}.repository-boundary>.name{font-size:2rem;margin-bottom:1.5rem}.repository-boundary .media-card{min-height:26vh}
+.change-location{display:flex;flex-direction:column;gap:2rem}.change-location .media-card{min-height:25vh}.change-location .media-card--gray{opacity:.55}.active-detail{display:flex;gap:2rem;align-items:center;border-left:3px solid var(--brand);padding:1rem 1.5rem}.active-detail .micro{color:var(--brand);font-size:1.4rem}.active-detail .name{font-size:1.9rem}
+.commit-envelope{display:grid;grid-template-columns:35% 1fr;border:1px solid var(--border-gray);border-radius:12px;background:var(--bg-card);overflow:hidden}.commit-seal{display:flex;flex-direction:column;justify-content:center;align-items:center;padding:2rem;color:var(--brand);border-right:1px solid var(--border)}.commit-seal .diagram{height:10rem}.commit-seal .pair-title{font-size:2.4rem;color:var(--brand)}.commit-fields{padding:2rem 2.5rem;display:flex;flex-direction:column;gap:1.6rem}.commit-fields>.name{font-size:1.8rem;color:var(--yellow);margin-bottom:.3rem}.commit-fields>div{display:flex;align-items:center;gap:1.5rem}.commit-fields svg{width:2rem;height:2.3rem;color:var(--gray)}.commit-fields>div .name{font-size:1.55rem;line-height:1.4}
+.transfer code{font-size:1.25rem;background:none}.transfer>div:last-child code{color:var(--gray)}
+.journey{position:relative;gap:1.5rem}.journey .media-card{min-height:32vh;padding:1.3rem 1rem}.journey .diagram{height:15vh}.journey .name{font-size:1.6rem}.journey-detail{font-family:Monaco,Pretendard,sans-serif;color:var(--accent);font-size:1.2rem;line-height:1.4}
+.next-concept{display:flex;flex-direction:column;align-items:stretch;width:min(70rem,100%);align-self:center}.next-concept__foundation,.next-concept__new{display:flex;gap:2.5rem;align-items:center;padding:1.5rem 3rem;border:1px solid var(--border-gray);border-radius:10px;background:var(--bg-card)}.next-concept__foundation{color:var(--gray)}.next-concept__new{border-color:var(--border-brand);color:var(--brand);background:rgba(252,28,73,.03)}.next-concept .diagram{width:13rem;height:7rem}.next-concept .pair-title{color:var(--brand);font-size:2.1rem}.next-concept .name{font-size:1.8rem;line-height:1.4}
+.branch-case{position:relative;min-height:34vh;flex:1}.branch-case .branch-art{position:absolute;inset:0;width:100%;height:100%}.branch-case__original,.branch-case__separate{position:absolute;left:53%;padding:.3rem .8rem;background:var(--bg);font-size:1.7rem;font-weight:700}.branch-case__original{top:16%;color:var(--brand)}.branch-case__separate{bottom:1%;color:var(--purple)}
+.open-folders{display:flex;flex-direction:column}.open-folders .branch-option{min-height:0;padding:.8rem}.branch-option .diagram{height:6rem}.branch-option .name{font-size:1.5rem}.open-folder-lines{width:100%;height:7vh}.single-folder{display:flex;align-items:center;justify-content:center;gap:2rem}.single-folder .diagram{width:11rem;height:7rem}.single-folder .name{font-size:1.7rem}.open-folders .folder-node .diagram{height:9vh}.open-folders .folder-node{padding:.8rem;min-height:0}
+.choice-rows{display:flex;flex-direction:column;gap:2rem}.choice-row{display:grid;grid-template-columns:45% 10% 1fr;gap:1rem;align-items:center;border-bottom:1px solid var(--border);padding:1.5rem 0}.choice-row>.choice-arrow{font-size:3rem;color:var(--gray);text-align:center}.choice-row .name{font-size:1.85rem;line-height:1.4}.choice-row .pair-title{color:var(--brand);font-size:2.35rem}.choice-row:nth-child(2) .pair-title{color:var(--purple)}.choice-row .body-copy{margin-top:.75rem}
+.orca-provision__top{display:flex;align-items:center;justify-content:center;gap:1.2rem}.orca-provision__top .name{font-size:1.9rem}.provision-method{text-align:center;color:var(--gray);font-size:1.5rem;margin-top:1.4rem}.orca-provision .folder-node .diagram{height:16vh}
+.criteria-gate .media-card{min-height:22vh}.criteria-gate .diagram{height:8rem}.criteria-result{display:flex;align-items:center;justify-content:center;gap:2rem;color:var(--brand)}.criteria-result .diagram{width:10rem;height:7rem}.criteria-result .pair-title{font-size:2.2rem;color:var(--brand)}
+.response-rows{display:flex;flex-direction:column;gap:1.4rem}.response-row{display:grid;grid-template-columns:3rem 35% 10% 1fr;align-items:center;gap:1rem;padding:1.5rem 0;border-bottom:1px solid var(--border)}.row-arrow{width:100%;height:2.8rem;color:var(--gray)}.response-row .name{font-size:1.7rem;line-height:1.4}.response-row>div:last-child .name{color:var(--brand)}.response-row:nth-child(2)>div:last-child .name{color:var(--purple)}.response-row:nth-child(3)>div:last-child .name{color:var(--yellow)}
+.boundary-stack{display:flex;flex-direction:column;gap:1.3rem}.boundary-row{border-left:3px solid var(--accent);border-bottom:1px solid var(--border);padding:.7rem 1.5rem;display:flex;align-items:center;gap:3rem;color:var(--accent)}.boundary-row .diagram{width:12rem;height:6.3rem}.boundary-row .name{font-size:1.8rem;color:var(--text);margin-bottom:.5rem}
+.visibility-observer{display:flex;align-items:center;justify-content:center;gap:2rem}.visibility-observer .diagram{width:9rem;height:6.5rem;color:var(--yellow)}.visibility-observer .name{font-size:1.9rem}.visibility-map .terminal__art{height:7rem}
+.definition-equation{display:grid;grid-template-columns:26% 10% 1fr;align-items:center;gap:2rem}.definition-equation>div:first-child{display:flex;flex-direction:column;gap:2rem;align-items:center}.definition-equation img{width:9rem;height:9rem}.definition-equation .display{font-size:4rem}.equation-equals{font-size:4rem;text-align:center;color:var(--gray)}.definition-primary{font-size:clamp(2rem,3.5vw,3.4rem);font-weight:800;line-height:1.3;margin-bottom:1.2rem}
+.missing-file{display:flex;align-items:center;gap:2rem;padding:1.5rem;border:1px solid var(--border-orange);border-radius:8px;color:var(--orange);margin-bottom:2rem}.missing-file svg{width:2.5rem;height:3rem;flex:none}.missing-evidence .media-card{min-height:22vh}.missing-evidence .display{font-size:3.2rem}
+.two-dimensions{display:flex;flex-direction:column;gap:2rem}.dimension-row{display:grid;grid-template-columns:18% 22% 1fr;align-items:center;gap:2rem;border-bottom:1px solid var(--border);padding:1.5rem 0}.dimension-row .pair-title{font-size:2.1rem;color:var(--brand)}.dimension-row:nth-child(2) .pair-title{color:var(--yellow)}.dimension-row .diagram{height:8rem;color:var(--gray)}.dimension-row .name{font-size:1.9rem;line-height:1.4}
+.command-grid{grid-template-rows:1fr 1fr;gap:1.5rem}.command-panel{display:grid;grid-template-columns:40% 1fr;gap:1rem;text-align:left;padding:1.6rem;min-height:0}.command-panel .diagram{height:10rem}.command-panel .pair-title{font-family:Monaco,monospace;font-size:1.7rem;margin-bottom:1rem}.command-panel .name{font-size:1.65rem}
+@media(min-width:1600px){.pattern-route{padding:1rem 1.5rem}.pattern-route .diagram{height:6.5rem}}
+
+.journey{gap:.8rem}.journey-arrow{display:flex;align-items:center;justify-content:center;width:1.7rem}.journey-arrow svg{width:100%;height:2rem}
+
+[data-visual="actor-enclosure"] .environment{padding:1.5rem}
+[data-visual="actor-enclosure"] .media-card{min-height:26vh;padding:1.5rem}
+[data-visual="actor-enclosure"] .agent-logo{margin:.75rem 0}
+.workflow-stages>div:not(:last-child)::after{right:0}
+
+.choice-arrow svg{width:3rem;height:2.5rem}
+
+/* SCENE_IMAGE: dimensions from base-template.html pattern 1 (template remains untouched). */
+.slide__body:has(> .scene){container-type:size}
+.scene{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.65fr);gap:clamp(1.5rem,3vw,3rem);align-items:center;width:min(100%,92rem);height:auto;min-height:0;margin-inline:auto;align-self:center;overflow:visible;border-radius:0;background:transparent}
+.scene__image{position:static;inset:auto;grid-column:2;grid-row:1;display:block;width:100%;height:min(78cqh,34rem);min-height:15rem;object-fit:contain;object-position:center;mask-image:none;-webkit-mask-image:none;transform:none;border:0;border-radius:0;box-shadow:none;background:transparent}
+.scene__copy{position:static;inset:auto;grid-column:1;grid-row:1;width:auto;min-width:0;display:flex;flex-direction:column;gap:clamp(1.3rem,3vh,2.5rem);z-index:1;transform:none;word-break:keep-all;overflow-wrap:normal}
+
+/* Repository flow: neutral areas, document states, actions on connecting arrows. */
+.rf{width:min(100%,92rem);margin-inline:auto;min-width:0}
+.rf-title{font-family:Pretendard,sans-serif;font-size:clamp(1.5rem,2.2vw,2.25rem);font-weight:800;line-height:1.35;letter-spacing:-.025em}
+.rf-copy{font-size:clamp(1.1rem,1.6vw,1.42rem);line-height:1.6;color:var(--text-dim)}
+.rf-statement{font-family:Pretendard,sans-serif;font-size:clamp(2rem,3.8vw,3.7rem);font-weight:850;line-height:1.35;letter-spacing:-.035em}
+.rf-statement strong{display:block;color:var(--brand);font-weight:900}
+.rf-icon{display:block;width:100%;height:100%;flex:none}
+.rf-foot{font-size:clamp(1.1rem,1.6vw,1.42rem);line-height:1.55;color:var(--text-dim);text-align:center;margin-top:clamp(1.2rem,3vh,2.4rem)}
+.rf-foot strong{font-weight:650;color:var(--text)}
+.rf-cover{display:grid;grid-template-columns:1fr 1.35fr;align-items:center;gap:clamp(2rem,5vw,6rem)}
+.rf-cover-art{display:flex;flex-direction:column;align-items:center;gap:1.5rem;color:var(--gray)}
+.rf-cover-files{display:flex;width:100%;height:clamp(13rem,34vh,26rem);gap:2rem;align-items:center}
+.rf-cover-files>.rf-icon{width:42%;height:90%;color:var(--brand)}
+.rf-cover-files>.rf-arrow-art{width:17%;color:var(--gray)}
+.rf-cover-files>.rf-cover-record{height:100%;flex:1;display:grid;align-content:center;gap:.8rem}
+.rf-cover-record>.rf-icon{height:clamp(8rem,18vh,14rem);color:var(--gray)}
+.rf-cover-record .rf-title{text-align:center}
+.rf-history{width:100%;display:flex;justify-content:space-between;position:relative;margin-top:1rem}
+.rf-history::before{content:"";position:absolute;left:.5rem;right:.5rem;top:.5rem;border-top:2px solid var(--gray)}
+.rf-history span{display:flex;align-items:center;flex-direction:column;gap:1rem;color:var(--gray);font-size:1.15rem;z-index:1}
+.rf-history span::before{content:"";width:1.1rem;height:1.1rem;border:2px solid currentColor;background:var(--bg);border-radius:50%}
+.rf-history span:last-child{color:var(--brand)}
+.rf-local{padding:clamp(1.1rem,2vw,2rem);border:1px solid var(--border-gray);border-radius:10px;min-width:0}
+.rf-location-label{display:flex;align-items:center;gap:.75rem;color:var(--gray);font-size:1.2rem;font-weight:700;margin-bottom:clamp(1rem,2vh,1.6rem)}
+.rf-location-label>.rf-icon{width:2.2rem;height:1.8rem}
+.rf-map{display:grid;grid-template-columns:minmax(0,1fr) 5.5rem minmax(0,1fr) 5.5rem minmax(0,1fr);align-items:stretch;gap:.6rem}
+.rf-zone{border-top:2px solid var(--gray);padding:1.25rem .8rem 1rem;display:flex;flex-direction:column;align-items:center;text-align:center;min-width:0}
+.rf-area-title{font-size:clamp(1.35rem,1.9vw,1.75rem);font-weight:800;line-height:1.35;letter-spacing:-.025em;white-space:nowrap}
+.rf-en{color:var(--text-dim);font-size:1rem;line-height:1.4;margin-top:.45rem;white-space:nowrap}
+.rf-area-art{height:clamp(7rem,17vh,12.5rem);width:100%;color:var(--gray);margin:1.4rem 0 1rem}
+.rf-zone-copy{font-size:clamp(1.05rem,1.45vw,1.3rem);line-height:1.5;color:var(--text-dim)}
+.rf-action{align-self:center;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.55rem;color:var(--gray);min-width:0}
+.rf-action code{font-family:Monaco,monospace;white-space:nowrap;background:none;padding:0;color:var(--text);font-size:1.05rem;line-height:1.4}
+.rf-action span{font-size:1.05rem;line-height:1.4;color:var(--text-dim)}
+.rf-arrow-art{display:block;width:100%;height:1.65rem;overflow:visible}
+.rf-action--active{color:var(--brand)}.rf-action--active code{color:var(--brand)}
+.rf-track{display:grid;grid-template-columns:1fr 6rem 1fr 6rem 1fr;gap:1rem;align-items:center;width:100%;padding:0 0 1.1rem;border-bottom:1px solid var(--border)}
+.rf-track-area{font-weight:750;color:var(--gray);font-size:1.4rem;text-align:center;white-space:nowrap}
+.rf-track .rf-action{gap:.1rem}.rf-track .rf-action span{display:none}
+.rf-document{width:100%;max-width:19rem;margin-top:1.6rem;border-left:2px solid var(--gray);padding:.4rem 0 .4rem 1.1rem;text-align:left}
+.rf-filename{display:flex;gap:.55rem;align-items:center;color:var(--gray);font-size:1.05rem;white-space:nowrap}
+.rf-filename>.rf-icon{width:1.5rem;height:1.8rem}
+.rf-document-copy{font-size:clamp(1.45rem,2vw,1.85rem);font-weight:700;line-height:1.5;margin-top:1.15rem;letter-spacing:-.025em}
+.rf-document-copy em{font-style:normal;color:var(--orange)}
+.rf-status{display:flex;align-items:center;justify-content:center;gap:.4rem;margin-top:1.7rem;line-height:1.45;color:var(--state);white-space:nowrap;font-size:1.12rem}
+.rf-status--modified{--state:var(--orange)}.rf-status--staged{--state:var(--yellow)}.rf-status--committed{--state:var(--green)}
+.rf-status-icon{width:1.3rem;height:1.3rem;flex:none;stroke-width:1.8}
+.rf-status span{font-size:.9rem}.rf-status strong{font-weight:700}
+.rf-empty{color:var(--gray);display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:.75rem;min-height:12rem;font-size:1.1rem}
+.rf-empty>.rf-icon{height:5.7rem;width:7.8rem}
+.rf-staging{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);align-items:center;gap:3rem;margin-top:clamp(1.2rem,3vh,3rem)}
+.rf-staging-copy{display:flex;flex-direction:column;gap:1.3rem}.rf-staging-copy .rf-status{justify-content:flex-start;margin:0}
+.rf-staging-image{display:block;width:100%;height:clamp(17rem,40vh,33rem);object-fit:contain;border:0;background:none;box-shadow:none;border-radius:0}
+.rf-commit{display:grid;grid-template-columns:35% 1fr;align-items:stretch;margin:clamp(1.5rem,3vh,3rem) auto 0;width:min(100%,73rem);border:1px solid var(--border-gray);border-radius:10px;overflow:hidden}
+.rf-commit-symbol{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;padding:1.6rem;color:var(--gray)}
+.rf-commit-symbol>.rf-icon{height:clamp(6rem,14vh,11rem);width:100%}.rf-commit-symbol .rf-title{color:var(--text)}.rf-commit-symbol .rf-status{margin-top:.7rem}
+.rf-commit-fields{padding:clamp(1.5rem,3vw,3rem);border-left:1px solid var(--border);display:flex;flex-direction:column;justify-content:center;gap:1.25rem}
+.rf-field{display:grid;grid-template-columns:7.5rem 1fr;gap:1rem;align-items:baseline}.rf-field dt{color:var(--text-dim);font-size:1.1rem}.rf-field dd{font-size:clamp(1.25rem,1.7vw,1.65rem);font-weight:700;line-height:1.4}
+.rf-state-legend{display:flex;justify-content:space-between;gap:1.5rem;align-items:baseline;margin-bottom:1.5rem}.rf-state-legend strong{font-size:1.4rem;font-weight:750}.rf-state-legend span{color:var(--text-dim);font-size:1.1rem}
+.rf-remote{display:grid;grid-template-columns:minmax(0,1fr) minmax(13rem,.7fr) minmax(0,1fr);gap:2rem;align-items:stretch}
+.rf-remote-place{border:1px solid var(--border-gray);border-radius:10px;padding:clamp(1.5rem,3vw,3rem);display:flex;flex-direction:column;align-items:center;text-align:center;min-width:0}
+.rf-remote-place>.rf-icon{height:clamp(8rem,20vh,15rem);color:var(--gray);margin:1rem 0 1.5rem}
+.rf-remote-place>.rf-copy{margin-top:1rem}
+.rf-transfers{display:flex;flex-direction:column;justify-content:center;gap:3.2rem}
+.rf-transfer{text-align:center;display:flex;flex-direction:column;gap:.6rem;color:var(--gray)}
+.rf-transfer code{font-size:1.4rem;background:none;color:var(--text);padding:0}.rf-transfer p{font-size:1.15rem;line-height:1.45;color:var(--text-dim)}
+/* One continuous journey: four peers, location as a tag. */
+.rf-journey{--journey-link:clamp(5.5rem,9vw,8rem);--journey-tag:2rem;--journey-gap:1.25rem;--journey-art:clamp(8rem,17vh,13rem);display:grid;grid-template-columns:minmax(0,1fr) var(--journey-link) minmax(0,1fr) var(--journey-link) minmax(0,1fr) var(--journey-link) minmax(0,1fr);align-items:stretch}
+.rf-journey-step{min-width:0;text-align:center}
+.rf-journey-step--edit{--journey-color:var(--brand)}
+.rf-journey-step--stage,.rf-journey-link--stage{--journey-color:var(--yellow)}
+.rf-journey-step--record,.rf-journey-link--record{--journey-color:var(--green)}
+.rf-journey-step--remote,.rf-journey-link--remote{--journey-color:var(--purple)}
+.rf-journey-place{display:flex;align-items:center;justify-content:center;width:max-content;height:var(--journey-tag);margin:0 auto;padding:0 .85rem;border:1px solid rgba(139,148,158,.28);border-radius:999px;background:rgba(139,148,158,.04);font-size:clamp(.9rem,1.15vw,1.1rem);font-weight:500;line-height:1;color:var(--text-dim);white-space:nowrap}
+.rf-journey-art{height:var(--journey-art);margin-top:var(--journey-gap);color:var(--journey-color)}
+.rf-journey-verb{margin:1.15rem 0 .45rem;color:var(--journey-color)}
+.rf-journey-area{white-space:nowrap}
+.rf-journey-link{position:relative;min-width:0;color:var(--journey-color)}
+.rf-journey-link code{position:absolute;left:50%;top:calc(var(--journey-tag) + var(--journey-gap) + var(--journey-art) * .5 - 1rem);transform:translate(-50%,-100%);padding:0;background:none;color:inherit;font-size:clamp(1rem,1.4vw,1.2rem);line-height:1.35;white-space:nowrap}
+.rf-journey-arrow{position:absolute;left:0;right:0;top:calc(var(--journey-tag) + var(--journey-gap) + var(--journey-art) * .5);border-top:2px solid currentColor}
+.rf-journey-arrow::after{content:"";position:absolute;right:1px;top:-6px;width:10px;height:10px;border-top:2px solid currentColor;border-right:2px solid currentColor;transform:rotate(45deg)}
+@media(max-height:850px){.rf-staging{gap:2rem;margin-top:1rem}.rf-staging-image{height:19rem}.rf-staging-copy{gap:1rem}.rf-commit{margin-top:1.5rem}.rf-commit-fields{gap:1rem}.rf-document{margin-top:1.2rem}.rf-status{margin-top:1.25rem}.rf-state-legend{margin-bottom:1rem}}
+
+
+@media(max-height:850px){[data-visual="repo-states"] .rf-local{padding:1.1rem}[data-visual="repo-states"] .rf-foot{margin-top:1rem}}
+
+/* User correction: repository comparison first, one concept per page. */
+.rf-repo-compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(1.5rem,3vw,3rem)}
+.rf-repo-half{border:1px solid var(--border-gray);border-radius:10px;display:flex;flex-direction:column;align-items:center;padding:clamp(1.5rem,3vh,2.5rem);text-align:center;min-width:0}
+.rf-repo-en{color:var(--text-dim);font-size:1.1rem;line-height:1.5;min-height:1.65rem;margin-top:.3rem}
+.rf-repo-art{display:block;width:100%;height:clamp(13rem,32vh,26rem);color:var(--text);margin:.5rem 0}
+.rf-repo-caption{font-size:clamp(1.25rem,1.9vw,1.75rem);font-weight:700;line-height:1.45;letter-spacing:-.02em}
+.rf-staging--simple{margin-top:0;grid-template-columns:1fr 1.65fr}
+.rf-staging--simple .rf-staging-image{height:min(54vh,34rem)}
+.rf-dimensions{display:flex;flex-direction:column;gap:clamp(1.5rem,4vh,3.5rem)}
+.rf-dimension-row{display:grid;grid-template-columns:26% 1fr;gap:2.5rem;align-items:center;padding:1rem 0}
+.rf-dimension-row:first-child{border-bottom:1px solid var(--border);padding-bottom:clamp(1.2rem,3vh,2.5rem)}
+.rf-dimension-title .rf-copy{margin-top:.55rem;font-size:1.15rem;white-space:nowrap}
+.rf-dimension-items{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2rem}
+.rf-dimension-node{display:flex;flex-direction:column;align-items:center;gap:.65rem;color:var(--gray);text-align:center;min-width:0}
+.rf-dimension-node>.rf-icon{height:clamp(5rem,12vh,10rem);width:100%}
+.rf-dimension-node>p{font-size:clamp(1.25rem,1.8vw,1.6rem);font-weight:750;line-height:1.4;white-space:nowrap}
+.rf-dimension-node--modified{color:var(--orange)}.rf-dimension-node--staged{color:var(--yellow)}.rf-dimension-node--committed{color:var(--green)}
+.rf-dimensions .rf-title{font-size:clamp(1.8rem,2.8vw,2.8rem)}
+
+
+/* User-selected accent distinguishes the repository from an ordinary folder. */
+.rf-repo-half--git{border-color:rgba(var(--brand-rgb),.45);background:rgba(var(--brand-rgb),.05)}
+.rf-repo-half--git>.rf-title{color:var(--brand)}
+
+/* Three fixed area diagrams: highlight only the current explanation. */
+.rf-area-step .rf-zone{opacity:.6}
+.rf-area-step .rf-zone--focused{opacity:1;border-top-color:var(--brand);background:rgba(var(--brand-rgb),.045)}
+.rf-area-step .rf-zone--focused .rf-area-title,.rf-area-step .rf-zone--focused .rf-area-art{color:var(--brand)}
+.rf-area-step .rf-area-art [stroke="var(--brand)"]{stroke:currentColor}
+.rf-area-step .rf-area-art{height:clamp(7rem,15vh,12rem);margin:1.2rem 0 .85rem}
+.rf-area-step .rf-zone-copy{white-space:nowrap}
+.rf-area-detail{font-size:clamp(1.1rem,1.6vw,1.42rem);font-weight:500;line-height:1.55;color:var(--text);text-align:center;white-space:nowrap;margin-top:1.4rem;min-height:1.55em}
+
+/* Static comparison pages: no entry delay or crossfade on slides 4–5. */
+.slide[data-motion="none"],#deck.instant-transition .slide{transition:none}
+.slide[data-motion="none"] .anim-item{opacity:1;animation:none;transform:none}
+/* Local/remote scene keeps the existing card geometry and labels. */
+.rf-remote-place--local{background:rgba(var(--brand-rgb),.045);border-color:rgba(var(--brand-rgb),.35)}
+.rf-remote-place--local>.rf-icon{color:var(--brand)}
+.rf-transfer--push,.rf-transfer--push code{color:var(--brand)}
+.rf-transfer--pull code{color:var(--gray)}
+.rf-transfer-line{display:block;position:relative;width:100%;height:1.65rem}
+.rf-transfer-line::before{content:"";position:absolute;left:0;right:0;top:50%;border-top:2px solid currentColor}
+.rf-transfer-line::after{content:"";position:absolute;right:1px;top:calc(50% - 4px);width:10px;height:10px;border-top:2px solid currentColor;border-right:2px solid currentColor;transform:rotate(45deg)}
+.rf-transfer-line--left::after{right:auto;left:1px;transform:rotate(-135deg)}
+/* Place command labels above the existing arrows without moving the diagram. */
+.rf-area-step .rf-action{position:relative}
+.rf-area-step .rf-action code{position:absolute;bottom:calc(100% + .55rem);left:50%;transform:translateX(-50%);width:max-content}
+</style></head><body>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress"></div>
+    </div>
+    <button class="nav-btn" id="btn-prev" aria-label="이전 슬라이드">
+      &#8592;
+    </button>
+    <button class="nav-btn" id="btn-next" aria-label="다음 슬라이드">
+      &#8594;
+    </button>
+    <div class="dot-nav" id="dot-nav"></div>
+    <div class="slide-counter">
+      <span id="cur">1</span> / <span id="tot">10</span>
+    </div>
+
+    <div class="slide-deck" id="deck"><!-- 발표 노트: 저장소는 프로젝트 파일과 변경 이력을 함께 관리하는 곳입니다. --><article class="slide active" data-index="0" data-visual="repo-cover"><header class="slide__header"><span class="slide__label">Part 3 · Ch01-02 · 저장소와 작업흐름</span><h1 class="slide__title">저장소와 <span class="hl">작업흐름</span></h1><p class="slide__sub">Git 저장소와 변경을 기록하는 과정을 살펴봅니다.</p></header><main class="slide__body"><div class="rf rf-cover"><p class="rf-statement anim-item">파일의 변경이<strong>기록으로 남기까지</strong></p><div class="rf-cover-art anim-item"><div class="rf-cover-files"><svg class="rf-icon" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M33 13H76L98 35V104H33ZM76 13V35H98M47 51H74M47 67H64"/><path d="M79 93L84 75L126 33L139 46L97 88ZM120 40L132 52M79 93L97 88" stroke="var(--brand)"/></svg><svg class="rf-arrow-art" viewBox="0 0 100 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12H94M86 5L94 12L86 19"/></svg><div class="rf-cover-record"><svg class="rf-icon" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 30V16H63L77 30H142V103H19ZM19 43H142"/><path d="M69 51H91L106 66V93H69ZM91 51V66H106M79 76H96M79 85H93"/></svg><p class="rf-title">변경 이력</p></div></div><div class="rf-history" aria-label="순서대로 남긴 버전"><span>v1</span><span>v2</span><span>v3</span></div></div></div></main><footer class="slide__footer"><img src="/assets/fastcampus-logo-dark.svg" class="fastcampus-logo" alt="FastCampus"></footer></article>
+<article class="slide" data-index="1" data-visual="repo-definition"><header class="slide__header"><span class="slide__label">Part 3 · Ch01-02 · 저장소와 작업흐름</span><h1 class="slide__title"><span class="hl">저장소</span>란</h1><p class="slide__sub">Git 저장소는 프로젝트 파일과 그 변경 이력을 함께 관리합니다.</p></header><main class="slide__body"><div class="rf rf-repo-compare"><section class="rf-repo-half anim-item"><h2 class="rf-title">일반 폴더</h2><span class="rf-repo-en" aria-hidden="true">&nbsp;</span><svg class="rf-repo-art" viewBox="0 0 480 325" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M45 79V40H180L211 79H435V290H45ZM45 102H435" stroke="var(--gray)" stroke-width="4"/><g transform="translate(139 120)"><path d="M0 0H38L54 16V83H0ZM38 0V16H54M12 33H42M12 48H40M12 63H31"/></g><g transform="translate(215 120)"><path d="M0 0H38L54 16V83H0ZM38 0V16H54M12 33H42M12 48H40M12 63H31"/></g><g transform="translate(291 120)"><path d="M0 0H38L54 16V83H0ZM38 0V16H54M12 33H42M12 48H40M12 63H31"/></g></svg><p class="rf-repo-caption">현재 파일을 보관</p></section><section class="rf-repo-half rf-repo-half--git anim-item"><h2 class="rf-title">Git 저장소</h2><span class="rf-repo-en">Repository</span><svg class="rf-repo-art" viewBox="0 0 480 325" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="일반 프로젝트 파일과 오른쪽 아래의 작은 .git 숨김 폴더가 함께 있는 Git 저장소"><path d="M45 79V40H180L211 79H435V290H45ZM45 102H435" stroke="var(--brand)" stroke-width="4"/><g transform="translate(139 120)"><path d="M0 0H38L54 16V83H0ZM38 0V16H54M12 33H42M12 48H40M12 63H31"/></g><g transform="translate(215 120)"><path d="M0 0H38L54 16V83H0ZM38 0V16H54M12 33H42M12 48H40M12 63H31"/></g><g transform="translate(291 120)"><path d="M0 0H38L54 16V83H0ZM38 0V16H54M12 33H42M12 48H40M12 63H31"/></g><g class="rf-dotgit-folder" opacity="0.38"><path d="M320 236V225H349L359 236H408V271H320ZM320 246H408" fill="none" stroke="var(--gray)" stroke-width="2.5" stroke-dasharray="5 4"/><text x="364" y="263" text-anchor="middle" stroke="none" fill="var(--text)" font-family="Monaco, monospace" font-size="22" font-weight="500">.git</text></g></svg><p class="rf-repo-caption">파일과 변경 이력을 함께 관리</p></section></div></main><footer class="slide__footer"><img src="/assets/fastcampus-logo-dark.svg" class="fastcampus-logo" alt="FastCampus"></footer></article>
+<article class="slide" data-index="2" data-visual="repo-area-step" data-area-step="0"><header class="slide__header"><span class="slide__label">Part 3 · Ch01-02 · 저장소와 작업흐름</span><h1 class="slide__title">버전 관리를 위한 <span class="hl">3 단계</span></h1><p class="slide__sub">Git의 기본 작업은 작업 → 스테이징 → 커밋의 3단계로 이루어집니다.</p></header><main class="slide__body"><div class="rf rf-area-step anim-item"><div class="rf-local"><p class="rf-location-label"><svg class="rf-icon" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="20" y="13" width="120" height="79" rx="5"/><path d="M20 92L7 110H153L140 92M65 104H96"/></svg>내 컴퓨터</p><div class="rf-map"><section class="rf-zone rf-zone--focused" aria-current="step"><h2 class="rf-area-title">작업 디렉토리</h2><p class="rf-en">Working Directory</p><div class="rf-area-art"><svg class="rf-icon" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M33 13H76L98 35V104H33ZM76 13V35H98M47 51H74M47 67H64"/><path d="M79 93L84 75L126 33L139 46L97 88ZM120 40L132 52M79 93L97 88" stroke="var(--brand)"/></svg></div><p class="rf-zone-copy">실제 파일을 작업하는 유일한 공간</p></section><div class="rf-action"><code>git add</code><svg class="rf-arrow-art" viewBox="0 0 100 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12H94M86 5L94 12L86 19"/></svg><span>선택</span></div><section class="rf-zone"><h2 class="rf-area-title">스테이징 영역</h2><p class="rf-en">Staging Area / Index</p><div class="rf-area-art"><svg class="rf-icon" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M30 65V105H131V65M30 65L57 83H103L131 65"/><path d="M60 12H95L114 31V76H60ZM95 12V31H114M72 46H101M72 60H94"/><path d="M40 31H50M40 46H50"/></svg></div><p class="rf-zone-copy">다음 커밋을 준비하는 공간</p></section><div class="rf-action"><code>git commit</code><svg class="rf-arrow-art" viewBox="0 0 100 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12H94M86 5L94 12L86 19"/></svg><span>기록</span></div><section class="rf-zone"><h2 class="rf-area-title">Git 저장소</h2><p class="rf-en">Repository</p><div class="rf-area-art"><svg class="rf-icon" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 30V16H63L77 30H142V103H19ZM19 43H142"/><path d="M69 51H91L106 66V93H69ZM91 51V66H106M79 76H96M79 85H93"/></svg></div><p class="rf-zone-copy">변경사항이 영구적으로 기록되는 공간</p></section></div></div><p class="rf-area-detail">파일을 만들고, 수정하고, 삭제하며 실제 작업을 진행합니다.</p></div></main><footer class="slide__footer"><img src="/assets/fastcampus-logo-dark.svg" class="fastcampus-logo" alt="FastCampus"></footer></article>
+<article class="slide" data-index="3" data-visual="repo-area-step" data-area-step="1" data-motion="none"><header class="slide__header"><span class="slide__label">Part 3 · Ch01-02 · 저장소와 작업흐름</span><h1 class="slide__title">버전 관리를 위한 <span class="hl">3 단계</span></h1><p class="slide__sub">Git의 기본 작업은 작업 → 스테이징 → 커밋의 3단계로 이루어집니다.</p></header><main class="slide__body"><div class="rf rf-area-step anim-item"><div class="rf-local"><p class="rf-location-label"><svg class="rf-icon" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="20" y="13" width="120" height="79" rx="5"/><path d="M20 92L7 110H153L140 92M65 104H96"/></svg>내 컴퓨터</p><div class="rf-map"><section class="rf-zone"><h2 class="rf-area-title">작업 디렉토리</h2><p class="rf-en">Working Directory</p><div class="rf-area-art"><svg class="rf-icon" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M33 13H76L98 35V104H33ZM76 13V35H98M47 51H74M47 67H64"/><path d="M79 93L84 75L126 33L139 46L97 88ZM120 40L132 52M79 93L97 88" stroke="var(--brand)"/></svg></div><p class="rf-zone-copy">실제 파일을 작업하는 유일한 공간</p></section><div class="rf-action"><code>git add</code><svg class="rf-arrow-art" viewBox="0 0 100 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12H94M86 5L94 12L86 19"/></svg><span>선택</span></div><section class="rf-zone rf-zone--focused" aria-current="step"><h2 class="rf-area-title">스테이징 영역</h2><p class="rf-en">Staging Area / Index</p><div class="rf-area-art"><svg class="rf-icon" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M30 65V105H131V65M30 65L57 83H103L131 65"/><path d="M60 12H95L114 31V76H60ZM95 12V31H114M72 46H101M72 60H94"/><path d="M40 31H50M40 46H50"/></svg></div><p class="rf-zone-copy">다음 커밋을 준비하는 공간</p></section><div class="rf-action"><code>git commit</code><svg class="rf-arrow-art" viewBox="0 0 100 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12H94M86 5L94 12L86 19"/></svg><span>기록</span></div><section class="rf-zone"><h2 class="rf-area-title">Git 저장소</h2><p class="rf-en">Repository</p><div class="rf-area-art"><svg class="rf-icon" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 30V16H63L77 30H142V103H19ZM19 43H142"/><path d="M69 51H91L106 66V93H69ZM91 51V66H106M79 76H96M79 85H93"/></svg></div><p class="rf-zone-copy">변경사항이 영구적으로 기록되는 공간</p></section></div></div><p class="rf-area-detail">변경한 내용 중 다음 커밋에 담을 것만 골라 준비합니다.</p></div></main><footer class="slide__footer"><img src="/assets/fastcampus-logo-dark.svg" class="fastcampus-logo" alt="FastCampus"></footer></article>
+<article class="slide" data-index="4" data-visual="repo-area-step" data-area-step="2" data-motion="none"><header class="slide__header"><span class="slide__label">Part 3 · Ch01-02 · 저장소와 작업흐름</span><h1 class="slide__title">버전 관리를 위한 <span class="hl">3 단계</span></h1><p class="slide__sub">Git의 기본 작업은 작업 → 스테이징 → 커밋의 3단계로 이루어집니다.</p></header><main class="slide__body"><div class="rf rf-area-step anim-item"><div class="rf-local"><p class="rf-location-label"><svg class="rf-icon" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="20" y="13" width="120" height="79" rx="5"/><path d="M20 92L7 110H153L140 92M65 104H96"/></svg>내 컴퓨터</p><div class="rf-map"><section class="rf-zone"><h2 class="rf-area-title">작업 디렉토리</h2><p class="rf-en">Working Directory</p><div class="rf-area-art"><svg class="rf-icon" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M33 13H76L98 35V104H33ZM76 13V35H98M47 51H74M47 67H64"/><path d="M79 93L84 75L126 33L139 46L97 88ZM120 40L132 52M79 93L97 88" stroke="var(--brand)"/></svg></div><p class="rf-zone-copy">실제 파일을 작업하는 유일한 공간</p></section><div class="rf-action"><code>git add</code><svg class="rf-arrow-art" viewBox="0 0 100 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12H94M86 5L94 12L86 19"/></svg><span>선택</span></div><section class="rf-zone"><h2 class="rf-area-title">스테이징 영역</h2><p class="rf-en">Staging Area / Index</p><div class="rf-area-art"><svg class="rf-icon" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M30 65V105H131V65M30 65L57 83H103L131 65"/><path d="M60 12H95L114 31V76H60ZM95 12V31H114M72 46H101M72 60H94"/><path d="M40 31H50M40 46H50"/></svg></div><p class="rf-zone-copy">다음 커밋을 준비하는 공간</p></section><div class="rf-action"><code>git commit</code><svg class="rf-arrow-art" viewBox="0 0 100 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12H94M86 5L94 12L86 19"/></svg><span>기록</span></div><section class="rf-zone rf-zone--focused" aria-current="step"><h2 class="rf-area-title">Git 저장소</h2><p class="rf-en">Repository</p><div class="rf-area-art"><svg class="rf-icon" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 30V16H63L77 30H142V103H19ZM19 43H142"/><path d="M69 51H91L106 66V93H69ZM91 51V66H106M79 76H96M79 85H93"/></svg></div><p class="rf-zone-copy">변경사항이 영구적으로 기록되는 공간</p></section></div></div><p class="rf-area-detail">커밋 히스토리가 남아, 언제든지 이전 버전으로 되돌릴 수 있습니다.</p></div></main><footer class="slide__footer"><img src="/assets/fastcampus-logo-dark.svg" class="fastcampus-logo" alt="FastCampus"></footer></article>
+
+<article class="slide" data-index="5" data-visual="repo-commit"><header class="slide__header"><span class="slide__label">Part 3 · Ch01-02 · 저장소와 작업흐름</span><h1 class="slide__title">기록으로 남는 순간 - <span class="hl">commit</span></h1><p class="slide__sub">선택한 변경을 반영한 프로젝트 버전을 커밋으로 남깁니다.</p></header><main class="slide__body"><div class="rf"><div class="rf-commit anim-item"><div class="rf-commit-symbol"><svg class="rf-icon" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 64H57M103 64H145"/><circle cx="80" cy="64" r="24"/><path d="M68 64L77 74L94 53" stroke="var(--green)"/></svg><h2 class="rf-title">하나의 커밋</h2></div><dl class="rf-commit-fields"><div class="rf-field"><dt>프로젝트 버전</dt><dd>선택한 변경을 반영</dd></div><div class="rf-field"><dt>커밋 메시지</dt><dd>작업 내용과 변경 이유</dd></div><div class="rf-field"><dt>작성자 · 시간</dt><dd>누가 · 언제</dd></div></dl></div><p class="rf-foot anim-item">커밋한 시점이 곧 돌아갈 수 있는 버전입니다.</p></div></main><footer class="slide__footer"><img src="/assets/fastcampus-logo-dark.svg" class="fastcampus-logo" alt="FastCampus"></footer></article>
+
+<article class="slide" data-index="6" data-visual="repo-remote"><header class="slide__header"><span class="slide__label">Part 3 · Ch01-02 · 저장소와 작업흐름</span><h1 class="slide__title">내 기록과 <span class="hl">원격 기록</span></h1><p class="slide__sub">로컬에 기록하는 일과 원격에 공유하는 일은 별개입니다.</p></header><main class="slide__body"><div class="rf"><div class="rf-remote"><section class="rf-remote-place rf-remote-place--local anim-item"><p class="rf-location-label">내 컴퓨터</p><svg class="rf-icon" viewBox="0 0 300 150" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><rect x="45" y="10" width="210" height="110" rx="7" fill="var(--bg-card)" stroke="var(--gray)" stroke-width="2.5"/><path d="M45 120L20 140H280L255 120M120 140H180" stroke="var(--gray)" stroke-width="3"/><g transform="translate(82 29) scale(1.1)"><path d="M0 0H30L42 12V54H0ZM30 0V12H42M9 24H31M9 33H28M9 42H23" stroke="currentColor" stroke-width="2.5"/></g><path d="M153 48H224M153 69H214M153 90H230" stroke="var(--gray)" stroke-width="3"/></svg><h2 class="rf-title">로컬 저장소</h2><p class="rf-copy">내 컴퓨터의 기록</p></section><div class="rf-transfers anim-item"><div class="rf-transfer rf-transfer--push"><code>git push</code><span class="rf-transfer-line" aria-hidden="true"></span></div><div class="rf-transfer rf-transfer--pull"><span class="rf-transfer-line rf-transfer-line--left" aria-hidden="true"></span><code>git pull</code></div></div><section class="rf-remote-place anim-item"><p class="rf-location-label">원격</p><svg class="rf-icon" viewBox="0 0 300 150" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><path d="M66 105C9 105 15 46 65 44C85-4 157 0 173 46C248 22 283 109 226 113H66" stroke="var(--gray)" stroke-width="3"/></svg><h2 class="rf-title">원격 저장소</h2><p class="rf-copy">GitHub에 올려 공유하고 협업</p></section></div></div></main><footer class="slide__footer"><img src="/assets/fastcampus-logo-dark.svg" class="fastcampus-logo" alt="FastCampus"></footer></article>
+<article class="slide" data-index="7" data-visual="repo-overview" data-motion="sequence"><header class="slide__header"><span class="slide__label">Part 3 · Ch01-02 · 저장소와 작업흐름</span><h1 class="slide__title">한 번의 <span class="hl">작업 흐름</span></h1><p class="slide__sub">내 컴퓨터에서 변경을 기록하고, 필요할 때 원격과 주고받습니다.</p></header><main class="slide__body"><div class="rf rf-journey-shell"><div class="rf-journey"><section class="rf-journey-step rf-journey-step--edit anim-item"><p class="rf-journey-place">내 컴퓨터</p><div class="rf-journey-art"><svg class="rf-icon" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M33 13H76L98 35V104H33ZM76 13V35H98M47 51H74M47 67H64"/><path d="M79 93L84 75L126 33L139 46L97 88ZM120 40L132 52M79 93L97 88" stroke="var(--brand)"/></svg></div><h2 class="rf-title rf-journey-verb">고친다</h2><p class="rf-copy rf-journey-area">작업 디렉토리</p></section><div class="rf-journey-link rf-journey-link--stage anim-item"><code>git add</code><span class="rf-journey-arrow" aria-hidden="true"></span></div><section class="rf-journey-step rf-journey-step--stage anim-item"><p class="rf-journey-place">내 컴퓨터</p><div class="rf-journey-art"><svg class="rf-icon" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M30 65V105H131V65M30 65L57 83H103L131 65"/><path d="M60 12H95L114 31V76H60ZM95 12V31H114M72 46H101M72 60H94"/><path d="M40 31H50M40 46H50"/></svg></div><h2 class="rf-title rf-journey-verb">고른다</h2><p class="rf-copy rf-journey-area">스테이징 영역</p></section><div class="rf-journey-link rf-journey-link--record anim-item"><code>git commit</code><span class="rf-journey-arrow" aria-hidden="true"></span></div><section class="rf-journey-step rf-journey-step--record anim-item"><p class="rf-journey-place">내 컴퓨터</p><div class="rf-journey-art"><svg class="rf-icon" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 30V16H63L77 30H142V103H19ZM19 43H142"/><path d="M69 51H91L106 66V93H69ZM91 51V66H106M79 76H96M79 85H93"/></svg></div><h2 class="rf-title rf-journey-verb">남긴다</h2><p class="rf-copy rf-journey-area">로컬 저장소</p></section><div class="rf-journey-link rf-journey-link--remote anim-item"><code>git push</code><span class="rf-journey-arrow" aria-hidden="true"></span></div><section class="rf-journey-step rf-journey-step--remote anim-item"><p class="rf-journey-place">원격</p><div class="rf-journey-art"><svg class="rf-icon" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M40 98C5 98 2 53 32 46C41 6 107 4 117 43C151 36 169 99 128 99H40"/><path d="M55 58H79L91 70V98H55ZM79 58V70H91M64 79H82M64 87H78"/></svg></div><h2 class="rf-title rf-journey-verb">올린다</h2><p class="rf-copy rf-journey-area">원격 저장소</p></section></div></div></main><footer class="slide__footer"><img src="/assets/fastcampus-logo-dark.svg" class="fastcampus-logo" alt="FastCampus"></footer></article></div><script>
+      /* 조작 규칙 (성공 기준):
+         페이지 이동은 좌우 nav-btn · 하단 dot · 키보드(←/→/스페이스)로만.
+         #deck/body/.slide에 이동용 click 리스너를 절대 달지 않는다 —
+         강의 중 화면을 가리키며 클릭해도 슬라이드가 넘어가면 안 된다. */
+      class SlidePresentation {
+        constructor() {
+          this.slides = Array.from(document.querySelectorAll(".slide"));
+          this.total = this.slides.length;
+          const requested = Number.parseInt(
+            new URLSearchParams(window.location.search).get("slide"),
+            10,
+          );
+          this.current =
+            Number.isInteger(requested) && requested >= 1 && requested <= this.total
+              ? requested - 1
+              : 0;
+          this.isAnimating = false;
+          this._init();
+        }
+        _init() {
+          this.slides.forEach((slide, i) =>
+            slide.classList.toggle("active", i === this.current),
+          );
+          document.getElementById("tot").textContent = this.total;
+          this._buildDots();
+          this._bindKeys();
+          this._bindButtons();
+          this._update();
+          this._runSlide(this.current);
+        }
+        /* 슬라이드 진입 시 .anim-item 을 순차 등장시킨다.
+           스토리보드의 "애니메이션 순서" = DOM 순서 */
+        _runSlide(i) {
+          if (this.slides[i].dataset.motion === "none") return;
+          const items = this.slides[i].querySelectorAll(".anim-item");
+          items.forEach((el) => {
+            el.classList.remove("do-fadeinup");
+            void el.offsetWidth; /* reflow — 재진입 시 재생 */
+          });
+          if (this.slides[i].dataset.motion === "sequence") {
+            // CSS delays restart together; no old timers can reveal later steps on re-entry.
+            items.forEach((el, n) => {
+              el.style.animationDelay = `${150 + n * 260}ms`;
+              el.classList.add("do-fadeinup");
+            });
+            return;
+          }
+          items.forEach((el, n) => {
+            setTimeout(() => el.classList.add("do-fadeinup"), 150 + n * 260);
+          });
+        }
+        next() {
+          if (!this.isAnimating) this._go(this.current + 1);
+        }
+        prev() {
+          if (!this.isAnimating) this._go(this.current - 1);
+        }
+        _go(i) {
+          if (
+            i < 0 ||
+            i >= this.total ||
+            i === this.current ||
+            this.isAnimating
+          )
+            return;
+          this.isAnimating = true;
+          const instant = this.slides[i].dataset.motion === "none";
+          document.getElementById("deck").classList.toggle("instant-transition", instant);
+          this.slides[this.current].classList.remove("active");
+          this.slides[i].classList.add("active");
+          this.current = i;
+          const url = new URL(window.location.href);
+          url.searchParams.set("slide", this.current + 1);
+          window.history.replaceState({}, "", url);
+          this._runSlide(i);
+          if (instant) {
+            this.isAnimating = false;
+          } else {
+            setTimeout(() => {
+              this.isAnimating = false;
+              this._update();
+            }, 420);
+          }
+          this._update();
+        }
+        _update() {
+          const pct = ((this.current + 1) / this.total) * 100;
+          document.getElementById("progress").style.width = pct + "%";
+          document.getElementById("cur").textContent = this.current + 1;
+          document.getElementById("btn-prev").disabled = this.current === 0;
+          document.getElementById("btn-next").disabled =
+            this.current === this.total - 1;
+          document
+            .querySelectorAll(".dot")
+            .forEach((d, i) =>
+              d.classList.toggle("active", i === this.current),
+            );
+        }
+        _buildDots() {
+          const nav = document.getElementById("dot-nav");
+          this.slides.forEach((_, i) => {
+            const b = document.createElement("button");
+            b.className = "dot" + (i === 0 ? " active" : "");
+            b.setAttribute("aria-label", `슬라이드 ${i + 1}`);
+            b.addEventListener("click", () => this._go(i));
+            nav.appendChild(b);
+          });
+        }
+        _bindButtons() {
+          document
+            .getElementById("btn-prev")
+            .addEventListener("click", () => this.prev());
+          document
+            .getElementById("btn-next")
+            .addEventListener("click", () => this.next());
+        }
+        _bindKeys() {
+          document.addEventListener("keydown", (e) => {
+            if (this.isAnimating) return;
+            if (e.key === "ArrowRight" || e.key === " ") {
+              e.preventDefault();
+              this.next();
+            }
+            if (e.key === "ArrowLeft") {
+              e.preventDefault();
+              this.prev();
+            }
+          });
+        }
+      }
+      // Resolve root asset paths when opening this file directly.
+      if (window.location.protocol === "file:") {
+        const projectRoot = new URL("../../../", window.location.href);
+        document.querySelectorAll('img[src^="/"]').forEach((img) => {
+          const assetPath = img.getAttribute("src");
+          if (assetPath && !assetPath.startsWith("//")) img.src = new URL(assetPath.slice(1), projectRoot).href;
+        });
+      }
+      new SlidePresentation();
+    </script></body></html>
