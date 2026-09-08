@@ -2,97 +2,83 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>fastcampus-slide 베이스 템플릿 — 타입 6종 예제</title>
-    <!-- 허용된 외부 의존은 아래 웹폰트 2개뿐. 그 외 모든 것은 인라인/로컬 -->
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>FastCampus 슬라이드 템플릿 · 공통 디자인 8개 패턴</title>
+    <!-- TEMPLATE ONLY: 실제 강의 내용·제품명·작업 캡처를 넣지 않는다.
+     사용법: 이 파일을 복사 → 필요한 article 선택 → 모든 data-slot/제목/부제 교체.
+     diagram의 공통 shape 정의를 유지하거나 사용한 도형만 각 SVG에 펼친다.
+     같은 역할은 공통 CSS를 공유한다. 강의 덱의 내용은 소스·스토리보드에서 가져온다. -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSans.css"
     />
     <style>
       :root {
         --bg: #0d1117;
         --bg-card: #161b22;
-        --bg-code: #1e2430;
-        --bg-inset: #252d3a;
         --text: #e6edf3;
         --text-dim: #8b949e;
-        --text-muted: #484f58;
-        --brand: #fc1c49; /* 패스트캠퍼스 시그니처 레드 — 덱의 기본 강조색 */
-        --brand-rgb: 252, 28, 73;
+        --text-muted: #59636e;
+        --brand: #fc1c49;
+        --purple: #9188ff;
         --orange: #ff6d3b;
         --yellow: #f0b429;
-        --purple: #9188ff;
         --green: #4ade80;
         --gray: #8b949e;
         --border: rgba(255, 255, 255, 0.08);
-        --border-brand: rgba(var(--brand-rgb), 0.3);
-        --border-orange: rgba(255, 109, 59, 0.25);
-        --border-purple: rgba(145, 136, 255, 0.28);
-        --border-yellow: rgba(240, 180, 41, 0.28);
-        --border-green: rgba(74, 222, 128, 0.25);
-        --border-gray: rgba(139, 148, 158, 0.22);
         --dot: rgba(255, 255, 255, 0.055);
-        --ease: 0.36s cubic-bezier(0.4, 0, 0.2, 1);
+        --title: clamp(2rem, 5.2vw, 3.8rem);
+        --statement: clamp(2rem, 3.8vw, 3.7rem);
+        --heading: clamp(1.5rem, 2.2vw, 2.25rem);
+        --body: clamp(1.1rem, 1.6vw, 1.42rem);
+        --gap: clamp(1.5rem, 3vw, 3rem);
+        --content-width: 86rem;
       }
-
-      *,
-      *::before,
-      *::after {
+      * {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
       }
-
       html {
         font-family:
-          "Pretendard",
+          Pretendard,
           -apple-system,
           BlinkMacSystemFont,
           sans-serif;
-        font-size: clamp(12px, 1.35vw, 15px);
+        font-size: clamp(13px, 1.35vw, 16px);
         background: var(--bg);
         color: var(--text);
-        word-break: keep-all; /* 한국어 어절 단위 줄바꿈 */
+        word-break: keep-all;
       }
       body {
         overflow: hidden;
       }
-
+      button {
+        font: inherit;
+      }
       .slide-deck {
         position: fixed;
         inset: 0;
       }
-
       .slide {
         position: absolute;
         inset: 0;
-        background-image: radial-gradient(
-          circle,
-          var(--dot) 1px,
-          transparent 1px
-        );
-        background-size: 26px 26px;
-        background-color: var(--bg);
         display: grid;
-        grid-template-rows: auto 1fr auto;
-        padding: clamp(2.5rem, 5.5vh, 4.5rem) clamp(3.5rem, 9vw, 8rem);
+        grid-template-rows: auto minmax(0, 1fr) auto;
         gap: clamp(1.5rem, 3.75vh, 3rem);
+        padding: clamp(2.6rem, 5.5vh, 4.2rem) clamp(4rem, 7.5vw, 7rem);
+        background:
+          radial-gradient(circle, var(--dot) 1px, transparent 1px) 0 0/26px 26px,
+          var(--bg);
         overflow: hidden;
         opacity: 0;
         pointer-events: none;
-        transition: opacity var(--ease);
+        transition: opacity 0.36s ease;
       }
       .slide.active {
         opacity: 1;
         pointer-events: auto;
       }
-
-      /* ── 공통 헤더 / 푸터 ─────────────────────────────────── */
       .slide__header {
         display: flex;
         flex-direction: column;
@@ -108,711 +94,183 @@
         color: var(--brand);
       }
       .slide__title {
-        font-size: clamp(2rem, 5.2vw, 3.8rem);
+        font-size: var(--title);
         font-weight: 800;
         line-height: 1.08;
         letter-spacing: -0.015em;
       }
-      .slide__title .hl {
-        color: var(--brand);
-      }
-      .slide__title .hl-orange {
-        color: var(--orange);
-      }
-      .slide__title .hl-yellow {
-        color: var(--yellow);
-      }
-      .slide__title .hl-purple {
-        color: var(--purple);
-      }
       .slide__sub {
-        font-size: clamp(1rem, 1.65vw, 1.15rem);
-        font-weight: 400;
-        color: var(--text-dim);
+        font-size: clamp(1.05rem, 1.6vw, 1.28rem);
         line-height: 1.5;
+        color: var(--text-dim);
       }
-
       .slide__body {
-        overflow: hidden;
+        min-height: 0;
         display: flex;
         flex-direction: column;
-        gap: clamp(1.2rem, 2.7vh, 2.1rem);
-        min-height: 0;
         justify-content: center;
+        align-items: center;
+        gap: var(--gap);
+        overflow: hidden;
+        container-type: size;
       }
-      .slide__body > .grid-3 {
-        flex: 0 0 auto;
-        align-items: stretch;
-      }
-      .slide__body > .grid-2 {
-        flex: 0 0 auto;
-      }
-      .slide__body > .timeline {
-        width: 100%;
-        align-self: center;
-      }
-
       .slide__footer {
         border-top: 1px solid var(--border);
         padding-top: clamp(0.5rem, 1.3vh, 0.9rem);
-        display: flex;
-        align-items: center;
-        font-size: clamp(0.58rem, 0.85vw, 0.7rem);
-        font-weight: 400;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-        color: var(--text-muted);
       }
-      /* 모든 슬라이드 푸터는 패스트캠퍼스 로고 하나다 — 텍스트를 넣지 않는다 */
       .fastcampus-logo {
         display: block;
         width: clamp(7.2rem, 9vw, 8.5rem);
         height: auto;
       }
-
-      /* ── 공통 타이포 ──────────────────────────────────────── */
-      .display {
-        font-family: "GmarketSans", "Pretendard", sans-serif;
-        font-size: clamp(2.8rem, 7vw, 5.5rem);
-        font-weight: 900;
-        line-height: 1;
-        letter-spacing: -0.03em;
-      }
-      .caption {
-        font-size: clamp(0.9rem, 1.45vw, 1.15rem);
-        line-height: 1.5;
-        color: var(--text-dim);
-      }
-      .kw-brand {
+      .hl,
+      .tone-brand {
         color: var(--brand);
       }
-      .kw-orange {
-        color: var(--orange);
-        font-weight: 600;
-      }
-      .kw-yellow {
-        color: var(--yellow);
-        font-weight: 600;
-      }
-      .kw-purple {
+      .tone-purple {
         color: var(--purple);
       }
-
-      code {
-        font-family: "Monaco", "Menlo", "Consolas", monospace;
-        font-size: 0.85em;
-        background: rgba(var(--brand-rgb), 0.1);
-        color: var(--brand);
-        padding: 2px 6px;
-        border-radius: 3px;
+      .tone-gray {
+        color: var(--gray);
       }
-
-      /* ── 불릿 리스트 (✓/✕) ───────────────────────────────── */
-      .bullet-list {
-        list-style: none;
-        display: flex;
-        flex-direction: column;
-        gap: 0.7rem;
-      }
-      .bullet-list li {
-        display: flex;
-        align-items: baseline;
-        gap: 0.9rem;
-        font-size: clamp(0.95rem, 1.5vw, 1.2rem);
-        line-height: 1.55;
-      }
-      .bullet-list li.no::before {
-        content: "✕";
-        color: var(--orange);
-        font-weight: 700;
-        flex-shrink: 0;
-      }
-      .bullet-list li.ok::before {
-        content: "✓";
-        color: var(--green);
-        font-weight: 700;
-        flex-shrink: 0;
-      }
-      .bullet-list li.no {
-        color: var(--text-dim);
-      }
-
-      /* ── tip: 슬라이드 하단 한 줄 정리 ────────────────────── */
-      .tip {
-        background: rgba(var(--brand-rgb), 0.05);
-        border: 1px solid rgba(var(--brand-rgb), 0.18);
-        border-radius: 3px;
-        padding: 0.975rem 1.5rem;
-        font-size: clamp(0.95rem, 1.4vw, 1.15rem);
-        color: var(--text-dim);
-        line-height: 1.6;
-      }
-      .tip::before {
-        content: "→  ";
-        color: var(--brand);
-        font-weight: 700;
-      }
-      .tip--yellow {
-        background: rgba(240, 180, 41, 0.05);
-        border-color: rgba(240, 180, 41, 0.22);
-      }
-      .tip--yellow::before {
+      .tone-yellow {
         color: var(--yellow);
       }
-
-      /* ── TEXT(표지) — cover ───────────────────────────────── */
-      .cover-body {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        gap: clamp(1.1rem, 2.6vh, 2rem);
+      .tone-orange {
+        color: var(--orange);
       }
-      .cover-emoji {
-        font-size: clamp(3.6rem, 9vw, 7rem);
-        line-height: 1;
+      .tone-green {
+        color: var(--green);
       }
-      .cover-stmt {
-        font-family: "GmarketSans", "Pretendard", sans-serif;
-        font-size: clamp(1.9rem, 4.4vw, 3.6rem);
+      /* Shared roles: cover and split layouts inherit exactly the same type. */
+      .statement {
+        font-family: inherit;
+        font-size: var(--statement);
+        font-weight: 850;
+        line-height: 1.35;
+        letter-spacing: -0.035em;
+      }
+      .statement strong {
+        display: block;
+        color: var(--brand);
         font-weight: 900;
+      }
+      .heading {
+        font-size: var(--heading);
+        font-weight: 800;
         line-height: 1.35;
         letter-spacing: -0.025em;
       }
-      .cover-axis {
-        display: flex;
-        align-items: center;
-        gap: clamp(0.6rem, 1.4vw, 1.1rem);
-        font-family: "Monaco", "Menlo", monospace;
-        font-size: clamp(0.7rem, 1.1vw, 0.9rem);
-        letter-spacing: 0.1em;
-        color: var(--text-muted);
-        text-transform: uppercase;
-      }
-      .cover-axis b {
-        color: var(--brand);
-        font-weight: 700;
-      }
-
-      /* ── CARD_GRID — grid-3 + col-card ────────────────────── */
-      .grid-3 {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: clamp(1.2rem, 3vw, 2.1rem);
-      }
-      .col-card {
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        border-radius: 4px;
-        padding: clamp(1.5rem, 2.7vw, 2.25rem);
-        display: flex;
-        flex-direction: column;
-        gap: 1.1rem;
-      }
-      .col-card__title-row {
-        display: flex;
-        align-items: center;
-        gap: 0.7rem;
-      }
-      .col-card__emoji {
-        font-size: clamp(1.5rem, 2.4vw, 2rem);
-        line-height: 1;
-        flex-shrink: 0;
-      }
-      .col-card__title {
-        font-size: clamp(1.4rem, 2.8vw, 2rem);
-        font-weight: 700;
-        line-height: 1.2;
-        letter-spacing: -0.01em;
-      }
-      .col-card__body {
-        font-size: clamp(0.88rem, 1.35vw, 1.08rem);
-        line-height: 1.55;
+      .copy {
+        font-size: var(--body);
+        line-height: 1.6;
         color: var(--text-dim);
       }
-      .col-card--brand {
-        border-color: var(--border-brand) !important;
-        background: rgba(var(--brand-rgb), 0.05);
+      .eyebrow {
+        font-size: clamp(1rem, 1.5vw, 1.3rem);
+        line-height: 1.5;
+        color: var(--text-dim);
       }
-      .col-card--orange {
-        border-color: var(--border-orange) !important;
-        background: rgba(255, 109, 59, 0.05);
-      }
-      .col-card--purple {
-        border-color: var(--border-purple) !important;
-        background: rgba(145, 136, 255, 0.05);
-      }
-      .col-card--gray {
-        border-color: var(--border-gray) !important;
-        background: rgba(139, 148, 158, 0.05);
-      }
-      /* 변형: 카드 6장(3열 2행)일 때 — grid-3에 함께 붙인다 */
-      .grid-3--tight {
-        gap: clamp(0.9rem, 1.8vw, 1.5rem);
-      }
-      .grid-3--tight .col-card {
-        padding: clamp(1rem, 1.9vw, 1.5rem);
-        gap: 0.7rem;
-      }
-      .grid-3--tight .col-card__title {
-        font-size: clamp(1.1rem, 2vw, 1.5rem);
-        font-family: "Monaco", "Menlo", monospace;
-        letter-spacing: -0.01em;
-      }
-      .grid-3--tight .col-card__emoji {
-        font-size: clamp(1.2rem, 2vw, 1.6rem);
-      }
-      /* 변형: 설명이 긴 카드 6장 — 높이·패딩·타이포를 줄이지 않는다 */
-      .grid-3--spacious {
-        min-height: clamp(24rem, 52vh, 30rem);
-        gap: clamp(1rem, 2vw, 1.6rem);
-      }
-      .grid-3--spacious .col-card {
-        justify-content: center;
-        padding: clamp(1.35rem, 2.2vw, 1.85rem);
-        gap: clamp(0.85rem, 1.7vh, 1.15rem);
-      }
-      .grid-3--spacious .col-card__title {
-        font-size: clamp(1.2rem, 1.85vw, 1.55rem);
-      }
-      .grid-3--spacious .col-card__body {
-        font-size: clamp(0.96rem, 1.3vw, 1.1rem);
-        line-height: 1.55;
-      }
-      /* 변형: 카드 상단 정체 배지 (역할·소속 구분) */
-      .role-badge {
-        align-self: flex-start;
-        font-family: "Monaco", "Menlo", monospace;
-        font-size: clamp(0.66rem, 1vw, 0.8rem);
-        font-weight: 700;
-        letter-spacing: 0.08em;
-        padding: 0.32rem 0.7rem;
-        border-radius: 3px;
-        border: 1px solid var(--border);
-      }
-      .role-badge--brand {
-        color: var(--brand);
-        border-color: var(--border-brand);
-        background: rgba(var(--brand-rgb), 0.08);
-      }
-      .role-badge--purple {
-        color: var(--purple);
-        border-color: var(--border-purple);
-        background: rgba(145, 136, 255, 0.08);
-      }
-      .role-badge--gray {
-        color: var(--gray);
-        border-color: var(--border-gray);
-        background: rgba(139, 148, 158, 0.08);
-      }
-      .role-sub {
-        font-family: "Monaco", "Menlo", monospace;
-        font-size: clamp(0.7rem, 1.05vw, 0.85rem);
-        color: var(--text-muted);
-        letter-spacing: 0.03em;
-      }
-
-      /* ── 좌우 2분할 — grid-2 · vs-grid(대비 비교) ─────────── */
-      .grid-2 {
-        display: grid;
-        grid-template-columns: 1.05fr 1fr;
-        gap: clamp(1.5rem, 3.5vw, 2.8rem);
-        align-items: center;
-      }
-      .vs-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: clamp(1.2rem, 3vw, 2.4rem);
+      .diagram {
+        display: block;
         width: 100%;
+        height: 100%;
+        overflow: visible;
+        color: var(--gray);
       }
-      .vs-col {
-        border: 1px solid var(--border);
-        border-radius: 6px;
-        padding: clamp(1.2rem, 2.4vw, 2rem);
+      .symbols {
+        position: absolute;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+        pointer-events: none;
+      }
+      .content {
+        width: min(100%, var(--content-width));
+        margin-inline: auto;
+      }
+      /* Image slots are borderless. Replace the SVG slot with the clip's image. */
+      .scene {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.65fr);
+        gap: var(--gap);
+        align-items: center;
+        width: min(100%, 92rem);
+      }
+      .scene--visual-first {
+        grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+      }
+      .scene__copy {
         display: flex;
         flex-direction: column;
-        gap: clamp(0.8rem, 1.8vh, 1.3rem);
+        gap: clamp(1.3rem, 3vh, 2.5rem);
       }
-      .vs-col--blocked {
-        border-color: var(--border-orange);
-        background: rgba(255, 109, 59, 0.04);
-      }
-      .vs-col--pass {
-        border-color: var(--border-brand);
-        background: rgba(var(--brand-rgb), 0.05);
-      }
-      .vs-badge {
-        align-self: flex-start;
-        font-family: "Monaco", "Menlo", monospace;
-        font-size: clamp(0.64rem, 1vw, 0.78rem);
-        font-weight: 700;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        padding: 0.3rem 0.65rem;
-        border-radius: 3px;
-        border: 1px solid var(--border);
-      }
-      .vs-badge--blocked {
-        color: var(--orange);
-        border-color: var(--border-orange);
-        background: rgba(255, 109, 59, 0.08);
-      }
-      .vs-badge--pass {
-        color: var(--brand);
-        border-color: var(--border-brand);
-        background: rgba(var(--brand-rgb), 0.08);
-      }
-      .vs-headline {
+      .scene__visual {
+        width: 100%;
+        height: min(52cqh, 28rem);
+        min-height: 15rem;
+        position: relative;
         display: flex;
+        flex-direction: column;
         align-items: center;
-        gap: 0.7rem;
-        font-size: clamp(1.35rem, 2.7vw, 2.1rem);
+        justify-content: center;
+        gap: 1rem;
+      }
+      .scene--cover .scene__visual,
+      .scene--image .scene__visual {
+        height: min(78cqh, 34rem);
+      }
+      .scene__visual > img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border: 0;
+        box-shadow: none;
+      }
+      .scene__visual > .diagram {
+        min-height: 0;
+        flex: 1;
+      }
+      .scene__visual figcaption {
+        font-size: var(--body);
+        color: var(--text-dim);
+        text-align: center;
+      }
+      /* Open parallel concepts: diagram, heading, caption; no card shells. */
+      .triptych {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--gap);
+        align-items: start;
+      }
+      .concept {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: clamp(1rem, 2.6vh, 2rem);
+        min-width: 0;
+      }
+      .concept > .diagram {
+        height: clamp(11rem, 25vh, 19rem);
+      }
+      .concept .copy {
+        max-width: 17em;
+      }
+      /* Optional transition copy, never wrapped in a banner or bordered box. */
+      .handoff {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1.25rem;
+        color: var(--text-dim);
+        font-size: var(--body);
+        line-height: 1.5;
+      }
+      .handoff strong {
+        color: var(--text);
         font-weight: 800;
-        line-height: 1.2;
-        letter-spacing: -0.015em;
       }
-      .vs-headline span {
-        font-size: clamp(1.5rem, 2.7vw, 2.1rem);
-        line-height: 1;
-        flex-shrink: 0;
-      }
-      .vs-col--blocked .vs-headline {
-        color: var(--orange);
-      }
-      .vs-col--pass .vs-headline {
-        color: var(--brand);
-      }
-
-      /* ── LIST — 번호 원 + 제목 + 부연 나열 (카드 박스 없음) ── */
-      .list {
-        display: flex;
-        flex-direction: column;
-        gap: clamp(2.4rem, 7vh, 5.5rem);
-        align-self: center;
-        width: min(52rem, 100%);
-      }
-      .list-item {
-        display: flex;
-        align-items: flex-start;
-        gap: clamp(1rem, 2vw, 1.6rem);
-      }
-      .list-item.num {
-        align-items: center;
-      }
-      .list-num {
-        width: clamp(3.2rem, 5.5vw, 4.6rem);
-        height: clamp(3.2rem, 5.5vw, 4.6rem);
-        flex-shrink: 0;
-        border-radius: 50%;
-        border: 1.5px solid var(--text);
-        background: var(--bg);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: "Monaco", "Menlo", monospace;
-        font-size: clamp(1.1rem, 1.9vw, 1.5rem);
-        font-weight: 700;
-        color: var(--text);
-      }
-      /* 변형: 번호 대신 점 마커 (순서 없는 나열) */
-      .list-dot {
-        width: clamp(0.75rem, 1.1vw, 0.95rem);
-        height: clamp(0.75rem, 1.1vw, 0.95rem);
-        margin-top: 0.55em;
-        border-radius: 50%;
-        background: var(--text);
-        flex-shrink: 0;
-      }
-      .list-body {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: clamp(0.3rem, 0.8vh, 0.55rem);
-      }
-      .list-title {
-        font-size: clamp(1.3rem, 2.5vw, 1.95rem);
-        font-weight: 700;
-        line-height: 1.3;
-        letter-spacing: -0.01em;
-      }
-      .list-sub {
-        font-size: clamp(0.95rem, 1.5vw, 1.2rem);
-        color: var(--text-dim);
-        line-height: 1.45;
-      }
-
-      /* ── ICON_ROW — timeline (가로 파이프라인) ────────────── */
-      .timeline {
-        display: grid;
-        /* 카드 5장 기준. 카드 수가 다르면 timeline--4 처럼 columns를 맞춘다 */
-        grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr auto 1fr;
-        gap: 0;
-        align-items: stretch;
-      }
-      .timeline--4 {
-        grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
-      }
-      .timeline--3 {
-        grid-template-columns: 1fr auto 1fr auto 1fr;
-      }
-      .timeline-card {
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        border-radius: 6px;
-        padding: clamp(1rem, 1.9vw, 1.6rem) clamp(0.6rem, 1.2vw, 1rem);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: clamp(0.6rem, 1.5vh, 1.1rem);
-        text-align: center;
-        justify-content: flex-start;
-      }
-      .timeline-card--plain {
-        border-color: var(--border);
-      }
-      .timeline-card--gray {
-        border-color: var(--border-gray);
-        background: rgba(139, 148, 158, 0.06);
-      }
-      .timeline-card--brand {
-        border-color: var(--border-brand);
-        background: rgba(var(--brand-rgb), 0.07);
-      }
-      .timeline-card--purple {
-        border-color: var(--border-purple);
-        background: rgba(145, 136, 255, 0.07);
-      }
-      .timeline-card--yellow {
-        border-color: var(--border-yellow);
-        background: rgba(240, 180, 41, 0.08);
-      }
-      .timeline-card--orange {
-        border-color: var(--border-orange);
-        background: rgba(255, 109, 59, 0.08);
-      }
-      .timeline-card--green {
-        border-color: var(--border-green);
-        background: rgba(74, 222, 128, 0.08);
-      }
-      .timeline-card__step {
-        font-family: "Monaco", "Menlo", monospace;
-        font-size: clamp(0.62rem, 0.95vw, 0.8rem);
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.09em;
-        padding: 0.3rem 0.7rem;
-        border-radius: 3px;
-        background: rgba(255, 255, 255, 0.04);
-      }
-      .step--gray {
-        color: var(--gray);
-      }
-      .step--brand {
-        color: var(--brand);
-      }
-      .step--purple {
-        color: var(--purple);
-      }
-      .step--yellow {
-        color: var(--yellow);
-      }
-      .step--orange {
-        color: var(--orange);
-      }
-      .step--green {
-        color: var(--green);
-      }
-      .step--muted {
-        color: var(--text-dim);
-      }
-      .timeline-emoji-wrap {
-        width: clamp(4.2rem, 8.5vw, 7rem);
-        height: clamp(4.2rem, 8.5vw, 7rem);
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.03);
-        border: 1.5px solid var(--border);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-      }
-      .timeline-emoji-wrap span {
-        font-size: clamp(1.9rem, 4vw, 3.2rem);
-        line-height: 1;
-      }
-      .timeline-card__title {
-        font-size: clamp(1.15rem, 2.1vw, 1.7rem);
-        font-weight: 700;
-        line-height: 1.2;
-      }
-      .timeline-card__body {
-        font-size: clamp(0.82rem, 1.25vw, 1.02rem);
-        line-height: 1.5;
-        color: var(--text-dim);
-      }
-      .timeline-arrow {
-        position: relative;
-        flex-shrink: 0;
-        width: clamp(1.4rem, 2.6vw, 2.4rem);
-        height: clamp(1rem, 2vh, 1.5rem);
-        align-self: center;
-      }
-      .timeline-arrow::before {
-        content: "";
-        position: absolute;
-        left: 10%;
-        right: 28%;
-        top: 50%;
-        height: 2px;
-        background: var(--border-purple);
-        transform: translateY(-50%);
-      }
-      .timeline-arrow::after {
-        content: "";
-        position: absolute;
-        right: 10%;
-        top: 50%;
-        border-top: 0.36rem solid transparent;
-        border-bottom: 0.36rem solid transparent;
-        border-left: 0.5rem solid var(--purple);
-        transform: translateY(-50%);
-      }
-      .flow-quote {
-        color: var(--text);
-        font-style: normal;
-      }
-
-      /* ── TREE — fan (부모 1 → 자식 여럿) ──────────────────── */
-      .fan {
-        --fan-gap: clamp(1.5rem, 4vw, 3rem);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: min(58rem, 100%);
-        align-self: center;
-      }
-      .fan-card {
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        border-radius: 6px;
-        padding: clamp(1rem, 2vw, 1.6rem) clamp(1.2rem, 2.4vw, 2rem);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.5rem;
-        text-align: center;
-      }
-      .fan-card--brand {
-        border-color: var(--border-brand);
-        background: rgba(var(--brand-rgb), 0.06);
-      }
-      .fan-card--purple {
-        border-color: var(--border-purple);
-        background: rgba(145, 136, 255, 0.06);
-      }
-      .fan-card--orange {
-        border-color: var(--border-orange);
-        background: rgba(255, 109, 59, 0.06);
-      }
-      .fan-card__emoji {
-        font-size: clamp(1.8rem, 3.4vw, 2.8rem);
-        line-height: 1;
-      }
-      .fan-card__title {
-        font-size: clamp(1.2rem, 2.2vw, 1.75rem);
-        font-weight: 700;
-        line-height: 1.2;
-      }
-      .fan-card__body {
-        font-size: clamp(0.85rem, 1.3vw, 1.05rem);
-        color: var(--text-dim);
-        line-height: 1.5;
-      }
-      .fan-root {
-        width: clamp(14rem, 26vw, 20rem);
-      }
-      .fan-stem {
-        width: 2px;
-        height: clamp(1.4rem, 3vh, 2.4rem);
-        background: var(--border-brand);
-      }
-      .fan-bar-wrap {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-      }
-      .fan-bar {
-        position: relative;
-        /* 자식 카드의 중심과 세로선을 맞춘다 (열 중심 간격 = 50% + gap/2) */
-        width: calc(50% + var(--fan-gap) / 2);
-        height: 2px;
-        background: var(--border-brand);
-      }
-      .fan-bar::before,
-      .fan-bar::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        width: 2px;
-        height: clamp(1.4rem, 3vh, 2.4rem);
-        background: var(--border-brand);
-      }
-      .fan-bar::before {
-        left: 0;
-      }
-      .fan-bar::after {
-        right: 0;
-      }
-      .fan-kids {
-        margin-top: clamp(1.4rem, 3vh, 2.4rem);
-        width: 100%;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: var(--fan-gap);
-      }
-
-      /* ── METRIC — 대형 수치 (소스에 실제 수치가 있을 때만) ── */
-      .metric-row {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: clamp(1.2rem, 3vw, 2.4rem);
-      }
-      .metric {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: clamp(0.55rem, 1.3vh, 0.95rem);
-        padding: clamp(1.6rem, 3.4vh, 2.6rem) clamp(1rem, 2vw, 1.6rem);
-        border: 1px solid var(--border);
-        border-radius: 6px;
-        background: var(--bg-card);
-      }
-      .metric--star {
-        border-color: var(--border-yellow);
-        background: rgba(240, 180, 41, 0.06);
-      }
-      .metric__icon {
-        font-size: clamp(1.6rem, 3vw, 2.4rem);
-        line-height: 1;
-        margin-bottom: clamp(0.3rem, 0.9vh, 0.7rem);
-      }
-      .metric__num {
-        font-family: "GmarketSans", "Pretendard", sans-serif;
-        font-size: clamp(2.6rem, 6.5vw, 5rem);
-        font-weight: 900;
-        line-height: 1;
-        letter-spacing: -0.03em;
-      }
-      .metric--star .metric__num {
-        color: var(--yellow);
-      }
-      .metric__cap {
-        font-size: clamp(0.8rem, 1.2vw, 1rem);
-        color: var(--text-dim);
-      }
-
-      /* ── Navigation ───────────────────────────────────────── */
       .progress-bar {
         position: fixed;
         top: 0;
@@ -820,40 +278,35 @@
         width: 100%;
         height: 2px;
         z-index: 200;
-        background: rgba(255, 255, 255, 0.04);
-        user-select: none;
+        background: var(--border);
       }
       .progress-fill {
         height: 100%;
         background: var(--brand);
-        transition: width 0.3s ease-out;
+        transition: width 0.3s ease;
       }
       .nav-btn {
         position: fixed;
         top: 50%;
-        z-index: 150;
         transform: translateY(-50%);
-        user-select: none;
+        z-index: 150;
         width: clamp(1.9rem, 2.8vw, 2.5rem);
         height: clamp(1.9rem, 2.8vw, 2.5rem);
-        background: rgba(255, 255, 255, 0.03);
+        display: grid;
+        place-items: center;
         border: 1px solid var(--border);
         border-radius: 3px;
-        color: var(--text-muted);
-        font-size: 0.8rem;
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--text-dim);
         cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.2s ease;
       }
       .nav-btn:hover:not(:disabled) {
-        background: rgba(255, 255, 255, 0.08);
         color: var(--text);
+        background: rgba(255, 255, 255, 0.08);
       }
       .nav-btn:disabled {
-        opacity: 0.08;
-        cursor: not-allowed;
+        opacity: 0.1;
+        cursor: default;
       }
       #btn-prev {
         left: clamp(0.4rem, 1.2vw, 1.1rem);
@@ -866,19 +319,18 @@
         bottom: 1.3rem;
         left: 50%;
         transform: translateX(-50%);
-        z-index: 150;
         display: flex;
-        gap: 5px;
         align-items: center;
-        user-select: none;
+        gap: 5px;
+        z-index: 150;
       }
       .dot {
         width: 5px;
         height: 5px;
         border-radius: 50%;
         background: rgba(255, 255, 255, 0.18);
+        border: 0;
         cursor: pointer;
-        border: none;
         transition: all 0.22s ease;
       }
       .dot.active {
@@ -890,15 +342,12 @@
         position: fixed;
         bottom: 1.2rem;
         right: 1.8rem;
-        z-index: 150;
-        font-family: "Monaco", monospace;
-        font-size: 0.62em;
+        font:
+          0.62rem Monaco,
+          monospace;
         color: var(--text-muted);
-        letter-spacing: 0.07em;
-        user-select: none;
+        z-index: 150;
       }
-
-      /* ── Animations ───────────────────────────────────────── */
       @keyframes s-fadeInUp {
         from {
           opacity: 0;
@@ -915,9 +364,202 @@
       .anim-item.do-fadeinup {
         animation: s-fadeInUp 0.48s cubic-bezier(0.4, 0, 0.2, 1) forwards;
       }
+      @media (prefers-reduced-motion: reduce) {
+        .slide,
+        .progress-fill {
+          transition: none;
+        }
+        .anim-item.do-fadeinup {
+          animation-duration: 0.001s;
+        }
+      }
+
+      .status-one-line {
+        white-space: nowrap;
+        max-width: none;
+      }
+
+      /* STRUCTURE_BRANCH: root and children are content, connecting lines encode membership. */
+      .structure-tree {
+        width: min(100%, 72rem);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .structure-node {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        text-align: center;
+        min-width: 0;
+      }
+      .structure-node > .diagram {
+        width: 6rem;
+        height: 6rem;
+      }
+      .structure-tree__root {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+      .structure-tree__root > .diagram {
+        width: 5rem;
+        height: 5rem;
+      }
+      .structure-tree__stem {
+        height: 3rem;
+        border-left: 2px solid var(--gray);
+      }
+      .structure-tree__children {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+        position: relative;
+      }
+      .structure-tree__children::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 25%;
+        right: 25%;
+        border-top: 2px solid var(--gray);
+      }
+      .structure-tree__children > .structure-node {
+        position: relative;
+        padding: 3rem 1.5rem 0;
+      }
+      .structure-tree__children > .structure-node::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 0;
+        height: 2rem;
+        border-left: 2px solid var(--gray);
+      }
+      .structure-tree__root .copy {
+        margin-top: 0.45rem;
+      }
+      /* STRUCTURE_EXCHANGE: only the common scope gets a boundary, not every text node. */
+      .exchange {
+        position: relative;
+        aspect-ratio: 600/430;
+        width: 100%;
+        border: 1px solid var(--gray);
+        border-radius: 0.5rem;
+      }
+      .exchange__scope {
+        position: absolute;
+        top: 1rem;
+        left: 1.25rem;
+      }
+      .exchange > .diagram {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .exchange__node {
+        position: absolute;
+        width: 43%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+      .exchange__node--root {
+        top: 14%;
+        left: 28.5%;
+      }
+      .exchange__node--a {
+        bottom: 9%;
+        left: 3.5%;
+      }
+      .exchange__node--b {
+        bottom: 9%;
+        right: 3.5%;
+      }
+      .exchange__legend {
+        position: absolute;
+        top: 46%;
+        left: 37%;
+        width: 26%;
+        display: grid;
+        gap: 0.7rem;
+        text-align: center;
+      }
+      .exchange__legend .copy {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+      .line-key {
+        width: 1.5rem;
+        border-top: 2px solid var(--yellow);
+      }
+      .line-key--return {
+        border-top-style: dashed;
+      }
+      /* TRANSITION_COMPARE: mirror all four rows; the center is a transition arrow only. */
+      .transition-compare {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 4rem minmax(0, 1fr);
+        align-items: center;
+        gap: 2.5rem;
+        width: min(100%, var(--content-width));
+      }
+      .transition-side {
+        display: grid;
+        grid-template-rows: 2rem 5.5rem 12rem minmax(3.2rem, auto);
+        align-items: center;
+        justify-items: center;
+        text-align: center;
+        gap: 1rem;
+        min-width: 0;
+      }
+      .transition-side > .diagram {
+        height: 12rem;
+        width: 100%;
+      }
+      .transition-side > .copy {
+        max-width: 20em;
+      }
+      .transition-compare__arrow {
+        height: 4rem;
+      }
     </style>
   </head>
   <body>
+    <svg class="symbols" aria-hidden="true">
+      <defs>
+        <g id="shape-person">
+          <circle cx="50" cy="28" r="15" />
+          <path d="M18 85V73C18 44 82 44 82 73V85" />
+        </g>
+        <g id="shape-document">
+          <path
+            d="M24 12H59L77 30V88H24ZM59 12V30H77M35 45H64M35 58H64M35 71H55"
+          />
+        </g>
+        <g id="shape-folder">
+          <path d="M12 28V18H39L50 28H88V81H12ZM12 38H88" />
+        </g>
+        <g id="shape-done">
+          <circle cx="50" cy="50" r="35" />
+          <path d="M30 50L44 64L72 35" />
+        </g>
+        <g id="shape-working">
+          <circle cx="50" cy="50" r="35" opacity=".18" />
+          <path d="M50 15A35 35 0 1 1 15 50" stroke-width="5" />
+        </g>
+        <g id="shape-waiting">
+          <path
+            d="M25 15H75Q85 15 85 25V65Q85 75 75 75H45L25 90V75H25Q15 75 15 65V25Q15 15 25 15Z"
+          />
+          <path d="M38 37C38 22 64 24 61 39C60 46 50 46 50 55M50 65V66" />
+        </g>
+      </defs>
+    </svg>
     <div class="progress-bar">
       <div class="progress-fill" id="progress"></div>
     </div>
@@ -929,301 +571,704 @@
     </button>
     <div class="dot-nav" id="dot-nav"></div>
     <div class="slide-counter">
-      <span id="cur">1</span> / <span id="tot">6</span>
+      <span id="cur">1</span> / <span id="tot">8</span>
     </div>
-
     <div class="slide-deck" id="deck">
-      <!-- ═══════════════ Slide 1 — 타입 1: TEXT (표지) ═══════════════
-       표지는 목차가 아니라 선언으로 연다. 이모지 + GmarketSans 선언문 +
-       caption + 모노 축 라벨. 본문 전체 중앙 정렬.
-       발표 노트: 각 <section> 위 주석에 스토리보드의 발표 노트를 옮긴다.
-  ═══════════════════════════════════════════════════════════ -->
-      <article class="slide active" data-index="0">
+      <!-- Confirmed structure 1: replace all data-slot fields and visuals from the new clip storyboard. -->
+      <article data-index="0" class="slide active" data-pattern="COVER_SCENE">
         <header class="slide__header">
-          <span class="slide__label">Sample Deck · 예제 덱</span>
+          <span class="slide__label">Pattern 01 · COVER SCENE</span>
           <h1 class="slide__title">
-            강의 덱의 <span class="hl">기본 골격</span>
+            클립 제목의 <span class="hl">핵심어</span>
           </h1>
           <p class="slide__sub">
-            헤더(label · title · sub) + 본문 + 푸터. 모든 슬라이드가 같은 골격을
-            쓴다
-          </p>
-        </header>
-        <main class="slide__body cover-body">
-          <div class="cover-emoji anim-item">🎓</div>
-          <p class="cover-stmt anim-item">
-            덱 전체를 꿰는 문장 하나를<br />
-            <span class="kw-brand">첫 화면</span>에 못 박는다
-          </p>
-          <p class="caption anim-item">
-            보조 설명은 caption 한 줄로. 선언문을 다시 풀어 쓰지 않는다
-          </p>
-          <div class="cover-axis anim-item">
-            <b>Keyword A</b> 축 하나 <span>·</span> <b>Keyword B</b> 축 둘
-          </div>
-        </main>
-        <footer class="slide__footer">
-          <img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스" />
-        </footer>
-      </article>
-
-      <!-- ═══════════════ Slide 2 — 타입 2: CARD_GRID ═══════════════
-       grid-3 + col-card 색 변형. 카드 안은 bullet-list(✓/✕) 또는
-       col-card__body 문단. 카드 6장이면 grid-3--tight를 추가하고,
-       설명이 길면 grid-3--spacious까지 추가해 크기와 내부 공간을 확보한다.
-       카드 상단 정체 표시가 필요하면 role-badge.
-  ═══════════════════════════════════════════════════════════ -->
-      <article class="slide" data-index="1">
-        <header class="slide__header">
-          <span class="slide__label">Section 1 · Card Grid</span>
-          <h1 class="slide__title">
-            병렬 요소는 <span class="hl">카드</span>로
-          </h1>
-          <p class="slide__sub">
-            대등한 항목 2~3개를 소개할 때. 색이 곧 묶음이다
+            이 클립이 다루는 주제를 한 문장으로 소개합니다.
           </p>
         </header>
         <main class="slide__body">
-          <div class="grid-3">
-            <div class="col-card col-card--brand anim-item">
-              <div class="col-card__title-row">
-                <span class="col-card__emoji">🧠</span>
-                <div class="col-card__title">축 하나</div>
-              </div>
-              <ul class="bullet-list">
-                <li class="no">이전 방식의 한계를 ✕로</li>
-                <li class="ok">새 방식의 이점을 ✓로</li>
-              </ul>
+          <div class="scene scene--cover">
+            <div class="scene__copy anim-item">
+              <p class="statement" data-slot="statement">
+                핵심 메시지를<strong>짧고 선명하게</strong>
+              </p>
             </div>
-            <div class="col-card col-card--orange anim-item">
-              <div class="col-card__title-row">
-                <span class="col-card__emoji">⏳</span>
-                <div class="col-card__title">축 둘</div>
-              </div>
-              <ul class="bullet-list">
-                <li class="no">한 카드 = 한 비교 축</li>
-                <li class="ok">축이 넷이면 카드를 쪼갠다</li>
-              </ul>
-            </div>
-            <div class="col-card col-card--purple anim-item">
-              <div class="col-card__title-row">
-                <span class="col-card__emoji">🛠️</span>
-                <div class="col-card__title">축 셋</div>
-              </div>
-              <ul class="bullet-list">
-                <li class="no">색은 :root 변수만 쓴다</li>
-                <li class="ok">인라인 색상 금지</li>
-              </ul>
-            </div>
-          </div>
-          <div class="tip anim-item">
-            하단 한 줄 정리는 tip으로 — 본문 카드에 못 넣은 예외·보충 한 문장
+            <figure class="scene__visual anim-item" data-slot="scene-image">
+              <svg
+                class="diagram"
+                viewBox="0 0 600 280"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="402" cy="64" r="26" stroke="var(--purple)" />
+                <path
+                  d="M50 224L206 64L362 224M263 224L375 111L486 224"
+                  stroke="var(--brand)"
+                />
+                <path
+                  d="M208 68L188 126L224 112L243 137"
+                  stroke="var(--gray)"
+                />
+                <path d="M79 247H503" stroke="var(--border)" />
+              </svg>
+              <figcaption>주제를 보여주는 장면 이미지</figcaption>
+            </figure>
           </div>
         </main>
         <footer class="slide__footer">
-          <img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스" />
+          <img
+            class="fastcampus-logo"
+            src="/assets/fastcampus-logo-dark.svg"
+            alt="패스트캠퍼스"
+          />
         </footer>
       </article>
 
-      <!-- ═══════════════ Slide 3 — 타입 3: LIST ═══════════════
-       번호 원 + 제목 + 부연 세로 나열 (카드 박스 없음).
-       근거 나열, 번호 절차에 쓴다.
-       변형 · 점 마커 나열: .list-num 대신 <div class="list-dot"></div>,
-                          .list-item 에서 num 클래스 제거 (텍스트 상단 정렬)
-  ═══════════════════════════════════════════════════════════ -->
-      <article class="slide" data-index="2">
+      <!-- Confirmed structure 2: replace all data-slot fields and visuals from the new clip storyboard. -->
+      <article data-index="1" class="slide" data-pattern="SCENE_PAIR">
         <header class="slide__header">
-          <span class="slide__label">Section 2 · List</span>
-          <h1 class="slide__title">
-            근거 나열은 <span class="hl">리스트</span>로
-          </h1>
+          <span class="slide__label">Pattern 02 · SCENE PAIR</span>
+          <h1 class="slide__title">관계와 <span class="hl">핵심 문장</span></h1>
           <p class="slide__sub">
-            제목은 짧게, 부연은 한 문장으로. 항목 3~4개가 상한이다
+            왼쪽 도식에서 관계를 읽고 오른쪽 문장으로 의미를 정리합니다.
           </p>
         </header>
         <main class="slide__body">
-          <div class="list">
-            <div class="list-item num anim-item">
-              <div class="list-num">1</div>
-              <div class="list-body">
-                <div class="list-title">첫 번째 단계를 한 줄로</div>
-                <div class="list-sub">
-                  부연은 완결된 한 문장. 제목을 반복하지 않고 새 정보를 더한다
-                </div>
-              </div>
-            </div>
-            <div class="list-item num anim-item">
-              <div class="list-num">2</div>
-              <div class="list-body">
-                <div class="list-title">두 번째 단계를 한 줄로</div>
-                <div class="list-sub">
-                  번호 원과 점 마커는 흰색 통일 — 색을 입히지 않는다
-                </div>
-              </div>
-            </div>
-            <div class="list-item num anim-item">
-              <div class="list-num">3</div>
-              <div class="list-body">
-                <div class="list-title">세 번째 단계를 한 줄로</div>
-                <div class="list-sub">
-                  순서가 없는 나열이면 번호 원 대신 점 마커(list-dot)를 쓴다
-                </div>
-              </div>
+          <div class="scene scene--visual-first">
+            <figure
+              class="scene__visual anim-item"
+              data-slot="relationship-diagram"
+            >
+              <svg
+                class="diagram"
+                viewBox="0 0 600 280"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <use
+                  href="#shape-person"
+                  transform="translate(60 45) scale(1.8)"
+                />
+                <path d="M260 140H348M334 126L348 140L334 154" />
+                <use
+                  href="#shape-document"
+                  transform="translate(365 45) scale(1.8)"
+                  stroke="var(--brand)"
+                />
+              </svg>
+            </figure>
+            <div class="scene__copy anim-item">
+              <p class="statement" data-slot="statement">
+                하나의 관계를<strong>명확하게 설명</strong>
+              </p>
+              <p class="copy" data-slot="support">
+                도식의 의미를 보충하는 짧은 문장
+              </p>
             </div>
           </div>
         </main>
         <footer class="slide__footer">
-          <img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스" />
+          <img
+            class="fastcampus-logo"
+            src="/assets/fastcampus-logo-dark.svg"
+            alt="패스트캠퍼스"
+          />
         </footer>
       </article>
 
-      <!-- ═══════════════ Slide 4 — 타입 4: ICON_ROW (timeline) ═══════════════
-       가로 파이프라인. 흐름·단계·상태 전이에 쓴다. 카드 수에 맞춰
-       timeline--3/--4 클래스로 columns를 맞춘다 (기본은 5장).
-       진행 방향은 색으로도 읽히게 — 무채(대기) → 유채(활성) → green(완료).
-  ═══════════════════════════════════════════════════════════ -->
-      <article class="slide" data-index="3">
+      <!-- Confirmed structure 3: replace all data-slot fields and visuals from the new clip storyboard. -->
+      <article data-index="2" class="slide" data-pattern="SCENE_IMAGE">
         <header class="slide__header">
-          <span class="slide__label">Section 3 · Timeline</span>
-          <h1 class="slide__title">
-            흐름은 <span class="hl-yellow">가로 파이프라인</span>으로
-          </h1>
+          <span class="slide__label">Pattern 03 · SCENE IMAGE</span>
+          <h1 class="slide__title">장면과 <span class="hl">설명</span></h1>
           <p class="slide__sub">
-            세로로 쌓으면 목록처럼 읽힌다. 단계는 가로로 눕히고 화살표로 잇는다
+            왼쪽 문장과 오른쪽 장면이 같은 메시지를 전달합니다.
           </p>
         </header>
         <main class="slide__body">
-          <div class="timeline timeline--4">
-            <div class="timeline-card timeline-card--plain anim-item">
-              <span class="timeline-card__step step--muted">01</span>
-              <div class="timeline-emoji-wrap"><span>📥</span></div>
-              <div class="timeline-card__title">시작</div>
-              <div class="timeline-card__body">첫 단계는 무채색으로</div>
+          <div class="scene scene--image">
+            <div class="scene__copy anim-item">
+              <p class="statement" data-slot="statement">
+                상황을 보여주고<strong>의미를 연결</strong>
+              </p>
+              <p class="copy" data-slot="support">
+                장면에서 눈여겨볼 점을 한 줄로 설명
+              </p>
             </div>
-            <div class="timeline-arrow anim-item" aria-hidden="true"></div>
-            <div class="timeline-card timeline-card--yellow anim-item">
-              <span class="timeline-card__step step--yellow">02</span>
-              <div class="timeline-emoji-wrap"><span>🟡</span></div>
-              <div class="timeline-card__title">준비</div>
-              <div class="timeline-card__body">진행될수록 채도를 올린다</div>
-            </div>
-            <div class="timeline-arrow anim-item" aria-hidden="true"></div>
-            <div class="timeline-card timeline-card--orange anim-item">
-              <span class="timeline-card__step step--orange">03</span>
-              <div class="timeline-emoji-wrap"><span>⚙️</span></div>
-              <div class="timeline-card__title">실행</div>
-              <div class="timeline-card__body">활성 단계는 주황 계열</div>
-            </div>
-            <div class="timeline-arrow anim-item" aria-hidden="true"></div>
-            <div class="timeline-card timeline-card--green anim-item">
-              <span class="timeline-card__step step--green">04</span>
-              <div class="timeline-emoji-wrap"><span>🏁</span></div>
-              <div class="timeline-card__title">완료</div>
-              <div class="timeline-card__body">끝은 초록으로 닫는다</div>
-            </div>
-          </div>
-          <div class="tip tip--yellow anim-item">
-            정상 경로를 벗어나는 예외 상태는 열에 넣지 말고 tip 한 줄로 다룬다
+            <figure class="scene__visual anim-item" data-slot="scene-image">
+              <svg
+                class="diagram"
+                viewBox="0 0 600 280"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="402" cy="64" r="26" stroke="var(--purple)" />
+                <path
+                  d="M50 224L206 64L362 224M263 224L375 111L486 224"
+                  stroke="var(--brand)"
+                />
+                <path
+                  d="M208 68L188 126L224 112L243 137"
+                  stroke="var(--gray)"
+                />
+                <path d="M79 247H503" stroke="var(--border)" />
+              </svg>
+              <figcaption>상황을 설명하는 장면 이미지</figcaption>
+            </figure>
           </div>
         </main>
         <footer class="slide__footer">
-          <img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스" />
+          <img
+            class="fastcampus-logo"
+            src="/assets/fastcampus-logo-dark.svg"
+            alt="패스트캠퍼스"
+          />
         </footer>
       </article>
 
-      <!-- ═══════════════ Slide 5 — 타입 5: TREE (fan) ═══════════════
-       부모 1 → 자식 여럿의 분기 구조. 위임·분화·파생에 쓴다.
-       자식이 3개면 fan-kids를 grid-template-columns: 1fr 1fr 1fr로.
-  ═══════════════════════════════════════════════════════════ -->
-      <article class="slide" data-index="4">
+      <!-- Confirmed structure 4: replace all data-slot fields and visuals from the new clip storyboard. -->
+      <article data-index="3" class="slide" data-pattern="OPEN_TRIPTYCH">
         <header class="slide__header">
-          <span class="slide__label">Section 4 · Tree</span>
+          <span class="slide__label">Pattern 04 · OPEN TRIPTYCH</span>
           <h1 class="slide__title">
-            분기 구조는 <span class="hl">트리</span>로
+            세 개념의 <span class="hl">병렬 배치</span>
           </h1>
           <p class="slide__sub">
-            하나가 여럿으로 갈라지는 관계. 선이 구조를 말하게 한다
+            순서가 없는 세 요소를 그림·제목·설명으로 보여줍니다.
           </p>
         </header>
         <main class="slide__body">
-          <div class="fan">
-            <div class="fan-card fan-card--brand fan-root anim-item">
-              <span class="fan-card__emoji">🔍</span>
-              <div class="fan-card__title">부모 항목</div>
-              <div class="fan-card__body">갈라지기 전의 하나</div>
-            </div>
-            <div class="fan-stem anim-item"></div>
-            <div class="fan-bar-wrap anim-item">
-              <div class="fan-bar"></div>
-            </div>
-            <div class="fan-kids">
-              <div class="fan-card fan-card--purple anim-item">
-                <span class="fan-card__emoji">🎓</span>
-                <div class="fan-card__title">자식 A</div>
-                <div class="fan-card__body">갈래마다 색을 달리한다</div>
-              </div>
-              <div class="fan-card fan-card--orange anim-item">
-                <span class="fan-card__emoji">🎬</span>
-                <div class="fan-card__title">자식 B</div>
-                <div class="fan-card__body">자식 카드 구성은 동일하게</div>
-              </div>
-            </div>
-          </div>
-          <div class="tip anim-item">
-            루트 → 줄기 → 분기선 → 자식 순서로 등장시키면 구조가 그려진다
+          <div class="triptych content">
+            <section class="concept anim-item">
+              <svg
+                class="diagram tone-brand"
+                viewBox="0 0 100 100"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <use href="#shape-person" />
+              </svg>
+              <h2 class="heading" data-slot="item-title">첫 번째 개념</h2>
+              <p class="copy" data-slot="item-copy">
+                이 개념의 핵심을 한 문장으로
+              </p>
+            </section>
+            <section class="concept anim-item">
+              <svg
+                class="diagram tone-purple"
+                viewBox="0 0 100 100"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <use href="#shape-folder" />
+              </svg>
+              <h2 class="heading" data-slot="item-title">두 번째 개념</h2>
+              <p class="copy" data-slot="item-copy">
+                앞 항목과 같은 깊이로 설명
+              </p>
+            </section>
+            <section class="concept anim-item">
+              <svg
+                class="diagram tone-gray"
+                viewBox="0 0 100 100"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <use href="#shape-document" />
+              </svg>
+              <h2 class="heading" data-slot="item-title">세 번째 개념</h2>
+              <p class="copy" data-slot="item-copy">
+                같은 역할의 문구는 같은 규격으로
+              </p>
+            </section>
           </div>
         </main>
         <footer class="slide__footer">
-          <img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스" />
+          <img
+            class="fastcampus-logo"
+            src="/assets/fastcampus-logo-dark.svg"
+            alt="패스트캠퍼스"
+          />
         </footer>
       </article>
 
-      <!-- ═══════════════ Slide 6 — 타입 6: METRIC ═══════════════
-       대형 수치 나열. 소스에 실제 수치가 있을 때만 쓴다 — 수치 창작 금지.
-       강조할 수치 하나에만 metric--star를 붙인다.
-  ═══════════════════════════════════════════════════════════ -->
-      <article class="slide" data-index="5">
+      <!-- Confirmed structure 5: replace all data-slot fields and visuals from the new clip storyboard. -->
+      <article data-index="4" class="slide" data-pattern="STATUS_TRIPTYCH">
         <header class="slide__header">
-          <span class="slide__label">Section 5 · Metric</span>
+          <span class="slide__label">Pattern 05 · Status Triptych</span>
           <h1 class="slide__title">
-            수치는 <span class="hl-yellow">크게 하나씩</span>
+            상태를 포함한 <span class="hl">세 관점</span>
           </h1>
           <p class="slide__sub">
-            소스에 실제 수치가 있을 때만 쓴다. 캡션은 수치의 단위와 출처 맥락을
-            밝힌다
+            상태가 필요한 첫 도식과 나머지 두 도식을 같은 열 규격으로
+            정렬합니다.
           </p>
         </header>
         <main class="slide__body">
-          <div class="metric-row">
-            <div class="metric metric--star anim-item">
-              <div class="metric__icon">⭐</div>
-              <div class="metric__num">6.2k</div>
-              <div class="metric__cap">강조 수치 (metric--star)</div>
-            </div>
-            <div class="metric anim-item">
-              <div class="metric__icon">🔀</div>
-              <div class="metric__num">700+</div>
-              <div class="metric__cap">보조 수치</div>
-            </div>
-            <div class="metric anim-item">
-              <div class="metric__icon">📈</div>
-              <div class="metric__num">240+</div>
-              <div class="metric__cap">보조 수치</div>
-            </div>
+          <div class="triptych content">
+            <section class="concept anim-item">
+              <svg
+                class="diagram"
+                viewBox="0 0 600 300"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <rect
+                  x="10"
+                  y="10"
+                  width="580"
+                  height="280"
+                  rx="9"
+                  fill="var(--bg-card)"
+                />
+                <path d="M10 49H590" />
+                <circle cx="28" cy="30" r="3" fill="currentColor" />
+                <circle cx="42" cy="30" r="3" fill="currentColor" />
+                <circle cx="56" cy="30" r="3" fill="currentColor" />
+                <use href="#shape-person" transform="translate(75 66)" />
+                <use
+                  href="#shape-done"
+                  transform="translate(95 207) scale(.6)"
+                  stroke="var(--green)"
+                />
+                <use href="#shape-person" transform="translate(250 66)" />
+                <use
+                  href="#shape-working"
+                  transform="translate(270 207) scale(.6)"
+                  stroke="var(--yellow)"
+                />
+                <use href="#shape-person" transform="translate(425 66)" />
+                <use
+                  href="#shape-waiting"
+                  transform="translate(445 207) scale(.6)"
+                  stroke="var(--orange)"
+                />
+              </svg>
+              <h2 class="heading" data-slot="item-title">첫 번째 관점</h2>
+              <p class="copy status-one-line" data-slot="item-copy">
+                다른 상태를 한곳에 표시
+              </p>
+            </section>
+            <section class="concept anim-item">
+              <svg
+                class="diagram"
+                viewBox="0 0 600 300"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <use
+                  href="#shape-folder"
+                  transform="translate(10 65) scale(1.4)"
+                  stroke="var(--brand)"
+                />
+                <use
+                  href="#shape-folder"
+                  transform="translate(215 65) scale(1.4)"
+                  stroke="var(--purple)"
+                />
+                <use
+                  href="#shape-folder"
+                  transform="translate(420 65) scale(1.4)"
+                  stroke="var(--gray)"
+                />
+              </svg>
+              <h2 class="heading" data-slot="item-title">두 번째 관점</h2>
+              <p class="copy status-one-line" data-slot="item-copy">
+                각 대상의 구성을 표현
+              </p>
+            </section>
+            <section class="concept anim-item">
+              <svg
+                class="diagram"
+                viewBox="0 0 600 300"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <use
+                  href="#shape-document"
+                  transform="translate(5 55) scale(1.5)"
+                  stroke="var(--brand)"
+                />
+                <use
+                  href="#shape-document"
+                  transform="translate(210 55) scale(1.5)"
+                  stroke="var(--purple)"
+                />
+                <use
+                  href="#shape-document"
+                  transform="translate(415 55) scale(1.5)"
+                  stroke="var(--gray)"
+                />
+              </svg>
+              <h2 class="heading" data-slot="item-title">세 번째 관점</h2>
+              <p class="copy status-one-line" data-slot="item-copy">
+                같은 기준으로 나란히 배치
+              </p>
+            </section>
           </div>
-          <div class="tip anim-item">
-            수치가 두 개면 metric-row를 repeat(2, 1fr)로 — 빈 칸을 만들지
-            않는다
+          <p class="handoff anim-item" data-slot="handoff">
+            이 내용을 이어서 다룰 <strong>다음 주제</strong>
+          </p>
+        </main>
+        <footer class="slide__footer">
+          <img
+            class="fastcampus-logo"
+            src="/assets/fastcampus-logo-dark.svg"
+            alt="패스트캠퍼스"
+          />
+        </footer>
+      </article>
+      <!-- Pattern 6: replace labels and diagrams using the new storyboard; preserve shared type roles. -->
+      <article class="slide" data-index="5" data-pattern="STRUCTURE_BRANCH">
+        <header class="slide__header">
+          <span class="slide__label">Pattern 06 · STRUCTURE BRANCH</span>
+          <h1 class="slide__title">
+            상위와 하위의 <span class="hl">구조</span>
+          </h1>
+          <p class="slide__sub">
+            하나의 기준 아래 나뉘는 항목과 연결 관계를 보여줍니다.
+          </p>
+        </header>
+        <main class="slide__body">
+          <div class="structure-tree">
+            <div class="structure-tree__root anim-item">
+              <svg
+                class="diagram"
+                viewBox="0 0 100 100"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <use href="#shape-folder" />
+              </svg>
+              <div>
+                <h2 class="heading" data-slot="root-title">상위 항목</h2>
+                <p class="copy" data-slot="root-copy">전체를 묶는 기준</p>
+              </div>
+            </div>
+            <div
+              class="structure-tree__stem anim-item"
+              aria-hidden="true"
+            ></div>
+            <div class="structure-tree__children anim-item">
+              <section class="structure-node">
+                <svg
+                  class="diagram"
+                  viewBox="0 0 100 100"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <use href="#shape-folder" />
+                </svg>
+                <h2 class="heading tone-brand" data-slot="child-title">
+                  하위 항목 A
+                </h2>
+                <p class="copy" data-slot="child-copy">
+                  이 항목에 포함되는 내용
+                </p>
+              </section>
+              <section class="structure-node">
+                <svg
+                  class="diagram"
+                  viewBox="0 0 100 100"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <use href="#shape-folder" />
+                </svg>
+                <h2 class="heading tone-purple" data-slot="child-title">
+                  하위 항목 B
+                </h2>
+                <p class="copy" data-slot="child-copy">
+                  이 항목에 포함되는 내용
+                </p>
+              </section>
+            </div>
           </div>
         </main>
         <footer class="slide__footer">
-          <img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스" />
+          <img
+            class="fastcampus-logo"
+            src="/assets/fastcampus-logo-dark.svg"
+            alt="패스트캠퍼스"
+          />
+        </footer>
+      </article>
+      <!-- Pattern 7: replace labels and diagrams using the new storyboard; preserve shared type roles. -->
+      <article class="slide" data-index="6" data-pattern="STRUCTURE_EXCHANGE">
+        <header class="slide__header">
+          <span class="slide__label">Pattern 07 · STRUCTURE EXCHANGE</span>
+          <h1 class="slide__title">
+            주체 사이의 <span class="hl">요청과 결과</span>
+          </h1>
+          <p class="slide__sub">
+            같은 범위 안에서 역할을 나누고 정보를 주고받는 구조를 보여줍니다.
+          </p>
+        </header>
+        <main class="slide__body">
+          <div class="scene">
+            <div class="scene__copy anim-item">
+              <p class="statement" data-slot="statement">
+                주체와 역할을<strong>관계로 설명</strong>
+              </p>
+              <p class="copy" data-slot="supporting-copy">
+                오가는 방향과 전달 내용을 구분
+              </p>
+            </div>
+            <div class="exchange anim-item" data-slot="relationship-diagram">
+              <p class="eyebrow exchange__scope" data-slot="scope">공통 범위</p>
+              <svg
+                class="diagram"
+                viewBox="0 0 600 430"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <g stroke="var(--yellow)">
+                  <path
+                    d="M235 146V192H150V288m-7-10 7 10 7-10M365 146V192H450V288m-7-10 7 10 7-10"
+                  />
+                  <path
+                    d="M90 288V133H165M510 288V133H435"
+                    stroke-dasharray="7 8"
+                  />
+                  <path d="m155 126 10 7-10 7m290-14-10 7 10 7" />
+                </g>
+              </svg>
+              <div class="exchange__node exchange__node--root">
+                <h2 class="heading tone-yellow" data-slot="root-title">
+                  중심 역할
+                </h2>
+                <p class="copy" data-slot="root-copy">
+                  요청을 나누고 결과 확인
+                </p>
+              </div>
+              <div class="exchange__legend">
+                <p class="copy" data-slot="outbound">
+                  <span class="line-key" aria-hidden="true"></span>요청
+                </p>
+                <p class="copy" data-slot="inbound">
+                  <span
+                    class="line-key line-key--return"
+                    aria-hidden="true"
+                  ></span
+                  >결과
+                </p>
+              </div>
+              <div class="exchange__node exchange__node--a">
+                <h2 class="heading tone-brand" data-slot="child-title">
+                  담당 역할 A
+                </h2>
+                <p class="copy" data-slot="child-copy">맡은 역할의 범위</p>
+              </div>
+              <div class="exchange__node exchange__node--b">
+                <h2 class="heading tone-purple" data-slot="child-title">
+                  담당 역할 B
+                </h2>
+                <p class="copy" data-slot="child-copy">맡은 역할의 범위</p>
+              </div>
+            </div>
+          </div>
+        </main>
+        <footer class="slide__footer">
+          <img
+            class="fastcampus-logo"
+            src="/assets/fastcampus-logo-dark.svg"
+            alt="패스트캠퍼스"
+          />
+        </footer>
+      </article>
+      <!-- Pattern 8: replace labels and diagrams using the new storyboard; preserve shared type roles. -->
+      <article class="slide" data-index="7" data-pattern="TRANSITION_COMPARE">
+        <header class="slide__header">
+          <span class="slide__label">Pattern 08 · TRANSITION COMPARE</span>
+          <h1 class="slide__title">방식의 <span class="hl">변화</span></h1>
+          <p class="slide__sub">
+            같은 기준으로 두 방식을 나란히 놓고 달라지는 관계를 보여줍니다.
+          </p>
+        </header>
+        <main class="slide__body">
+          <div class="transition-compare">
+            <section class="transition-side anim-item">
+              <p class="eyebrow" data-slot="before-label">기존 방식의 조건</p>
+              <h2 class="heading tone-orange" data-slot="before-title">
+                기존 방식의<br />이름
+              </h2>
+              <svg
+                class="diagram"
+                viewBox="0 0 600 300"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <use
+                  href="#shape-document"
+                  transform="translate(0 75) scale(1.3)"
+                  stroke="var(--gray)"
+                />
+                <use
+                  href="#shape-person"
+                  transform="translate(230 35) scale(1.4)"
+                  stroke="var(--gray)"
+                />
+                <use
+                  href="#shape-document"
+                  transform="translate(470 75) scale(1.3)"
+                  stroke="var(--gray)"
+                />
+                <path
+                  d="M123 144H218m-12-9 12 9-12 9M383 144H472m-12-9 12 9-12 9"
+                />
+              </svg>
+              <p class="copy" data-slot="before-copy">
+                중앙 담당자를 거쳐 이어지는 흐름
+              </p>
+            </section>
+            <svg
+              class="diagram transition-compare__arrow anim-item"
+              viewBox="0 0 100 50"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M5 25H95m-12-9 12 9-12 9" />
+            </svg>
+            <section class="transition-side anim-item">
+              <p class="eyebrow" data-slot="after-label">전환된 방식의 조건</p>
+              <h2 class="heading tone-brand" data-slot="after-title">
+                전환된 방식의<br />이름
+              </h2>
+              <svg
+                class="diagram"
+                viewBox="0 0 600 300"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <use
+                  href="#shape-person"
+                  transform="translate(10 55) scale(1.3)"
+                  stroke="var(--brand)"
+                />
+                <use
+                  href="#shape-person"
+                  transform="translate(235 55) scale(1.3)"
+                  stroke="var(--purple)"
+                />
+                <use
+                  href="#shape-person"
+                  transform="translate(460 55) scale(1.3)"
+                  stroke="var(--gray)"
+                />
+                <path
+                  d="M142 126H226m-12-9 12 9-12 9M367 126H451m-12-9 12 9-12 9"
+                />
+                <use
+                  href="#shape-document"
+                  transform="translate(165 47) scale(0.5)"
+                  stroke="var(--gray)"
+                />
+                <use
+                  href="#shape-document"
+                  transform="translate(390 47) scale(0.5)"
+                  stroke="var(--gray)"
+                />
+                <path
+                  d="M525 182V240H300V182"
+                  stroke="var(--yellow)"
+                  stroke-dasharray="7 8"
+                />
+                <path d="m292 194 8-12 8 12" stroke="var(--yellow)" />
+              </svg>
+              <p class="copy" data-slot="after-copy">
+                각 담당자가 연결되어 이어지는 흐름
+              </p>
+            </section>
+          </div>
+        </main>
+        <footer class="slide__footer">
+          <img
+            class="fastcampus-logo"
+            src="/assets/fastcampus-logo-dark.svg"
+            alt="패스트캠퍼스"
+          />
         </footer>
       </article>
     </div>
-    <!-- /.slide-deck -->
-
     <script>
+      // 파일로 직접 여는 경우: 이 템플릿 위치와 정식 outputs 위치를 구분한다.
+      // 다른 깊이로 옮기면 루트 해석도 함께 확인한다. HTTP 경로에는 개입하지 않는다.
+      if (location.protocol === "file:") {
+        const depth =
+          /\/\.(claude|agents)\/skills\/fastcampus-slide\/assets\//.test(
+            location.pathname,
+          )
+            ? "../../../../"
+            : "../../../";
+        const root = new URL(depth, location.href);
+        document.querySelectorAll('img[src^="/"]').forEach((img) => {
+          img.src = new URL(img.getAttribute("src").slice(1), root).href;
+        });
+      }
+
       /* 조작 규칙 (성공 기준):
          페이지 이동은 좌우 nav-btn · 하단 dot · 키보드(←/→/스페이스)로만.
          #deck/body/.slide에 이동용 click 리스너를 절대 달지 않는다 —
@@ -1237,7 +1282,9 @@
             10,
           );
           this.current =
-            Number.isInteger(requested) && requested >= 1 && requested <= this.total
+            Number.isInteger(requested) &&
+            requested >= 1 &&
+            requested <= this.total
               ? requested - 1
               : 0;
           this.isAnimating = false;

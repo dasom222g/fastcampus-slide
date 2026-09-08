@@ -22,7 +22,7 @@
 
 ```
 Part 2 › Ch02-01. 설치 전 준비물과 환경 체크
-  → artifacts/part2/ch02-01-setup-prep.html
+  → artifacts/part2/outputs/ch02-01-setup-prep.html
   → 공개 주소 /part2/ch02-01-setup-prep
 ```
 
