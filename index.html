@@ -11,6 +11,8 @@
         --brand-rgb: 252, 28, 73;
         --line: rgba(255, 255, 255, 0.09);
         --dim: #8b97a6;
+        --status-confirmed: #5cdda5;
+        --status-working: #f2c66d;
         color-scheme: dark;
         font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         background: #0b1017;
@@ -129,12 +131,16 @@
       }
       .name { font-size: 24px; font-weight: 600; letter-spacing: -.02em; }
       .meta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 10px;
         font-family: Monaco, Menlo, monospace;
         font-size: 14px;
         color: #6b7686;
         white-space: nowrap;
       }
-      .meta.ext {
+      .meta .ext {
         font-family: inherit;
         font-size: 13px;
         font-weight: 700;
@@ -144,6 +150,13 @@
         border-radius: 999px;
         color: #97a2b1;
       }
+      .status {
+        font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+      }
+      .status--confirmed { color: var(--status-confirmed); }
+      .status--working { color: var(--status-working); }
       .go { color: var(--brand); font-weight: 800; font-size: 16px; }
 
       @media (max-width: 640px) {
@@ -174,7 +187,7 @@
         나 대신 일하는 AI 팀 만들기 — 이론 클립의 강의 슬라이드입니다.<br />
         커리큘럼의 파트 → 챕터 → 클립 순서 그대로 정렬되어 있습니다.
       </p>
-      <div class="count"><i></i><b>11개</b> 덱 · <b>4개</b> 파트</div>
+      <div class="count"><i></i><b>10개</b> 덱 · <b>4개</b> 파트</div>
 
       <!-- 새 덱을 만들면:
            1) 그 클립이 속한 파트 <section class="part">를 찾는다 (없으면 파트 블록부터 만든다)
@@ -182,7 +195,8 @@
               — 파트·챕터의 번호와 제목은 docs/curriculum.md를 그대로 쓴다
            3) 챕터 <ul> 안, 커리큘럼 순서에 맞는 자리에 <li>를 추가한다 (링크는 target="_blank"로 새 탭에서 연다)
            4) .meta는 클립 소스 frontmatter의 `슬라이드`(장수)를 쓴다.
-              덱이 이 저장소가 아니라 구글 슬라이드에 있으면 그 URL을 target="_blank"로 걸고 .meta.ext로 표시한다
+              덱이 이 저장소가 아니라 구글 슬라이드에 있으면 그 URL을 target="_blank"로 걸고 .meta 안의 .ext로 표시한다
+           상태는 확정(.status--confirmed) 또는 작업중(.status--working) 두 가지만 사용한다.
            5) 머리말의 .count(덱 수 · 파트 수)와 각 파트의 .part__meta(덱 수)를 갱신한다
            챕터 번호는 파트마다 1부터 다시 시작한다 — Part 1의 Ch02-01과 Part 2의 Ch02-01은 다른 클립이다. -->
 
@@ -200,7 +214,7 @@
               <a href="https://docs.google.com/presentation/d/1ni-MU5mTo5C84FhhQTc89fGOJOx1VnbZ0SWzbKLgUz4/edit?usp=drive_link" target="_blank" rel="noopener">
                 <span class="clip">Ch01-01</span>
                 <span class="name">강의 소개와 최종 결과물</span>
-                <span class="meta ext">Google Slides</span>
+                <span class="meta"><span class="ext">Google Slides</span><span class="status status--confirmed">확정</span></span>
                 <span class="go">열기 ↗</span>
               </a>
             </li>
@@ -208,7 +222,7 @@
               <a href="https://docs.google.com/presentation/d/1YTfdEa2p06JhmDgxCXm7YGbmHS32B6hI6_VXSgCL7bg/edit?usp=drive_link" target="_blank" rel="noopener">
                 <span class="clip">Ch01-02</span>
                 <span class="name">강의 로드맵과 선수 지식</span>
-                <span class="meta ext">Google Slides</span>
+                <span class="meta"><span class="ext">Google Slides</span><span class="status status--confirmed">확정</span></span>
                 <span class="go">열기 ↗</span>
               </a>
             </li>
@@ -222,7 +236,7 @@
               <a href="/part1/outputs/ch02-01-single-agent-limits" target="_blank" rel="noopener">
                 <span class="clip">Ch02-01</span>
                 <span class="name">에이전트 하나로 되는 일과 안 되는 일</span>
-                <span class="meta">5장 · 확정</span>
+                <span class="meta">5장<span class="status status--confirmed">확정</span></span>
                 <span class="go">열기 ↗</span>
               </a>
             </li>
@@ -234,7 +248,7 @@
         <div class="part__head">
           <span class="part__no">PART 2</span>
           <span class="part__title">Orca 설치 및 기본 사용</span>
-          <span class="part__meta">4개 덱</span>
+          <span class="part__meta">3개 덱</span>
         </div>
 
         <div class="chapter">
@@ -244,7 +258,7 @@
               <a href="/part2/outputs/ch01-01-terminal-problem" target="_blank" rel="noopener">
                 <span class="clip">Ch01-01</span>
                 <span class="name">터미널 여러 개의 문제</span>
-                <span class="meta">5장 · 확정</span>
+                <span class="meta">5장<span class="status status--confirmed">확정</span></span>
                 <span class="go">열기 ↗</span>
               </a>
             </li>
@@ -252,7 +266,7 @@
               <a href="/part2/outputs/ch01-02-what-is-orca" target="_blank" rel="noopener">
                 <span class="clip">Ch01-02</span>
                 <span class="name">Orca는 어떤 도구인가</span>
-                <span class="meta">5장 · 확정</span>
+                <span class="meta">5장<span class="status status--confirmed">확정</span></span>
                 <span class="go">열기 ↗</span>
               </a>
             </li>
@@ -266,18 +280,11 @@
               <a href="/part2/outputs/ch02-01-setup-prep" target="_blank" rel="noopener">
                 <span class="clip">Ch02-01</span>
                 <span class="name">설치 전 준비물과 환경 체크</span>
-                <span class="meta">4장 · 확정</span>
+                <span class="meta">4장<span class="status status--confirmed">확정</span></span>
                 <span class="go">열기 ↗</span>
               </a>
             </li>
-            <li>
-              <a href="/part2/outputs/ch02-03-screen-and-board" target="_blank" rel="noopener">
-                <span class="clip">Ch02-03</span>
-                <span class="name">화면 구조와 보드 읽는 법</span>
-                <span class="meta">7장</span>
-                <span class="go">열기 ↗</span>
-              </a>
-            </li>
+
           </ul>
         </div>
       </section>
@@ -296,7 +303,7 @@
               <a href="/part3/outputs/ch01-01-what-is-git" target="_blank" rel="noopener">
                 <span class="clip">Ch01-01</span>
                 <span class="name">Git이란 - 버전 관리가 없다면</span>
-                <span class="meta">5장</span>
+                <span class="meta">5장<span class="status status--confirmed">확정</span></span>
                 <span class="go">열기 ↗</span>
               </a>
             </li>
@@ -304,7 +311,7 @@
               <a href="/part3/outputs/ch01-02-repo-and-flow" target="_blank" rel="noopener">
                 <span class="clip">Ch01-02</span>
                 <span class="name">저장소와 작업흐름</span>
-                <span class="meta">8장</span>
+                <span class="meta">8장<span class="status status--confirmed">확정</span></span>
                 <span class="go">열기 ↗</span>
               </a>
             </li>
@@ -312,7 +319,7 @@
               <a href="/part3/outputs/ch01-03-branch-vs-worktree" target="_blank" rel="noopener">
                 <span class="clip">Ch01-03</span>
                 <span class="name">브랜치와 워크트리 차이</span>
-                <span class="meta">10장</span>
+                <span class="meta">7장<span class="status status--confirmed">확정</span></span>
                 <span class="go">열기 ↗</span>
               </a>
             </li>
@@ -333,7 +340,7 @@
               <a href="/part4/outputs/ch02-01-orchestration-skill-setup" target="_blank" rel="noopener">
                 <span class="clip">Ch02-01</span>
                 <span class="name">오케스트레이션 스킬 설치하기</span>
-                <span class="meta">1장 · 도입 초안</span>
+                <span class="meta">1장<span class="status status--working">작업중</span></span>
                 <span class="go">열기 ↗</span>
               </a>
             </li>
