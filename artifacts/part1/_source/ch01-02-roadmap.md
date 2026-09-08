@@ -4,7 +4,7 @@
 클립: Ch01-02. 강의 로드맵과 선수 지식
 길이: 9분
 슬라이드: 7장
-산출물: artifacts/part1/ch01-02-roadmap.html
+산출물: artifacts/part1/outputs/ch01-02-roadmap.html
 상태: 확정
 ---
 

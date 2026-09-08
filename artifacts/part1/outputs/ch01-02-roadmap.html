@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>강의 소개와 최종 결과물 — 나 대신 일하는 AI 팀</title>
+    <title>강의 로드맵과 선수 지식 — 나 대신 일하는 AI 팀</title>
     <!-- 허용된 외부 의존은 아래 웹폰트 2개뿐. 그 외 모든 것은 인라인/로컬 -->
     <link
       rel="stylesheet"
@@ -54,7 +54,7 @@
           -apple-system,
           BlinkMacSystemFont,
           sans-serif;
-        font-size: clamp(12px, 1.35vw, 15px);
+        font-size: clamp(13px, 1.35vw, 16px);
         background: var(--bg);
         color: var(--text);
         word-break: keep-all; /* 한국어 어절 단위 줄바꿈 */
@@ -80,7 +80,7 @@
         background-color: var(--bg);
         display: grid;
         grid-template-rows: auto 1fr auto;
-        padding: clamp(2.5rem, 5.5vh, 4.5rem) clamp(3.5rem, 9vw, 8rem);
+        padding: clamp(2.6rem, 5.5vh, 4.2rem) clamp(4rem, 7.5vw, 7rem);
         gap: clamp(1.5rem, 3.75vh, 3rem);
         overflow: hidden;
         opacity: 0;
@@ -126,7 +126,7 @@
         color: var(--purple);
       }
       .slide__sub {
-        font-size: clamp(1rem, 1.65vw, 1.15rem);
+        font-size: clamp(1.05rem, 1.6vw, 1.28rem);
         font-weight: 400;
         color: var(--text-dim);
         line-height: 1.5;
@@ -917,422 +917,218 @@
       }
     
       /* ══════════════════════════════════════════════════════════
-         이번 덱 전용 변형 — 진화 3단계 골격 · 대비 미니 도식 · 흐름 도형
-         타입 6종으로 표현되지 않는 것만 여기 둔다. 베이스 템플릿에는 넣지 않는다.
+         이번 덱 전용 변형 — 구간 표시줄 · 파트 카드 · 준비물
       ══════════════════════════════════════════════════════════ */
 
-      /* ── 진화 3단계가 공유하는 3단 골격 ─────────────────────
-         슬라이드 3·4·5가 같은 골격을 쓰고 사람 노드의 위치만 바뀐다.
-         밴드를 세로로 쌓고 CSS 연결선으로 잇는다 (글리프 화살표 금지). */
-      .flow {
-        --flow-gap: clamp(0.9rem, 2vw, 1.6rem);
-        width: min(62rem, 100%);
+      /* 지금 어느 구간을 보고 있는지 — 2·3·4에서 같은 자리에 온다 */
+      .seg-bar {
+        display: flex;
+        align-items: center;
+        gap: clamp(0.5rem, 1.2vw, 0.9rem);
         align-self: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-      .flow-row {
-        display: flex;
-        justify-content: center;
-        gap: var(--flow-gap);
-      }
-      /* 에이전트 3개 행과 합류선이 같은 격자를 써야 줄기가 노드 중심에 맞는다 */
-      .flow-branch {
-        --flow-gap: clamp(0.9rem, 2vw, 1.6rem);
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        width: min(42rem, 100%);
-      }
-      .flow-tri {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: var(--flow-gap);
-      }
-      /* 노드가 자기 열을 정확히 채워야 합류 줄기가 노드 중심에 맞는다 */
-      .flow-tri > .flow-node { min-width: 0; }
-      .flow-node {
-        min-width: clamp(8rem, 15vw, 12rem);
-        padding: clamp(0.8rem, 1.7vh, 1.15rem) clamp(1rem, 2vw, 1.5rem);
+        padding: 0.4rem 0.7rem;
         border: 1px solid var(--border);
-        border-radius: 8px;
-        background: var(--bg-card);
-        text-align: center;
-      }
-      .flow-node__title {
-        font-size: clamp(1rem, 1.65vw, 1.3rem);
-        font-weight: 700;
-        line-height: 1.25;
-      }
-      .flow-node__sub {
-        margin-top: 0.3rem;
-        font-size: clamp(0.78rem, 1.15vw, 0.95rem);
-        color: var(--text-dim);
-        line-height: 1.45;
-      }
-      .flow-node--gray {
-        border-color: var(--border-gray);
-        background: rgba(139, 148, 158, 0.06);
-      }
-      .flow-node--brand {
-        border-color: var(--border-brand);
-        background: rgba(var(--brand-rgb), 0.07);
-      }
-      .flow-node--brand .flow-node__title { color: var(--brand); }
-      .flow-node--green {
-        border-color: var(--border-green);
-        background: rgba(74, 222, 128, 0.07);
-      }
-      .flow-node--green .flow-node__title { color: var(--green); }
-      /* 사람 노드 — 어느 밴드에 놓이느냐가 이 블록의 메시지다 */
-      .flow-node--me {
-        border-color: var(--border-orange);
-        background: rgba(255, 109, 59, 0.09);
-        min-width: clamp(13rem, 26vw, 20rem);
-      }
-      .flow-node--me .flow-node__title { color: var(--orange); }
-      .flow-node--person { border-style: dashed; }
-
-      /* 세로 연결선 + border 삼각 화살촉 */
-      .flow-link {
-        width: 1px;
-        height: clamp(1.1rem, 2.8vh, 2.2rem);
-        background: var(--border-gray);
-        position: relative;
-        flex-shrink: 0;
-      }
-      .flow-link::after {
-        content: "";
-        position: absolute;
-        left: 50%;
-        bottom: -1px;
-        transform: translateX(-50%);
-        border-left: 5px solid transparent;
-        border-right: 5px solid transparent;
-        border-top: 7px solid var(--text-muted);
-      }
-      .flow-link--brand { background: var(--border-brand); }
-      .flow-link--brand::after { border-top-color: var(--brand); }
-      /* 여러 갈래가 한 점으로 모이는 구간 */
-      .flow-merge {
-        width: 100%;
-        height: clamp(1.3rem, 3.2vh, 2.4rem);
-        position: relative;
-        flex-shrink: 0;
-      }
-      /* 줄기는 에이전트 행과 같은 3열 격자에 얹어 노드 중심에 정확히 맞춘다 */
-      .flow-merge__stems {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: var(--flow-gap);
-        height: 50%;
-      }
-      .flow-merge__stems span {
-        justify-self: center;
-        width: 1px;
-        height: 100%;
-        background: var(--border-orange);
-      }
-      .flow-merge__bar {
-        position: absolute;
-        top: 50%;
-        left: calc((100% - 2 * var(--flow-gap)) / 6);
-        right: calc((100% - 2 * var(--flow-gap)) / 6);
-        height: 1px;
-        background: var(--border-orange);
-      }
-      .flow-merge__drop {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 1px;
-        height: 50%;
-        background: var(--border-orange);
-      }
-      .flow-merge__drop::after {
-        content: "";
-        position: absolute;
-        left: 50%;
-        bottom: -1px;
-        transform: translateX(-50%);
-        border-left: 5px solid transparent;
-        border-right: 5px solid transparent;
-        border-top: 7px solid var(--orange);
-      }
-      /* 에이전트끼리 가로로 주고받는 구간 (3단계) */
-      .flow-peer {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0;
-        padding: clamp(0.7rem, 1.6vh, 1.1rem) clamp(1.1rem, 2.4vw, 1.8rem);
-        border: 1px dashed var(--border-brand);
-        border-radius: 10px;
-        background: rgba(var(--brand-rgb), 0.03);
-      }
-      .flow-peer__link {
-        width: clamp(1.6rem, 4vw, 3.2rem);
-        height: 1px;
-        background: var(--border-brand);
-        position: relative;
-        flex-shrink: 0;
-      }
-      .flow-peer__link::after {
-        content: "";
-        position: absolute;
-        top: 50%;
-        right: -1px;
-        transform: translateY(-50%);
-        border-top: 5px solid transparent;
-        border-bottom: 5px solid transparent;
-        border-left: 7px solid var(--brand);
-      }
-      .flow-stage {
-        align-self: flex-start;
-        margin-bottom: clamp(0.5rem, 1.4vh, 0.9rem);
-        padding: 0.34rem 0.8rem;
-        border: 1px solid var(--border);
-        border-radius: 4px;
-        font-family: "Monaco", "Menlo", monospace;
-        font-size: clamp(0.68rem, 0.95vw, 0.8rem);
-        font-weight: 800;
-        letter-spacing: 0.12em;
-        color: var(--text-muted);
-      }
-      .flow-stage--orange {
-        color: var(--orange);
-        border-color: var(--border-orange);
-        background: rgba(255, 109, 59, 0.08);
-      }
-      .flow-stage--brand {
-        color: var(--brand);
-        border-color: var(--border-brand);
-        background: rgba(var(--brand-rgb), 0.08);
-      }
-
-      /* 슬라이드 4 — 도식 + 장면 이미지 좌우 배치 */
-      .scene-split {
-        display: grid;
-        grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-        gap: clamp(1.2rem, 3vw, 2.4rem);
-        align-items: center;
-        width: 100%;
-      }
-      .scene-split .flow { width: 100%; }
-      .scene-frame {
-        justify-self: center;
-        border: 1px solid var(--border-orange);
-        border-radius: 10px;
-        overflow: hidden;
-        background: rgba(255, 109, 59, 0.04);
-      }
-      .scene-frame img {
-        display: block;
-        height: clamp(13rem, 36vh, 22rem);
-        width: auto;
-        max-width: 100%;
-      }
-      .scene-split .flow-node {
-        padding: clamp(0.6rem, 1.3vh, 0.9rem) clamp(0.8rem, 1.6vw, 1.2rem);
-      }
-
-      /* 슬라이드 6 — vs 열 안에 들어가는 미니 도식 */
-      .mini {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.32rem;
-        padding: clamp(0.9rem, 2.2vh, 1.4rem) 0;
-      }
-      .mini-row {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.4rem;
-      }
-      .mini-chip {
-        padding: 0.34rem 0.7rem;
-        border: 1px solid var(--border);
-        border-radius: 4px;
+        border-radius: 6px;
         background: var(--bg-card);
         font-family: "Monaco", "Menlo", monospace;
         font-size: clamp(0.66rem, 0.95vw, 0.78rem);
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        color: var(--text-muted);
+      }
+      .seg-bar__sep {
+        width: clamp(0.9rem, 2vw, 1.5rem);
+        height: 1px;
+        background: var(--border);
+      }
+      .seg-bar__on {
+        padding: 0.18rem 0.55rem;
+        border-radius: 3px;
+        color: var(--brand);
+        background: rgba(var(--brand-rgb), 0.12);
+      }
+
+      /* 파트 카드 */
+      .part-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: clamp(0.8rem, 1.8vw, 1.35rem);
+        width: 100%;
+      }
+      .part-grid--2 { grid-template-columns: 1fr 1fr; }
+      .part-card {
+        display: flex;
+        gap: clamp(0.9rem, 2vw, 1.4rem);
+        align-items: center;
+        padding: clamp(1rem, 2.2vw, 1.55rem);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: var(--bg-card);
+      }
+      .part-card__text { min-width: 0; }
+      .part-card__no {
+        display: block;
+        margin-bottom: 0.34rem;
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(0.66rem, 0.92vw, 0.76rem);
+        font-weight: 800;
+        letter-spacing: 0.14em;
+        color: var(--text-muted);
+      }
+      .part-card__title {
+        font-size: clamp(1.02rem, 1.7vw, 1.35rem);
         font-weight: 700;
-        white-space: nowrap;
+        line-height: 1.3;
       }
-      .mini-chip--me {
+      .part-card__body {
+        margin-top: 0.36rem;
+        font-size: clamp(0.82rem, 1.25vw, 0.98rem);
         color: var(--text-dim);
-        border-style: dashed;
+        line-height: 1.5;
       }
-      .mini-chip--agent-o {
-        color: var(--orange);
-        border-color: var(--border-orange);
-        background: rgba(255, 109, 59, 0.08);
+      .part-card__tag {
+        display: inline-block;
+        margin-top: 0.5rem;
+        padding: 0.2rem 0.5rem;
+        border: 1px solid var(--border);
+        border-radius: 3px;
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(0.6rem, 0.85vw, 0.7rem);
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        color: var(--text-muted);
       }
-      .mini-chip--agent-b {
+      .part-card__shape {
+        flex-shrink: 0;
+        width: clamp(4.2rem, 8vw, 6.2rem);
+      }
+      .part-card__shape svg { width: 100%; height: auto; display: block; }
+      .part-card--brand  { border-color: var(--border-brand);  background: rgba(var(--brand-rgb), 0.055); }
+      .part-card--purple { border-color: var(--border-purple); background: rgba(145, 136, 255, 0.055); }
+      .part-card--yellow { border-color: var(--border-yellow); background: rgba(240, 180, 41, 0.055); }
+      .part-card--green  { border-color: var(--border-green);  background: rgba(74, 222, 128, 0.055); }
+      .part-card--brand  .part-card__no, .part-card--brand  .part-card__shape { color: var(--brand); }
+      .part-card--purple .part-card__no, .part-card--purple .part-card__shape { color: var(--purple); }
+      .part-card--yellow .part-card__no, .part-card--yellow .part-card__shape { color: var(--yellow); }
+      .part-card--green  .part-card__no, .part-card--green  .part-card__shape { color: var(--green); }
+      .part-card--brand  .part-card__tag { color: var(--brand);  border-color: var(--border-brand); }
+      .part-card--purple .part-card__tag { color: var(--purple); border-color: var(--border-purple); }
+      .part-card--yellow .part-card__tag { color: var(--yellow); border-color: var(--border-yellow); }
+      .part-card--green  .part-card__tag { color: var(--green);  border-color: var(--border-green); }
+      .part-card--tall { min-height: clamp(9rem, 20vh, 13rem); }
+
+      /* timeline 카드 하단 지표 */
+      .tl-metric {
+        margin-top: auto;
+        padding-top: clamp(0.5rem, 1.2vh, 0.8rem);
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(0.66rem, 0.95vw, 0.78rem);
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        color: var(--text-muted);
+      }
+
+      /* 선수 지식 — 큰 한 문장 */
+      .pre-lead {
+        margin: 0.6rem 0 0.9rem;
+        font-size: clamp(1.05rem, 1.75vw, 1.4rem);
+        font-weight: 700;
+        line-height: 1.45;
+      }
+
+      /* 준비물 */
+      .req-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: clamp(0.8rem, 1.8vw, 1.35rem);
+        width: 100%;
+      }
+      .req-card {
+        display: flex;
+        flex-direction: column;
+        gap: 0.55rem;
+        padding: clamp(1.2rem, 2.6vw, 1.9rem);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: var(--bg-card);
+      }
+      .req-card__badge {
+        align-self: flex-start;
+        padding: 0.24rem 0.6rem;
+        border: 1px solid var(--border);
+        border-radius: 3px;
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(0.62rem, 0.88vw, 0.72rem);
+        font-weight: 800;
+        letter-spacing: 0.12em;
+      }
+      .req-card__title {
+        font-size: clamp(1.15rem, 2vw, 1.6rem);
+        font-weight: 800;
+        line-height: 1.25;
+      }
+      .req-card__body {
+        font-size: clamp(0.84rem, 1.25vw, 1rem);
+        color: var(--text-dim);
+        line-height: 1.5;
+      }
+      .req-card--paid {
+        border-color: var(--border-brand);
+        background: rgba(var(--brand-rgb), 0.055);
+      }
+      .req-card--paid .req-card__badge {
         color: var(--brand);
         border-color: var(--border-brand);
         background: rgba(var(--brand-rgb), 0.08);
       }
-      .mini-both,
-      .mini-fwd {
-        width: clamp(1.1rem, 2.4vw, 1.8rem);
-        height: 1px;
-        position: relative;
-        flex-shrink: 0;
+      .req-card--opt {
+        border-color: var(--border-gray);
+        background: rgba(139, 148, 158, 0.05);
       }
-      .mini-fwd { background: var(--border-brand); }
-      .mini-fwd::after {
-        content: "";
-        position: absolute;
-        top: 50%;
-        right: -1px;
-        transform: translateY(-50%);
-        border-top: 4px solid transparent;
-        border-bottom: 4px solid transparent;
-        border-left: 6px solid var(--brand);
+      .req-card--opt .req-card__badge { color: var(--text-dim); }
+      .free-line {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.6rem;
+        width: 100%;
+        padding: clamp(0.75rem, 1.7vh, 1.1rem) clamp(1rem, 2vw, 1.5rem);
+        border: 1px solid var(--border-green);
+        border-radius: 7px;
+        background: rgba(74, 222, 128, 0.06);
+        font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+        font-weight: 700;
+        color: var(--green);
       }
-      .mini-both { background: var(--border-orange); }
-      .mini-both::before,
-      .mini-both::after {
-        content: "";
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        border-top: 4px solid transparent;
-        border-bottom: 4px solid transparent;
-      }
-      .mini-both::before {
-        left: -1px;
-        border-right: 6px solid var(--orange);
-      }
-      .mini-both::after {
-        right: -1px;
-        border-left: 6px solid var(--orange);
-      }
-      .mini-note {
-        margin-top: 0.5rem;
-        font-family: "Monaco", "Menlo", monospace;
-        font-size: clamp(0.64rem, 0.92vw, 0.75rem);
-        letter-spacing: 0.04em;
-        color: var(--text-muted);
-      }
-      .vs-def {
-        margin: 0.55rem 0 0.75rem;
-        font-size: clamp(0.92rem, 1.4vw, 1.12rem);
-        line-height: 1.5;
+      .free-line::before {
+        content: "✓";
+        font-weight: 800;
       }
 
-      /* 슬라이드 7 — 결과물 카드 2×2 */
-      .grid-4 {
+      /* 듣는 법 — 두 질문 */
+      .ask-row {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: clamp(0.9rem, 2vw, 1.5rem);
-        width: 100%;
-      }
-      .out-card {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        padding: clamp(1.1rem, 2.4vw, 1.7rem);
-        border: 1px solid var(--border);
-        border-radius: 10px;
-        background: var(--bg-card);
-      }
-      .out-card__no {
-        font-family: "Monaco", "Menlo", monospace;
-        font-size: clamp(0.68rem, 0.95vw, 0.8rem);
-        font-weight: 800;
-        letter-spacing: 0.14em;
-      }
-      .out-card__title {
-        font-size: clamp(1.1rem, 1.85vw, 1.45rem);
-        font-weight: 700;
-        line-height: 1.3;
-      }
-      .out-card__body {
-        font-size: clamp(0.86rem, 1.3vw, 1.02rem);
-        color: var(--text-dim);
-        line-height: 1.55;
-      }
-      .out-card--brand  { border-color: var(--border-brand);  background: rgba(var(--brand-rgb), 0.055); }
-      .out-card--purple { border-color: var(--border-purple); background: rgba(145, 136, 255, 0.055); }
-      .out-card--yellow { border-color: var(--border-yellow); background: rgba(240, 180, 41, 0.055); }
-      .out-card--green  { border-color: var(--border-green);  background: rgba(74, 222, 128, 0.055); }
-      .out-card--brand  .out-card__no { color: var(--brand); }
-      .out-card--purple .out-card__no { color: var(--purple); }
-      .out-card--yellow .out-card__no { color: var(--yellow); }
-      .out-card--green  .out-card__no { color: var(--green); }
-
-      /* 슬라이드 8 — 이름 없는 흐름 도형 4개
-         패턴 이름을 쓰지 않는다. 모양만 남긴다 (텍스트 없는 인라인 SVG). */
-      .shape-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
         gap: clamp(0.8rem, 1.8vw, 1.4rem);
-        width: 100%;
-      }
-      .shape-card {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: clamp(0.7rem, 1.6vh, 1.1rem);
-        padding: clamp(1rem, 2.2vw, 1.6rem) clamp(0.7rem, 1.6vw, 1.2rem);
-        border: 1px solid var(--border);
-        border-radius: 10px;
-        background: var(--bg-card);
-        text-align: center;
-      }
-      .shape-card {
-        min-height: clamp(15rem, 34vh, 21rem);
-        justify-content: center;
-      }
-      .shape-card svg {
-        width: 100%;
-        max-width: 13rem;
-        height: auto;
-      }
-      .shape-card__cap {
-        font-size: clamp(0.82rem, 1.25vw, 0.98rem);
-        font-weight: 600;
-        color: var(--text-dim);
-        line-height: 1.45;
-      }
-      .shape-card--brand  { border-color: var(--border-brand);  background: rgba(var(--brand-rgb), 0.05); color: var(--brand); }
-      .shape-card--purple { border-color: var(--border-purple); background: rgba(145, 136, 255, 0.05); color: var(--purple); }
-      .shape-card--yellow { border-color: var(--border-yellow); background: rgba(240, 180, 41, 0.05); color: var(--yellow); }
-      .shape-card--green  { border-color: var(--border-green);  background: rgba(74, 222, 128, 0.05); color: var(--green); }
-
-      @media (max-width: 900px) {
-        .scene-split { grid-template-columns: 1fr; }
-        .grid-4,
-        .shape-grid { grid-template-columns: 1fr 1fr; }
-      }
-
-      /* 템플릿에 없는 보조 변형 */
-      .tip--orange {
-        background: rgba(255, 109, 59, 0.05);
-        border-color: rgba(255, 109, 59, 0.22);
-      }
-      .tip--orange::before { color: var(--orange); }
-      .cover-stmt--goal {
-        font-size: clamp(2.2rem, 4.8vw, 3.8rem);
-        line-height: 1.28;
-      }
-      .closing-stmt {
-        width: min(70rem, 100%);
+        width: min(58rem, 100%);
         align-self: center;
-        margin-top: clamp(0.4rem, 1.2vh, 1rem);
-        padding: clamp(0.95rem, 2vh, 1.35rem) clamp(1.2rem, 2.4vw, 1.9rem);
+        margin-top: clamp(0.6rem, 1.6vh, 1.2rem);
+      }
+      .ask-card {
+        padding: clamp(1rem, 2.2vh, 1.5rem) clamp(1.1rem, 2.2vw, 1.7rem);
         border: 1px solid var(--border-brand);
         border-radius: 8px;
         background: rgba(var(--brand-rgb), 0.055);
-        font-family: "GmarketSans", "Pretendard", sans-serif;
-        font-size: clamp(1.15rem, 2.1vw, 1.75rem);
-        font-weight: 900;
-        line-height: 1.35;
         text-align: center;
+        font-size: clamp(1rem, 1.65vw, 1.3rem);
+        font-weight: 700;
+        line-height: 1.4;
+      }
+
+      @media (max-width: 900px) {
+        .part-grid,
+        .ask-row { grid-template-columns: 1fr; }
+        .req-grid { grid-template-columns: 1fr; }
       }
     </style>
   </head>
@@ -1348,57 +1144,57 @@
     </button>
     <div class="dot-nav" id="dot-nav"></div>
     <div class="slide-counter">
-      <span id="cur">1</span> / <span id="tot">8</span>
+      <span id="cur">1</span> / <span id="tot">7</span>
     </div>
 
     <div class="slide-deck" id="deck">
-      <!-- ═══ 1 / 8 — 나 대신 일하는 AI 팀 ═══
-       발표 노트: 이 강의의 제목은 나 대신 일하는 AI 팀 만들기입니다. 화면에 있는
-       그림이 강의 전체입니다. 제가 목표 하나를 던지면, 에이전트 여러 개가 알아서
-       일을 나누고 서로 넘겨가며 결과물을 만들어냅니다. 지금은 그림일 뿐이지만
-       강의가 끝나면 이걸 직접 굴리시게 됩니다.
+      <!-- ═══ 1 / 7 — 강의 로드맵 ═══
+       발표 노트: 전체 지도부터 보겠습니다. 열 개 파트가 세 구간으로 나뉩니다.
+       Part 1부터 4까지가 세팅입니다. Orca를 깔고 Git을 이해하고 오케스트레이션과
+       스킬을 배웁니다. 여기까지가 준비 단계입니다. Part 5부터 8까지가 프로젝트
+       구간이고, 패턴 네 가지를 각각 다른 프로젝트로 만듭니다. 강의의 중심이자 가장
+       긴 구간입니다. 마지막 Part 9와 10이 확장입니다. 모바일로 진행 상황을 확인하고
+       토큰 비용을 줄이는 법을 배웁니다.
+       ※ 표지가 따로 없다 — 이 장이 덱을 연다 (소스가 7장을 4+1+1+1로 지정).
+       ※ 클립 수·시간은 docs/curriculum.md 표의 구간별 합계.
   ═══════════════════════════════════════════════════════════ -->
       <article class="slide active" data-index="0">
         <header class="slide__header">
-          <span class="slide__label">Course Intro · 강의 소개</span>
-          <h1 class="slide__title">나 대신 일하는 <span class="hl">AI 팀</span></h1>
-          <p class="slide__sub">
-            목표 하나만 던지면 여러 에이전트가 스스로 일을 나누고 협업해 결과물을 만든다
-          </p>
+          <span class="slide__label">Roadmap · 강의 로드맵</span>
+          <h1 class="slide__title">강의 <span class="hl">로드맵</span></h1>
+          <p class="slide__sub">세 구간으로 간다</p>
         </header>
-        <main class="slide__body cover-body">
-          <div class="flow anim-item">
-            <div class="flow-row">
-              <div class="flow-node flow-node--gray flow-node--person">
-                <div class="flow-node__title">목표 하나</div>
+        <main class="slide__body">
+          <div class="timeline timeline--3">
+            <div class="timeline-card timeline-card--plain anim-item">
+              <span class="timeline-card__step step--muted">PART 1–4</span>
+              <div class="timeline-card__title">세팅</div>
+              <div class="timeline-card__body">
+                Orca를 깔고 Git을 이해하고 오케스트레이션과 스킬을 배운다
               </div>
+              <div class="tl-metric">21클립</div>
             </div>
-            <div class="flow-link"></div>
-            <div class="flow-peer">
-              <div class="flow-node flow-node--brand">
-                <div class="flow-node__title">에이전트</div>
+            <div class="timeline-arrow anim-item" aria-hidden="true"></div>
+            <div class="timeline-card timeline-card--brand anim-item">
+              <span class="timeline-card__step step--brand">PART 5–8</span>
+              <div class="timeline-card__title">프로젝트</div>
+              <div class="timeline-card__body">
+                패턴 4가지를 각각 다른 프로젝트로 만든다
               </div>
-              <div class="flow-peer__link"></div>
-              <div class="flow-node flow-node--brand">
-                <div class="flow-node__title">에이전트</div>
-              </div>
-              <div class="flow-peer__link"></div>
-              <div class="flow-node flow-node--brand">
-                <div class="flow-node__title">에이전트</div>
-              </div>
+              <div class="tl-metric">45클립</div>
             </div>
-            <div class="flow-link flow-link--brand"></div>
-            <div class="flow-row">
-              <div class="flow-node flow-node--green">
-                <div class="flow-node__title">결과물</div>
+            <div class="timeline-arrow anim-item" aria-hidden="true"></div>
+            <div class="timeline-card timeline-card--purple anim-item">
+              <span class="timeline-card__step step--purple">PART 9–10</span>
+              <div class="timeline-card__title">확장</div>
+              <div class="timeline-card__body">
+                모바일로 진행 상황을 확인하고 토큰 비용을 줄이는 법을 배운다
               </div>
+              <div class="tl-metric">6클립</div>
             </div>
           </div>
-          <p class="cover-stmt anim-item">
-            나 대신 일하는 <span class="kw-brand">AI 팀</span> 만들기
-          </p>
-          <div class="cover-axis anim-item">
-            <b>설계</b> · <b>운영</b> · <b>멀티에이전트 패턴</b>
+          <div class="tip anim-item">
+            프로젝트 구간이 강의의 중심이자 가장 긴 구간이다
           </div>
         </main>
         <footer class="slide__footer">
@@ -1406,68 +1202,163 @@
         </footer>
       </article>
 
-      <!-- ═══ 2 / 8 — 강의 목표 ═══
-       발표 노트: 강의 목표는 하나입니다. 목표 하나만 던지면 여러 에이전트가 스스로
-       일을 나누고 협업해 결과물을 만들어내는 AI 팀을 설계하고 운영할 수 있는 능력을
-       기르는 겁니다. 그 과정에서 실무에 바로 써먹을 수 있는 멀티에이전트 패턴 네 가지를
-       익히게 됩니다. 그래서 도구가 바뀌어도 AI를 내 업무에 활용하는 데 있어 흔들리지
-       않는 기본기를 만들어드리는 게 이 강의의 목표이자 존재 이유입니다.
-       ※ 소스 지시대로 화면에는 한 줄만 띄운다. sub·caption·도식을 붙이지 않는다.
+      <!-- ═══ 2 / 7 — 세팅 구간 ═══
+       발표 노트: 세팅 구간을 하나씩 보겠습니다. Part 1은 지금 보고 계신 개요입니다.
+       Part 2에서 Orca를 설치하고 에이전트를 연결합니다. Part 3은 Git과 워크트리인데,
+       개발 지식을 배우려는 게 아니라 에이전트마다 작업 공간을 어떻게 나누는지
+       이해하려는 겁니다. Part 4에서 오케스트레이션과 스킬을 배우고 목표 하나로 굴리는
+       구조를 처음 돌려봅니다. 여기까지 끝내면 준비가 끝납니다.
   ═══════════════════════════════════════════════════════════ -->
       <article class="slide" data-index="1">
         <header class="slide__header">
-          <span class="slide__label">Goal · 강의 목표</span>
-          <h1 class="slide__title">강의 <span class="hl">목표</span></h1>
+          <span class="slide__label">Roadmap 1 / 3 · Setup</span>
+          <h1 class="slide__title"><span class="hl">세팅</span> 구간</h1>
+          <p class="slide__sub">여기까지가 준비 단계다</p>
         </header>
-        <main class="slide__body cover-body">
-          <p class="cover-stmt cover-stmt--goal anim-item">
-            스스로 일을 나누고 협업하는<br />
-            <span class="kw-brand">AI 팀 설계·운영 능력</span> 기르기
-          </p>
+        <main class="slide__body">
+          <div class="seg-bar anim-item">
+            <span class="seg-bar__on">세팅</span>
+            <span class="seg-bar__sep"></span>
+            <span>프로젝트</span>
+            <span class="seg-bar__sep"></span>
+            <span>확장</span>
+          </div>
+          <div class="part-grid">
+            <div class="part-card anim-item">
+              <div class="part-card__text">
+                <span class="part-card__no">PART 1</span>
+                <div class="part-card__title">왜 팀이 필요한가</div>
+                <p class="part-card__body">지금 보고 있는 파트다</p>
+              </div>
+            </div>
+            <div class="part-card anim-item">
+              <div class="part-card__text">
+                <span class="part-card__no">PART 2</span>
+                <div class="part-card__title">Orca 설치 및 기본 사용</div>
+                <p class="part-card__body">에이전트를 연결하고 화면을 읽는다</p>
+              </div>
+            </div>
+            <div class="part-card anim-item">
+              <div class="part-card__text">
+                <span class="part-card__no">PART 3</span>
+                <div class="part-card__title">Git과 워크트리</div>
+                <p class="part-card__body">작업 공간을 나누는 바탕을 이해한다</p>
+              </div>
+            </div>
+            <div class="part-card part-card--brand anim-item">
+              <div class="part-card__text">
+                <span class="part-card__no">PART 4</span>
+                <div class="part-card__title">오케스트레이션과 스킬</div>
+                <p class="part-card__body">목표 하나로 굴리는 구조를 처음 돌려본다</p>
+              </div>
+            </div>
+          </div>
+          <div class="tip anim-item">
+            Part 4까지 끝내면 목표 하나로 여러 에이전트를 굴릴 준비가 끝난다
+          </div>
         </main>
         <footer class="slide__footer">
           <img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스" />
         </footer>
       </article>
 
-      <!-- ═══ 3 / 8 — 에이전트의 탄생 ═══
-       발표 노트: 에이전트가 어디까지 왔는지부터 보겠습니다. 1단계는 에이전트의
-       탄생입니다. 원래 AI는 대화만 했습니다. 물어보면 답을 주고, 그 답을 제가 복사해서
-       파일에 붙여넣었죠. 그러다 AI가 제 파일을 직접 열고 작업하기 시작했습니다.
-       결과를 복사해서 옮기던 일이 이 시점에 사라졌습니다.
-       ※ 3·4·5가 공유할 3단 골격을 여기서 세운다. 사람은 맨 위에만 있다.
+      <!-- ═══ 3 / 7 — 프로젝트 구간 ═══
+       발표 노트: 강의의 중심입니다. Part 5부터 8까지 네 개 팀을 만듭니다. 기획팀은
+       리서치부터 기획서까지 한 줄로 이어지고, 영업팀은 제안서와 견적서를 서로
+       주고받으며 검증합니다. 디자인팀은 같은 요청을 동시에 맡기고 나온 시안 중에서
+       고르고, 콘텐츠팀은 소재 하나를 세 플랫폼으로 갈라 보냅니다. 카드마다 붙은 모양이
+       앞 클립 마지막에 보셨던 네 가지 모양입니다. 각각이 정확히 뭔지는 Part 5를
+       시작할 때 따로 다룹니다.
+       ※ 도형은 Ch01-01 슬라이드 8과 같은 것을 그대로 재사용한다 (아이콘 연속성).
+       ※ 패턴 이름은 파트 제목에 들어 있는 만큼만 딱지로 노출하고 설명하지 않는다.
   ═══════════════════════════════════════════════════════════ -->
       <article class="slide" data-index="2">
         <header class="slide__header">
-          <span class="slide__label">Evolution 1 / 3 · The Agent</span>
-          <h1 class="slide__title">에이전트의 <span class="hl">탄생</span></h1>
-          <p class="slide__sub">대화만 하던 AI가 내 파일을 열고 직접 작업하기 시작했다</p>
+          <span class="slide__label">Roadmap 2 / 3 · Projects</span>
+          <h1 class="slide__title"><span class="hl">프로젝트</span> 구간</h1>
+          <p class="slide__sub">패턴 4가지를 각각 다른 프로젝트로 만든다</p>
         </header>
         <main class="slide__body">
-          <div class="flow">
-            <span class="flow-stage anim-item">STAGE 01</span>
-            <div class="flow-row anim-item">
-              <div class="flow-node flow-node--gray flow-node--person">
-                <div class="flow-node__title">요청</div>
-                <div class="flow-node__sub">사람이 시킨다</div>
+          <div class="seg-bar anim-item">
+            <span>세팅</span>
+            <span class="seg-bar__sep"></span>
+            <span class="seg-bar__on">프로젝트</span>
+            <span class="seg-bar__sep"></span>
+            <span>확장</span>
+          </div>
+          <div class="part-grid">
+            <div class="part-card part-card--brand anim-item">
+              <div class="part-card__shape" aria-hidden="true">
+                <svg viewBox="0 0 160 96" fill="none">
+                  <path d="M34 48h30M96 48h30" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" />
+                  <path d="M64 48l-7-4v8zM126 48l-7-4v8z" fill="currentColor" />
+                  <circle cx="20" cy="48" r="14" fill="currentColor" fill-opacity=".18" stroke="currentColor" stroke-width="2" />
+                  <circle cx="80" cy="48" r="14" fill="currentColor" fill-opacity=".18" stroke="currentColor" stroke-width="2" />
+                  <circle cx="140" cy="48" r="14" fill="currentColor" fill-opacity=".18" stroke="currentColor" stroke-width="2" />
+                </svg>
+              </div>
+              <div class="part-card__text">
+                <span class="part-card__no">PART 5</span>
+                <div class="part-card__title">기획팀</div>
+                <p class="part-card__body">리서치부터 기획서까지</p>
+                <span class="part-card__tag">순차 파이프라인</span>
               </div>
             </div>
-            <div class="flow-link anim-item"></div>
-            <div class="flow-row anim-item">
-              <div class="flow-node flow-node--gray">
-                <div class="flow-node__title">에이전트</div>
-                <div class="flow-node__sub">파일을 직접 연다</div>
+            <div class="part-card part-card--purple anim-item">
+              <div class="part-card__shape" aria-hidden="true">
+                <svg viewBox="0 0 160 96" fill="none">
+                  <path d="M62 34h36M98 62H62" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" />
+                  <path d="M98 34l-7-4v8zM62 62l7-4v8z" fill="currentColor" />
+                  <circle cx="42" cy="48" r="17" fill="currentColor" fill-opacity=".18" stroke="currentColor" stroke-width="2" />
+                  <circle cx="118" cy="48" r="17" fill="currentColor" fill-opacity=".18" stroke="currentColor" stroke-width="2" />
+                </svg>
+              </div>
+              <div class="part-card__text">
+                <span class="part-card__no">PART 6</span>
+                <div class="part-card__title">영업팀</div>
+                <p class="part-card__body">제안서·견적서 검증하기</p>
+                <span class="part-card__tag">교차 검증</span>
               </div>
             </div>
-            <div class="flow-link anim-item"></div>
-            <div class="flow-row anim-item">
-              <div class="flow-node flow-node--gray">
-                <div class="flow-node__title">결과물</div>
+            <div class="part-card part-card--yellow anim-item">
+              <div class="part-card__shape" aria-hidden="true">
+                <svg viewBox="0 0 160 96" fill="none">
+                  <path d="M80 22v10M80 32H40v14M80 32h40v14" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" />
+                  <path d="M40 50l-4-7h8zM120 50l-4-7h8z" fill="currentColor" />
+                  <circle cx="80" cy="14" r="8" fill="currentColor" fill-opacity=".18" stroke="currentColor" stroke-width="2" />
+                  <rect x="16" y="54" width="48" height="30" rx="6" fill="currentColor" fill-opacity=".34" stroke="currentColor" stroke-width="2.5" />
+                  <path d="M31 69l6 7 12-14" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <rect x="96" y="54" width="48" height="30" rx="6" fill="none" stroke="currentColor" stroke-width="2" stroke-opacity=".35" stroke-dasharray="5 4" />
+                </svg>
+              </div>
+              <div class="part-card__text">
+                <span class="part-card__no">PART 7</span>
+                <div class="part-card__title">디자인팀</div>
+                <p class="part-card__body">Best 시안 머지하기</p>
+                <span class="part-card__tag">병렬</span>
+              </div>
+            </div>
+            <div class="part-card part-card--green anim-item">
+              <div class="part-card__shape" aria-hidden="true">
+                <svg viewBox="0 0 160 96" fill="none">
+                  <path d="M40 48h16M56 48V22h30M56 48h30M56 48v26h30" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" />
+                  <path d="M86 22l-7-4v8zM86 48l-7-4v8zM86 74l-7-4v8z" fill="currentColor" />
+                  <circle cx="26" cy="48" r="12" fill="currentColor" fill-opacity=".18" stroke="currentColor" stroke-width="2" />
+                  <rect x="92" y="12" width="42" height="20" rx="5" fill="currentColor" fill-opacity=".3" stroke="currentColor" stroke-width="2" />
+                  <rect x="92" y="38" width="42" height="20" rx="5" fill="currentColor" fill-opacity=".3" stroke="currentColor" stroke-width="2" />
+                  <rect x="92" y="64" width="42" height="20" rx="5" fill="currentColor" fill-opacity=".3" stroke="currentColor" stroke-width="2" />
+                </svg>
+              </div>
+              <div class="part-card__text">
+                <span class="part-card__no">PART 8</span>
+                <div class="part-card__title">콘텐츠팀</div>
+                <p class="part-card__body">플랫폼별 콘텐츠 자동화하기</p>
+                <span class="part-card__tag">R&amp;R 분배</span>
               </div>
             </div>
           </div>
           <div class="tip anim-item">
-            결과를 복사해서 옮기던 일이 이 시점에 사라졌다
+            앞 클립에서 본 네 가지 모양이 각각 이 파트가 된다
           </div>
         </main>
         <footer class="slide__footer">
@@ -1475,64 +1366,44 @@
         </footer>
       </article>
 
-      <!-- ═══ 4 / 8 — 멀티 에이전트 ═══
-       발표 노트: 2단계는 멀티 에이전트입니다. 여기서 아마 많은 분들이 자기 얘기라고
-       느끼실 겁니다. 에이전트를 여러 개 띄우기 시작했습니다. 빨라진 것 같은데, 실제로
-       뭘 하고 계신지 보면 이 창 저 창 옮겨 다니면서 한쪽 결과를 복사해 다른 쪽에
-       붙여넣고 계십니다. 에이전트는 늘었는데 일을 넘겨주는 건 여전히 내 몫입니다.
-       그림에서 보시면 세 갈래가 전부 저 한 명을 거쳐 갑니다.
-       ※ 사람 노드가 한가운데로 들어와 병목이 된다. 사람만 orange, 에이전트는 무채.
+      <!-- ═══ 4 / 7 — 확장 구간 ═══
+       발표 노트: 마지막 확장 구간입니다. Part 9에서는 모바일로 진행 상황을 확인합니다.
+       팀에게 일을 맡기고 자리를 비웠을 때 어디까지 갔는지 보고 승인까지 하는
+       방법입니다. Part 10은 토큰 아끼는 법입니다. 팀을 굴리면 에이전트 하나 쓸 때보다
+       비용이 늘어나는데, 이걸 줄이는 방법을 다룹니다.
   ═══════════════════════════════════════════════════════════ -->
       <article class="slide" data-index="3">
         <header class="slide__header">
-          <span class="slide__label">Evolution 2 / 3 · Multi Agent</span>
-          <h1 class="slide__title"><span class="hl-orange">멀티</span> 에이전트</h1>
-          <p class="slide__sub">에이전트는 늘었는데 일을 넘겨주는 건 여전히 내 몫이다</p>
+          <span class="slide__label">Roadmap 3 / 3 · Extension</span>
+          <h1 class="slide__title"><span class="hl">확장</span> 구간</h1>
+          <p class="slide__sub">팀이 굴러가기 시작한 다음에 필요한 것들</p>
         </header>
         <main class="slide__body">
-          <div class="scene-split">
-            <div class="flow">
-              <span class="flow-stage flow-stage--orange anim-item">STAGE 02</span>
-              <div class="flow-row anim-item">
-                <div class="flow-node flow-node--gray flow-node--person">
-                  <div class="flow-node__title">요청</div>
-                </div>
-              </div>
-              <div class="flow-link anim-item"></div>
-              <div class="flow-branch">
-                <div class="flow-tri anim-item">
-                  <div class="flow-node flow-node--gray"><div class="flow-node__title">에이전트</div></div>
-                  <div class="flow-node flow-node--gray"><div class="flow-node__title">에이전트</div></div>
-                  <div class="flow-node flow-node--gray"><div class="flow-node__title">에이전트</div></div>
-                </div>
-                <div class="flow-merge anim-item" aria-hidden="true">
-                  <div class="flow-merge__stems"><span></span><span></span><span></span></div>
-                  <div class="flow-merge__bar"></div>
-                  <div class="flow-merge__drop"></div>
-                </div>
-              </div>
-              <div class="flow-row anim-item">
-                <div class="flow-node flow-node--me">
-                  <div class="flow-node__title">나</div>
-                  <div class="flow-node__sub">이 창 저 창 옮겨 다니며 결과를 나른다</div>
-                </div>
-              </div>
-              <div class="flow-link anim-item"></div>
-              <div class="flow-row anim-item">
-                <div class="flow-node flow-node--gray">
-                  <div class="flow-node__title">결과물</div>
-                </div>
+          <div class="seg-bar anim-item">
+            <span>세팅</span>
+            <span class="seg-bar__sep"></span>
+            <span>프로젝트</span>
+            <span class="seg-bar__sep"></span>
+            <span class="seg-bar__on">확장</span>
+          </div>
+          <div class="part-grid part-grid--2">
+            <div class="part-card part-card--purple part-card--tall anim-item">
+              <div class="part-card__text">
+                <span class="part-card__no">PART 9</span>
+                <div class="part-card__title">모바일로 진행 상황 확인하기</div>
+                <p class="part-card__body">자리를 비운 사이 어디까지 갔는지 보고 승인한다</p>
               </div>
             </div>
-            <figure class="scene-frame anim-item">
-              <img
-                src="/artifacts/part1/_images/ch01-01-course-intro/multi-agent-carrier.png"
-                alt="여러 개의 터미널 창 사이를 오가며 자료를 나르는 사람"
-              />
-            </figure>
+            <div class="part-card part-card--purple part-card--tall anim-item">
+              <div class="part-card__text">
+                <span class="part-card__no">PART 10</span>
+                <div class="part-card__title">토큰 아끼는 법</div>
+                <p class="part-card__body">팀을 굴릴수록 늘어나는 비용을 줄인다</p>
+              </div>
+            </div>
           </div>
-          <div class="tip tip--orange anim-item">
-            빨라진 것 같지만 세 갈래가 전부 사람 한 명을 거쳐 간다
+          <div class="tip anim-item">
+            팀이 돌기 시작하면 확인하는 방법과 비용이 다음 문제가 된다
           </div>
         </main>
         <footer class="slide__footer">
@@ -1540,114 +1411,43 @@
         </footer>
       </article>
 
-      <!-- ═══ 5 / 8 — 오케스트레이션 ═══
-       발표 노트: 3단계가 오케스트레이션입니다. 목표 하나만 던지면 알아서 일을 나누고
-       서로 협업해서 결과물을 만듭니다. 앞 장과 비교해 보시면 차이가 하나입니다.
-       아까는 제가 한가운데 있었는데 지금은 양 끝에만 있습니다. 목표를 정하는 자리와
-       최종 결정을 하는 자리, 두 곳입니다. 가운데는 에이전트끼리 알아서 주고받습니다.
-       이 강의에서 만드는 게 이 3단계입니다.
-       ※ 사람 노드가 한가운데에서 양 끝으로 밀려나는 것이 이 장의 메시지다.
+      <!-- ═══ 5 / 7 — 선수 지식 ═══
+       발표 노트: 선수 지식을 정리하겠습니다. 클로드 코드나 코덱스를 한 번이라도
+       실행해 보셨으면 됩니다. 그 이상은 필요 없습니다. 프로그래밍 지식은 필요 없고
+       코드를 읽을 줄 몰라도 됩니다. 터미널도 잘 다루실 필요 없습니다. 다만 솔직히
+       말씀드리면 AI가 일하는 자리가 터미널이라 그 화면을 자주 보시게 됩니다.
+       그런데 강의를 따라가다 보면 자연스럽게 익숙해집니다.
+       ※ 필요 없는 쪽에 orange를 쓰지 않는다 — 걱정을 덜어주는 장이다.
   ═══════════════════════════════════════════════════════════ -->
       <article class="slide" data-index="4">
         <header class="slide__header">
-          <span class="slide__label">Evolution 3 / 3 · Orchestration</span>
-          <h1 class="slide__title"><span class="hl">오케스트레이션</span></h1>
-          <p class="slide__sub">목표 하나만 던지면 알아서 일을 나누고 서로 협업해 결과물을 만든다</p>
-        </header>
-        <main class="slide__body">
-          <div class="flow">
-            <span class="flow-stage flow-stage--brand anim-item">STAGE 03</span>
-            <div class="flow-row anim-item">
-              <div class="flow-node flow-node--gray flow-node--person">
-                <div class="flow-node__title">목표 하나</div>
-                <div class="flow-node__sub">사람이 정한다</div>
-              </div>
-            </div>
-            <div class="flow-link flow-link--brand anim-item"></div>
-            <div class="flow-peer anim-item">
-              <div class="flow-node flow-node--brand"><div class="flow-node__title">에이전트</div></div>
-              <div class="flow-peer__link"></div>
-              <div class="flow-node flow-node--brand"><div class="flow-node__title">에이전트</div></div>
-              <div class="flow-peer__link"></div>
-              <div class="flow-node flow-node--brand"><div class="flow-node__title">에이전트</div></div>
-            </div>
-            <div class="flow-link flow-link--brand anim-item"></div>
-            <div class="flow-row anim-item">
-              <div class="flow-node flow-node--green">
-                <div class="flow-node__title">결과물</div>
-              </div>
-            </div>
-            <div class="flow-link anim-item"></div>
-            <div class="flow-row anim-item">
-              <div class="flow-node flow-node--gray flow-node--person">
-                <div class="flow-node__title">최종 결정</div>
-                <div class="flow-node__sub">사람이 고른다</div>
-              </div>
-            </div>
-          </div>
-          <div class="tip anim-item">사람은 목표를 정하고 최종 결정만 한다</div>
-        </main>
-        <footer class="slide__footer">
-          <img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스" />
-        </footer>
-      </article>
-
-      <!-- ═══ 6 / 8 — 나처럼과 나 대신 ═══
-       발표 노트: 여기서 이 강의가 다른 AI 강의와 뭐가 다른지 정리하고 가겠습니다.
-       나처럼 일하는 에이전트와 나 대신 일하는 에이전트는 다릅니다. 나처럼 일하는 건
-       제 말투와 판단 기준을 아는 겁니다. 프롬프트를 잘 쓰면 에이전트 하나로도 어느 정도
-       됩니다. 그런데 여전히 제가 옆에 붙어 있어야 합니다. 나 대신 일하는 건 제가
-       자리를 비워도 굴러가는 겁니다. 차이는 하나입니다. 내가 붙어 있어야 하는가.
-       이 강의는 후자를 만듭니다. 그래서 다루는 게 프롬프트가 아니라 일을 나누고
-       넘기고 검사하는 구조입니다.
-  ═══════════════════════════════════════════════════════════ -->
-      <article class="slide" data-index="5">
-        <header class="slide__header">
-          <span class="slide__label">Section 2 · What We Build</span>
-          <h1 class="slide__title">나처럼과 <span class="hl">나 대신</span></h1>
-          <p class="slide__sub">내가 붙어 있어야 하는가가 둘을 가른다</p>
+          <span class="slide__label">Prerequisites · 선수 지식</span>
+          <h1 class="slide__title">선수 <span class="hl">지식</span></h1>
+          <p class="slide__sub">준비된 정도보다 덜 필요하다</p>
         </header>
         <main class="slide__body">
           <div class="vs-grid">
-            <div class="vs-col vs-col--blocked anim-item">
-              <span class="vs-badge vs-badge--blocked">나처럼 일하는</span>
-              <div class="mini" aria-hidden="true">
-                <div class="mini-row">
-                  <span class="mini-chip mini-chip--me">나</span>
-                  <span class="mini-both"></span>
-                  <span class="mini-chip mini-chip--agent-o">에이전트</span>
-                </div>
-                <div class="mini-note">붙어 있어야 굴러간다</div>
-              </div>
-              <p class="vs-def">내 말투와 판단 기준을 아는 에이전트</p>
+            <div class="vs-col vs-col--pass anim-item">
+              <span class="vs-badge vs-badge--pass">필요한 것</span>
+              <p class="pre-lead">
+                <span class="kw-brand">클로드 코드</span>나 <span class="kw-brand">코덱스</span>를<br />
+                한 번이라도 실행해 본 경험
+              </p>
               <ul class="bullet-list">
-                <li class="no">프롬프트를 잘 쓰면 하나로도 어느 정도 된다</li>
-                <li class="no">그런데 여전히 내가 옆에 붙어 있어야 한다</li>
+                <li class="ok">그 이상은 요구하지 않는다</li>
               </ul>
             </div>
-            <div class="vs-col vs-col--pass anim-item">
-              <span class="vs-badge vs-badge--pass">나 대신 일하는</span>
-              <div class="mini" aria-hidden="true">
-                <div class="mini-row">
-                  <span class="mini-chip mini-chip--me">나</span>
-                  <span class="mini-fwd"></span>
-                  <span class="mini-chip mini-chip--agent-b">에이전트</span>
-                  <span class="mini-fwd"></span>
-                  <span class="mini-chip mini-chip--agent-b">에이전트</span>
-                  <span class="mini-fwd"></span>
-                  <span class="mini-chip mini-chip--me">나</span>
-                </div>
-                <div class="mini-note">양 끝에만 있으면 된다</div>
-              </div>
-              <p class="vs-def">내가 자리를 비워도 굴러가는 에이전트</p>
+            <div class="vs-col anim-item">
+              <span class="vs-badge">필요 없는 것</span>
+              <p class="pre-lead">프로그래밍 지식과 터미널 숙련</p>
               <ul class="bullet-list">
-                <li class="ok">목표만 주면 나누고 실행하고 결과를 낸다</li>
-                <li class="ok">이 강의는 이쪽을 만든다</li>
+                <li class="no">코드를 읽을 줄 몰라도 된다</li>
+                <li class="no">터미널을 잘 다룰 필요도 없다</li>
               </ul>
             </div>
           </div>
           <div class="tip anim-item">
-            그래서 이 강의가 다루는 것은 프롬프트가 아니라 일을 나누고 넘기고 검사하는 구조다
+            AI가 일하는 자리가 터미널이라 화면은 자주 보게 되지만 따라가다 보면 익숙해진다
           </div>
         </main>
         <footer class="slide__footer">
@@ -1655,124 +1455,77 @@
         </footer>
       </article>
 
-      <!-- ═══ 7 / 8 — 손에 남는 것 ═══
-       발표 노트: 강의가 끝나면 손에 남는 것들입니다. 첫째, 판매 아이템 기획
-       파이프라인입니다. 목표를 던지면 조사하고 후보를 추리고 기획서까지 나옵니다.
-       둘째, 교차 검증한 클라이언트 제안서입니다. 한쪽이 쓰고 다른 쪽이 검증해서
-       기준을 통과할 때까지 스스로 고쳐 씁니다. 셋째, 프로모션 랜딩페이지입니다.
-       같은 요청을 두 에이전트에게 동시에 맡기고 나온 시안 중에서 사람이 고릅니다.
-       넷째, 콘텐츠 자동화 라인입니다. 소재 하나를 넣으면 블로그와 카드뉴스와 스레드가
-       동시에 나오고, 이건 매일 자동으로 돕니다. 참고로 실제 산출물은 마크다운 파일이고,
-       화면에 보이는 건 그걸 보기 좋게 정리한 예시입니다.
-       ※ 카드 색은 docs/patterns.md의 패턴 색 배정. Part 5~8까지 이어진다.
+      <!-- ═══ 6 / 7 — 준비물 ═══
+       발표 노트: 준비물입니다. Claude 구독과 ChatGPT 구독 두 가지입니다. 클로드 코드를
+       쓰려면 Claude 구독이, 코덱스를 쓰려면 ChatGPT 구독이 필요합니다. 유료로
+       준비하실 것은 이 둘뿐입니다. Orca와 강의에서 쓰는 스킬은 전부 무료입니다.
+       Hermes는 선택입니다. 마지막 프로젝트에서 세 번째 에이전트로 쓰는데 없어도
+       진행하실 수 있습니다. 구독을 먼저 준비해두시면 다음 파트부터 바로 따라오실 수
+       있습니다.
+       ※ 결제 대상(Claude·ChatGPT)과 실행 도구(Claude Code·Codex)를 섞지 않는다.
+  ═══════════════════════════════════════════════════════════ -->
+      <article class="slide" data-index="5">
+        <header class="slide__header">
+          <span class="slide__label">Requirements · 준비물</span>
+          <h1 class="slide__title"><span class="hl">준비물</span></h1>
+          <p class="slide__sub">유료로 준비할 것은 구독 두 개뿐이다</p>
+        </header>
+        <main class="slide__body">
+          <div class="req-grid">
+            <div class="req-card req-card--paid anim-item">
+              <span class="req-card__badge">유료</span>
+              <div class="req-card__title">Claude 구독</div>
+              <p class="req-card__body">클로드 코드를 쓰기 위해 필요하다</p>
+            </div>
+            <div class="req-card req-card--paid anim-item">
+              <span class="req-card__badge">유료</span>
+              <div class="req-card__title">ChatGPT 구독</div>
+              <p class="req-card__body">코덱스를 쓰기 위해 필요하다</p>
+            </div>
+            <div class="req-card req-card--opt anim-item">
+              <span class="req-card__badge">선택</span>
+              <div class="req-card__title">Hermes</div>
+              <p class="req-card__body">마지막 프로젝트의 세 번째 에이전트로 쓰고 없어도 진행할 수 있다</p>
+            </div>
+          </div>
+          <div class="free-line anim-item">
+            Orca와 강의에서 쓰는 스킬은 전부 무료
+          </div>
+          <div class="tip anim-item">
+            구독을 먼저 준비해두면 다음 파트부터 바로 따라올 수 있다
+          </div>
+        </main>
+        <footer class="slide__footer">
+          <img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스" />
+        </footer>
+      </article>
+
+      <!-- ═══ 7 / 7 — 듣는 법 ═══
+       발표 노트: 마지막으로 이 강의를 어떻게 들으시면 좋을지 말씀드리겠습니다. 실습은
+       그대로 따라 하셔도 됩니다. 손으로 해봐야 감이 옵니다. 그런데 AI를 내 업무에 쓸 때
+       가장 중요한 능력은 설계입니다. 어떤 에이전트를 어디에 배치하고 어떤 패턴으로
+       굴려야 내 일을 가장 잘 대신할까. 이걸 계속 생각하면서 요청해야 합니다. 강의에
+       나오는 소재는 예시일 뿐이고 패턴 자체는 어떤 업무에도 적용됩니다. 그래서 실습을
+       따라 하시면서 내 업무에는 어떤 패턴이 맞을까, 나라면 에이전트를 어떻게 배치할까를
+       같이 생각하시면 훨씬 빨리 익히실 수 있습니다.
   ═══════════════════════════════════════════════════════════ -->
       <article class="slide" data-index="6">
         <header class="slide__header">
-          <span class="slide__label">Section 3 · What You Get</span>
-          <h1 class="slide__title">손에 남는 <span class="hl">결과물</span></h1>
-          <p class="slide__sub">강의가 끝나면 네 개의 프로젝트가 직접 굴러간다</p>
+          <span class="slide__label">How To Follow · 듣는 법</span>
+          <h1 class="slide__title">듣는 <span class="hl">법</span></h1>
+          <p class="slide__sub">실습은 그대로 따라 해도 된다</p>
         </header>
-        <main class="slide__body">
-          <div class="grid-4">
-            <div class="out-card out-card--brand anim-item">
-              <span class="out-card__no">01</span>
-              <div class="out-card__title">판매 아이템 기획 파이프라인</div>
-              <p class="out-card__body">시장 조사부터 기획서까지 한 번에 돈다</p>
-            </div>
-            <div class="out-card out-card--purple anim-item">
-              <span class="out-card__no">02</span>
-              <div class="out-card__title">교차 검증한 클라이언트 제안서</div>
-              <p class="out-card__body">한쪽이 쓰고 다른 쪽이 기준을 통과할 때까지 검증한다</p>
-            </div>
-            <div class="out-card out-card--yellow anim-item">
-              <span class="out-card__no">03</span>
-              <div class="out-card__title">프로모션 랜딩페이지</div>
-              <p class="out-card__body">같은 요청을 동시에 맡기고 나온 시안 중에서 고른다</p>
-            </div>
-            <div class="out-card out-card--green anim-item">
-              <span class="out-card__no">04</span>
-              <div class="out-card__title">콘텐츠 자동화 라인</div>
-              <p class="out-card__body">소재 하나로 세 플랫폼 글이 동시에 나오고 매일 자동으로 돈다</p>
-            </div>
+        <main class="slide__body cover-body">
+          <p class="cover-stmt anim-item">
+            AI 활용의 핵심은 <span class="kw-brand">설계</span>
+          </p>
+          <div class="ask-row">
+            <div class="ask-card anim-item">내 업무엔 어떤 패턴이 맞을까</div>
+            <div class="ask-card anim-item">나라면 에이전트를 어떻게 배치할까</div>
           </div>
           <div class="tip anim-item">
-            실제 산출물은 마크다운 파일이고 화면에 보이는 건 그걸 보기 좋게 정리한 예시다
+            강의에 나오는 소재는 예시일 뿐이고 패턴 자체는 어떤 업무에도 적용된다
           </div>
-        </main>
-        <footer class="slide__footer">
-          <img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스" />
-        </footer>
-      </article>
-
-      <!-- ═══ 8 / 8 — 나누는 방식 ═══
-       발표 노트: 방금 본 프로젝트 네 개는 각각 다른 방식으로 일을 나눕니다. 화면의
-       네 모양을 보시면 됩니다. 하나는 한 줄로 이어지고, 하나는 주고받으며 되돌아오고,
-       하나는 갈라졌다가 하나만 고르고, 마지막은 갈라져서 전부 씁니다. 이 방식이
-       멀티에이전트 패턴이고, 이 강의에서는 실무에서 가장 많이 쓰이는 네 가지를 다룹니다.
-       각각이 뭔지는 프로젝트를 시작하기 전에 따로 시간을 잡아뒀습니다. 중요한 건 이
-       패턴이 Orca에만 있는 개념이 아니라는 겁니다. 그래서 도구가 바뀌어도 AI를 내
-       업무에 활용하는 데 있어 흔들리지 않는 기본기가 됩니다. 그게 이 강의의 목표이자
-       존재 이유입니다.
-       ※ 소스 지시대로 패턴 이름을 쓰지 않는다. 모양만 남긴다 (Part 5 Ch01-01의 몫).
-  ═══════════════════════════════════════════════════════════ -->
-      <article class="slide" data-index="7">
-        <header class="slide__header">
-          <span class="slide__label">Section 4 · How Work Splits</span>
-          <h1 class="slide__title">나누는 <span class="hl">방식</span></h1>
-          <p class="slide__sub">방금 본 네 프로젝트는 각각 다른 방식으로 일을 나눈다</p>
-        </header>
-        <main class="slide__body">
-          <div class="shape-grid">
-            <div class="shape-card shape-card--brand anim-item">
-              <!-- 한 줄로 이어지는 사슬 -->
-              <svg viewBox="0 0 160 96" fill="none" aria-hidden="true">
-                <path d="M34 48h30M96 48h30" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" />
-                <path d="M64 48l-7-4v8zM126 48l-7-4v8z" fill="currentColor" />
-                <circle cx="20" cy="48" r="14" fill="currentColor" fill-opacity=".18" stroke="currentColor" stroke-width="2" />
-                <circle cx="80" cy="48" r="14" fill="currentColor" fill-opacity=".18" stroke="currentColor" stroke-width="2" />
-                <circle cx="140" cy="48" r="14" fill="currentColor" fill-opacity=".18" stroke="currentColor" stroke-width="2" />
-              </svg>
-              <p class="shape-card__cap">판매 아이템 기획 파이프라인</p>
-            </div>
-            <div class="shape-card shape-card--purple anim-item">
-              <!-- 주고받으며 되돌아오는 두 축 -->
-              <svg viewBox="0 0 160 96" fill="none" aria-hidden="true">
-                <path d="M62 34h36M98 62H62" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" />
-                <path d="M98 34l-7-4v8zM62 62l7-4v8z" fill="currentColor" />
-                <circle cx="42" cy="48" r="17" fill="currentColor" fill-opacity=".18" stroke="currentColor" stroke-width="2" />
-                <circle cx="118" cy="48" r="17" fill="currentColor" fill-opacity=".18" stroke="currentColor" stroke-width="2" />
-              </svg>
-              <p class="shape-card__cap">교차 검증한 클라이언트 제안서</p>
-            </div>
-            <div class="shape-card shape-card--yellow anim-item">
-              <!-- 갈라졌다 하나만 남는다 -->
-              <svg viewBox="0 0 160 96" fill="none" aria-hidden="true">
-                <path d="M80 22v10M80 32H40v14M80 32h40v14" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" />
-                <path d="M40 50l-4-7h8zM120 50l-4-7h8z" fill="currentColor" />
-                <circle cx="80" cy="14" r="8" fill="currentColor" fill-opacity=".18" stroke="currentColor" stroke-width="2" />
-                <rect x="16" y="54" width="48" height="30" rx="6" fill="currentColor" fill-opacity=".34" stroke="currentColor" stroke-width="2.5" />
-                <path d="M31 69l6 7 12-14" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
-                <rect x="96" y="54" width="48" height="30" rx="6" fill="none" stroke="currentColor" stroke-width="2" stroke-opacity=".35" stroke-dasharray="5 4" />
-              </svg>
-              <p class="shape-card__cap">프로모션 랜딩페이지</p>
-            </div>
-            <div class="shape-card shape-card--green anim-item">
-              <!-- 갈라져서 전부 남는다 -->
-              <svg viewBox="0 0 160 96" fill="none" aria-hidden="true">
-                <path d="M40 48h16M56 48V22h30M56 48h30M56 48v26h30" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" />
-                <path d="M86 22l-7-4v8zM86 48l-7-4v8zM86 74l-7-4v8z" fill="currentColor" />
-                <circle cx="26" cy="48" r="12" fill="currentColor" fill-opacity=".18" stroke="currentColor" stroke-width="2" />
-                <rect x="92" y="12" width="42" height="20" rx="5" fill="currentColor" fill-opacity=".3" stroke="currentColor" stroke-width="2" />
-                <rect x="92" y="38" width="42" height="20" rx="5" fill="currentColor" fill-opacity=".3" stroke="currentColor" stroke-width="2" />
-                <rect x="92" y="64" width="42" height="20" rx="5" fill="currentColor" fill-opacity=".3" stroke="currentColor" stroke-width="2" />
-              </svg>
-              <p class="shape-card__cap">콘텐츠 자동화 라인</p>
-            </div>
-          </div>
-          <p class="closing-stmt anim-item">
-            이 방식은 Orca에만 있는 개념이 아니다<br />
-            <span class="kw-brand">도구가 바뀌어도 그대로 쓴다</span>
-          </p>
         </main>
         <footer class="slide__footer">
           <img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스" />

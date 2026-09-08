@@ -1,5 +1,5 @@
 ---
-산출물: artifacts/part1/ch01-02-roadmap.html
+산출물: artifacts/part1/outputs/ch01-02-roadmap.html
 스킬: fastcampus-slide
 날짜: 2026-09-07
 상태: 작성중        # 작성중 | 반영완료 | 골든셋등록

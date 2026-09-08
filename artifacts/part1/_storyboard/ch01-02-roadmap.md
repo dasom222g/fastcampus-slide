@@ -2,7 +2,7 @@
 
 **소스:** `artifacts/part1/_source/ch01-02-roadmap.md`
 **참조:** `docs/curriculum.md` (파트 제목·클립 수·시간) · `docs/course-brief.md` · `docs/patterns.md`
-**출력 슬라이드:** `artifacts/part1/ch01-02-roadmap.html` (공개 주소 `/part1/ch01-02-roadmap`)
+**출력 슬라이드:** `artifacts/part1/outputs/ch01-02-roadmap.html` (공개 주소 `/part1/ch01-02-roadmap`)
 **총 슬라이드:** 7장 — 소스 frontmatter가 정한 수
 **디자인 기준:** fastcampus-slide 스킬 `assets/base-template.html` (다크 · 패스트캠퍼스 레드)
 

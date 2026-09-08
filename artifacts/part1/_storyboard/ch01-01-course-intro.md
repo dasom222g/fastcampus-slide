@@ -2,7 +2,7 @@
 
 **소스:** `artifacts/part1/_source/ch01-01-course-intro.md`
 **참조:** `docs/course-brief.md` (청중·톤·관통 축) · `docs/patterns.md` (패턴 4가지)
-**출력 슬라이드:** `artifacts/part1/ch01-01-course-intro.html` (공개 주소 `/part1/ch01-01-course-intro`)
+**출력 슬라이드:** `artifacts/part1/outputs/ch01-01-course-intro.html` (공개 주소 `/part1/ch01-01-course-intro`)
 **총 슬라이드:** 8장 (표지 1장 + 본문 7장) — 소스 frontmatter가 정한 수
 **디자인 기준:** fastcampus-slide 스킬 `assets/base-template.html` (다크 · 패스트캠퍼스 레드)
 
@@ -69,7 +69,7 @@
 |---|---|---|
 | 1 | 목표 하나 → 에이전트 여럿 → 결과 하나 (강의 전체 요약 도식) | CSS 도식 |
 | 3·4·5 | **같은 3단 골격**(목표 / 에이전트 영역 / 결과)에서 **사람의 위치만** 바뀐다 | CSS 도식 |
-| 4 | 여러 창 사이를 오가는 사람 장면 | 생성 이미지 `_images/ch01-01-course-intro/` |
+| 4 | 여러 창 사이를 오가는 사람 장면 | 생성 이미지 `part1/_images/` (파일명으로 구분) |
 | 6 | 왼쪽은 사람이 에이전트에 붙어 왕복, 오른쪽은 사람이 양 끝에만 | CSS 미니 도식 |
 | 8 | 이름 없는 네 가지 흐름 모양 (사슬 / 루프 / 갈라졌다 하나 / 갈라져서 전부) | 인라인 SVG (텍스트 없음) |
 
@@ -386,7 +386,7 @@
 
 > Flat vector editorial illustration on a very dark charcoal background (#0d1117). A single small human figure, seen from behind, stands overwhelmed at the center of the frame, arms full of stacked paper documents. Surrounding the figure are four floating rectangular terminal/code windows … thin dashed orange motion trails curve from window to window, all passing through the person … no text, no logos, no typography of any kind.
 
-모델 `nano_banana_pro`, 1:1, 2048px 생성 후 1200px로 축소. 저장 위치 `_images/ch01-01-course-intro/multi-agent-carrier.png`.
+모델 `nano_banana_pro`, 1:1, 2048px 생성 후 1200px로 축소. 저장 위치 `/artifacts/part1/_images/ch01-01-course-intro--multi-agent-carrier.png`.
 
 ---
 

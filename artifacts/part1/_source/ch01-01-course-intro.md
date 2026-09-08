@@ -4,7 +4,7 @@
 클립: Ch01-01. 강의 소개와 최종 결과물
 길이: 11분
 슬라이드: 8장
-산출물: artifacts/part1/ch01-01-course-intro.html
+산출물: artifacts/part1/outputs/ch01-01-course-intro.html
 상태: 확정
 ---
 
