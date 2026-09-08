@@ -1,0 +1,613 @@
+{
+  "finals": [
+    {
+      "file": "artifacts/part2/outputs/ch02-01-setup-prep.html",
+      "url": "http://localhost:3000/part2/outputs/ch02-01-setup-prep",
+      "slides": 4,
+      "hashMatches": true
+    },
+    {
+      "file": "artifacts/part2/outputs/ch01-01-terminal-problem.html",
+      "url": "http://localhost:3000/part2/outputs/ch01-01-terminal-problem",
+      "slides": 5,
+      "hashMatches": true
+    },
+    {
+      "file": "artifacts/part1/outputs/ch02-01-single-agent-limits.html",
+      "url": "http://localhost:3000/part1/outputs/ch02-01-single-agent-limits",
+      "slides": 5,
+      "hashMatches": true
+    },
+    {
+      "file": "artifacts/part2/outputs/ch01-02-what-is-orca.html",
+      "url": "http://localhost:3000/part2/outputs/ch01-02-what-is-orca",
+      "slides": 7,
+      "hashMatches": true
+    }
+  ],
+  "screenshots": [
+    {
+      "deck": "ch02-01-setup-prep",
+      "slide": 1,
+      "width": 1280,
+      "file": "artifacts/part2/_qa/qa-final--ch02-01-setup-prep--1--1280.png"
+    },
+    {
+      "deck": "ch02-01-single-agent-limits",
+      "slide": 1,
+      "width": 1280,
+      "file": "artifacts/part1/_qa/qa-final--ch02-01-single-agent-limits--1--1280.png"
+    },
+    {
+      "deck": "ch01-01-terminal-problem",
+      "slide": 1,
+      "width": 1280,
+      "file": "artifacts/part2/_qa/qa-final--ch01-01-terminal-problem--1--1280.png"
+    },
+    {
+      "deck": "ch01-02-what-is-orca",
+      "slide": 1,
+      "width": 1280,
+      "file": "artifacts/part2/_qa/qa-final--ch01-02-what-is-orca--1--1280.png"
+    },
+    {
+      "deck": "ch02-01-setup-prep",
+      "slide": 2,
+      "width": 1280,
+      "file": "artifacts/part2/_qa/qa-final--ch02-01-setup-prep--2--1280.png"
+    },
+    {
+      "deck": "ch01-02-what-is-orca",
+      "slide": 2,
+      "width": 1280,
+      "file": "artifacts/part2/_qa/qa-final--ch01-02-what-is-orca--2--1280.png"
+    },
+    {
+      "deck": "ch01-01-terminal-problem",
+      "slide": 2,
+      "width": 1280,
+      "file": "artifacts/part2/_qa/qa-final--ch01-01-terminal-problem--2--1280.png"
+    },
+    {
+      "deck": "ch02-01-single-agent-limits",
+      "slide": 2,
+      "width": 1280,
+      "file": "artifacts/part1/_qa/qa-final--ch02-01-single-agent-limits--2--1280.png"
+    },
+    {
+      "deck": "ch02-01-setup-prep",
+      "slide": 3,
+      "width": 1280,
+      "file": "artifacts/part2/_qa/qa-final--ch02-01-setup-prep--3--1280.png"
+    },
+    {
+      "deck": "ch01-02-what-is-orca",
+      "slide": 3,
+      "width": 1280,
+      "file": "artifacts/part2/_qa/qa-final--ch01-02-what-is-orca--3--1280.png"
+    },
+    {
+      "deck": "ch02-01-single-agent-limits",
+      "slide": 3,
+      "width": 1280,
+      "file": "artifacts/part1/_qa/qa-final--ch02-01-single-agent-limits--3--1280.png"
+    },
+    {
+      "deck": "ch01-01-terminal-problem",
+      "slide": 3,
+      "width": 1280,
+      "file": "artifacts/part2/_qa/qa-final--ch01-01-terminal-problem--3--1280.png"
+    },
+    {
+      "deck": "ch01-02-what-is-orca",
+      "slide": 4,
+      "width": 1280,
+      "file": "artifacts/part2/_qa/qa-final--ch01-02-what-is-orca--4--1280.png"
+    },
+    {
+      "deck": "ch01-01-terminal-problem",
+      "slide": 4,
+      "width": 1280,
+      "file": "artifacts/part2/_qa/qa-final--ch01-01-terminal-problem--4--1280.png"
+    },
+    {
+      "deck": "ch02-01-single-agent-limits",
+      "slide": 4,
+      "width": 1280,
+      "file": "artifacts/part1/_qa/qa-final--ch02-01-single-agent-limits--4--1280.png"
+    },
+    {
+      "deck": "ch02-01-setup-prep",
+      "slide": 4,
+      "width": 1280,
+      "file": "artifacts/part2/_qa/qa-final--ch02-01-setup-prep--4--1280.png"
+    },
+    {
+      "deck": "ch01-02-what-is-orca",
+      "slide": 5,
+      "width": 1280,
+      "file": "artifacts/part2/_qa/qa-final--ch01-02-what-is-orca--5--1280.png"
+    },
+    {
+      "deck": "ch02-01-single-agent-limits",
+      "slide": 5,
+      "width": 1280,
+      "file": "artifacts/part1/_qa/qa-final--ch02-01-single-agent-limits--5--1280.png"
+    },
+    {
+      "deck": "ch01-01-terminal-problem",
+      "slide": 5,
+      "width": 1280,
+      "file": "artifacts/part2/_qa/qa-final--ch01-01-terminal-problem--5--1280.png"
+    },
+    {
+      "deck": "ch02-01-setup-prep",
+      "slide": 1,
+      "width": 1920,
+      "file": "artifacts/part2/_qa/qa-final--ch02-01-setup-prep--1--1920.png"
+    },
+    {
+      "deck": "ch01-02-what-is-orca",
+      "slide": 6,
+      "width": 1280,
+      "file": "artifacts/part2/_qa/qa-final--ch01-02-what-is-orca--6--1280.png"
+    },
+    {
+      "deck": "ch02-01-single-agent-limits",
+      "slide": 1,
+      "width": 1920,
+      "file": "artifacts/part1/_qa/qa-final--ch02-01-single-agent-limits--1--1920.png"
+    },
+    {
+      "deck": "ch01-01-terminal-problem",
+      "slide": 1,
+      "width": 1920,
+      "file": "artifacts/part2/_qa/qa-final--ch01-01-terminal-problem--1--1920.png"
+    },
+    {
+      "deck": "ch02-01-setup-prep",
+      "slide": 2,
+      "width": 1920,
+      "file": "artifacts/part2/_qa/qa-final--ch02-01-setup-prep--2--1920.png"
+    },
+    {
+      "deck": "ch01-02-what-is-orca",
+      "slide": 7,
+      "width": 1280,
+      "file": "artifacts/part2/_qa/qa-final--ch01-02-what-is-orca--7--1280.png"
+    },
+    {
+      "deck": "ch02-01-setup-prep",
+      "slide": 3,
+      "width": 1920,
+      "file": "artifacts/part2/_qa/qa-final--ch02-01-setup-prep--3--1920.png"
+    },
+    {
+      "deck": "ch01-01-terminal-problem",
+      "slide": 2,
+      "width": 1920,
+      "file": "artifacts/part2/_qa/qa-final--ch01-01-terminal-problem--2--1920.png"
+    },
+    {
+      "deck": "ch02-01-single-agent-limits",
+      "slide": 2,
+      "width": 1920,
+      "file": "artifacts/part1/_qa/qa-final--ch02-01-single-agent-limits--2--1920.png"
+    },
+    {
+      "deck": "ch01-02-what-is-orca",
+      "slide": 1,
+      "width": 1920,
+      "file": "artifacts/part2/_qa/qa-final--ch01-02-what-is-orca--1--1920.png"
+    },
+    {
+      "deck": "ch02-01-single-agent-limits",
+      "slide": 3,
+      "width": 1920,
+      "file": "artifacts/part1/_qa/qa-final--ch02-01-single-agent-limits--3--1920.png"
+    },
+    {
+      "deck": "ch02-01-setup-prep",
+      "slide": 4,
+      "width": 1920,
+      "file": "artifacts/part2/_qa/qa-final--ch02-01-setup-prep--4--1920.png"
+    },
+    {
+      "deck": "ch01-01-terminal-problem",
+      "slide": 3,
+      "width": 1920,
+      "file": "artifacts/part2/_qa/qa-final--ch01-01-terminal-problem--3--1920.png"
+    },
+    {
+      "deck": "ch01-02-what-is-orca",
+      "slide": 2,
+      "width": 1920,
+      "file": "artifacts/part2/_qa/qa-final--ch01-02-what-is-orca--2--1920.png"
+    },
+    {
+      "deck": "ch02-01-single-agent-limits",
+      "slide": 4,
+      "width": 1920,
+      "file": "artifacts/part1/_qa/qa-final--ch02-01-single-agent-limits--4--1920.png"
+    },
+    {
+      "deck": "ch01-01-terminal-problem",
+      "slide": 4,
+      "width": 1920,
+      "file": "artifacts/part2/_qa/qa-final--ch01-01-terminal-problem--4--1920.png"
+    },
+    {
+      "deck": "ch01-02-what-is-orca",
+      "slide": 3,
+      "width": 1920,
+      "file": "artifacts/part2/_qa/qa-final--ch01-02-what-is-orca--3--1920.png"
+    },
+    {
+      "deck": "ch02-01-single-agent-limits",
+      "slide": 5,
+      "width": 1920,
+      "file": "artifacts/part1/_qa/qa-final--ch02-01-single-agent-limits--5--1920.png"
+    },
+    {
+      "deck": "ch01-01-terminal-problem",
+      "slide": 5,
+      "width": 1920,
+      "file": "artifacts/part2/_qa/qa-final--ch01-01-terminal-problem--5--1920.png"
+    },
+    {
+      "deck": "ch01-02-what-is-orca",
+      "slide": 4,
+      "width": 1920,
+      "file": "artifacts/part2/_qa/qa-final--ch01-02-what-is-orca--4--1920.png"
+    },
+    {
+      "deck": "ch01-02-what-is-orca",
+      "slide": 5,
+      "width": 1920,
+      "file": "artifacts/part2/_qa/qa-final--ch01-02-what-is-orca--5--1920.png"
+    },
+    {
+      "deck": "ch01-02-what-is-orca",
+      "slide": 6,
+      "width": 1920,
+      "file": "artifacts/part2/_qa/qa-final--ch01-02-what-is-orca--6--1920.png"
+    },
+    {
+      "deck": "ch01-02-what-is-orca",
+      "slide": 7,
+      "width": 1920,
+      "file": "artifacts/part2/_qa/qa-final--ch01-02-what-is-orca--7--1920.png"
+    }
+  ],
+  "assets": [
+    {
+      "url": "http://localhost:3000/assets/fastcampus-logo-dark.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:3000/artifacts/part1/_images/ch01-01-course-intro--multi-agent-carrier.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:3000/artifacts/part1/_images/ch02-01-single-agent-limits--human-directs-ai-executes.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:3000/artifacts/part2/_images/ch01-01-terminal-problem--cover.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:3000/artifacts/part2/_images/ch01-01-terminal-problem--three-agents.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:3000/assets/orca-logo.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:3000/artifacts/part2/_images/ch01-02-what-is-orca--agent-office-equipped-v3.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:3000/assets/claude-code-logo.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:3000/assets/codex-logo.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:3000/artifacts/part2/_images/ch02-03-screen-and-board--review-decision.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:3000/artifacts/part2/_images/ch02-03-screen-and-board--workspace-separation.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:3000/artifacts/part3/_images/ch01-01-what-is-git--agents-in-separate-spaces.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:3000/artifacts/part3/_images/ch01-02-repo-and-flow--scope-path.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:3000/artifacts/part3/_images/ch01-03-branch-vs-worktree--one-desk-two-agents.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:8611/codex/assets/fastcampus-logo-dark.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:3000/codex/assets/fastcampus-logo-dark.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:8611/codex/part3/_images/ch01-01-what-is-git--version-history.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:3000/codex/part3/_images/ch01-01-what-is-git--version-history.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:8611/codex/part3/_images/ch01-03-branch-vs-worktree--separate-desks.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:3000/codex/part3/_images/ch01-03-branch-vs-worktree--separate-desks.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:8611/codex/part3/_images/ch01-02-repo-and-flow--staging-selection.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:3000/codex/part3/_images/ch01-02-repo-and-flow--staging-selection.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:8611/artifacts/part3/_images/image--shared-desk--0efdd26cb7.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:3000/artifacts/part3/_images/image--shared-desk--0efdd26cb7.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:8611/codex/assets/orca-logo.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:3000/codex/assets/orca-logo.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:8621/codex-v2/assets/fastcampus-logo-dark.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:3000/codex-v2/assets/fastcampus-logo-dark.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:8621/artifacts/part1/_images/image--single-agent--bea188db66.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:3000/artifacts/part1/_images/image--single-agent--bea188db66.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:8621/artifacts/part1/_images/image--B--5598a8042e.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:3000/artifacts/part1/_images/image--B--5598a8042e.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:8621/artifacts/part1/_images/image--C--42b1765cfe.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:3000/artifacts/part1/_images/image--C--42b1765cfe.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:8621/artifacts/part1/_images/image--D--395562faa4.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:3000/artifacts/part1/_images/image--D--395562faa4.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:8621/artifacts/part1/_images/image--E--4e1b542774.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:3000/artifacts/part1/_images/image--E--4e1b542774.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:8621/artifacts/part2/_images/ch01-01-terminal-problem--three-agents.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:8621/codex-v2/assets/scenes/archive-review.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:3000/codex-v2/assets/scenes/archive-review.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:8621/codex-v2/assets/scenes/selected-changes.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:3000/codex-v2/assets/scenes/selected-changes.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:8621/codex-v2/assets/scenes/two-drafts.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:3000/codex-v2/assets/scenes/two-drafts.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:8621/codex-v2/assets/orca-logo.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:3000/codex-v2/assets/orca-logo.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:8631/codex-v3/assets/fastcampus-logo-dark.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:3000/codex-v3/assets/fastcampus-logo-dark.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:8631/artifacts/part1/_images/image--single-agent--bea188db66.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:8631/artifacts/part1/_images/image--B--5598a8042e.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:8631/artifacts/part1/_images/image--C--42b1765cfe.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:8631/artifacts/part1/_images/image--D--395562faa4.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:8631/artifacts/part1/_images/image--E--4e1b542774.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:8631/artifacts/part2/_images/ch01-01-terminal-problem--three-agents.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:8631/codex-v3/assets/scenes/archive-review.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:3000/codex-v3/assets/scenes/archive-review.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:8631/artifacts/part2/_images/image--agent-office--0ee83295a1.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:3000/artifacts/part2/_images/image--agent-office--0ee83295a1.png",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:8631/codex-v3/assets/orca-logo.svg",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://localhost:3000/codex-v3/assets/orca-logo.svg",
+      "status": 200,
+      "ok": true
+    }
+  ],
+  "indexes": [
+    {
+      "port": 3000,
+      "links": 8,
+      "ok": true
+    },
+    {
+      "port": 8611,
+      "links": 3,
+      "ok": true
+    },
+    {
+      "port": 8621,
+      "links": 3,
+      "ok": true
+    },
+    {
+      "port": 8631,
+      "links": 3,
+      "ok": true
+    }
+  ],
+  "errors": [],
+  "passed": true
+}

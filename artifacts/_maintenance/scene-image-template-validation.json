@@ -1,0 +1,535 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "file": "artifacts/part1/outputs/ch02-01-single-agent-limits.html",
+      "slide": 2,
+      "width": 2133,
+      "height": 1200,
+      "screenshot": "artifacts/part1/_qa/ch02-01-single-agent-limits--scene-2-transparent-2133.png",
+      "mainWidth": 1909,
+      "mainHeight": 781.734375,
+      "sceneWidth": 1472,
+      "imageWidth": 886.640625,
+      "imageHeight": 544,
+      "copyWidth": 537.34375,
+      "images": [
+        {
+          "src": "/artifacts/part1/_images/ch02-01-single-agent-limits--human-directs-ai-executes-transparent.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/fastcampus-logo-dark.svg",
+          "loaded": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "file": "codex/part3/outputs/ch01-01-what-is-git.html",
+      "slide": 2,
+      "width": 2133,
+      "height": 1200,
+      "screenshot": "codex/part3/_qa/ch01-01-what-is-git--scene-2-transparent-2133.png",
+      "mainWidth": 1909,
+      "mainHeight": 781.734375,
+      "sceneWidth": 1472,
+      "imageWidth": 886.640625,
+      "imageHeight": 544,
+      "copyWidth": 537.34375,
+      "images": [
+        {
+          "src": "/codex/part3/_images/ch01-01-what-is-git--version-history-transparent.png",
+          "loaded": true
+        },
+        {
+          "src": "/codex/assets/fastcampus-logo-dark.svg",
+          "loaded": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "file": "codex/part3/outputs/ch01-01-what-is-git.html",
+      "slide": 6,
+      "width": 2133,
+      "height": 1200,
+      "screenshot": "codex/part3/_qa/ch01-01-what-is-git--scene-6-transparent-2133.png",
+      "mainWidth": 1909,
+      "mainHeight": 781.734375,
+      "sceneWidth": 1472,
+      "imageWidth": 886.640625,
+      "imageHeight": 544,
+      "copyWidth": 537.34375,
+      "images": [
+        {
+          "src": "/codex/part3/_images/ch01-03-branch-vs-worktree--separate-desks-transparent.png",
+          "loaded": true
+        },
+        {
+          "src": "/codex/assets/fastcampus-logo-dark.svg",
+          "loaded": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "file": "codex/part3/outputs/ch01-02-repo-and-flow.html",
+      "slide": 4,
+      "width": 2133,
+      "height": 1200,
+      "screenshot": "codex/part3/_qa/ch01-02-repo-and-flow--scene-4-transparent-2133.png",
+      "mainWidth": 1909,
+      "mainHeight": 781.734375,
+      "sceneWidth": 1472,
+      "imageWidth": 886.640625,
+      "imageHeight": 544,
+      "copyWidth": 537.34375,
+      "images": [
+        {
+          "src": "/codex/part3/_images/ch01-02-repo-and-flow--staging-selection-transparent.png",
+          "loaded": true
+        },
+        {
+          "src": "/codex/assets/fastcampus-logo-dark.svg",
+          "loaded": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "file": "codex/part3/outputs/ch01-03-branch-vs-worktree.html",
+      "slide": 3,
+      "width": 2133,
+      "height": 1200,
+      "screenshot": "codex/part3/_qa/ch01-03-branch-vs-worktree--scene-3-transparent-2133.png",
+      "mainWidth": 1909,
+      "mainHeight": 781.734375,
+      "sceneWidth": 1472,
+      "imageWidth": 886.640625,
+      "imageHeight": 544,
+      "copyWidth": 537.34375,
+      "images": [
+        {
+          "src": "/artifacts/part3/_images/shared-desk-transparent.png",
+          "loaded": true
+        },
+        {
+          "src": "/codex/assets/fastcampus-logo-dark.svg",
+          "loaded": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "file": "codex/part3/outputs/ch01-03-branch-vs-worktree.html",
+      "slide": 4,
+      "width": 2133,
+      "height": 1200,
+      "screenshot": "codex/part3/_qa/ch01-03-branch-vs-worktree--scene-4-transparent-2133.png",
+      "mainWidth": 1909,
+      "mainHeight": 781.734375,
+      "sceneWidth": 1472,
+      "imageWidth": 886.640625,
+      "imageHeight": 544,
+      "copyWidth": 537.34375,
+      "images": [
+        {
+          "src": "/codex/part3/_images/ch01-03-branch-vs-worktree--separate-desks-transparent.png",
+          "loaded": true
+        },
+        {
+          "src": "/codex/assets/fastcampus-logo-dark.svg",
+          "loaded": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "file": "codex-v2/part3/outputs/ch01-01-what-is-git.html",
+      "slide": 2,
+      "width": 2133,
+      "height": 1200,
+      "screenshot": "codex-v2/part3/_qa/ch01-01-what-is-git--scene-2-transparent-2133.png",
+      "mainWidth": 1909,
+      "mainHeight": 781.734375,
+      "sceneWidth": 1472,
+      "imageWidth": 886.640625,
+      "imageHeight": 544,
+      "copyWidth": 537.34375,
+      "images": [
+        {
+          "src": "/codex-v2/part3/_images/ch01-01-what-is-git--version-history-transparent.png",
+          "loaded": true
+        },
+        {
+          "src": "/codex-v2/assets/fastcampus-logo-dark.svg",
+          "loaded": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "file": "codex-v2/part3/outputs/ch01-02-repo-and-flow.html",
+      "slide": 3,
+      "width": 2133,
+      "height": 1200,
+      "screenshot": "codex-v2/part3/_qa/ch01-02-repo-and-flow--scene-3-transparent-2133.png",
+      "mainWidth": 1909,
+      "mainHeight": 781.734375,
+      "sceneWidth": 1472,
+      "imageWidth": 886.640625,
+      "imageHeight": 544,
+      "copyWidth": 537.34375,
+      "images": [
+        {
+          "src": "/codex-v2/part3/_images/ch01-02-repo-and-flow--staging-selection-transparent.png",
+          "loaded": true
+        },
+        {
+          "src": "/codex-v2/assets/fastcampus-logo-dark.svg",
+          "loaded": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "file": "codex-v2/part3/outputs/ch01-03-branch-vs-worktree.html",
+      "slide": 1,
+      "width": 2133,
+      "height": 1200,
+      "screenshot": "codex-v2/part3/_qa/ch01-03-branch-vs-worktree--scene-1-transparent-2133.png",
+      "mainWidth": 1909,
+      "mainHeight": 781.734375,
+      "sceneWidth": 1472,
+      "imageWidth": 886.640625,
+      "imageHeight": 544,
+      "copyWidth": 537.34375,
+      "images": [
+        {
+          "src": "/codex-v2/part3/_images/two-drafts-transparent.png",
+          "loaded": true
+        },
+        {
+          "src": "/codex-v2/assets/fastcampus-logo-dark.svg",
+          "loaded": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "file": "codex-v3/part3/outputs/ch01-01-what-is-git.html",
+      "slide": 3,
+      "width": 2133,
+      "height": 1200,
+      "screenshot": "codex-v3/part3/_qa/ch01-01-what-is-git--scene-3-transparent-2133.png",
+      "mainWidth": 1909,
+      "mainHeight": 781.734375,
+      "sceneWidth": 1472,
+      "imageWidth": 886.640625,
+      "imageHeight": 544,
+      "copyWidth": 537.34375,
+      "images": [
+        {
+          "src": "/codex-v3/part3/_images/ch01-01-what-is-git--version-history-transparent.png",
+          "loaded": true
+        },
+        {
+          "src": "/codex-v3/assets/fastcampus-logo-dark.svg",
+          "loaded": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "file": "codex-v3/part3/outputs/ch01-03-branch-vs-worktree.html",
+      "slide": 4,
+      "width": 2133,
+      "height": 1200,
+      "screenshot": "codex-v3/part3/_qa/ch01-03-branch-vs-worktree--scene-4-transparent-2133.png",
+      "mainWidth": 1909,
+      "mainHeight": 781.734375,
+      "sceneWidth": 1472,
+      "imageWidth": 886.640625,
+      "imageHeight": 544,
+      "copyWidth": 537.34375,
+      "images": [
+        {
+          "src": "/codex-v3/part3/_images/agent-office-transparent.png",
+          "loaded": true
+        },
+        {
+          "src": "/codex-v3/assets/fastcampus-logo-dark.svg",
+          "loaded": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "file": "artifacts/part1/outputs/ch02-01-single-agent-limits.html",
+      "slide": 2,
+      "width": 1280,
+      "height": 800,
+      "screenshot": "artifacts/part1/_qa/ch02-01-single-agent-limits--scene-2-transparent-1280.png",
+      "mainWidth": 1088,
+      "mainHeight": 472.03125,
+      "sceneWidth": 1088,
+      "imageWidth": 653.53125,
+      "imageHeight": 368.171875,
+      "copyWidth": 396.078125,
+      "images": [
+        {
+          "src": "/artifacts/part1/_images/ch02-01-single-agent-limits--human-directs-ai-executes-transparent.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/fastcampus-logo-dark.svg",
+          "loaded": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "file": "codex/part3/outputs/ch01-01-what-is-git.html",
+      "slide": 2,
+      "width": 1280,
+      "height": 800,
+      "screenshot": "codex/part3/_qa/ch01-01-what-is-git--scene-2-transparent-1280.png",
+      "mainWidth": 1088,
+      "mainHeight": 472.03125,
+      "sceneWidth": 1088,
+      "imageWidth": 653.53125,
+      "imageHeight": 368.171875,
+      "copyWidth": 396.078125,
+      "images": [
+        {
+          "src": "/codex/part3/_images/ch01-01-what-is-git--version-history-transparent.png",
+          "loaded": true
+        },
+        {
+          "src": "/codex/assets/fastcampus-logo-dark.svg",
+          "loaded": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "file": "codex/part3/outputs/ch01-01-what-is-git.html",
+      "slide": 6,
+      "width": 1280,
+      "height": 800,
+      "screenshot": "codex/part3/_qa/ch01-01-what-is-git--scene-6-transparent-1280.png",
+      "mainWidth": 1088,
+      "mainHeight": 472.03125,
+      "sceneWidth": 1088,
+      "imageWidth": 653.53125,
+      "imageHeight": 368.171875,
+      "copyWidth": 396.078125,
+      "images": [
+        {
+          "src": "/codex/part3/_images/ch01-03-branch-vs-worktree--separate-desks-transparent.png",
+          "loaded": true
+        },
+        {
+          "src": "/codex/assets/fastcampus-logo-dark.svg",
+          "loaded": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "file": "codex/part3/outputs/ch01-02-repo-and-flow.html",
+      "slide": 4,
+      "width": 1280,
+      "height": 800,
+      "screenshot": "codex/part3/_qa/ch01-02-repo-and-flow--scene-4-transparent-1280.png",
+      "mainWidth": 1088,
+      "mainHeight": 472.03125,
+      "sceneWidth": 1088,
+      "imageWidth": 653.53125,
+      "imageHeight": 368.171875,
+      "copyWidth": 396.078125,
+      "images": [
+        {
+          "src": "/codex/part3/_images/ch01-02-repo-and-flow--staging-selection-transparent.png",
+          "loaded": true
+        },
+        {
+          "src": "/codex/assets/fastcampus-logo-dark.svg",
+          "loaded": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "file": "codex/part3/outputs/ch01-03-branch-vs-worktree.html",
+      "slide": 3,
+      "width": 1280,
+      "height": 800,
+      "screenshot": "codex/part3/_qa/ch01-03-branch-vs-worktree--scene-3-transparent-1280.png",
+      "mainWidth": 1088,
+      "mainHeight": 472.03125,
+      "sceneWidth": 1088,
+      "imageWidth": 653.53125,
+      "imageHeight": 368.171875,
+      "copyWidth": 396.078125,
+      "images": [
+        {
+          "src": "/artifacts/part3/_images/shared-desk-transparent.png",
+          "loaded": true
+        },
+        {
+          "src": "/codex/assets/fastcampus-logo-dark.svg",
+          "loaded": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "file": "codex/part3/outputs/ch01-03-branch-vs-worktree.html",
+      "slide": 4,
+      "width": 1280,
+      "height": 800,
+      "screenshot": "codex/part3/_qa/ch01-03-branch-vs-worktree--scene-4-transparent-1280.png",
+      "mainWidth": 1088,
+      "mainHeight": 472.03125,
+      "sceneWidth": 1088,
+      "imageWidth": 653.53125,
+      "imageHeight": 368.171875,
+      "copyWidth": 396.078125,
+      "images": [
+        {
+          "src": "/codex/part3/_images/ch01-03-branch-vs-worktree--separate-desks-transparent.png",
+          "loaded": true
+        },
+        {
+          "src": "/codex/assets/fastcampus-logo-dark.svg",
+          "loaded": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "file": "codex-v2/part3/outputs/ch01-01-what-is-git.html",
+      "slide": 2,
+      "width": 1280,
+      "height": 800,
+      "screenshot": "codex-v2/part3/_qa/ch01-01-what-is-git--scene-2-transparent-1280.png",
+      "mainWidth": 1088,
+      "mainHeight": 472.03125,
+      "sceneWidth": 1088,
+      "imageWidth": 653.53125,
+      "imageHeight": 368.171875,
+      "copyWidth": 396.078125,
+      "images": [
+        {
+          "src": "/codex-v2/part3/_images/ch01-01-what-is-git--version-history-transparent.png",
+          "loaded": true
+        },
+        {
+          "src": "/codex-v2/assets/fastcampus-logo-dark.svg",
+          "loaded": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "file": "codex-v2/part3/outputs/ch01-02-repo-and-flow.html",
+      "slide": 3,
+      "width": 1280,
+      "height": 800,
+      "screenshot": "codex-v2/part3/_qa/ch01-02-repo-and-flow--scene-3-transparent-1280.png",
+      "mainWidth": 1088,
+      "mainHeight": 472.03125,
+      "sceneWidth": 1088,
+      "imageWidth": 653.53125,
+      "imageHeight": 368.171875,
+      "copyWidth": 396.078125,
+      "images": [
+        {
+          "src": "/codex-v2/part3/_images/ch01-02-repo-and-flow--staging-selection-transparent.png",
+          "loaded": true
+        },
+        {
+          "src": "/codex-v2/assets/fastcampus-logo-dark.svg",
+          "loaded": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "file": "codex-v2/part3/outputs/ch01-03-branch-vs-worktree.html",
+      "slide": 1,
+      "width": 1280,
+      "height": 800,
+      "screenshot": "codex-v2/part3/_qa/ch01-03-branch-vs-worktree--scene-1-transparent-1280.png",
+      "mainWidth": 1088,
+      "mainHeight": 472.03125,
+      "sceneWidth": 1088,
+      "imageWidth": 653.53125,
+      "imageHeight": 368.171875,
+      "copyWidth": 396.078125,
+      "images": [
+        {
+          "src": "/codex-v2/part3/_images/two-drafts-transparent.png",
+          "loaded": true
+        },
+        {
+          "src": "/codex-v2/assets/fastcampus-logo-dark.svg",
+          "loaded": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "file": "codex-v3/part3/outputs/ch01-01-what-is-git.html",
+      "slide": 3,
+      "width": 1280,
+      "height": 800,
+      "screenshot": "codex-v3/part3/_qa/ch01-01-what-is-git--scene-3-transparent-1280.png",
+      "mainWidth": 1088,
+      "mainHeight": 472.03125,
+      "sceneWidth": 1088,
+      "imageWidth": 653.53125,
+      "imageHeight": 368.171875,
+      "copyWidth": 396.078125,
+      "images": [
+        {
+          "src": "/codex-v3/part3/_images/ch01-01-what-is-git--version-history-transparent.png",
+          "loaded": true
+        },
+        {
+          "src": "/codex-v3/assets/fastcampus-logo-dark.svg",
+          "loaded": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "file": "codex-v3/part3/outputs/ch01-03-branch-vs-worktree.html",
+      "slide": 4,
+      "width": 1280,
+      "height": 800,
+      "screenshot": "codex-v3/part3/_qa/ch01-03-branch-vs-worktree--scene-4-transparent-1280.png",
+      "mainWidth": 1088,
+      "mainHeight": 472.03125,
+      "sceneWidth": 1088,
+      "imageWidth": 653.53125,
+      "imageHeight": 368.171875,
+      "copyWidth": 396.078125,
+      "images": [
+        {
+          "src": "/codex-v3/part3/_images/agent-office-transparent.png",
+          "loaded": true
+        },
+        {
+          "src": "/codex-v3/assets/fastcampus-logo-dark.svg",
+          "loaded": true
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "visualReview": "All 22 rendered slides reviewed: no background rectangles, cropped foreground, text overlap or broken image.",
+  "templateUnchanged": true
+}

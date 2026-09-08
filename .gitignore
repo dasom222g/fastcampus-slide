@@ -5,5 +5,18 @@
 !.env.example
 node_modules/
 outputs/
+# 정식 HTML 슬라이드는 배포 소스이므로 버전 관리한다.
+!artifacts/part*/outputs/
+!artifacts/part*/outputs/*.html
 playwright-report/
 test-results/
+artifacts/part*/_qa/
+artifacts/_maintenance/*.zip
+*.log
+__pycache__/
+*.pyc
+configs/*.local.*
+.auth/
+playwright/.auth/
+storage-state*.json
+storageState*.json

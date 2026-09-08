@@ -1,0 +1,253 @@
+{
+  "generated": [
+    {
+      "key": "history",
+      "file": "codex/part3/_images/ch01-01-what-is-git--version-history-transparent.png",
+      "source": "/Users/dasom/.codex/generated_images/01a07dcf-762d-7ed3-97c4-04faa89eb565/exec-396594b6-fa66-48dd-90db-c9f368ff9203.png",
+      "mode": "RGBA",
+      "size": [
+        1254,
+        1254
+      ],
+      "subjectBounds": [
+        104,
+        73,
+        1184,
+        1215
+      ],
+      "sha256": "4bf90412791a1264f65ee4bab181680709783d80b4962a066160e2fa31dbc00a",
+      "tool": "built-in image_gen"
+    },
+    {
+      "key": "single",
+      "file": "artifacts/part1/_images/ch02-01-single-agent-limits--human-directs-ai-executes-transparent.png",
+      "source": "/Users/dasom/.codex/generated_images/01a07dcf-762d-7ed3-97c4-04faa89eb565/exec-2ca33309-7e59-460e-85e2-da5e9475992b.png",
+      "mode": "RGBA",
+      "size": [
+        1254,
+        1254
+      ],
+      "subjectBounds": [
+        161,
+        96,
+        1146,
+        1186
+      ],
+      "sha256": "9db1df915f7097b021632cfa39d99d770c59cacdeec4caa6bedfa22beadd630f",
+      "tool": "built-in image_gen"
+    },
+    {
+      "key": "desks",
+      "file": "codex/part3/_images/ch01-03-branch-vs-worktree--separate-desks-transparent.png",
+      "source": "/Users/dasom/.codex/generated_images/01a07dcf-762d-7ed3-97c4-04faa89eb565/exec-b16f7daf-a957-4cfc-84d3-743b62919c61.png",
+      "mode": "RGBA",
+      "size": [
+        1254,
+        1254
+      ],
+      "subjectBounds": [
+        16,
+        194,
+        1238,
+        1065
+      ],
+      "sha256": "9cd519dbc328a2ffb366c8d808a70e4f38ca9e9f24a7b0d3dbe003109cb6549c",
+      "tool": "built-in image_gen"
+    },
+    {
+      "key": "staging",
+      "file": "codex/part3/_images/ch01-02-repo-and-flow--staging-selection-transparent.png",
+      "source": "/Users/dasom/.codex/generated_images/01a07dcf-762d-7ed3-97c4-04faa89eb565/exec-6ff001fe-de87-43f4-9183-9f3a6b48a7ad.png",
+      "mode": "RGBA",
+      "size": [
+        1254,
+        1254
+      ],
+      "subjectBounds": [
+        92,
+        71,
+        1161,
+        1193
+      ],
+      "sha256": "e834c654b389fe490c8ed52f81e79b50625212a30184b0355a69c95ffe532c71",
+      "tool": "built-in image_gen"
+    },
+    {
+      "key": "shared",
+      "file": "artifacts/part3/_images/shared-desk-transparent.png",
+      "source": "/Users/dasom/.codex/generated_images/01a07dcf-762d-7ed3-97c4-04faa89eb565/exec-4e68a588-c20e-48d3-b3e1-02f0e68026bd.png",
+      "mode": "RGBA",
+      "size": [
+        1254,
+        1254
+      ],
+      "subjectBounds": [
+        37,
+        152,
+        1243,
+        1171
+      ],
+      "sha256": "e3b2cff0e7864de8daf986d28dde3c125c762f754de06fe3503ee47ddd6dcfe6",
+      "tool": "built-in image_gen"
+    },
+    {
+      "key": "drafts",
+      "file": "codex-v2/part3/_images/two-drafts-transparent.png",
+      "source": "/Users/dasom/.codex/generated_images/01a07dcf-762d-7ed3-97c4-04faa89eb565/exec-17a820ba-37c1-4a2f-b1c4-1db70c555f19.png",
+      "mode": "RGBA",
+      "size": [
+        1254,
+        1254
+      ],
+      "subjectBounds": [
+        110,
+        81,
+        1208,
+        1196
+      ],
+      "sha256": "d312ab7d22de34869296cb483ce9b287d882acff7ea006cea73900b679086d9f",
+      "tool": "built-in image_gen"
+    },
+    {
+      "key": "office",
+      "file": "codex-v3/part3/_images/agent-office-transparent.png",
+      "source": "/Users/dasom/.codex/generated_images/01a07dcf-762d-7ed3-97c4-04faa89eb565/exec-9a80782b-cafe-4700-8a3a-a46f4945806e.png",
+      "mode": "RGBA",
+      "size": [
+        1254,
+        1254
+      ],
+      "subjectBounds": [
+        69,
+        117,
+        1217,
+        1163
+      ],
+      "sha256": "0d08960144c3c86595766de53d3b1308b94df733068fbb090cfd6b5b0eebe8c5",
+      "tool": "built-in image_gen"
+    }
+  ],
+  "scenes": [
+    {
+      "file": "artifacts/part1/outputs/ch02-01-single-agent-limits.html",
+      "slide": 2,
+      "title": "하나로 되는 일",
+      "images": [
+        "/artifacts/part1/_images/ch02-01-single-agent-limits--human-directs-ai-executes-transparent.png"
+      ],
+      "previousImages": [
+        "/artifacts/part1/_images/ch02-01-single-agent-limits--human-directs-ai-executes.png"
+      ]
+    },
+    {
+      "file": "codex/part3/outputs/ch01-01-what-is-git.html",
+      "slide": 2,
+      "title": "Git의 역할",
+      "images": [
+        "/codex/part3/_images/ch01-01-what-is-git--version-history-transparent.png"
+      ],
+      "previousImages": [
+        "/codex/part3/_images/ch01-01-what-is-git--version-history.png"
+      ]
+    },
+    {
+      "file": "codex/part3/outputs/ch01-01-what-is-git.html",
+      "slide": 6,
+      "title": "필요한 만큼만",
+      "images": [
+        "/codex/part3/_images/ch01-03-branch-vs-worktree--separate-desks-transparent.png"
+      ],
+      "previousImages": [
+        "/codex/part3/_images/ch01-03-branch-vs-worktree--separate-desks.png"
+      ]
+    },
+    {
+      "file": "codex/part3/outputs/ch01-02-repo-and-flow.html",
+      "slide": 4,
+      "title": "골라두는 이유",
+      "images": [
+        "/codex/part3/_images/ch01-02-repo-and-flow--staging-selection-transparent.png"
+      ],
+      "previousImages": [
+        "/codex/part3/_images/ch01-02-repo-and-flow--staging-selection.png"
+      ]
+    },
+    {
+      "file": "codex/part3/outputs/ch01-03-branch-vs-worktree.html",
+      "slide": 3,
+      "title": "한 폴더의 한계",
+      "images": [
+        "/artifacts/part3/_images/shared-desk-transparent.png"
+      ],
+      "previousImages": [
+        "/artifacts/part3/_images/image--shared-desk--0efdd26cb7.png"
+      ]
+    },
+    {
+      "file": "codex/part3/outputs/ch01-03-branch-vs-worktree.html",
+      "slide": 4,
+      "title": "폴더를 하나 더",
+      "images": [
+        "/codex/part3/_images/ch01-03-branch-vs-worktree--separate-desks-transparent.png"
+      ],
+      "previousImages": [
+        "/codex/part3/_images/ch01-03-branch-vs-worktree--separate-desks.png"
+      ]
+    },
+    {
+      "file": "codex-v2/part3/outputs/ch01-01-what-is-git.html",
+      "slide": 2,
+      "title": "이름 대신 기록",
+      "images": [
+        "/codex-v2/part3/_images/ch01-01-what-is-git--version-history-transparent.png"
+      ],
+      "previousImages": [
+        "/codex-v2/assets/scenes/archive-review.png"
+      ]
+    },
+    {
+      "file": "codex-v2/part3/outputs/ch01-02-repo-and-flow.html",
+      "slide": 3,
+      "title": "이번에 남길 변경",
+      "images": [
+        "/codex-v2/part3/_images/ch01-02-repo-and-flow--staging-selection-transparent.png"
+      ],
+      "previousImages": [
+        "/codex-v2/assets/scenes/selected-changes.png"
+      ]
+    },
+    {
+      "file": "codex-v2/part3/outputs/ch01-03-branch-vs-worktree.html",
+      "slide": 1,
+      "title": "두 가지 수정안",
+      "images": [
+        "/codex-v2/part3/_images/two-drafts-transparent.png"
+      ],
+      "previousImages": [
+        "/codex-v2/assets/scenes/two-drafts.png"
+      ]
+    },
+    {
+      "file": "codex-v3/part3/outputs/ch01-01-what-is-git.html",
+      "slide": 3,
+      "title": "Git이 남기는 것",
+      "images": [
+        "/codex-v3/part3/_images/ch01-01-what-is-git--version-history-transparent.png"
+      ],
+      "previousImages": [
+        "/codex-v3/assets/scenes/archive-review.png"
+      ]
+    },
+    {
+      "file": "codex-v3/part3/outputs/ch01-03-branch-vs-worktree.html",
+      "slide": 4,
+      "title": "공간을 추가할 때",
+      "images": [
+        "/codex-v3/part3/_images/agent-office-transparent.png"
+      ],
+      "previousImages": [
+        "/artifacts/part2/_images/image--agent-office--0ee83295a1.png"
+      ]
+    }
+  ]
+}

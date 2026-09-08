@@ -1,0 +1,22 @@
+{
+  "date": "2026-09-08",
+  "removedRoots": [
+    "codex",
+    "codex-v2",
+    "codex-v3"
+  ],
+  "canonicalRoot": "artifacts",
+  "canonicalAndSharedFilesPreservedAtDeletion": 791,
+  "canonicalFilesByteIdenticalAtDeletion": true,
+  "remainingSlideSymlinks": 0,
+  "promotionPolicy": "Copy or move real files and assets; never create symlinks for slide work files. Working directories must remain disposable.",
+  "verification": {
+    "localDecks": 11,
+    "indexEntries": 11,
+    "indexParts": 4,
+    "existingGoogleSlidesLinksPreserved": 2,
+    "brokenLocalReferences": 0,
+    "referencesToRemovedRoots": 0,
+    "inlineJavaScriptSyntaxChecks": 11
+  }
+}

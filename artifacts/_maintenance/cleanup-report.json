@@ -1,0 +1,74 @@
+{
+  "finals": [
+    {
+      "slug": "ch02-01-single-agent-limits",
+      "file": "artifacts/part1/outputs/ch02-01-single-agent-limits.html",
+      "slides": 5,
+      "titles": [
+        "에이전트 하나로되는 일과 안 되는 일",
+        "하나로 되는 일",
+        "단일 에이전트의 한계",
+        "왜 안 되는가",
+        "멀티 에이전트가 필요한 이유"
+      ],
+      "status": "confirmed"
+    },
+    {
+      "slug": "ch01-01-terminal-problem",
+      "file": "artifacts/part2/outputs/ch01-01-terminal-problem.html",
+      "slides": 5,
+      "titles": [
+        "터미널 여러 개의 문제",
+        "에이전트가 일하는 자리",
+        "멀티 에이전트를 쓰려면",
+        "터미널 여러 개의 문제",
+        "무엇이 필요한가"
+      ],
+      "status": "confirmed"
+    },
+    {
+      "slug": "ch01-02-what-is-orca",
+      "file": "artifacts/part2/outputs/ch01-02-what-is-orca.html",
+      "slides": 7,
+      "titles": [
+        "Orca의 정체",
+        "Orca 안에서 일하는 AI",
+        "IDE와 ADE",
+        "터미널 여러 개의 문제",
+        "Orca로 달라지는 작업",
+        "환경과 협업 기능",
+        "Orca 위의 패턴"
+      ],
+      "status": "confirmed"
+    },
+    {
+      "slug": "ch02-01-setup-prep",
+      "file": "artifacts/part2/outputs/ch02-01-setup-prep.html",
+      "slides": 4,
+      "titles": [
+        "설치 전 준비물과 환경 체크",
+        "Orca 설치 전 준비물",
+        "준비물 두 가지",
+        "로그인까지 완료"
+      ],
+      "status": "confirmed"
+    }
+  ],
+  "moved_image_paths": 381,
+  "unique_preserved_images": 261,
+  "image_content_lost": 0,
+  "removed_groups": [
+    "orca2 덱과 부속 문서",
+    "확정된 세 덱의 codex·codex-v2·codex-v3 비교본",
+    "single-agent·what-is-orca 수정 이력",
+    "해당 덱의 outputs 임시 제작 파일"
+  ],
+  "image_manifest": "artifacts/_maintenance/image-manifest.json",
+  "validation": {
+    "passed": true,
+    "final_decks": 4,
+    "rendered_screens": 42,
+    "asset_requests": 61,
+    "indexes": 4
+  }
+}

@@ -2,6 +2,13 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/:part/:clip", "destination": "/artifacts/:part/:clip" }
+    {
+      "source": "/:part/outputs/:clip",
+      "destination": "/artifacts/:part/outputs/:clip"
+    },
+    {
+      "source": "/:part/:clip",
+      "destination": "/artifacts/:part/outputs/:clip"
+    }
   ]
 }

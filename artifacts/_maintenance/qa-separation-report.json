@@ -1,0 +1,12 @@
+{
+  "moved_qa_captures": 282,
+  "by_part": {
+    "part1": 69,
+    "part2": 213
+  },
+  "all_capture_bytes_preserved": true,
+  "all_html_unchanged": true,
+  "image_references_checked": 186,
+  "missing_images": [],
+  "skill_symlink_verified": true
+}

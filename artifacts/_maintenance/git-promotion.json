@@ -1,0 +1,49 @@
+{
+  "source": "codex/part3/outputs/ch01-01-what-is-git.html",
+  "canonical": "artifacts/part3/outputs/ch01-01-what-is-git.html",
+  "sourceSha256": "582d967d4c00b4de048d9c161ee623fbb4dd760f16575276126896e582172580",
+  "assetMap": {
+    "/codex/assets/fastcampus-logo-dark.svg": "/assets/fastcampus-logo-dark.svg",
+    "/codex/part3/_images/ch01-01-what-is-git--version-history-transparent.png": "/artifacts/part3/_images/ch01-01-what-is-git--version-history-transparent.png",
+    "/codex/part3/_images/ch01-01-what-is-git--version-history.png": "/artifacts/part3/_images/ch01-01-what-is-git--version-history.png"
+  },
+  "durationRemovals": [
+    {
+      "file": "artifacts/part3/outputs/ch01-01-what-is-git.html",
+      "removed": 1
+    },
+    {
+      "file": "artifacts/part3/outputs/ch01-03-branch-vs-worktree.html",
+      "removed": 1
+    },
+    {
+      "file": "artifacts/part3/outputs/ch01-02-repo-and-flow.html",
+      "removed": 1
+    },
+    {
+      "file": "artifacts/part2/outputs/ch02-01-setup-prep.html",
+      "removed": 1
+    },
+    {
+      "file": "artifacts/part2/outputs/ch02-03-screen-and-board.html",
+      "removed": 1
+    },
+    {
+      "file": "artifacts/part1/outputs/ch01-02-roadmap.html",
+      "removed": 3
+    },
+    {
+      "file": "artifacts/part1/outputs/ch02-01-single-agent-limits.html",
+      "removed": 1
+    }
+  ],
+  "verified": true,
+  "report": "artifacts/part3/_qa/promotion-git-report.json",
+  "files": {
+    "artifacts/part3/outputs/ch01-01-what-is-git.html": "215a13b9128e3d833400a45b7ea7e7496d1e465a239bb639cc80befc3c1b9339",
+    "artifacts/part3/_source/ch01-01-what-is-git.md": "5b79c79e0a864fcce3368c4df0e8e1abbc79e846942af106f5ff4d386688b18f",
+    "artifacts/part3/_storyboard/ch01-01-what-is-git.md": "109a193272e95ca570dac3d326756f0da8c76a09cb8e03eedd367f696ac16e0a",
+    "artifacts/part3/_script/ch01-01-what-is-git.md": "1f35ccd0a40e5d60b1b9db4f7275e8b67d902ba5581a6f13615c2ab0ff3a3650",
+    "artifacts/part3/_feedback/ch01-01-what-is-git.md": "4343852bb99b323f16ebb7131ee065f8210dfe1df11ceb64943fde9d8fa83440"
+  }
+}

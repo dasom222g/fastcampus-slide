@@ -1,0 +1,66 @@
+[
+  {
+    "slug": "ch02-01-single-agent-limits",
+    "file": "artifacts/part1/outputs/ch02-01-single-agent-limits.html",
+    "slides": 5,
+    "titles": [
+      "에이전트 하나로되는 일과 안 되는 일",
+      "하나로 되는 일",
+      "단일 에이전트의 한계",
+      "왜 안 되는가",
+      "멀티 에이전트가 필요한 이유"
+    ],
+    "status": "confirmed"
+  },
+  {
+    "slug": "ch01-01-terminal-problem",
+    "file": "artifacts/part2/outputs/ch01-01-terminal-problem.html",
+    "slides": 5,
+    "titles": [
+      "터미널 여러 개의 문제",
+      "에이전트가 일하는 자리",
+      "멀티 에이전트를 쓰려면",
+      "터미널 여러 개의 문제",
+      "무엇이 필요한가"
+    ],
+    "status": "confirmed"
+  },
+  {
+    "slug": "ch01-02-what-is-orca",
+    "file": "artifacts/part2/outputs/ch01-02-what-is-orca.html",
+    "slides": 5,
+    "titles": [
+      "Orca의 정체",
+      "Orca 안에서 일하는 AI",
+      "IDE와 ADE",
+      "Orca의 작업 단위",
+      "오케스트레이션까지"
+    ],
+    "status": "confirmed"
+  },
+  {
+    "slug": "ch02-01-setup-prep",
+    "file": "artifacts/part2/outputs/ch02-01-setup-prep.html",
+    "slides": 4,
+    "titles": [
+      "설치 전 준비물과 환경 체크",
+      "Orca 설치 전 준비물",
+      "준비물 두 가지",
+      "로그인까지 완료"
+    ],
+    "status": "confirmed"
+  },
+  {
+    "slug": "ch01-01-what-is-git",
+    "file": "artifacts/part3/outputs/ch01-01-what-is-git.html",
+    "slides": 5,
+    "titles": [
+      "Git이란 - 버전 관리가 없다면",
+      "이름으로 남긴 버전",
+      "Git의 역할",
+      "Git이 바꾸는 것",
+      "Git과 GitHub"
+    ],
+    "status": "confirmed"
+  }
+]
