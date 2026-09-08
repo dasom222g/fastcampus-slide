@@ -1,8 +1,8 @@
 # Orca 설치 전 준비물 스토리보드
 
 **소스:** 채팅으로 받은 3장 구성 초안 + `artifacts/part2/_source/ch02-01-setup-prep.md` 「1. Orca — Agent Development Environment」
-**출력 슬라이드:** `artifacts/part2/ch02-01-setup-prep.html` (공개 주소 `/part2/ch02-01-setup-prep`)
-**총 슬라이드:** 3장 (표지 1장 + 본문 2장)
+**출력 슬라이드:** `artifacts/part2/outputs/ch02-01-setup-prep.html` (공개 주소 `/part2/ch02-01-setup-prep`)
+**총 슬라이드:** 4장 (표지 1장 + 본문 3장 — 표지는 2026-09-08 「표지 게이트」로 추가, 소스 frontmatter도 4장으로 갱신)
 **디자인 기준:** fastcampus-slide 스킬 `assets/base-template.html` (다크 · 패스트캠퍼스 레드)
 
 ---
@@ -54,13 +54,45 @@
 
 | # | 타입 | 제목 | 핵심 메시지 |
 |---|---|---|---|
-| 1 | TEXT | Orca 설치 전 준비물 | Orca를 설치하기 전에 연결할 AI CLI부터 준비한다. |
-| 2 | CARD_GRID(2) | 준비물 두 가지 | 이번 실습에 필요한 CLI는 Claude Code와 Codex다. |
-| 3 | CARD_GRID(2) | 로그인까지 완료 | 각 CLI에 로그인된 상태여야 Orca에서 연결할 수 있다. |
+| 1 | **COVER** (`cover-frame`) | 표지 | 클립 정체와 이 클립에서 배우는 것 3개 — 본문의 그릇 |
+| 2 | TEXT | Orca 설치 전 준비물 | Orca를 설치하기 전에 연결할 AI CLI부터 준비한다. |
+| 3 | CARD_GRID(2) | 준비물 두 가지 | 이번 실습에 필요한 CLI는 Claude Code와 Codex다. |
+| 4 | CARD_GRID(2) | 로그인까지 완료 | 각 CLI에 로그인된 상태여야 Orca에서 연결할 수 있다. |
 
 ---
 
-## 슬라이드 1 / 3 — Orca 설치 전 준비물
+## 슬라이드 1 / 4 — 표지
+
+- **타입:** COVER (`cover-frame` — 클립 정체 + 이 클립에서 배우는 것 3개 + 시각 1점)
+- **핵심 메시지:** 이 클립이 무엇이고 여기서 무엇을 배우는지를 본문에 들어가기 전에 그릇으로 먼저 보인다
+- **근거:** `docs/curriculum.md` Part 2 › Chapter 2 › Ch02-01 (5분) / 위 「주제 도출」의 한 줄 주제와 핵심 주장 1·2·3 — 새 문장을 만들지 않고 셋을 명사구로 압축했다
+
+**화면 요소**
+
+| 요소 | 내용 |
+|---|---|
+| slide__label | Part 2 · Chapter 2 · Ch02-01 · 5분 |
+| slide__title | 설치 전 준비물과 **환경 체크** — 커리큘럼 클립 제목 그대로 (12자 규칙의 유일한 예외) |
+| slide__sub | Orca를 설치하기 전에 Claude Code와 Codex를 설치하고 각 CLI 로그인까지 완료한다 |
+| learn 라벨 | `WHAT YOU LEARN` · 이 클립에서 배우는 것 |
+| learn 01 | **준비 순서** / Orca보다 연결할 AI CLI가 먼저다 |
+| learn 02 | **준비물 두 가지** / 이번 실습에 필요한 CLI는 Claude Code와 Codex다 |
+| learn 03 | **로그인 상태** / 두 CLI 모두 로그인돼 있어야 Orca에서 연결할 수 있다 |
+| 로고 카드 2장 (`cover-frame__visual--cards`) | Claude Code(brand) · Codex(purple) — 장면 이미지가 없는 실습 준비 클립 — 준비물 자체인 Claude Code · Codex 로고 카드 2장(brand · purple) |
+
+> 표지는 2026-09-08 「표지 게이트」로 추가됐다 — "뭘 배울지 없이 바로 설명부터 들어가면 그릇이 없다"는 지적. 본문 슬라이드는 그대로이고 번호만 하나씩 밀렸다.
+
+**애니메이션 순서**
+1. 배우는 것 라벨
+2. 01 → 02 → 03 순서로 fadeInUp
+3. 시각 1점
+
+**발표 노트**
+> 이번 클립은 설치 전 준비물과 환경 체크입니다. Orca를 설치하기 전에 Claude Code와 Codex를 설치하고 로그인까지 끝내 둡니다. 준비 순서, 준비물 두 가지, 로그인 상태 — 이 세 가지를 확인합니다.
+
+---
+
+## 슬라이드 2 / 4 — Orca 설치 전 준비물
 
 - **타입:** TEXT (대형 로고 표지)
 - **핵심 메시지:** Orca를 설치하기 전에 연결할 AI CLI부터 준비한다.
@@ -90,7 +122,7 @@
 
 ---
 
-## 슬라이드 2 / 3 — 준비물 두 가지
+## 슬라이드 3 / 4 — 준비물 두 가지
 
 - **타입:** CARD_GRID(2) — 좌우 대형 카드
 - **핵심 메시지:** 이번 실습에 필요한 CLI는 Claude Code와 Codex다.
@@ -116,7 +148,7 @@
 
 ---
 
-## 슬라이드 3 / 3 — 로그인까지 완료
+## 슬라이드 4 / 4 — 로그인까지 완료
 
 - **타입:** CARD_GRID(2) — 로그인 상태가 붙은 좌우 대형 카드
 - **핵심 메시지:** 각 CLI에 로그인된 상태여야 Orca에서 연결할 수 있다.

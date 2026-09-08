@@ -1,0 +1,446 @@
+{
+  "approved_on": "2026-09-08",
+  "approval": "좋아. 지금까지 작업에서 실패에서 배운걸 골든셋작업해. 현재파일이 최종본 정답이야",
+  "canonical_html": "artifacts/part2/outputs/ch01-01-terminal-problem.html",
+  "preview_url": "http://localhost:3000/part2/outputs/ch01-01-terminal-problem",
+  "html_unchanged_during_registration": true,
+  "screenshots": [
+    {
+      "viewport": [
+        1280,
+        800
+      ],
+      "screenshot": "artifacts/part2/_qa/qa--slide-01-1280x800--77beca6ed6.png",
+      "slide": 1,
+      "title": "터미널 여러 개의 문제",
+      "subtitle": "에이전트를 늘릴수록, 사람이 챙겨야 할 작업도 늘어납니다.",
+      "images": [
+        {
+          "src": "/artifacts/part2/_images/ch01-01-terminal-problem--cover.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/fastcampus-logo-dark.svg",
+          "loaded": true
+        }
+      ],
+      "mainType": [
+        {
+          "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+          "fontSize": "48.64px",
+          "fontWeight": "850",
+          "lineHeight": "65.664px",
+          "letterSpacing": "-1.7024px",
+          "borderTopWidth": "0px",
+          "borderBottomWidth": "0px",
+          "borderLeftWidth": "0px",
+          "borderRightWidth": "0px"
+        }
+      ],
+      "caption": null,
+      "windowPadding": null,
+      "handoff": null,
+      "bodyOverflow": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "viewport": [
+        1280,
+        800
+      ],
+      "screenshot": "artifacts/part2/_qa/qa--slide-02-1280x800--5aea51593d.png",
+      "slide": 2,
+      "title": "에이전트가 일하는 자리",
+      "subtitle": "터미널 하나에 에이전트 하나가 돌아갑니다.",
+      "images": [
+        {
+          "src": "/assets/fastcampus-logo-dark.svg",
+          "loaded": true
+        }
+      ],
+      "mainType": [
+        {
+          "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+          "fontSize": "48.64px",
+          "fontWeight": "850",
+          "lineHeight": "65.664px",
+          "letterSpacing": "-1.7024px",
+          "borderTopWidth": "0px",
+          "borderBottomWidth": "0px",
+          "borderLeftWidth": "0px",
+          "borderRightWidth": "0px"
+        }
+      ],
+      "caption": null,
+      "windowPadding": null,
+      "handoff": null,
+      "bodyOverflow": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "viewport": [
+        1280,
+        800
+      ],
+      "screenshot": "artifacts/part2/_qa/qa--slide-03-1280x800--30dbb93702.png",
+      "slide": 3,
+      "title": "멀티 에이전트를 쓰려면",
+      "subtitle": "에이전트를 세 개 쓰려면 터미널도 세 개 열어야 합니다.",
+      "images": [
+        {
+          "src": "/artifacts/part2/_images/ch01-01-terminal-problem--three-agents.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/fastcampus-logo-dark.svg",
+          "loaded": true
+        }
+      ],
+      "mainType": [
+        {
+          "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+          "fontSize": "48.64px",
+          "fontWeight": "850",
+          "lineHeight": "65.664px",
+          "letterSpacing": "-1.7024px",
+          "borderTopWidth": "0px",
+          "borderBottomWidth": "0px",
+          "borderLeftWidth": "0px",
+          "borderRightWidth": "0px"
+        }
+      ],
+      "caption": null,
+      "windowPadding": null,
+      "handoff": null,
+      "bodyOverflow": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "viewport": [
+        1280,
+        800
+      ],
+      "screenshot": "artifacts/part2/_qa/qa--slide-04-1280x800--f237e0888c.png",
+      "slide": 4,
+      "title": "터미널 여러 개의 문제",
+      "subtitle": "창을 늘린 뒤에는 상태·파일·결과를 직접 확인해야 합니다.",
+      "images": [
+        {
+          "src": "/assets/fastcampus-logo-dark.svg",
+          "loaded": true
+        }
+      ],
+      "mainType": [],
+      "caption": null,
+      "windowPadding": null,
+      "handoff": null,
+      "bodyOverflow": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "viewport": [
+        1280,
+        800
+      ],
+      "screenshot": "artifacts/part2/_qa/qa--slide-05-1280x800--f1c97aaa9d.png",
+      "slide": 5,
+      "title": "무엇이 필요한가",
+      "subtitle": "진행 상황·작업 공간·결과를 함께 관리할 수 있어야 합니다.",
+      "images": [
+        {
+          "src": "/assets/orca-logo.svg",
+          "loaded": true
+        },
+        {
+          "src": "/assets/fastcampus-logo-dark.svg",
+          "loaded": true
+        }
+      ],
+      "mainType": [],
+      "caption": {
+        "text": "여러 에이전트 상태를 한 화면에",
+        "height": 32.765625,
+        "lineHeight": "32.768px",
+        "width": 251,
+        "scrollWidth": 251
+      },
+      "windowPadding": {
+        "top": 31,
+        "bottom": 31
+      },
+      "handoff": {
+        "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "borderTopWidth": "0px",
+        "borderBottomWidth": "0px",
+        "borderLeftWidth": "0px",
+        "borderRightWidth": "0px"
+      },
+      "bodyOverflow": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "viewport": [
+        1920,
+        1080
+      ],
+      "screenshot": "artifacts/part2/_qa/qa--slide-01-1920x1080--2a92198aaa.png",
+      "slide": 1,
+      "title": "터미널 여러 개의 문제",
+      "subtitle": "에이전트를 늘릴수록, 사람이 챙겨야 할 작업도 늘어납니다.",
+      "images": [
+        {
+          "src": "/artifacts/part2/_images/ch01-01-terminal-problem--cover.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/fastcampus-logo-dark.svg",
+          "loaded": true
+        }
+      ],
+      "mainType": [
+        {
+          "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+          "fontSize": "59.2px",
+          "fontWeight": "850",
+          "lineHeight": "79.92px",
+          "letterSpacing": "-2.072px",
+          "borderTopWidth": "0px",
+          "borderBottomWidth": "0px",
+          "borderLeftWidth": "0px",
+          "borderRightWidth": "0px"
+        }
+      ],
+      "caption": null,
+      "windowPadding": null,
+      "handoff": null,
+      "bodyOverflow": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "viewport": [
+        1920,
+        1080
+      ],
+      "screenshot": "artifacts/part2/_qa/qa--slide-02-1920x1080--e7f47df5ab.png",
+      "slide": 2,
+      "title": "에이전트가 일하는 자리",
+      "subtitle": "터미널 하나에 에이전트 하나가 돌아갑니다.",
+      "images": [
+        {
+          "src": "/assets/fastcampus-logo-dark.svg",
+          "loaded": true
+        }
+      ],
+      "mainType": [
+        {
+          "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+          "fontSize": "59.2px",
+          "fontWeight": "850",
+          "lineHeight": "79.92px",
+          "letterSpacing": "-2.072px",
+          "borderTopWidth": "0px",
+          "borderBottomWidth": "0px",
+          "borderLeftWidth": "0px",
+          "borderRightWidth": "0px"
+        }
+      ],
+      "caption": null,
+      "windowPadding": null,
+      "handoff": null,
+      "bodyOverflow": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "viewport": [
+        1920,
+        1080
+      ],
+      "screenshot": "artifacts/part2/_qa/qa--slide-03-1920x1080--ae963cf909.png",
+      "slide": 3,
+      "title": "멀티 에이전트를 쓰려면",
+      "subtitle": "에이전트를 세 개 쓰려면 터미널도 세 개 열어야 합니다.",
+      "images": [
+        {
+          "src": "/artifacts/part2/_images/ch01-01-terminal-problem--three-agents.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/fastcampus-logo-dark.svg",
+          "loaded": true
+        }
+      ],
+      "mainType": [
+        {
+          "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+          "fontSize": "59.2px",
+          "fontWeight": "850",
+          "lineHeight": "79.92px",
+          "letterSpacing": "-2.072px",
+          "borderTopWidth": "0px",
+          "borderBottomWidth": "0px",
+          "borderLeftWidth": "0px",
+          "borderRightWidth": "0px"
+        }
+      ],
+      "caption": null,
+      "windowPadding": null,
+      "handoff": null,
+      "bodyOverflow": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "viewport": [
+        1920,
+        1080
+      ],
+      "screenshot": "artifacts/part2/_qa/qa--slide-04-1920x1080--296cc134cb.png",
+      "slide": 4,
+      "title": "터미널 여러 개의 문제",
+      "subtitle": "창을 늘린 뒤에는 상태·파일·결과를 직접 확인해야 합니다.",
+      "images": [
+        {
+          "src": "/assets/fastcampus-logo-dark.svg",
+          "loaded": true
+        }
+      ],
+      "mainType": [],
+      "caption": null,
+      "windowPadding": null,
+      "handoff": null,
+      "bodyOverflow": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "viewport": [
+        1920,
+        1080
+      ],
+      "screenshot": "artifacts/part2/_qa/qa--slide-05-1920x1080--066f5f2eca.png",
+      "slide": 5,
+      "title": "무엇이 필요한가",
+      "subtitle": "진행 상황·작업 공간·결과를 함께 관리할 수 있어야 합니다.",
+      "images": [
+        {
+          "src": "/assets/orca-logo.svg",
+          "loaded": true
+        },
+        {
+          "src": "/assets/fastcampus-logo-dark.svg",
+          "loaded": true
+        }
+      ],
+      "mainType": [],
+      "caption": {
+        "text": "여러 에이전트 상태를 한 화면에",
+        "height": 35.84375,
+        "lineHeight": "35.84px",
+        "width": 274,
+        "scrollWidth": 274
+      },
+      "windowPadding": {
+        "top": 31,
+        "bottom": 31
+      },
+      "handoff": {
+        "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "borderTopWidth": "0px",
+        "borderBottomWidth": "0px",
+        "borderLeftWidth": "0px",
+        "borderRightWidth": "0px"
+      },
+      "bodyOverflow": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  ],
+  "direct_file_images": [
+    {
+      "src": "file:///Users/dasom/somi/%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%B4/%E1%84%91%E1%85%A2%E1%84%8F%E1%85%A2%E1%86%B7/orca%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%B4/fastcampus-slide/artifacts/part2/_images/ch01-01-terminal-problem--cover.png",
+      "loaded": true
+    },
+    {
+      "src": "file:///Users/dasom/somi/%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%B4/%E1%84%91%E1%85%A2%E1%84%8F%E1%85%A2%E1%86%B7/orca%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%B4/fastcampus-slide/assets/fastcampus-logo-dark.svg",
+      "loaded": true
+    },
+    {
+      "src": "file:///Users/dasom/somi/%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%B4/%E1%84%91%E1%85%A2%E1%84%8F%E1%85%A2%E1%86%B7/orca%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%B4/fastcampus-slide/assets/fastcampus-logo-dark.svg",
+      "loaded": true
+    },
+    {
+      "src": "file:///Users/dasom/somi/%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%B4/%E1%84%91%E1%85%A2%E1%84%8F%E1%85%A2%E1%86%B7/orca%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%B4/fastcampus-slide/artifacts/part2/_images/ch01-01-terminal-problem--three-agents.png",
+      "loaded": true
+    },
+    {
+      "src": "file:///Users/dasom/somi/%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%B4/%E1%84%91%E1%85%A2%E1%84%8F%E1%85%A2%E1%86%B7/orca%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%B4/fastcampus-slide/assets/fastcampus-logo-dark.svg",
+      "loaded": true
+    },
+    {
+      "src": "file:///Users/dasom/somi/%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%B4/%E1%84%91%E1%85%A2%E1%84%8F%E1%85%A2%E1%86%B7/orca%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%B4/fastcampus-slide/assets/fastcampus-logo-dark.svg",
+      "loaded": true
+    },
+    {
+      "src": "file:///Users/dasom/somi/%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%B4/%E1%84%91%E1%85%A2%E1%84%8F%E1%85%A2%E1%86%B7/orca%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%B4/fastcampus-slide/assets/orca-logo.svg",
+      "loaded": true
+    },
+    {
+      "src": "file:///Users/dasom/somi/%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%B4/%E1%84%91%E1%85%A2%E1%84%8F%E1%85%A2%E1%86%B7/orca%E1%84%80%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%B4/fastcampus-slide/assets/fastcampus-logo-dark.svg",
+      "loaded": true
+    }
+  ],
+  "scope": "Current approved 5-slide deck; no alternate HTML. Screenshots at 1280x800 and 1920x1080; smaller viewports not assessed.",
+  "asset_relocation_note": "2026-09-08: 이미지 파일을 part2/_images 직속으로 이동. HTML 변경은 이미지 경로뿐이며 이미지 바이트는 동일하다.",
+  "registration_sha256": {
+    "artifacts/part2/outputs/ch01-01-terminal-problem.html": "7ee6618b610179d4869184d513eaad3a11200988232faf36ef0ba0fa3c2aa211",
+    "artifacts/part2/_images/image--carry-by-hand--490a02cf6f.png": "490a02cf6fc7cf204ec77a309922134fe4e16e6a44d191fa5e9289cc6a6a211e",
+    "artifacts/part2/_images/ch01-01-terminal-problem--cover.png": "a475eddb69a636b7e9377a9debbe54ad1bec627d808c7d633455a091b68e9a7e",
+    "artifacts/part2/_images/image--terminals-three--92e9621153.png": "92e96211535673ec846bfc9cb993bbf94405b241b20c0672312594ad01f228bb",
+    "artifacts/part2/_images/ch01-01-terminal-problem--three-agents.png": "c3ad53f1026b9450ae24d0f5a20393e785c068e69af348c9080d270dcb49f990",
+    "assets/orca-logo.svg": "6545255de6cca93679d3419629d0fadae68432475549068e8779811c4aa21f89",
+    "assets/fastcampus-logo-dark.svg": "13e0e37df38498b4ca900ecad8e5fb722efefff176f851525a443d100ffd7d0e"
+  },
+  "sha256": {
+    "artifacts/part2/outputs/ch01-01-terminal-problem.html": "824bfde03fc8231cf2ef91f9f80cc69f6d2c4920e3d36e323db96654a2462864",
+    "artifacts/part2/_images/ch01-01-terminal-problem--three-agents.png": "c3ad53f1026b9450ae24d0f5a20393e785c068e69af348c9080d270dcb49f990",
+    "assets/fastcampus-logo-dark.svg": "13e0e37df38498b4ca900ecad8e5fb722efefff176f851525a443d100ffd7d0e",
+    "assets/orca-logo.svg": "6545255de6cca93679d3419629d0fadae68432475549068e8779811c4aa21f89",
+    "artifacts/part2/_images/ch01-01-terminal-problem--cover.png": "a475eddb69a636b7e9377a9debbe54ad1bec627d808c7d633455a091b68e9a7e"
+  },
+  "asset_path_migration": {
+    "date": "2026-09-08",
+    "verified": "Reversing only these image src changes reproduces the registration HTML hash exactly; image bytes unchanged. Migration occurred concurrently outside this task.",
+    "mapping": {
+      "/artifacts/part2/_images/ch01-01-terminal-problem/cover.png": "/artifacts/part2/_images/ch01-01-terminal-problem--cover.png",
+      "/artifacts/part2/_images/ch01-01-terminal-problem/three-agents.png": "/artifacts/part2/_images/ch01-01-terminal-problem--three-agents.png"
+    }
+  },
+  "non_visual_metadata_removed": [],
+  "visual_content_unchanged_after_asset_migration": true,
+  "registration_html_sha256": "b5736be44fd1d559b40fb9103475662bf54b0aa3f360e33c2fe066b0a160ac81"
+}

@@ -3,9 +3,9 @@
 챕터: Chapter 2. Orca 설치와 첫 실행
 클립: Ch02-01. 설치 전 준비물과 환경 체크
 길이: 5분
-슬라이드: 3장
-산출물: artifacts/part2/ch02-01-setup-prep.html
-상태: 확정
+슬라이드: 4장                      # 표지 1장 + 본문 3장 (섹션 합 3 + 표지 1)
+산출물: artifacts/part2/outputs/ch02-01-setup-prep.html
+상태: 최종 확정
 유형: 참고 노트 (구성안이 아니라 원본 자료. 구성은 _storyboard/ 참조)
 ---
 

@@ -1,0 +1,1370 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Orca는 어떤 도구인가</title>
+    <!-- 허용된 외부 의존은 아래 웹폰트 2개뿐. 그 외 모든 것은 인라인/로컬 -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSans.css"
+    />
+    <style>
+      :root {
+        --bg: #0d1117;
+        --bg-card: #161b22;
+        --bg-code: #1e2430;
+        --bg-inset: #252d3a;
+        --text: #e6edf3;
+        --text-dim: #8b949e;
+        --text-muted: #484f58;
+        --brand: #fc1c49; /* 패스트캠퍼스 시그니처 레드 — 덱의 기본 강조색 */
+        --brand-rgb: 252, 28, 73;
+        --orange: #ff6d3b;
+        --yellow: #f0b429;
+        --purple: #9188ff;
+        --green: #4ade80;
+        --gray: #8b949e;
+        --border: rgba(255, 255, 255, 0.08);
+        --border-brand: rgba(var(--brand-rgb), 0.3);
+        --border-orange: rgba(255, 109, 59, 0.25);
+        --border-purple: rgba(145, 136, 255, 0.28);
+        --border-yellow: rgba(240, 180, 41, 0.28);
+        --border-green: rgba(74, 222, 128, 0.25);
+        --border-gray: rgba(139, 148, 158, 0.22);
+        --dot: rgba(255, 255, 255, 0.055);
+        --ease: 0.36s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        font-family:
+          "Pretendard",
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        font-size: clamp(13px, 1.35vw, 16px); /* 기준 덱과 동일 — 이보다 낮추지 않는다 */
+        background: var(--bg);
+        color: var(--text);
+        word-break: keep-all; /* 한국어 어절 단위 줄바꿈 */
+      }
+      body {
+        overflow: hidden;
+      }
+
+      .slide-deck {
+        position: fixed;
+        inset: 0;
+      }
+
+      .slide {
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(
+          circle,
+          var(--dot) 1px,
+          transparent 1px
+        );
+        background-size: 26px 26px;
+        background-color: var(--bg);
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        /* 좌우 여백을 키우면 본문이 좁아져 모든 게 작아 보인다. 7.5vw/7rem을 넘기지 않는다 */
+        padding: clamp(2.6rem, 5.5vh, 4.2rem) clamp(4rem, 7.5vw, 7rem);
+        gap: clamp(1.5rem, 3.75vh, 3rem);
+        overflow: hidden;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity var(--ease);
+      }
+      .slide.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      /* ── 공통 헤더 / 푸터 ─────────────────────────────────── */
+      .slide__header {
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+        padding-bottom: clamp(0.9rem, 2.2vh, 1.6rem);
+        border-bottom: 1px solid var(--border);
+      }
+      .slide__label {
+        font-size: clamp(0.58rem, 0.85vw, 0.72rem);
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--brand);
+      }
+      .slide__title {
+        font-size: clamp(2rem, 5.2vw, 3.8rem);
+        font-weight: 800;
+        line-height: 1.08;
+        letter-spacing: -0.015em;
+      }
+      .slide__title .hl {
+        color: var(--brand);
+      }
+      .slide__title .hl-orange {
+        color: var(--orange);
+      }
+      .slide__title .hl-yellow {
+        color: var(--yellow);
+      }
+      .slide__title .hl-purple {
+        color: var(--purple);
+      }
+      .slide__sub {
+        font-size: clamp(1.05rem, 1.6vw, 1.28rem);
+        font-weight: 400;
+        color: var(--text-dim);
+        line-height: 1.5;
+      }
+
+      .slide__body {
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        gap: clamp(1.2rem, 2.7vh, 2.1rem);
+        min-height: 0;
+        justify-content: center;
+      }
+      .slide__body > .grid-3 {
+        flex: 0 0 auto;
+        align-items: stretch;
+      }
+      .slide__body > .grid-2 {
+        flex: 0 0 auto;
+      }
+      .slide__body > .timeline {
+        width: 100%;
+        align-self: center;
+      }
+
+      .slide__footer {
+        border-top: 1px solid var(--border);
+        padding-top: clamp(0.5rem, 1.3vh, 0.9rem);
+        display: flex;
+        align-items: center;
+        font-size: clamp(0.58rem, 0.85vw, 0.7rem);
+        font-weight: 400;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+      /* 모든 슬라이드 푸터는 패스트캠퍼스 로고 하나다 — 텍스트를 넣지 않는다 */
+      .fastcampus-logo {
+        display: block;
+        width: clamp(7.2rem, 9vw, 8.5rem);
+        height: auto;
+      }
+
+      /* ══════════════════════════════════════════════════════════
+         시각 장치 — 기준 덱(hermes-bot · orca-competition-pattern)에서 가져온 것.
+         **거의 모든 슬라이드에 이 중 하나가 들어가야 한다.** 기준 덱은 12장 중
+         11장에 이미지나 SVG가 있다. 글자만 있는 장을 연속으로 두지 않는다.
+      ══════════════════════════════════════════════════════════ */
+
+      /* 큰 설명 이미지 — 본문 높이를 실제로 쓴다. 작게 넣지 않는다 */
+      .illustration-frame {
+        width: min(48rem, 100%);
+        align-self: center;
+        overflow: hidden;
+        border: 1px solid var(--border-brand);
+        border-radius: 10px;
+        background: rgba(var(--brand-rgb), 0.035);
+      }
+      .illustration-frame img {
+        display: block;
+        width: 100%;
+        height: clamp(15rem, 38vh, 22rem);
+        object-fit: cover;
+        object-position: center;
+      }
+      /* 여백이 이미 있는 그림(로고·다이어그램)은 잘라내지 않고 담는다 */
+      .illustration-frame--contain {
+        width: auto;
+        border-color: var(--border-gray);
+        background: rgba(139, 148, 158, 0.05);
+      }
+      .illustration-frame--contain img {
+        width: auto;
+        max-width: 100%;
+        object-fit: contain;
+      }
+
+      /* 이미지가 남는 본문 높이를 전부 먹는 변형 — 그림이 주인공인 장 */
+      .slide--visual .slide__body {
+        justify-content: stretch;
+        gap: 0;
+      }
+      .slide--visual .illustration-frame {
+        flex: 1 1 auto;
+        min-height: 0;
+      }
+      .slide--visual .illustration-frame img {
+        width: 100%;
+        height: 100%;
+      }
+      .slide--visual .statement {
+        margin-top: clamp(1.25rem, 2.8vh, 2rem);
+      }
+
+      /* 이미지 주도 표지 — 이미지가 본문 전체를 채우고 글자를 그 위에 얹는다.
+         이미지 안에 네거티브 스페이스가 있으면 별도 텍스트 열을 만들지 않는다 */
+      .cover-hero {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        align-self: center;
+        overflow: hidden;
+        border: 1px solid var(--border-brand);
+        border-radius: 12px;
+        background: rgba(var(--brand-rgb), 0.04);
+        box-shadow: 0 1.6rem 4.5rem rgba(0, 0, 0, 0.34);
+      }
+      .cover-hero img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .cover-hero__copy {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: clamp(0.6rem, 1.4vh, 1rem);
+        padding: clamp(1.6rem, 4vw, 3.4rem);
+      }
+
+      /* SVG 커넥터 — 분기·합류선을 손으로 CSS 계산하지 말고 이걸 쓴다.
+         non-scaling-stroke라 폭이 변해도 선 두께가 유지된다 */
+      .svg-connectors {
+        display: block;
+        width: 78%;
+        height: clamp(2.5rem, 5.5vh, 3.6rem);
+        overflow: visible;
+        align-self: center;
+      }
+      .svg-connectors path {
+        fill: none;
+        stroke: var(--border-brand);
+        stroke-width: 1.8;
+        vector-effect: non-scaling-stroke;
+      }
+      .svg-connectors--gray path { stroke: var(--border-gray); }
+      .svg-connectors--orange path { stroke: var(--border-orange); }
+
+      /* 로고 — 제품을 가르치는 덱이라 로고가 자주 나온다. 작게 넣지 않는다 */
+      .logo {
+        width: clamp(4.5rem, 7vw, 6.3rem);
+        height: clamp(4.5rem, 7vw, 6.3rem);
+        object-fit: contain;
+      }
+      .logo--small {
+        width: clamp(2.8rem, 4vw, 3.7rem);
+        height: clamp(2.8rem, 4vw, 3.7rem);
+      }
+      .logo--wide {
+        width: clamp(8rem, 14vw, 12rem);
+        height: clamp(5rem, 9vw, 7.5rem);
+      }
+
+      /* 로고·그림을 담는 카드. min-height로 높이를 먼저 확보한다 */
+      .media-card {
+        min-width: 0;
+        min-height: clamp(9rem, 20vh, 12.5rem);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: clamp(0.5rem, 1.2vh, 0.85rem);
+        padding: clamp(1.1rem, 2.2vw, 1.7rem);
+        border: 1.5px solid var(--border);
+        border-radius: 10px;
+        background: var(--bg-card);
+        text-align: center;
+      }
+      .media-card--brand  { border-color: var(--border-brand);  background: rgba(var(--brand-rgb), 0.05); }
+      .media-card--purple { border-color: var(--border-purple); background: rgba(145, 136, 255, 0.05); }
+      .media-card--yellow { border-color: var(--border-yellow); background: rgba(240, 180, 41, 0.05); }
+      .media-card--green  { border-color: var(--border-green);  background: rgba(74, 222, 128, 0.05); }
+      .media-card--gray   { border-color: var(--border-gray);   background: rgba(139, 148, 158, 0.05); }
+      .media-card--tall   { min-height: clamp(14rem, 32vh, 18rem); }
+
+      /* 큰 본문 타이포 — 기준 덱은 본문도 1.4rem까지 간다. 작게 쓰지 않는다 */
+      .name {
+        font-size: clamp(1.35rem, 2.1vw, 1.85rem);
+        font-weight: 800;
+        line-height: 1.16;
+      }
+      .body-copy {
+        color: var(--text-dim);
+        font-size: clamp(1.16rem, 1.75vw, 1.42rem);
+        line-height: 1.45;
+      }
+      .file-name {
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(1rem, 1.55vw, 1.25rem);
+        font-weight: 700;
+        color: var(--text);
+      }
+      .statement {
+        align-self: center;
+        font-size: clamp(1.3rem, 2vw, 1.65rem);
+        font-weight: 800;
+        color: var(--text);
+        text-align: center;
+        line-height: 1.4;
+      }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        align-self: center;
+        gap: 0.5rem;
+        padding: clamp(0.48rem, 0.9vh, 0.7rem) clamp(1rem, 1.7vw, 1.45rem);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(0.8rem, 1.15vw, 0.98rem);
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        color: var(--text-dim);
+      }
+      .badge--brand  { color: var(--brand);  border-color: var(--border-brand);  background: rgba(var(--brand-rgb), 0.08); }
+      .badge--orange { color: var(--orange); border-color: var(--border-orange); background: rgba(255, 109, 59, 0.08); }
+      .badge--green  { color: var(--green);  border-color: var(--border-green);  background: rgba(74, 222, 128, 0.08); }
+
+      /* ── 공통 타이포 ──────────────────────────────────────── */
+      .display {
+        font-family: "GmarketSans", "Pretendard", sans-serif;
+        font-size: clamp(2.8rem, 7vw, 5.5rem);
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: -0.03em;
+      }
+      .caption {
+        font-size: clamp(0.9rem, 1.45vw, 1.15rem);
+        line-height: 1.5;
+        color: var(--text-dim);
+      }
+      .kw-brand {
+        color: var(--brand);
+      }
+      .kw-orange {
+        color: var(--orange);
+        font-weight: 600;
+      }
+      .kw-yellow {
+        color: var(--yellow);
+        font-weight: 600;
+      }
+      .kw-purple {
+        color: var(--purple);
+      }
+
+      code {
+        font-family: "Monaco", "Menlo", "Consolas", monospace;
+        font-size: 0.85em;
+        background: rgba(var(--brand-rgb), 0.1);
+        color: var(--brand);
+        padding: 2px 6px;
+        border-radius: 3px;
+      }
+
+      /* ── 불릿 리스트 (✓/✕) ───────────────────────────────── */
+      .bullet-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+      }
+      .bullet-list li {
+        display: flex;
+        align-items: baseline;
+        gap: 0.9rem;
+        font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+        line-height: 1.55;
+      }
+      .bullet-list li.no::before {
+        content: "✕";
+        color: var(--orange);
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+      .bullet-list li.ok::before {
+        content: "✓";
+        color: var(--green);
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+      .bullet-list li.no {
+        color: var(--text-dim);
+      }
+
+      /* ── tip: 슬라이드 하단 한 줄 정리 ────────────────────── */
+      .tip {
+        background: rgba(var(--brand-rgb), 0.05);
+        border: 1px solid rgba(var(--brand-rgb), 0.18);
+        border-radius: 3px;
+        padding: 0.975rem 1.5rem;
+        font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+        color: var(--text-dim);
+        line-height: 1.6;
+      }
+      .tip::before {
+        content: "→  ";
+        color: var(--brand);
+        font-weight: 700;
+      }
+      .tip--yellow {
+        background: rgba(240, 180, 41, 0.05);
+        border-color: rgba(240, 180, 41, 0.22);
+      }
+      .tip--yellow::before {
+        color: var(--yellow);
+      }
+
+      /* ── TEXT(표지) — cover ───────────────────────────────── */
+      .cover-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: clamp(1.1rem, 2.6vh, 2rem);
+      }
+      .cover-emoji {
+        font-size: clamp(3.6rem, 9vw, 7rem);
+        line-height: 1;
+      }
+      .cover-stmt {
+        font-family: "GmarketSans", "Pretendard", sans-serif;
+        font-size: clamp(2.4rem, 4.5vw, 3.9rem);
+        font-weight: 900;
+        line-height: 1.3;
+        letter-spacing: -0.025em;
+      }
+      .cover-axis {
+        display: flex;
+        align-items: center;
+        gap: clamp(0.6rem, 1.4vw, 1.1rem);
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(0.7rem, 1.1vw, 0.9rem);
+        letter-spacing: 0.1em;
+        color: var(--text-muted);
+        text-transform: uppercase;
+      }
+      .cover-axis b {
+        color: var(--brand);
+        font-weight: 700;
+      }
+
+      /* ── CARD_GRID — grid-3 + col-card ────────────────────── */
+      .grid-3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: clamp(1.2rem, 3vw, 2.1rem);
+      }
+      .col-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: clamp(1.5rem, 2.7vw, 2.25rem);
+        display: flex;
+        flex-direction: column;
+        gap: 1.1rem;
+      }
+      .col-card__title-row {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+      }
+      .col-card__emoji {
+        font-size: clamp(1.5rem, 2.4vw, 2rem);
+        line-height: 1;
+        flex-shrink: 0;
+      }
+      .col-card__title {
+        font-size: clamp(1.4rem, 2.8vw, 2rem);
+        font-weight: 700;
+        line-height: 1.2;
+        letter-spacing: -0.01em;
+      }
+      .col-card__body {
+        font-size: clamp(0.88rem, 1.35vw, 1.08rem);
+        line-height: 1.55;
+        color: var(--text-dim);
+      }
+      .col-card--brand {
+        border-color: var(--border-brand) !important;
+        background: rgba(var(--brand-rgb), 0.05);
+      }
+      .col-card--orange {
+        border-color: var(--border-orange) !important;
+        background: rgba(255, 109, 59, 0.05);
+      }
+      .col-card--purple {
+        border-color: var(--border-purple) !important;
+        background: rgba(145, 136, 255, 0.05);
+      }
+      .col-card--gray {
+        border-color: var(--border-gray) !important;
+        background: rgba(139, 148, 158, 0.05);
+      }
+      /* 변형: 카드 6장(3열 2행)일 때 — grid-3에 함께 붙인다 */
+      .grid-3--tight {
+        gap: clamp(0.9rem, 1.8vw, 1.5rem);
+      }
+      .grid-3--tight .col-card {
+        padding: clamp(1rem, 1.9vw, 1.5rem);
+        gap: 0.7rem;
+      }
+      .grid-3--tight .col-card__title {
+        font-size: clamp(1.1rem, 2vw, 1.5rem);
+        font-family: "Monaco", "Menlo", monospace;
+        letter-spacing: -0.01em;
+      }
+      .grid-3--tight .col-card__emoji {
+        font-size: clamp(1.2rem, 2vw, 1.6rem);
+      }
+      /* 변형: 설명이 긴 카드 6장 — 높이·패딩·타이포를 줄이지 않는다 */
+      .grid-3--spacious {
+        min-height: clamp(24rem, 52vh, 30rem);
+        gap: clamp(1rem, 2vw, 1.6rem);
+      }
+      .grid-3--spacious .col-card {
+        justify-content: center;
+        padding: clamp(1.35rem, 2.2vw, 1.85rem);
+        gap: clamp(0.85rem, 1.7vh, 1.15rem);
+      }
+      .grid-3--spacious .col-card__title {
+        font-size: clamp(1.2rem, 1.85vw, 1.55rem);
+      }
+      .grid-3--spacious .col-card__body {
+        font-size: clamp(0.96rem, 1.3vw, 1.1rem);
+        line-height: 1.55;
+      }
+      /* 변형: 카드 상단 정체 배지 (역할·소속 구분) */
+      .role-badge {
+        align-self: flex-start;
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(0.66rem, 1vw, 0.8rem);
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        padding: 0.32rem 0.7rem;
+        border-radius: 3px;
+        border: 1px solid var(--border);
+      }
+      .role-badge--brand {
+        color: var(--brand);
+        border-color: var(--border-brand);
+        background: rgba(var(--brand-rgb), 0.08);
+      }
+      .role-badge--purple {
+        color: var(--purple);
+        border-color: var(--border-purple);
+        background: rgba(145, 136, 255, 0.08);
+      }
+      .role-badge--gray {
+        color: var(--gray);
+        border-color: var(--border-gray);
+        background: rgba(139, 148, 158, 0.08);
+      }
+      .role-sub {
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(0.7rem, 1.05vw, 0.85rem);
+        color: var(--text-muted);
+        letter-spacing: 0.03em;
+      }
+
+      /* ── 좌우 2분할 — grid-2 · vs-grid(대비 비교) ─────────── */
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1.05fr 1fr;
+        gap: clamp(1.5rem, 3.5vw, 2.8rem);
+        align-items: center;
+      }
+      .vs-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: clamp(1.2rem, 3vw, 2.4rem);
+        width: 100%;
+      }
+      .vs-col {
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: clamp(1.2rem, 2.4vw, 2rem);
+        display: flex;
+        flex-direction: column;
+        gap: clamp(0.8rem, 1.8vh, 1.3rem);
+      }
+      .vs-col--blocked {
+        border-color: var(--border-orange);
+        background: rgba(255, 109, 59, 0.04);
+      }
+      .vs-col--pass {
+        border-color: var(--border-brand);
+        background: rgba(var(--brand-rgb), 0.05);
+      }
+      .vs-badge {
+        align-self: flex-start;
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(0.64rem, 1vw, 0.78rem);
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 0.3rem 0.65rem;
+        border-radius: 3px;
+        border: 1px solid var(--border);
+      }
+      .vs-badge--blocked {
+        color: var(--orange);
+        border-color: var(--border-orange);
+        background: rgba(255, 109, 59, 0.08);
+      }
+      .vs-badge--pass {
+        color: var(--brand);
+        border-color: var(--border-brand);
+        background: rgba(var(--brand-rgb), 0.08);
+      }
+      .vs-headline {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        font-size: clamp(1.35rem, 2.7vw, 2.1rem);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.015em;
+      }
+      .vs-headline span {
+        font-size: clamp(1.5rem, 2.7vw, 2.1rem);
+        line-height: 1;
+        flex-shrink: 0;
+      }
+      .vs-col--blocked .vs-headline {
+        color: var(--orange);
+      }
+      .vs-col--pass .vs-headline {
+        color: var(--brand);
+      }
+
+      /* ── LIST — 번호 원 + 제목 + 부연 나열 (카드 박스 없음) ── */
+      .list {
+        display: flex;
+        flex-direction: column;
+        gap: clamp(2.4rem, 7vh, 5.5rem);
+        align-self: center;
+        width: min(52rem, 100%);
+      }
+      .list-item {
+        display: flex;
+        align-items: flex-start;
+        gap: clamp(1rem, 2vw, 1.6rem);
+      }
+      .list-item.num {
+        align-items: center;
+      }
+      .list-num {
+        width: clamp(3.2rem, 5.5vw, 4.6rem);
+        height: clamp(3.2rem, 5.5vw, 4.6rem);
+        flex-shrink: 0;
+        border-radius: 50%;
+        border: 1.5px solid var(--text);
+        background: var(--bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(1.1rem, 1.9vw, 1.5rem);
+        font-weight: 700;
+        color: var(--text);
+      }
+      /* 변형: 번호 대신 점 마커 (순서 없는 나열) */
+      .list-dot {
+        width: clamp(0.75rem, 1.1vw, 0.95rem);
+        height: clamp(0.75rem, 1.1vw, 0.95rem);
+        margin-top: 0.55em;
+        border-radius: 50%;
+        background: var(--text);
+        flex-shrink: 0;
+      }
+      .list-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: clamp(0.3rem, 0.8vh, 0.55rem);
+      }
+      .list-title {
+        font-size: clamp(1.3rem, 2.5vw, 1.95rem);
+        font-weight: 700;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
+      }
+      .list-sub {
+        font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+        color: var(--text-dim);
+        line-height: 1.45;
+      }
+
+      /* ── ICON_ROW — timeline (가로 파이프라인) ────────────── */
+      .timeline {
+        display: grid;
+        /* 카드 5장 기준. 카드 수가 다르면 timeline--4 처럼 columns를 맞춘다 */
+        grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr auto 1fr;
+        gap: 0;
+        align-items: stretch;
+      }
+      .timeline--4 {
+        grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+      }
+      .timeline--3 {
+        grid-template-columns: 1fr auto 1fr auto 1fr;
+      }
+      .timeline-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: clamp(1rem, 1.9vw, 1.6rem) clamp(0.6rem, 1.2vw, 1rem);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: clamp(0.6rem, 1.5vh, 1.1rem);
+        text-align: center;
+        justify-content: flex-start;
+      }
+      .timeline-card--plain {
+        border-color: var(--border);
+      }
+      .timeline-card--gray {
+        border-color: var(--border-gray);
+        background: rgba(139, 148, 158, 0.06);
+      }
+      .timeline-card--brand {
+        border-color: var(--border-brand);
+        background: rgba(var(--brand-rgb), 0.07);
+      }
+      .timeline-card--purple {
+        border-color: var(--border-purple);
+        background: rgba(145, 136, 255, 0.07);
+      }
+      .timeline-card--yellow {
+        border-color: var(--border-yellow);
+        background: rgba(240, 180, 41, 0.08);
+      }
+      .timeline-card--orange {
+        border-color: var(--border-orange);
+        background: rgba(255, 109, 59, 0.08);
+      }
+      .timeline-card--green {
+        border-color: var(--border-green);
+        background: rgba(74, 222, 128, 0.08);
+      }
+      .timeline-card__step {
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: clamp(0.62rem, 0.95vw, 0.8rem);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        padding: 0.3rem 0.7rem;
+        border-radius: 3px;
+        background: rgba(255, 255, 255, 0.04);
+      }
+      .step--gray {
+        color: var(--gray);
+      }
+      .step--brand {
+        color: var(--brand);
+      }
+      .step--purple {
+        color: var(--purple);
+      }
+      .step--yellow {
+        color: var(--yellow);
+      }
+      .step--orange {
+        color: var(--orange);
+      }
+      .step--green {
+        color: var(--green);
+      }
+      .step--muted {
+        color: var(--text-dim);
+      }
+      .timeline-emoji-wrap {
+        width: clamp(4.2rem, 8.5vw, 7rem);
+        height: clamp(4.2rem, 8.5vw, 7rem);
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1.5px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .timeline-emoji-wrap span {
+        font-size: clamp(1.9rem, 4vw, 3.2rem);
+        line-height: 1;
+      }
+      .timeline-card__title {
+        font-size: clamp(1.15rem, 2.1vw, 1.7rem);
+        font-weight: 700;
+        line-height: 1.2;
+      }
+      .timeline-card__body {
+        font-size: clamp(0.82rem, 1.25vw, 1.02rem);
+        line-height: 1.5;
+        color: var(--text-dim);
+      }
+      .timeline-arrow {
+        position: relative;
+        flex-shrink: 0;
+        width: clamp(1.4rem, 2.6vw, 2.4rem);
+        height: clamp(1rem, 2vh, 1.5rem);
+        align-self: center;
+      }
+      .timeline-arrow::before {
+        content: "";
+        position: absolute;
+        left: 10%;
+        right: 28%;
+        top: 50%;
+        height: 2px;
+        background: var(--border-purple);
+        transform: translateY(-50%);
+      }
+      .timeline-arrow::after {
+        content: "";
+        position: absolute;
+        right: 10%;
+        top: 50%;
+        border-top: 0.36rem solid transparent;
+        border-bottom: 0.36rem solid transparent;
+        border-left: 0.5rem solid var(--purple);
+        transform: translateY(-50%);
+      }
+      .flow-quote {
+        color: var(--text);
+        font-style: normal;
+      }
+
+      /* ── TREE — fan (부모 1 → 자식 여럿) ──────────────────── */
+      .fan {
+        --fan-gap: clamp(1.5rem, 4vw, 3rem);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: min(58rem, 100%);
+        align-self: center;
+      }
+      .fan-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: clamp(1rem, 2vw, 1.6rem) clamp(1.2rem, 2.4vw, 2rem);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        text-align: center;
+      }
+      .fan-card--brand {
+        border-color: var(--border-brand);
+        background: rgba(var(--brand-rgb), 0.06);
+      }
+      .fan-card--purple {
+        border-color: var(--border-purple);
+        background: rgba(145, 136, 255, 0.06);
+      }
+      .fan-card--orange {
+        border-color: var(--border-orange);
+        background: rgba(255, 109, 59, 0.06);
+      }
+      .fan-card__emoji {
+        font-size: clamp(1.8rem, 3.4vw, 2.8rem);
+        line-height: 1;
+      }
+      .fan-card__title {
+        font-size: clamp(1.2rem, 2.2vw, 1.75rem);
+        font-weight: 700;
+        line-height: 1.2;
+      }
+      .fan-card__body {
+        font-size: clamp(0.85rem, 1.3vw, 1.05rem);
+        color: var(--text-dim);
+        line-height: 1.5;
+      }
+      .fan-root {
+        width: clamp(14rem, 26vw, 20rem);
+      }
+      .fan-stem {
+        width: 2px;
+        height: clamp(1.4rem, 3vh, 2.4rem);
+        background: var(--border-brand);
+      }
+      .fan-bar-wrap {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+      .fan-bar {
+        position: relative;
+        /* 자식 카드의 중심과 세로선을 맞춘다 (열 중심 간격 = 50% + gap/2) */
+        width: calc(50% + var(--fan-gap) / 2);
+        height: 2px;
+        background: var(--border-brand);
+      }
+      .fan-bar::before,
+      .fan-bar::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        width: 2px;
+        height: clamp(1.4rem, 3vh, 2.4rem);
+        background: var(--border-brand);
+      }
+      .fan-bar::before {
+        left: 0;
+      }
+      .fan-bar::after {
+        right: 0;
+      }
+      .fan-kids {
+        margin-top: clamp(1.4rem, 3vh, 2.4rem);
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--fan-gap);
+      }
+
+      /* ── METRIC — 대형 수치 (소스에 실제 수치가 있을 때만) ── */
+      .metric-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: clamp(1.2rem, 3vw, 2.4rem);
+      }
+      .metric {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: clamp(0.55rem, 1.3vh, 0.95rem);
+        padding: clamp(1.6rem, 3.4vh, 2.6rem) clamp(1rem, 2vw, 1.6rem);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        background: var(--bg-card);
+      }
+      .metric--star {
+        border-color: var(--border-yellow);
+        background: rgba(240, 180, 41, 0.06);
+      }
+      .metric__icon {
+        font-size: clamp(1.6rem, 3vw, 2.4rem);
+        line-height: 1;
+        margin-bottom: clamp(0.3rem, 0.9vh, 0.7rem);
+      }
+      .metric__num {
+        font-family: "GmarketSans", "Pretendard", sans-serif;
+        font-size: clamp(2.6rem, 6.5vw, 5rem);
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: -0.03em;
+      }
+      .metric--star .metric__num {
+        color: var(--yellow);
+      }
+      .metric__cap {
+        font-size: clamp(0.8rem, 1.2vw, 1rem);
+        color: var(--text-dim);
+      }
+
+      /* ── Navigation ───────────────────────────────────────── */
+      .progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        z-index: 200;
+        background: rgba(255, 255, 255, 0.04);
+        user-select: none;
+      }
+      .progress-fill {
+        height: 100%;
+        background: var(--brand);
+        transition: width 0.3s ease-out;
+      }
+      .nav-btn {
+        position: fixed;
+        top: 50%;
+        z-index: 150;
+        transform: translateY(-50%);
+        user-select: none;
+        width: clamp(1.9rem, 2.8vw, 2.5rem);
+        height: clamp(1.9rem, 2.8vw, 2.5rem);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 3px;
+        color: var(--text-muted);
+        font-size: 0.8rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+      }
+      .nav-btn:hover:not(:disabled) {
+        background: rgba(255, 255, 255, 0.08);
+        color: var(--text);
+      }
+      .nav-btn:disabled {
+        opacity: 0.08;
+        cursor: not-allowed;
+      }
+      #btn-prev {
+        left: clamp(0.4rem, 1.2vw, 1.1rem);
+      }
+      #btn-next {
+        right: clamp(0.4rem, 1.2vw, 1.1rem);
+      }
+      .dot-nav {
+        position: fixed;
+        bottom: 1.3rem;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 150;
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        user-select: none;
+      }
+      .dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.18);
+        cursor: pointer;
+        border: none;
+        transition: all 0.22s ease;
+      }
+      .dot.active {
+        width: 22px;
+        border-radius: 3px;
+        background: var(--brand);
+      }
+      .slide-counter {
+        position: fixed;
+        bottom: 1.2rem;
+        right: 1.8rem;
+        z-index: 150;
+        font-family: "Monaco", monospace;
+        font-size: 0.62em;
+        color: var(--text-muted);
+        letter-spacing: 0.07em;
+        user-select: none;
+      }
+
+      /* ── Animations ───────────────────────────────────────── */
+      @keyframes s-fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .anim-item {
+        opacity: 0;
+      }
+      .anim-item.do-fadeinup {
+        animation: s-fadeInUp 0.48s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      }
+    
+/* Semantic diagrams only; base-template owns slide geometry, tokens and common grids/cards. */
+.media-card .name{color:var(--text);font-size:clamp(1.45rem,2.25vw,2.15rem);line-height:1.3}
+.media-card .body-copy{color:var(--text-dim)}
+.media-card--orange{border-color:var(--border-orange);background:rgba(255,109,59,.04)}
+.diagram{width:100%;height:clamp(8rem,19vh,13rem);flex:none;overflow:visible}
+.eyebrow{font-family:Monaco,Pretendard,sans-serif;font-size:1.02rem;line-height:1.5;align-self:flex-start}
+.micro{font-size:1.13rem;color:var(--accent,var(--text-dim));line-height:1.4}
+.diagram-caption{text-align:center;color:var(--text-dim);font-size:1.5rem;line-height:1.5}
+.scene{position:relative;width:100%;height:100%;min-height:38vh;overflow:hidden;border-radius:10px;background:#07090c}
+.scene__image{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:right center;mask-image:linear-gradient(to right,transparent 32%,black 57%)}
+.scene__copy{position:absolute;left:3.5%;top:0;bottom:0;width:41%;display:flex;flex-direction:column;justify-content:center;gap:2rem;z-index:1}
+.hero-statement{font-family:GmarketSans,Pretendard,sans-serif;font-size:clamp(2rem,3.1vw,3.2rem);font-weight:700;line-height:1.5;letter-spacing:-.04em}
+.hero-statement strong{color:var(--brand);font-weight:700}
+.hero-note{font-size:clamp(1.2rem,1.65vw,1.55rem);line-height:1.55;color:var(--text-dim);max-width:21em}
+.hero-point{font-size:clamp(1.5rem,2.3vw,2.4rem);font-weight:750;line-height:1.5;display:flex;gap:1.1rem;align-items:baseline}
+.hero-number{font-family:Monaco,monospace;font-size:.52em;color:var(--brand)}
+.cause-list{display:flex;flex-direction:column;gap:1rem}
+.cause-row{display:grid;grid-template-columns:3.5rem 30% 4rem 1fr;align-items:center;gap:1.5rem;border-bottom:1px solid var(--border);padding:1rem 0}
+.cause-number{font-family:Monaco,monospace;font-size:1.8rem;color:var(--orange)}
+.cause-phenomenon{display:flex;align-items:center;gap:1rem}.cause-phenomenon .diagram{width:8rem;height:5.3rem;color:var(--orange)}
+.cause-row .name{font-size:1.55rem}.cause-row .body-copy{margin-top:.55rem}
+.cause-arrow{color:var(--orange);font-size:2.5rem;text-align:center}
+.terminal{border:1.5px solid var(--accent);border-radius:10px;background:var(--bg-card);min-width:0;overflow:hidden}
+.terminal__bar{border-bottom:1px solid var(--border);padding:1rem;font-size:1.2rem;color:var(--text);display:flex;gap:1.5rem;align-items:center}
+.terminal__bar span{font-size:.6rem;color:var(--accent);letter-spacing:.25em}
+.terminal__screen{position:relative;padding:1.3rem;color:var(--accent)}.terminal__art{width:100%;height:9rem}
+.window-evolution{display:grid;grid-template-columns:1fr 6rem 1.2fr;align-items:center;gap:2rem}.window-evolution .diagram-caption{margin-top:1.8rem}.big-arrow{text-align:center;font-size:4rem;color:var(--gray)}
+.window-stack{display:flex;flex-direction:column;gap:1rem}.window-stack .terminal__screen{padding:.3rem 1.3rem}.window-stack .terminal__art{height:4.2rem}.window-stack .terminal__bar{padding:.65rem 1rem}.window-stack .terminal:nth-child(2){margin-left:1.5rem}.window-stack .terminal:nth-child(3){margin-left:3rem}
+.question{position:absolute;right:10%;top:20%;background:var(--bg-card);font-size:3.8rem;color:var(--yellow);padding:0 .5rem}
+.inspection-route{position:relative;color:var(--yellow);height:4rem}.inspection-route svg{width:100%;height:3rem}.route-label{position:absolute;left:40%;top:0;background:var(--bg);padding:0 2rem;font-size:1.4rem}
+.person-memory{display:flex;align-items:center;justify-content:center;gap:2rem}.person-memory .diagram{width:8rem;height:6rem}.person-memory .name{font-size:2.3rem}.statement{font-size:2rem;line-height:1.4}
+.handoff-map .media-card{min-height:22vh}.handoff-map .diagram{height:12vh}.handoff-map .person-memory .diagram{height:6rem}.fan-lines{display:block;width:100%;height:6.5vh;flex:none}
+.environment{border:1.5px solid var(--border-gray);border-radius:12px;padding:clamp(1.3rem,2.5vw,2.5rem);background:rgba(139,148,158,.025)}
+.environment__label{display:flex;gap:1.2rem;align-items:center;margin-bottom:1.8rem}.environment__label .name{font-size:2rem}.inline-logo{width:3.4rem;height:3.4rem;object-fit:contain;flex:none}.agent-logo{width:5.5rem;height:5.5rem;object-fit:contain}.environment .agent-logo{margin:1.5rem 0}
+.steps{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;font-size:1.2rem;color:var(--text-dim);line-height:1.5}.step-arrow{color:var(--accent)}
+.layer-model{max-width:70rem;width:100%;align-self:center}.orchestration-band{border:1px solid var(--border-yellow);background:rgba(240,180,41,.035);border-radius:10px;padding:1.2rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:2rem}.orchestration-band .name{color:var(--yellow);margin-bottom:.5rem}.orchestration-band .diagram{width:13rem;height:7rem;color:var(--yellow)}.layer-link{text-align:center;color:var(--yellow);font-size:2rem;line-height:1.7}.actor-line{display:flex;align-items:center;justify-content:center;gap:2rem}.actor-line .body-copy{margin-top:.5rem}.layer-model .environment__label{margin-bottom:0}
+.pattern-grid{grid-template-rows:1fr 1fr;gap:1.2rem;flex:1!important;min-height:0}.pattern-card{display:grid;grid-template-columns:32% 1fr;text-align:left;gap:1.6rem;padding:1.7rem;min-height:0}.pattern-card .diagram{height:8.5rem}.pattern-card .name{margin-bottom:.85rem}.pattern-card .body-copy{font-size:1.3rem}
+.version-list{display:flex;flex-direction:column;gap:1rem;width:100%;max-width:75rem;align-self:center}.version-file{display:flex;align-items:center;gap:1.4rem;border:1px solid var(--border-orange);background:rgba(255,109,59,.025);padding:1rem 1.6rem;border-radius:6px;color:var(--orange)}.version-file svg{width:2.4rem;height:2.8rem;flex:none}.version-filename{font-size:clamp(1.2rem,1.9vw,1.9rem);color:var(--text);font-weight:600;white-space:nowrap}.version-unknown{margin-left:auto;color:var(--orange);font-size:1.8rem;padding-left:1rem}
+.worktree-diagram{width:100%;display:flex;flex-direction:column}.root-node{display:flex;justify-content:center;align-items:center;gap:1.2rem;color:var(--gray)}.root-node .diagram{width:7rem;height:5rem}.root-node .name{font-size:1.7rem}.folder-node{padding:1rem;min-height:0}.folder-node .diagram{height:14vh}.folder-node .name{font-size:1.5rem}.worktree-diagram .diagram-caption{margin-top:1.4rem}
+.repository-boundary{position:relative;border:2px solid var(--border-gray);border-radius:0 18px 18px 18px;padding:2rem 2.4rem;margin-top:2.8rem}.repository-tab{position:absolute;top:-2.8rem;left:-2px;border:2px solid var(--border-gray);border-bottom:0;border-radius:12px 12px 0 0;padding:.6rem 1.7rem;height:2.8rem;background:var(--bg-card);font-family:Monaco,monospace;font-size:1rem;color:var(--gray)}.repository-heading{font-size:2rem;margin-bottom:1.5rem}.repository-boundary .media-card{border:0}
+.remote-flow{display:grid;grid-template-columns:1fr 11rem 1fr;align-items:center;gap:1rem}.remote-flow .media-card{min-height:38vh}.transfer{display:flex;flex-direction:column;gap:2.2rem;text-align:center}.transfer svg{width:100%;height:2.5rem}.transfer .body-copy{font-size:1.4rem}
+.area-model{padding:1.5rem}.area-model .grid-3{gap:1.2rem}.area-model .media-card{padding:1.2rem;justify-content:flex-start}.area-model .diagram{height:12vh}.area-english{font-family:Monaco,monospace;font-size:1.3rem;min-height:3.2rem;display:flex;align-items:center;justify-content:center;line-height:1.3}.area-verb{font-size:2.1rem;font-weight:800;margin:.7rem 0 .3rem}.area-model .body-copy{font-size:1.2rem}.area-model .name{font-size:1.6rem}
+.command-flow{display:grid;grid-template-columns:1fr .75fr 1fr .75fr 1fr .75fr 1fr;align-items:center;gap:.3rem}.command-node{text-align:center}.command-node .diagram{height:20vh}.command-node .name{font-size:1.3rem;color:var(--text)}.command-arrow{text-align:center;color:var(--brand)}.command-arrow svg{width:100%;height:3rem}.command-arrow code{white-space:nowrap;font-size:1.12rem;background:none;padding:0}.command-arrow .body-copy{font-size:1.1rem}.pull-flow{align-self:flex-end;display:flex;align-items:center;gap:1.8rem;padding:1.2rem 2rem;margin-top:2rem;border-top:1px solid var(--border);width:100%;color:var(--gray)}.pull-flow code{font-size:1.2rem;color:var(--gray);background:rgba(139,148,158,.08)}.pull-flow span{font-size:2rem}.pull-flow span:first-child{margin-right:auto}.pull-flow span:last-child{margin-left:auto}
+.commit-record{display:grid;grid-template-columns:36% 1fr;border:1px solid var(--border-gray);border-radius:10px;overflow:hidden}.commit-record__spine{background:var(--bg-card);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:2rem;color:var(--brand)}.commit-record__spine .diagram{height:12rem}.commit-record__spine .display{font-size:3rem}.commit-record__fields{padding:2rem 3rem;display:flex;flex-direction:column;gap:1.7rem}.commit-record__fields>div{display:flex;align-items:center;gap:1.5rem}.commit-record__fields svg{width:2rem;height:2.3rem;color:var(--gray)}.commit-record__fields .name{font-size:1.65rem}
+.branch-board{position:relative;width:100%;height:100%;min-height:38vh}.branch-art{position:absolute;width:100%;height:100%}.branch-label{position:absolute;left:54%;font-size:1.8rem;font-weight:700;background:var(--bg);padding:.2rem .8rem}.branch-label.original{top:20%;color:var(--brand)}.branch-label.separate{top:85%;color:var(--purple)}.branch-term{position:absolute;top:5%;left:6%;font-size:2.4rem;font-weight:800}.branch-term span{font-family:Monaco,monospace;font-size:1.2rem;color:var(--gray);margin-left:.6rem}.branch-mark{position:absolute;font-size:1.3rem;color:var(--gray);top:52%;background:var(--bg);padding:.2rem .5rem}.branch-mark.split{left:27%}.branch-mark.merge{left:78%;color:var(--green)}
+.comparison-art{width:100%;height:28vh}.comparison-conclusion{font-size:1.45rem;font-weight:700;color:var(--accent)}
+.orca-creation{display:flex;align-items:center;justify-content:center;gap:1.5rem}.orca-creation span{font-size:2rem;color:var(--gray)}
+@media(prefers-reduced-motion:reduce){.slide{transition:none}.anim-item{animation-duration:1ms!important}}
+
+.area-model .grid-3{position:relative}.area-model .grid-3::before,.area-model .grid-3::after{content:"→";position:absolute;top:48%;color:var(--gray);font-size:1.25rem;z-index:2;transform:translateX(-50%)}.area-model .grid-3::before{left:calc((100% - 2.4rem)/3 + .6rem)}.area-model .grid-3::after{left:calc((100% - 2.4rem)*2/3 + 1.8rem)}
+
+/* Preserve the complete human + three-terminal composition. */
+.scene:has(img[src*="three-terminals"]) .scene__image{left:35%;width:65%;mask-image:none;object-position:center}
+.scene:has(img[src*="three-terminals"]) .scene__copy{width:29%;left:3%}
+.scene:has(img[src*="three-terminals"]) .hero-statement{font-size:clamp(1.8rem,2.7vw,2.8rem)}
+.scene:has(img[src*="three-terminals"]) .hero-note{font-size:1.3rem}
+
+
+.orca-office-scene{width:min(100%,94rem);height:100%;min-height:0;align-self:center;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(2.5rem,4vw,4rem);align-items:center}
+.orca-office-art{height:100%;min-height:0;width:100%;display:flex;align-items:center;justify-content:center}
+.orca-office-art img{display:block;width:100%;height:100%;object-fit:contain}
+.orca-office-copy{display:flex;flex-direction:column;gap:2rem;min-width:0}
+.orca-office-copy .hero-statement{font-size:clamp(2.8rem,3.75vw,4rem);line-height:1.45}
+.orca-office-copy .hero-note{font-size:clamp(1.3rem,1.8vw,1.7rem)}
+
+
+
+.ide-ade-panel{padding:1.25rem;gap:.75rem;justify-content:center}
+.ide-ade-heading{display:flex;flex-direction:column;gap:.35rem;align-items:center}
+.ide-ade-short{font-family:GmarketSans,Pretendard,sans-serif;font-size:3.75rem;font-weight:700;line-height:1.15;color:var(--accent)}
+.ide-ade-full{font-size:1.1rem;line-height:1.4;color:var(--text-dim);white-space:nowrap}
+.ide-ade-focus{display:flex;align-items:center;justify-content:center;gap:.8rem;width:100%}
+.ide-ade-focus .diagram{width:9rem;height:5rem;flex:none}
+.ide-ade-focus .name{font-size:1.6rem;margin:0}
+.ide-ade-flow{display:flex;flex-direction:column;gap:.55rem;align-items:center;width:100%;padding:.5rem 0}
+.ide-ade-flow-row{display:flex;align-items:center;justify-content:center;gap:.5rem}
+.ide-ade-step{display:inline-flex;align-items:center;gap:.5rem;white-space:nowrap;font-size:1.12rem;line-height:1.5;color:var(--text-dim)}
+.ide-ade-arrow{width:1.2rem;height:1rem;flex:none}
+.ide-ade-definition{width:100%;border-top:1px solid var(--border-gray);padding-top:1rem;margin:0;font-size:1.25rem;line-height:1.55;color:var(--text);text-wrap:balance}
+
+.terminal-orca-pair .media-card{min-height:20rem}.terminal-orca-pair .media-card .name{font-size:1.8rem}.terminal-orca-pair .environment__label .inline-logo .diagram{width:100%;height:100%}
+
+.terminal-orca-pair{padding:1.5rem}.terminal-orca-pair .environment__label{margin-bottom:1.25rem}
+
+/* Existing terminal slide layout, copied unchanged. */
+.open-triptych { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(1.6rem,3vw,3rem); align-items:start; width:100%; }
+.open-concept { display:flex; flex-direction:column; align-items:center; text-align:center; gap:clamp(1rem,2.6vh,2rem); color:var(--orange); }
+.open-concept > svg { width:100%; height:clamp(11rem,25vh,19rem); }
+.open-concept h2 { color:var(--text); font-size:clamp(1.5rem,2.2vw,2.25rem); line-height:1.25; letter-spacing:-.025em; }
+.open-concept p { color:var(--text-dim); font-size:clamp(1.05rem,1.6vw,1.4rem); line-height:1.6; max-width:15em; }
+.open-concept--solution { color:var(--brand); }
+.open-concept--solution:nth-child(2) { color:var(--purple); }
+.open-concept--solution:nth-child(3) { color:var(--green); }
+
+.ide-ade-v1-heading{display:flex;flex-direction:column;align-items:center;gap:.2rem}.ide-ade-v1-card{padding-block:calc(clamp(1.1rem,2.2vw,1.7rem) - .87rem)}
+
+/* Orca basics: project/worktrees and orchestration capability. */
+
+
+/* Slide 2: a shared workspace boundary around open agent columns. */
+.orca-agent-workspace{width:min(100%,72rem);align-self:center;margin-inline:auto;display:flex;flex-direction:column;align-items:center;border:1.5px solid var(--gray);border-radius:.5rem;padding:1.5rem 2rem}
+.orca-agent-workspace__root{display:flex;align-items:center;gap:1.5rem}
+.orca-agent-workspace__root img{width:5rem;height:5rem;object-fit:contain}
+.orca-agent-workspace__title{font-family:Pretendard,sans-serif;font-size:clamp(1.5rem,2.2vw,2.25rem);font-weight:800;line-height:1.35;letter-spacing:-.025em;margin:0}
+.orca-agent-workspace__copy{font-size:clamp(1.1rem,1.6vw,1.42rem);line-height:1.6;color:var(--text-dim);margin:0}
+.orca-agent-workspace__root .orca-agent-workspace__copy{margin-top:.45rem}
+.orca-agent-workspace__stem{height:2rem;border-left:2px solid var(--gray)}
+.orca-agent-workspace__agents{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;position:relative}
+.orca-agent-workspace__agents::before{content:"";position:absolute;top:0;left:25%;right:25%;border-top:2px solid var(--gray)}
+.orca-agent-workspace__agent{position:relative;padding:2rem 1.5rem 0;display:flex;flex-direction:column;align-items:center;gap:1rem;text-align:center;min-width:0}
+.orca-agent-workspace__agent::before{content:"";position:absolute;left:50%;top:0;height:1rem;border-left:2px solid var(--gray)}
+.orca-agent-workspace__agent img{width:6rem;height:6rem;object-fit:contain}
+.orca-agent-workspace__agent--a .orca-agent-workspace__title{color:var(--brand)}
+.orca-agent-workspace__agent--b .orca-agent-workspace__title{color:var(--purple)}
+
+
+/* Slide 4: worktree is a physical working folder; keep the definition concrete. */
+.worktree-folder-scene{width:min(100%,86rem);align-self:center;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);align-items:center;gap:clamp(2rem,4vw,4rem)}
+.worktree-folder-scene__art{display:block;width:100%;height:clamp(17rem,36vh,27rem)}
+.worktree-folder-scene__copy{display:flex;flex-direction:column;gap:1.5rem}
+.worktree-folder-scene__title{font-family:Pretendard,sans-serif;font-size:clamp(2rem,3.8vw,3.7rem);font-weight:850;line-height:1.35;letter-spacing:-.035em;color:var(--brand)}
+.worktree-folder-scene__definition,.worktree-folder-scene__note{font-size:clamp(1.1rem,1.6vw,1.42rem);line-height:1.6;color:var(--text-dim)}
+.worktree-folder-scene__definition{color:var(--text)}
+
+
+/* Slide 5: goal -> distributed work -> collected results, with open connectors. */
+.orchestration-flow{width:min(100%,86rem);align-self:center;display:grid;grid-template-columns:minmax(0,1fr) clamp(4rem,7vw,7rem) minmax(0,1.25fr) clamp(4rem,7vw,7rem) minmax(0,1fr);align-items:center;gap:clamp(.75rem,1.5vw,1.5rem)}
+.orchestration-flow__endpoint{display:flex;flex-direction:column;align-items:center;gap:1.5rem;text-align:center}
+.orchestration-flow__endpoint svg{width:clamp(7rem,11vw,10rem);height:clamp(7rem,11vw,10rem)}
+.orchestration-flow__title{font-family:Pretendard,sans-serif;font-size:clamp(1.5rem,2.2vw,2.25rem);font-weight:800;line-height:1.35;letter-spacing:-.025em;white-space:nowrap}
+.orchestration-flow__agents{display:grid;grid-template-rows:repeat(3,1fr);height:clamp(18rem,33vh,26rem)}
+.orchestration-flow__agent{display:flex;align-items:center;justify-content:center;gap:1rem;min-width:0}
+.orchestration-flow__agent svg{width:clamp(3.5rem,5vw,4.5rem);height:clamp(3.5rem,5vw,4.5rem);flex:none}
+.orchestration-flow__agent--a{color:var(--brand)}.orchestration-flow__agent--b{color:var(--purple)}.orchestration-flow__agent--c{color:var(--gray)}
+.orchestration-flow__connector{width:100%;height:clamp(18rem,33vh,26rem)}
+.orchestration-flow-summary{font-size:clamp(1.1rem,1.6vw,1.42rem);line-height:1.6;color:var(--text-dim);align-self:center;text-align:center;margin-top:1.5rem}
+
+.orca-agent-workspace__subscription{color:var(--text);white-space:nowrap}
+</style></head><body>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress"></div>
+    </div>
+    <button class="nav-btn" id="btn-prev" aria-label="이전 슬라이드">
+      &#8592;
+    </button>
+    <button class="nav-btn" id="btn-next" aria-label="다음 슬라이드">
+      &#8594;
+    </button>
+    <div class="dot-nav" id="dot-nav"></div>
+    <div class="slide-counter">
+      <span id="cur">1</span> / <span id="tot">5</span>
+    </div>
+
+    <div class="slide-deck" id="deck"><!-- 발표 노트: Orca는 여러 에이전트가 일하는 작업 환경이라고 정의한다. 왼쪽 작업실 그림에서 각 에이전트가 사용할 모니터와 파일, 함께 볼 진행 보드, 메시지와 자료를 전달하는 영역을 설명한다. 사람은 없고 에이전트는 세 명이다. 사무실은 작업 환경의 기능을 이해시키는 비유이며 실제 제품 UI가 아니다. 이미지와 오른쪽 설명은 최대 너비가 있는 한 묶음으로 중앙에 놓는다. --><article class="slide active" data-index="0" data-visual="orca-office-scene"><header class="slide__header"><span class="slide__label">Part 2 · ch01-02 · Orca는 어떤 도구인가</span><h1 class="slide__title">Orca의 <span class="hl">정체</span></h1><p class="slide__sub">Orca는 여러 에이전트가 일하는 작업 환경입니다.</p></header><main class="slide__body"><div class="orca-office-scene"><div class="orca-office-art anim-item"><img src="/artifacts/part2/_images/ch01-02-what-is-orca--agent-office-v4.png" alt="하나의 사무실 안에서 노트북으로 일하는 큰 에이전트 세 명과 벽의 공용 진행 보드·메시지 영역"></div><div class="orca-office-copy"><div class="hero-statement anim-item">여러 에이전트가<br><strong>각자 일하는 환경</strong></div><p class="hero-note anim-item">비유하면 에이전트들의 작업장입니다.</p></div></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article><article class="slide " data-index="1" data-visual="orca-agent-workspace"><header class="slide__header"><span class="slide__label">Part 2 · ch01-02 · Orca는 어떤 도구인가</span><h1 class="slide__title">Orca 안에서 일하는 <span class="hl">AI</span></h1><p class="slide__sub">새 모델을 사는 것이 아니라 이미 쓰는 에이전트를 연결합니다.</p></header><main class="slide__body"><div class="orca-agent-workspace"><div class="orca-agent-workspace__root anim-item"><img src="/assets/orca-logo.svg" alt=""><div><h2 class="orca-agent-workspace__title">Orca</h2><p class="orca-agent-workspace__copy">여러 에이전트를 한곳에 두고 소통하게 하는 작업 공간</p></div></div><div class="orca-agent-workspace__stem anim-item" aria-hidden="true"></div><div class="orca-agent-workspace__agents anim-item"><section class="orca-agent-workspace__agent orca-agent-workspace__agent--a"><img src="/assets/claude-code-logo.png" alt=""><h2 class="orca-agent-workspace__title">에이전트 A</h2><p class="orca-agent-workspace__copy">Claude Code</p><p class="orca-agent-workspace__copy orca-agent-workspace__subscription">이미 쓰는 구독을 그대로 연결</p></section><section class="orca-agent-workspace__agent orca-agent-workspace__agent--b"><img src="/assets/codex-logo.svg" alt=""><h2 class="orca-agent-workspace__title">에이전트 B</h2><p class="orca-agent-workspace__copy">Codex</p><p class="orca-agent-workspace__copy orca-agent-workspace__subscription">이미 쓰는 구독을 그대로 연결</p></section></div></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article><article class="slide " data-index="2" data-visual="ide-ade-v1-enriched"><header class="slide__header"><span class="slide__label">Part 2 · ch01-02 · Orca는 어떤 도구인가</span><h1 class="slide__title">IDE와 <span class="hl">ADE</span></h1><p class="slide__sub">직접 작성하는 환경에서 에이전트에게 맡기고 검토하는 환경으로 옮겨갑니다.</p></header><main class="slide__body"><div class="grid-2 vs-grid"><div class="media-card media-card--gray anim-item ide-ade-v1-card" style="--accent:var(--gray);color:var(--gray)"><div class="ide-ade-v1-heading"><p class="display">IDE</p><p class="ide-ade-full">Integrated Development Environment</p></div><h2 class="name">사람 중심 환경</h2><svg class="diagram" viewBox="0 0 300 150" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><circle cx="75" cy="42" r="20" fill="var(--bg)" stroke="var(--gray)" stroke-width="3"/><path d="M35 127V104C35 65 115 65 115 104V127" stroke="var(--gray)" stroke-width="3"/><rect x="145" y="25" width="118" height="75" rx="5" fill="var(--bg-card)" stroke="var(--gray)" stroke-width="2.5"/><path d="M158 46H237M158 61H225M158 76H215M202 101V118M181 119H224" stroke="var(--gray)" stroke-width="2.5"/></svg><div class="steps"><span>파일 열기</span><span class="step-arrow">→</span><span>작성</span><span class="step-arrow">→</span><span>실행</span><span class="step-arrow">→</span><span>저장</span></div></div><div class="media-card media-card--brand anim-item ide-ade-v1-card" style="--accent:var(--brand);color:var(--brand)"><div class="ide-ade-v1-heading"><p class="display">ADE</p><p class="ide-ade-full">Agent Development Environment</p></div><h2 class="name">에이전트 중심 환경</h2><svg class="diagram" viewBox="0 0 300 150" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(34 42) scale(1.5)"><rect x="0" y="0" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)" stroke-width="2"/><rect x="8" y="13" width="34" height="11" rx="5.5" fill="var(--bg)"/><path d="M15 18.5H35" stroke="var(--brand)" stroke-width="3.5"/><path d="M10 39C4 42 4 49 4 52H46C46 49 46 42 40 39" stroke="var(--brand)" stroke-width="2.5"/></g><rect x="145" y="25" width="118" height="75" rx="5" fill="var(--bg-card)" stroke="var(--brand)" stroke-width="2.5"/><path d="M158 46H237M158 61H225M158 76H215M202 101V118M181 119H224" stroke="var(--brand)" stroke-width="2.5"/></svg><div class="steps"><span>작업 생성</span><span class="step-arrow">→</span><span>공간 생성</span><span class="step-arrow">→</span><span>에이전트 실행</span><span class="step-arrow">→</span><span>결과 검토</span></div></div></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article><article class="slide" data-index="3" data-visual="orca-work-unit"><header class="slide__header"><span class="slide__label">Part 2 · ch01-02 · Orca는 어떤 도구인가</span><h1 class="slide__title">Orca의 <span class="hl">작업 단위</span></h1><p class="slide__sub">Orca는 워크트리 단위로 작업을 나눕니다.</p></header><main class="slide__body"><div class="worktree-folder-scene"><svg class="worktree-folder-scene__art anim-item" viewBox="0 0 600 420" fill="none" role="img" aria-label="프로젝트 파일을 담고 있는 작업 폴더" stroke-linecap="round" stroke-linejoin="round"><path d="M63 130V69Q63 57 75 57H225L267 99H525Q537 99 537 111V337" stroke="var(--gray)" stroke-width="4"/><g stroke="var(--gray)" stroke-width="3"><path d="M118 163V107H187L211 131V204M187 107V131H211M135 146H185M135 161H177"/><path d="M254 174V119H323L347 143V216M323 119V143H347M271 158H321M271 173H313"/><path d="M390 182V131H459L483 155V228M459 131V155H483M407 170H457M407 185H449"/></g><path d="M49 193Q46 178 62 178H226L264 207H546Q560 207 557 223L529 346Q527 358 513 358H94Q80 358 77 344Z" fill="var(--bg)" stroke="var(--brand)" stroke-width="4"/><path d="M130 271H202M130 291H175" stroke="var(--brand)" stroke-width="4"/></svg><div class="worktree-folder-scene__copy anim-item"><h2 class="worktree-folder-scene__title">워크트리</h2><p class="worktree-folder-scene__definition">프로젝트 파일을 따로 꺼내<br>작업하는 폴더</p><p class="worktree-folder-scene__note">에이전트는 이 워크트리 안에서 작업합니다.</p></div></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article><article class="slide" data-index="4" data-visual="orca-orchestration-capability"><header class="slide__header"><span class="slide__label">Part 2 · ch01-02 · Orca는 어떤 도구인가</span><h1 class="slide__title"><span class="hl">오케스트레이션</span>까지</h1><p class="slide__sub">여러 에이전트에게 일을 나누고 결과를 모읍니다.</p></header><main class="slide__body"><div class="orchestration-flow"><div class="orchestration-flow__endpoint anim-item"><svg class="" viewBox="0 0 160 160" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="75" cy="85" r="57" stroke="var(--gray)"/><circle cx="75" cy="85" r="34" stroke="var(--gray)"/><circle cx="75" cy="85" r="10" stroke="var(--brand)"/><path d="M76 84L134 26M114 26H134V46" stroke="var(--brand)" stroke-width="4"/></svg><h2 class="orchestration-flow__title">하나의 목표</h2></div><svg class="orchestration-flow__connector anim-item" preserveAspectRatio="none" viewBox="0 0 100 300" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 150H30V50H96m-9-7 9 7-9 7" stroke="var(--brand)"/><path d="M4 150H30V150H96m-9-7 9 7-9 7" stroke="var(--purple)"/><path d="M4 150H30V250H96m-9-7 9 7-9 7" stroke="var(--gray)"/></svg><div class="orchestration-flow__agents anim-item"><div class="orchestration-flow__agent orchestration-flow__agent--a"><svg class="" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="15" y="14" width="70" height="49" rx="22" fill="var(--text)" stroke="var(--gray)"/><rect x="25" y="30" width="50" height="16" rx="8" fill="var(--bg)" stroke="none"/><path d="M37 38H63" stroke-width="5"/><path d="M28 66C15 71 16 82 16 87H84C84 82 85 71 72 66"/></svg><h2 class="orchestration-flow__title">에이전트 A</h2></div><div class="orchestration-flow__agent orchestration-flow__agent--b"><svg class="" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="15" y="14" width="70" height="49" rx="22" fill="var(--text)" stroke="var(--gray)"/><rect x="25" y="30" width="50" height="16" rx="8" fill="var(--bg)" stroke="none"/><path d="M37 38H63" stroke-width="5"/><path d="M28 66C15 71 16 82 16 87H84C84 82 85 71 72 66"/></svg><h2 class="orchestration-flow__title">에이전트 B</h2></div><div class="orchestration-flow__agent orchestration-flow__agent--c"><svg class="" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="15" y="14" width="70" height="49" rx="22" fill="var(--text)" stroke="var(--gray)"/><rect x="25" y="30" width="50" height="16" rx="8" fill="var(--bg)" stroke="none"/><path d="M37 38H63" stroke-width="5"/><path d="M28 66C15 71 16 82 16 87H84C84 82 85 71 72 66"/></svg><h2 class="orchestration-flow__title">에이전트 C</h2></div></div><svg class="orchestration-flow__connector anim-item" preserveAspectRatio="none" viewBox="0 0 100 300" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 50H70V150H96" stroke="var(--brand)"/><path d="M4 150H70V150H96" stroke="var(--purple)"/><path d="M4 250H70V150H96" stroke="var(--gray)"/><path d="m87 143 9 7-9 7" stroke="var(--gray)"/></svg><div class="orchestration-flow__endpoint anim-item"><svg class="" viewBox="0 0 160 160" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M54 20V10H117L138 31V124H129M117 10V31H138M36 38V28H99L120 49V142H111M99 28V49H120" stroke="var(--gray)"/><path d="M18 46H81L102 67V154H18ZM81 46V67H102M35 88H81M35 108H81M35 128H66" stroke="var(--text)"/></svg><h2 class="orchestration-flow__title">모인 결과</h2></div></div><p class="orchestration-flow-summary anim-item">작업 배정 · 진행 확인 · 결과 취합</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article></div><script>
+      /* 조작 규칙 (성공 기준):
+         페이지 이동은 좌우 nav-btn · 하단 dot · 키보드(←/→/스페이스)로만.
+         #deck/body/.slide에 이동용 click 리스너를 절대 달지 않는다 —
+         강의 중 화면을 가리키며 클릭해도 슬라이드가 넘어가면 안 된다. */
+      class SlidePresentation {
+        constructor() {
+          this.slides = Array.from(document.querySelectorAll(".slide"));
+          this.total = this.slides.length;
+          const requested = Number.parseInt(
+            new URLSearchParams(window.location.search).get("slide"),
+            10,
+          );
+          this.current =
+            Number.isInteger(requested) && requested >= 1 && requested <= this.total
+              ? requested - 1
+              : 0;
+          this.isAnimating = false;
+          this._init();
+        }
+        _init() {
+          this.slides.forEach((slide, i) =>
+            slide.classList.toggle("active", i === this.current),
+          );
+          document.getElementById("tot").textContent = this.total;
+          this._buildDots();
+          this._bindKeys();
+          this._bindButtons();
+          this._update();
+          this._runSlide(this.current);
+        }
+        /* 슬라이드 진입 시 .anim-item 을 순차 등장시킨다.
+           스토리보드의 "애니메이션 순서" = DOM 순서 */
+        _runSlide(i) {
+          const items = this.slides[i].querySelectorAll(".anim-item");
+          items.forEach((el) => {
+            el.classList.remove("do-fadeinup");
+            void el.offsetWidth; /* reflow — 재진입 시 재생 */
+          });
+          items.forEach((el, n) => {
+            setTimeout(() => el.classList.add("do-fadeinup"), 150 + n * 260);
+          });
+        }
+        next() {
+          if (!this.isAnimating) this._go(this.current + 1);
+        }
+        prev() {
+          if (!this.isAnimating) this._go(this.current - 1);
+        }
+        _go(i) {
+          if (
+            i < 0 ||
+            i >= this.total ||
+            i === this.current ||
+            this.isAnimating
+          )
+            return;
+          this.isAnimating = true;
+          this.slides[this.current].classList.remove("active");
+          this.slides[i].classList.add("active");
+          this.current = i;
+          const url = new URL(window.location.href);
+          url.searchParams.set("slide", this.current + 1);
+          window.history.replaceState({}, "", url);
+          this._runSlide(i);
+          setTimeout(() => {
+            this.isAnimating = false;
+            this._update();
+          }, 420);
+          this._update();
+        }
+        _update() {
+          const pct = ((this.current + 1) / this.total) * 100;
+          document.getElementById("progress").style.width = pct + "%";
+          document.getElementById("cur").textContent = this.current + 1;
+          document.getElementById("btn-prev").disabled = this.current === 0;
+          document.getElementById("btn-next").disabled =
+            this.current === this.total - 1;
+          document
+            .querySelectorAll(".dot")
+            .forEach((d, i) =>
+              d.classList.toggle("active", i === this.current),
+            );
+        }
+        _buildDots() {
+          const nav = document.getElementById("dot-nav");
+          this.slides.forEach((_, i) => {
+            const b = document.createElement("button");
+            b.className = "dot" + (i === 0 ? " active" : "");
+            b.setAttribute("aria-label", `슬라이드 ${i + 1}`);
+            b.addEventListener("click", () => this._go(i));
+            nav.appendChild(b);
+          });
+        }
+        _bindButtons() {
+          document
+            .getElementById("btn-prev")
+            .addEventListener("click", () => this.prev());
+          document
+            .getElementById("btn-next")
+            .addEventListener("click", () => this.next());
+        }
+        _bindKeys() {
+          document.addEventListener("keydown", (e) => {
+            if (this.isAnimating) return;
+            if (e.key === "ArrowRight" || e.key === " ") {
+              e.preventDefault();
+              this.next();
+            }
+            if (e.key === "ArrowLeft") {
+              e.preventDefault();
+              this.prev();
+            }
+          });
+        }
+      }
+      new SlidePresentation();
+    </script></body></html>

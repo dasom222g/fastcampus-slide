@@ -1,0 +1,1713 @@
+{
+  "registered_on": "2026-09-08",
+  "user_request": "ch01-02-what-is-orca 수정본 보고 본받아. 니가한거랑 비교해서 골든셋 작업해",
+  "canonical_html": "artifacts/part2/outputs/ch01-02-what-is-orca.html",
+  "preview_url": "http://localhost:3000/part2/outputs/ch01-02-what-is-orca",
+  "scope": "Current revised 5-slide deck; slides 2,4,5 compared against prior assistant output; slides 1,3 retained",
+  "html_unchanged_during_registration": true,
+  "template_unchanged_during_registration": true,
+  "checks": [
+    {
+      "actualViewport": [
+        2133,
+        1200
+      ],
+      "slide": 1,
+      "title": "Orca의 정체",
+      "text": "여러 에이전트가\n각자 일하는 환경\n\n비유하면 에이전트들의 작업장입니다.",
+      "body": {
+        "x": 112,
+        "y": 270.34375,
+        "width": 1909,
+        "height": 781.734375
+      },
+      "measurements": [
+        {
+          "selector": ".orca-office-scene",
+          "text": "여러 에이전트가각자 일하는 환경비유하면 에이전트들의 작업장입니다.",
+          "rect": {
+            "x": 314.5,
+            "y": 270.34375,
+            "width": 1504,
+            "height": 781.734375
+          },
+          "style": {
+            "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "letterSpacing": "normal",
+            "gridTemplateColumns": "754.281px 685.719px",
+            "gap": "64px",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "781.734px"
+          }
+        },
+        {
+          "selector": ".orca-office-art",
+          "text": "",
+          "rect": {
+            "x": 314.5,
+            "y": 270.34375,
+            "width": 754.28125,
+            "height": 781.734375
+          },
+          "style": {
+            "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "letterSpacing": "normal",
+            "gridTemplateColumns": "none",
+            "gap": "normal",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "781.734px"
+          }
+        },
+        {
+          "selector": ".orca-office-art img",
+          "text": "",
+          "rect": {
+            "x": 314.5,
+            "y": 270.34375,
+            "width": 754.28125,
+            "height": 781.734375
+          },
+          "style": {
+            "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "letterSpacing": "normal",
+            "gridTemplateColumns": "none",
+            "gap": "normal",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "contain",
+            "maxWidth": "none",
+            "height": "781.734px"
+          }
+        },
+        {
+          "selector": ".orca-office-copy",
+          "text": "여러 에이전트가각자 일하는 환경비유하면 에이전트들의 작업장입니다.",
+          "rect": {
+            "x": 1132.78125,
+            "y": 531.328125,
+            "width": 685.71875,
+            "height": 259.75
+          },
+          "style": {
+            "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "letterSpacing": "normal",
+            "gridTemplateColumns": "none",
+            "gap": "32px",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "259.75px"
+          }
+        },
+        {
+          "selector": ".orca-office-copy .hero-statement",
+          "text": "여러 에이전트가각자 일하는 환경",
+          "rect": {
+            "x": 1132.78125,
+            "y": 531.328125,
+            "width": 685.71875,
+            "height": 185.59375
+          },
+          "style": {
+            "fontFamily": "GmarketSans, Pretendard, sans-serif",
+            "fontSize": "64px",
+            "fontWeight": "700",
+            "lineHeight": "92.8px",
+            "letterSpacing": "-2.56px",
+            "gridTemplateColumns": "none",
+            "gap": "normal",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "185.594px"
+          }
+        }
+      ],
+      "images": [
+        {
+          "src": "/artifacts/part2/_images/ch01-02-what-is-orca--agent-office-v4.png",
+          "loaded": true,
+          "natural": [
+            1254,
+            1254
+          ]
+        },
+        {
+          "src": "/assets/fastcampus-logo-dark.svg",
+          "loaded": true,
+          "natural": [
+            120,
+            19
+          ]
+        }
+      ],
+      "overflow": [],
+      "screenshot": "artifacts/part2/_qa/golden-orca-1-2133x1200.png"
+    },
+    {
+      "actualViewport": [
+        2133,
+        1200
+      ],
+      "slide": 2,
+      "title": "Orca 안에서 일하는 AI",
+      "text": "Orca\n\n여러 에이전트를 한곳에 두고 소통하게 하는 작업 공간\n\n에이전트 A\n\nClaude Code\n\n이미 쓰는 구독을 그대로 연결\n\n에이전트 B\n\nCodex\n\n이미 쓰는 구독을 그대로 연결",
+      "body": {
+        "x": 112,
+        "y": 270.34375,
+        "width": 1909,
+        "height": 781.734375
+      },
+      "measurements": [
+        {
+          "selector": ".orca-agent-workspace",
+          "text": "Orca여러 에이전트를 한곳에 두고 소통하게 하는 작업 공간에이전트 AClaude Code이미 쓰는 구독을 그대로 연결에이전트 BCodex이미 쓰는 구독을 그대로 연결",
+          "rect": {
+            "x": 490.5,
+            "y": 425.5,
+            "width": 1152,
+            "height": 471.40625
+          },
+          "style": {
+            "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "letterSpacing": "normal",
+            "gridTemplateColumns": "none",
+            "gap": "normal",
+            "padding": "24px 32px",
+            "borderWidth": "1px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "471.406px"
+          }
+        },
+        {
+          "selector": ".orca-agent-workspace__root",
+          "text": "Orca여러 에이전트를 한곳에 두고 소통하게 하는 작업 공간",
+          "rect": {
+            "x": 778.546875,
+            "y": 450.5,
+            "width": 575.90625,
+            "height": 92.125
+          },
+          "style": {
+            "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "letterSpacing": "normal",
+            "gridTemplateColumns": "none",
+            "gap": "24px",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "92.125px"
+          }
+        },
+        {
+          "selector": ".orca-agent-workspace__agents",
+          "text": "에이전트 AClaude Code이미 쓰는 구독을 그대로 연결에이전트 BCodex이미 쓰는 구독을 그대로 연결",
+          "rect": {
+            "x": 523.5,
+            "y": 574.625,
+            "width": 1086,
+            "height": 297.28125
+          },
+          "style": {
+            "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "letterSpacing": "normal",
+            "gridTemplateColumns": "543px 543px",
+            "gap": "normal",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "297.281px"
+          }
+        },
+        {
+          "selector": ".orca-agent-workspace__agent",
+          "text": "에이전트 AClaude Code이미 쓰는 구독을 그대로 연결",
+          "rect": {
+            "x": 523.5,
+            "y": 574.625,
+            "width": 543,
+            "height": 297.28125
+          },
+          "style": {
+            "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "letterSpacing": "normal",
+            "gridTemplateColumns": "none",
+            "gap": "16px",
+            "padding": "32px 24px 0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "297.281px"
+          }
+        },
+        {
+          "selector": ".orca-agent-workspace__agent",
+          "text": "에이전트 BCodex이미 쓰는 구독을 그대로 연결",
+          "rect": {
+            "x": 1066.5,
+            "y": 574.625,
+            "width": 543,
+            "height": 297.28125
+          },
+          "style": {
+            "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "letterSpacing": "normal",
+            "gridTemplateColumns": "none",
+            "gap": "16px",
+            "padding": "32px 24px 0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "297.281px"
+          }
+        },
+        {
+          "selector": ".orca-agent-workspace__title",
+          "text": "Orca",
+          "rect": {
+            "x": 882.546875,
+            "y": 450.5,
+            "width": 471.90625,
+            "height": 48.59375
+          },
+          "style": {
+            "fontFamily": "Pretendard, sans-serif",
+            "fontSize": "36px",
+            "fontWeight": "800",
+            "lineHeight": "48.6px",
+            "letterSpacing": "-0.9px",
+            "gridTemplateColumns": "none",
+            "gap": "normal",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "48.5938px"
+          }
+        },
+        {
+          "selector": ".orca-agent-workspace__title",
+          "text": "에이전트 A",
+          "rect": {
+            "x": 718.078125,
+            "y": 718.625,
+            "width": 153.828125,
+            "height": 48.59375
+          },
+          "style": {
+            "fontFamily": "Pretendard, sans-serif",
+            "fontSize": "36px",
+            "fontWeight": "800",
+            "lineHeight": "48.6px",
+            "letterSpacing": "-0.9px",
+            "gridTemplateColumns": "none",
+            "gap": "normal",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "48.5938px"
+          }
+        },
+        {
+          "selector": ".orca-agent-workspace__title",
+          "text": "에이전트 B",
+          "rect": {
+            "x": 1262.890625,
+            "y": 718.625,
+            "width": 150.203125,
+            "height": 48.59375
+          },
+          "style": {
+            "fontFamily": "Pretendard, sans-serif",
+            "fontSize": "36px",
+            "fontWeight": "800",
+            "lineHeight": "48.6px",
+            "letterSpacing": "-0.9px",
+            "gridTemplateColumns": "none",
+            "gap": "normal",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "48.5938px"
+          }
+        }
+      ],
+      "images": [
+        {
+          "src": "/assets/orca-logo.svg",
+          "loaded": true,
+          "natural": [
+            319,
+            203
+          ]
+        },
+        {
+          "src": "/assets/claude-code-logo.png",
+          "loaded": true,
+          "natural": [
+            640,
+            640
+          ]
+        },
+        {
+          "src": "/assets/codex-logo.svg",
+          "loaded": true,
+          "natural": [
+            250,
+            250
+          ]
+        },
+        {
+          "src": "/assets/fastcampus-logo-dark.svg",
+          "loaded": true,
+          "natural": [
+            120,
+            19
+          ]
+        }
+      ],
+      "overflow": [],
+      "screenshot": "artifacts/part2/_qa/golden-orca-2-2133x1200.png"
+    },
+    {
+      "actualViewport": [
+        2133,
+        1200
+      ],
+      "slide": 3,
+      "title": "IDE와 ADE",
+      "text": "IDE\n\nIntegrated Development Environment\n\n사람 중심 환경\n파일 열기\n→\n작성\n→\n실행\n→\n저장\n\nADE\n\nAgent Development Environment\n\n에이전트 중심 환경\n작업 생성\n→\n공간 생성\n→\n에이전트 실행\n→\n결과 검토",
+      "body": {
+        "x": 112,
+        "y": 270.34375,
+        "width": 1909,
+        "height": 781.734375
+      },
+      "measurements": [
+        {
+          "selector": ".ide-ade-v1-card",
+          "text": "IDEIntegrated Development Environment사람 중심 환경파일 열기→작성→실행→저장",
+          "rect": {
+            "x": 112,
+            "y": 427.890625,
+            "width": 935.296875,
+            "height": 466.640625
+          },
+          "style": {
+            "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "letterSpacing": "normal",
+            "gridTemplateColumns": "none",
+            "gap": "13.6px",
+            "padding": "13.28px 27.2px",
+            "borderWidth": "1px",
+            "backgroundColor": "rgba(139, 148, 158, 0.05)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "466.641px"
+          }
+        },
+        {
+          "selector": ".ide-ade-v1-card",
+          "text": "ADEAgent Development Environment에이전트 중심 환경작업 생성→공간 생성→에이전트 실행→결과 검토",
+          "rect": {
+            "x": 1085.6875,
+            "y": 427.890625,
+            "width": 935.3125,
+            "height": 466.640625
+          },
+          "style": {
+            "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "letterSpacing": "normal",
+            "gridTemplateColumns": "none",
+            "gap": "13.6px",
+            "padding": "13.28px 27.2px",
+            "borderWidth": "1px",
+            "backgroundColor": "rgba(252, 28, 73, 0.05)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "466.641px"
+          }
+        }
+      ],
+      "images": [
+        {
+          "src": "/assets/fastcampus-logo-dark.svg",
+          "loaded": true,
+          "natural": [
+            120,
+            19
+          ]
+        }
+      ],
+      "overflow": [],
+      "screenshot": "artifacts/part2/_qa/golden-orca-3-2133x1200.png"
+    },
+    {
+      "actualViewport": [
+        2133,
+        1200
+      ],
+      "slide": 4,
+      "title": "Orca의 작업 단위",
+      "text": "워크트리\n\n프로젝트 파일을 따로 꺼내\n작업하는 폴더\n\n에이전트는 이 워크트리 안에서 작업합니다.",
+      "body": {
+        "x": 112,
+        "y": 270.34375,
+        "width": 1909,
+        "height": 781.734375
+      },
+      "measurements": [
+        {
+          "selector": ".worktree-folder-scene",
+          "text": "워크트리프로젝트 파일을 따로 꺼내작업하는 폴더에이전트는 이 워크트리 안에서 작업합니다.",
+          "rect": {
+            "x": 378.5,
+            "y": 445.203125,
+            "width": 1376,
+            "height": 432
+          },
+          "style": {
+            "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "letterSpacing": "normal",
+            "gridTemplateColumns": "687.234px 624.766px",
+            "gap": "64px",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "432px"
+          }
+        },
+        {
+          "selector": ".worktree-folder-scene__art",
+          "text": "",
+          "rect": {
+            "x": 378.5,
+            "y": 445.203125,
+            "width": 687.234375,
+            "height": 432
+          },
+          "style": {
+            "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "letterSpacing": "normal",
+            "gridTemplateColumns": "none",
+            "gap": "normal",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "432px"
+          }
+        },
+        {
+          "selector": ".worktree-folder-scene__title",
+          "text": "워크트리",
+          "rect": {
+            "x": 1129.734375,
+            "y": 542.71875,
+            "width": 624.765625,
+            "height": 79.921875
+          },
+          "style": {
+            "fontFamily": "Pretendard, sans-serif",
+            "fontSize": "59.2px",
+            "fontWeight": "850",
+            "lineHeight": "79.92px",
+            "letterSpacing": "-2.072px",
+            "gridTemplateColumns": "none",
+            "gap": "normal",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "79.9219px"
+          }
+        },
+        {
+          "selector": ".worktree-folder-scene__definition",
+          "text": "프로젝트 파일을 따로 꺼내작업하는 폴더",
+          "rect": {
+            "x": 1129.734375,
+            "y": 646.640625,
+            "width": 624.765625,
+            "height": 72.6875
+          },
+          "style": {
+            "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "22.72px",
+            "fontWeight": "400",
+            "lineHeight": "36.352px",
+            "letterSpacing": "normal",
+            "gridTemplateColumns": "none",
+            "gap": "normal",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "72.6875px"
+          }
+        }
+      ],
+      "images": [
+        {
+          "src": "/assets/fastcampus-logo-dark.svg",
+          "loaded": true,
+          "natural": [
+            120,
+            19
+          ]
+        }
+      ],
+      "overflow": [],
+      "screenshot": "artifacts/part2/_qa/golden-orca-4-2133x1200.png"
+    },
+    {
+      "actualViewport": [
+        2133,
+        1200
+      ],
+      "slide": 5,
+      "title": "오케스트레이션까지",
+      "text": "하나의 목표\n에이전트 A\n에이전트 B\n에이전트 C\n모인 결과\n\n작업 배정 · 진행 확인 · 결과 취합",
+      "body": {
+        "x": 112,
+        "y": 270.34375,
+        "width": 1909,
+        "height": 781.734375
+      },
+      "measurements": [
+        {
+          "selector": ".orchestration-flow",
+          "text": "하나의 목표에이전트 A에이전트 B에이전트 C모인 결과",
+          "rect": {
+            "x": 378.5,
+            "y": 416.84375,
+            "width": 1376,
+            "height": 396
+          },
+          "style": {
+            "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "letterSpacing": "normal",
+            "gridTemplateColumns": "324.922px 112px 406.141px 112px 324.922px",
+            "gap": "24px",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "396px"
+          }
+        },
+        {
+          "selector": ".orchestration-flow__agents",
+          "text": "에이전트 A에이전트 B에이전트 C",
+          "rect": {
+            "x": 863.421875,
+            "y": 416.84375,
+            "width": 406.140625,
+            "height": 396
+          },
+          "style": {
+            "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "letterSpacing": "normal",
+            "gridTemplateColumns": "406.141px",
+            "gap": "normal",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "396px"
+          }
+        },
+        {
+          "selector": ".orchestration-flow__title",
+          "text": "하나의 목표",
+          "rect": {
+            "x": 461.84375,
+            "y": 682.546875,
+            "width": 158.21875,
+            "height": 48.59375
+          },
+          "style": {
+            "fontFamily": "Pretendard, sans-serif",
+            "fontSize": "36px",
+            "fontWeight": "800",
+            "lineHeight": "48.6px",
+            "letterSpacing": "-0.9px",
+            "gridTemplateColumns": "none",
+            "gap": "normal",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "48.5938px"
+          }
+        },
+        {
+          "selector": ".orchestration-flow__title",
+          "text": "에이전트 A",
+          "rect": {
+            "x": 1033.578125,
+            "y": 458.546875,
+            "width": 153.828125,
+            "height": 48.59375
+          },
+          "style": {
+            "fontFamily": "Pretendard, sans-serif",
+            "fontSize": "36px",
+            "fontWeight": "800",
+            "lineHeight": "48.6px",
+            "letterSpacing": "-0.9px",
+            "gridTemplateColumns": "none",
+            "gap": "normal",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "48.5938px"
+          }
+        },
+        {
+          "selector": ".orchestration-flow__title",
+          "text": "에이전트 B",
+          "rect": {
+            "x": 1035.390625,
+            "y": 590.546875,
+            "width": 150.203125,
+            "height": 48.59375
+          },
+          "style": {
+            "fontFamily": "Pretendard, sans-serif",
+            "fontSize": "36px",
+            "fontWeight": "800",
+            "lineHeight": "48.6px",
+            "letterSpacing": "-0.9px",
+            "gridTemplateColumns": "none",
+            "gap": "normal",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "48.5938px"
+          }
+        },
+        {
+          "selector": ".orchestration-flow__title",
+          "text": "에이전트 C",
+          "rect": {
+            "x": 1033.71875,
+            "y": 722.546875,
+            "width": 153.546875,
+            "height": 48.59375
+          },
+          "style": {
+            "fontFamily": "Pretendard, sans-serif",
+            "fontSize": "36px",
+            "fontWeight": "800",
+            "lineHeight": "48.6px",
+            "letterSpacing": "-0.9px",
+            "gridTemplateColumns": "none",
+            "gap": "normal",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "48.5938px"
+          }
+        },
+        {
+          "selector": ".orchestration-flow__title",
+          "text": "모인 결과",
+          "rect": {
+            "x": 1528.015625,
+            "y": 682.546875,
+            "width": 128.015625,
+            "height": 48.59375
+          },
+          "style": {
+            "fontFamily": "Pretendard, sans-serif",
+            "fontSize": "36px",
+            "fontWeight": "800",
+            "lineHeight": "48.6px",
+            "letterSpacing": "-0.9px",
+            "gridTemplateColumns": "none",
+            "gap": "normal",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "48.5938px"
+          }
+        }
+      ],
+      "images": [
+        {
+          "src": "/assets/fastcampus-logo-dark.svg",
+          "loaded": true,
+          "natural": [
+            120,
+            19
+          ]
+        }
+      ],
+      "overflow": [],
+      "screenshot": "artifacts/part2/_qa/golden-orca-5-2133x1200.png"
+    },
+    {
+      "actualViewport": [
+        1280,
+        800
+      ],
+      "slide": 1,
+      "title": "Orca의 정체",
+      "text": "여러 에이전트가\n각자 일하는 환경\n\n비유하면 에이전트들의 작업장입니다.",
+      "body": {
+        "x": 96,
+        "y": 224.34375,
+        "width": 1088,
+        "height": 472.03125
+      },
+      "measurements": [
+        {
+          "selector": ".orca-office-scene",
+          "text": "여러 에이전트가각자 일하는 환경비유하면 에이전트들의 작업장입니다.",
+          "rect": {
+            "x": 96,
+            "y": 224.34375,
+            "width": 1088,
+            "height": 472.03125
+          },
+          "style": {
+            "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "letterSpacing": "normal",
+            "gridTemplateColumns": "543.078px 493.734px",
+            "gap": "51.2px",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "472.031px"
+          }
+        },
+        {
+          "selector": ".orca-office-art",
+          "text": "",
+          "rect": {
+            "x": 96,
+            "y": 224.34375,
+            "width": 543.078125,
+            "height": 472.03125
+          },
+          "style": {
+            "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "letterSpacing": "normal",
+            "gridTemplateColumns": "none",
+            "gap": "normal",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "472.031px"
+          }
+        },
+        {
+          "selector": ".orca-office-art img",
+          "text": "",
+          "rect": {
+            "x": 96,
+            "y": 224.34375,
+            "width": 543.078125,
+            "height": 472.03125
+          },
+          "style": {
+            "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "letterSpacing": "normal",
+            "gridTemplateColumns": "none",
+            "gap": "normal",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "contain",
+            "maxWidth": "none",
+            "height": "472.031px"
+          }
+        },
+        {
+          "selector": ".orca-office-copy",
+          "text": "여러 에이전트가각자 일하는 환경비유하면 에이전트들의 작업장입니다.",
+          "rect": {
+            "x": 690.265625,
+            "y": 356.90625,
+            "width": 493.734375,
+            "height": 206.90625
+          },
+          "style": {
+            "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "letterSpacing": "normal",
+            "gridTemplateColumns": "none",
+            "gap": "32px",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "206.906px"
+          }
+        },
+        {
+          "selector": ".orca-office-copy .hero-statement",
+          "text": "여러 에이전트가각자 일하는 환경",
+          "rect": {
+            "x": 690.265625,
+            "y": 356.90625,
+            "width": 493.734375,
+            "height": 139.1875
+          },
+          "style": {
+            "fontFamily": "GmarketSans, Pretendard, sans-serif",
+            "fontSize": "48px",
+            "fontWeight": "700",
+            "lineHeight": "69.6px",
+            "letterSpacing": "-1.92px",
+            "gridTemplateColumns": "none",
+            "gap": "normal",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "139.188px"
+          }
+        }
+      ],
+      "images": [
+        {
+          "src": "/artifacts/part2/_images/ch01-02-what-is-orca--agent-office-v4.png",
+          "loaded": true,
+          "natural": [
+            1254,
+            1254
+          ]
+        },
+        {
+          "src": "/assets/fastcampus-logo-dark.svg",
+          "loaded": true,
+          "natural": [
+            120,
+            19
+          ]
+        }
+      ],
+      "overflow": [],
+      "screenshot": "artifacts/part2/_qa/golden-orca-1-1280x800.png"
+    },
+    {
+      "actualViewport": [
+        1280,
+        800
+      ],
+      "slide": 2,
+      "title": "Orca 안에서 일하는 AI",
+      "text": "Orca\n\n여러 에이전트를 한곳에 두고 소통하게 하는 작업 공간\n\n에이전트 A\n\nClaude Code\n\n이미 쓰는 구독을 그대로 연결\n\n에이전트 B\n\nCodex\n\n이미 쓰는 구독을 그대로 연결",
+      "body": {
+        "x": 96,
+        "y": 224.34375,
+        "width": 1088,
+        "height": 472.03125
+      },
+      "measurements": [
+        {
+          "selector": ".orca-agent-workspace",
+          "text": "Orca여러 에이전트를 한곳에 두고 소통하게 하는 작업 공간에이전트 AClaude Code이미 쓰는 구독을 그대로 연결에이전트 BCodex이미 쓰는 구독을 그대로 연결",
+          "rect": {
+            "x": 96,
+            "y": 239.59375,
+            "width": 1088,
+            "height": 441.53125
+          },
+          "style": {
+            "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "letterSpacing": "normal",
+            "gridTemplateColumns": "none",
+            "gap": "normal",
+            "padding": "24px 32px",
+            "borderWidth": "1px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "441.531px"
+          }
+        },
+        {
+          "selector": ".orca-agent-workspace__root",
+          "text": "Orca여러 에이전트를 한곳에 두고 소통하게 하는 작업 공간",
+          "rect": {
+            "x": 375.296875,
+            "y": 264.59375,
+            "width": 529.390625,
+            "height": 80
+          },
+          "style": {
+            "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "letterSpacing": "normal",
+            "gridTemplateColumns": "none",
+            "gap": "24px",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "80px"
+          }
+        },
+        {
+          "selector": ".orca-agent-workspace__agents",
+          "text": "에이전트 AClaude Code이미 쓰는 구독을 그대로 연결에이전트 BCodex이미 쓰는 구독을 그대로 연결",
+          "rect": {
+            "x": 129,
+            "y": 376.59375,
+            "width": 1022,
+            "height": 279.53125
+          },
+          "style": {
+            "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "letterSpacing": "normal",
+            "gridTemplateColumns": "511px 511px",
+            "gap": "normal",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "279.531px"
+          }
+        },
+        {
+          "selector": ".orca-agent-workspace__agent",
+          "text": "에이전트 AClaude Code이미 쓰는 구독을 그대로 연결",
+          "rect": {
+            "x": 129,
+            "y": 376.59375,
+            "width": 511,
+            "height": 279.53125
+          },
+          "style": {
+            "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "letterSpacing": "normal",
+            "gridTemplateColumns": "none",
+            "gap": "16px",
+            "padding": "32px 24px 0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "279.531px"
+          }
+        },
+        {
+          "selector": ".orca-agent-workspace__agent",
+          "text": "에이전트 BCodex이미 쓰는 구독을 그대로 연결",
+          "rect": {
+            "x": 640,
+            "y": 376.59375,
+            "width": 511,
+            "height": 279.53125
+          },
+          "style": {
+            "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "letterSpacing": "normal",
+            "gridTemplateColumns": "none",
+            "gap": "16px",
+            "padding": "32px 24px 0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "279.531px"
+          }
+        },
+        {
+          "selector": ".orca-agent-workspace__title",
+          "text": "Orca",
+          "rect": {
+            "x": 479.296875,
+            "y": 265.609375,
+            "width": 425.390625,
+            "height": 38
+          },
+          "style": {
+            "fontFamily": "Pretendard, sans-serif",
+            "fontSize": "28.16px",
+            "fontWeight": "800",
+            "lineHeight": "38.016px",
+            "letterSpacing": "-0.704px",
+            "gridTemplateColumns": "none",
+            "gap": "normal",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "38px"
+          }
+        },
+        {
+          "selector": ".orca-agent-workspace__title",
+          "text": "에이전트 A",
+          "rect": {
+            "x": 324.328125,
+            "y": 520.59375,
+            "width": 120.328125,
+            "height": 38
+          },
+          "style": {
+            "fontFamily": "Pretendard, sans-serif",
+            "fontSize": "28.16px",
+            "fontWeight": "800",
+            "lineHeight": "38.016px",
+            "letterSpacing": "-0.704px",
+            "gridTemplateColumns": "none",
+            "gap": "normal",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "38px"
+          }
+        },
+        {
+          "selector": ".orca-agent-workspace__title",
+          "text": "에이전트 B",
+          "rect": {
+            "x": 836.75,
+            "y": 520.59375,
+            "width": 117.5,
+            "height": 38
+          },
+          "style": {
+            "fontFamily": "Pretendard, sans-serif",
+            "fontSize": "28.16px",
+            "fontWeight": "800",
+            "lineHeight": "38.016px",
+            "letterSpacing": "-0.704px",
+            "gridTemplateColumns": "none",
+            "gap": "normal",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "38px"
+          }
+        }
+      ],
+      "images": [
+        {
+          "src": "/assets/orca-logo.svg",
+          "loaded": true,
+          "natural": [
+            319,
+            203
+          ]
+        },
+        {
+          "src": "/assets/claude-code-logo.png",
+          "loaded": true,
+          "natural": [
+            640,
+            640
+          ]
+        },
+        {
+          "src": "/assets/codex-logo.svg",
+          "loaded": true,
+          "natural": [
+            250,
+            250
+          ]
+        },
+        {
+          "src": "/assets/fastcampus-logo-dark.svg",
+          "loaded": true,
+          "natural": [
+            120,
+            19
+          ]
+        }
+      ],
+      "overflow": [],
+      "screenshot": "artifacts/part2/_qa/golden-orca-2-1280x800.png"
+    },
+    {
+      "actualViewport": [
+        1280,
+        800
+      ],
+      "slide": 3,
+      "title": "IDE와 ADE",
+      "text": "IDE\n\nIntegrated Development Environment\n\n사람 중심 환경\n파일 열기\n→\n작성\n→\n실행\n→\n저장\n\nADE\n\nAgent Development Environment\n\n에이전트 중심 환경\n작업 생성\n→\n공간 생성\n→\n에이전트 실행\n→\n결과 검토",
+      "body": {
+        "x": 96,
+        "y": 224.34375,
+        "width": 1088,
+        "height": 472.03125
+      },
+      "measurements": [
+        {
+          "selector": ".ide-ade-v1-card",
+          "text": "IDEIntegrated Development Environment사람 중심 환경파일 열기→작성→실행→저장",
+          "rect": {
+            "x": 96,
+            "y": 264.6875,
+            "width": 524.796875,
+            "height": 391.34375
+          },
+          "style": {
+            "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "letterSpacing": "normal",
+            "gridTemplateColumns": "none",
+            "gap": "9.6px",
+            "padding": "13.28px 27.2px",
+            "borderWidth": "1px",
+            "backgroundColor": "rgba(139, 148, 158, 0.05)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "391.344px"
+          }
+        },
+        {
+          "selector": ".ide-ade-v1-card",
+          "text": "ADEAgent Development Environment에이전트 중심 환경작업 생성→공간 생성→에이전트 실행→결과 검토",
+          "rect": {
+            "x": 659.1875,
+            "y": 264.6875,
+            "width": 524.8125,
+            "height": 391.34375
+          },
+          "style": {
+            "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "letterSpacing": "normal",
+            "gridTemplateColumns": "none",
+            "gap": "9.6px",
+            "padding": "13.28px 27.2px",
+            "borderWidth": "1px",
+            "backgroundColor": "rgba(252, 28, 73, 0.05)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "391.344px"
+          }
+        }
+      ],
+      "images": [
+        {
+          "src": "/assets/fastcampus-logo-dark.svg",
+          "loaded": true,
+          "natural": [
+            120,
+            19
+          ]
+        }
+      ],
+      "overflow": [],
+      "screenshot": "artifacts/part2/_qa/golden-orca-3-1280x800.png"
+    },
+    {
+      "actualViewport": [
+        1280,
+        800
+      ],
+      "slide": 4,
+      "title": "Orca의 작업 단위",
+      "text": "워크트리\n\n프로젝트 파일을 따로 꺼내\n작업하는 폴더\n\n에이전트는 이 워크트리 안에서 작업합니다.",
+      "body": {
+        "x": 96,
+        "y": 224.34375,
+        "width": 1088,
+        "height": 472.03125
+      },
+      "measurements": [
+        {
+          "selector": ".worktree-folder-scene",
+          "text": "워크트리프로젝트 파일을 따로 꺼내작업하는 폴더에이전트는 이 워크트리 안에서 작업합니다.",
+          "rect": {
+            "x": 96,
+            "y": 316.359375,
+            "width": 1088,
+            "height": 288
+          },
+          "style": {
+            "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "letterSpacing": "normal",
+            "gridTemplateColumns": "543.078px 493.734px",
+            "gap": "51.2px",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "288px"
+          }
+        },
+        {
+          "selector": ".worktree-folder-scene__art",
+          "text": "",
+          "rect": {
+            "x": 96,
+            "y": 316.359375,
+            "width": 543.078125,
+            "height": 288
+          },
+          "style": {
+            "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "letterSpacing": "normal",
+            "gridTemplateColumns": "none",
+            "gap": "normal",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "288px"
+          }
+        },
+        {
+          "selector": ".worktree-folder-scene__title",
+          "text": "워크트리",
+          "rect": {
+            "x": 690.265625,
+            "y": 354.375,
+            "width": 493.734375,
+            "height": 65.65625
+          },
+          "style": {
+            "fontFamily": "Pretendard, sans-serif",
+            "fontSize": "48.64px",
+            "fontWeight": "850",
+            "lineHeight": "65.664px",
+            "letterSpacing": "-1.7024px",
+            "gridTemplateColumns": "none",
+            "gap": "normal",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "65.6562px"
+          }
+        },
+        {
+          "selector": ".worktree-folder-scene__definition",
+          "text": "프로젝트 파일을 따로 꺼내작업하는 폴더",
+          "rect": {
+            "x": 690.265625,
+            "y": 444.03125,
+            "width": 493.734375,
+            "height": 65.53125
+          },
+          "style": {
+            "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "20.48px",
+            "fontWeight": "400",
+            "lineHeight": "32.768px",
+            "letterSpacing": "normal",
+            "gridTemplateColumns": "none",
+            "gap": "normal",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "65.5312px"
+          }
+        }
+      ],
+      "images": [
+        {
+          "src": "/assets/fastcampus-logo-dark.svg",
+          "loaded": true,
+          "natural": [
+            120,
+            19
+          ]
+        }
+      ],
+      "overflow": [],
+      "screenshot": "artifacts/part2/_qa/golden-orca-4-1280x800.png"
+    },
+    {
+      "actualViewport": [
+        1280,
+        800
+      ],
+      "slide": 5,
+      "title": "오케스트레이션까지",
+      "text": "하나의 목표\n에이전트 A\n에이전트 B\n에이전트 C\n모인 결과\n\n작업 배정 · 진행 확인 · 결과 취합",
+      "body": {
+        "x": 96,
+        "y": 224.34375,
+        "width": 1088,
+        "height": 472.03125
+      },
+      "measurements": [
+        {
+          "selector": ".orchestration-flow",
+          "text": "하나의 목표에이전트 A에이전트 B에이전트 C모인 결과",
+          "rect": {
+            "x": 96,
+            "y": 277.171875,
+            "width": 1088,
+            "height": 288
+          },
+          "style": {
+            "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "letterSpacing": "normal",
+            "gridTemplateColumns": "256.016px 89.5938px 320.016px 89.5938px 256.031px",
+            "gap": "19.2px",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "288px"
+          }
+        },
+        {
+          "selector": ".orchestration-flow__agents",
+          "text": "에이전트 A에이전트 B에이전트 C",
+          "rect": {
+            "x": 479.984375,
+            "y": 277.171875,
+            "width": 320.015625,
+            "height": 288
+          },
+          "style": {
+            "fontFamily": "Pretendard, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "16px",
+            "fontWeight": "400",
+            "lineHeight": "normal",
+            "letterSpacing": "normal",
+            "gridTemplateColumns": "320.016px",
+            "gap": "normal",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "288px"
+          }
+        },
+        {
+          "selector": ".orchestration-flow__title",
+          "text": "하나의 목표",
+          "rect": {
+            "x": 162.125,
+            "y": 484.5625,
+            "width": 123.765625,
+            "height": 38
+          },
+          "style": {
+            "fontFamily": "Pretendard, sans-serif",
+            "fontSize": "28.16px",
+            "fontWeight": "800",
+            "lineHeight": "38.016px",
+            "letterSpacing": "-0.704px",
+            "gridTemplateColumns": "none",
+            "gap": "normal",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "38px"
+          }
+        },
+        {
+          "selector": ".orchestration-flow__title",
+          "text": "에이전트 A",
+          "rect": {
+            "x": 619.828125,
+            "y": 306.171875,
+            "width": 120.328125,
+            "height": 38
+          },
+          "style": {
+            "fontFamily": "Pretendard, sans-serif",
+            "fontSize": "28.16px",
+            "fontWeight": "800",
+            "lineHeight": "38.016px",
+            "letterSpacing": "-0.704px",
+            "gridTemplateColumns": "none",
+            "gap": "normal",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "38px"
+          }
+        },
+        {
+          "selector": ".orchestration-flow__title",
+          "text": "에이전트 B",
+          "rect": {
+            "x": 621.234375,
+            "y": 402.171875,
+            "width": 117.5,
+            "height": 38
+          },
+          "style": {
+            "fontFamily": "Pretendard, sans-serif",
+            "fontSize": "28.16px",
+            "fontWeight": "800",
+            "lineHeight": "38.016px",
+            "letterSpacing": "-0.704px",
+            "gridTemplateColumns": "none",
+            "gap": "normal",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "38px"
+          }
+        },
+        {
+          "selector": ".orchestration-flow__title",
+          "text": "에이전트 C",
+          "rect": {
+            "x": 619.9375,
+            "y": 498.171875,
+            "width": 120.109375,
+            "height": 38
+          },
+          "style": {
+            "fontFamily": "Pretendard, sans-serif",
+            "fontSize": "28.16px",
+            "fontWeight": "800",
+            "lineHeight": "38.016px",
+            "letterSpacing": "-0.704px",
+            "gridTemplateColumns": "none",
+            "gap": "normal",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "38px"
+          }
+        },
+        {
+          "selector": ".orchestration-flow__title",
+          "text": "모인 결과",
+          "rect": {
+            "x": 1005.90625,
+            "y": 484.5625,
+            "width": 100.140625,
+            "height": 38
+          },
+          "style": {
+            "fontFamily": "Pretendard, sans-serif",
+            "fontSize": "28.16px",
+            "fontWeight": "800",
+            "lineHeight": "38.016px",
+            "letterSpacing": "-0.704px",
+            "gridTemplateColumns": "none",
+            "gap": "normal",
+            "padding": "0px",
+            "borderWidth": "0px",
+            "backgroundColor": "rgba(0, 0, 0, 0)",
+            "objectFit": "fill",
+            "maxWidth": "none",
+            "height": "38px"
+          }
+        }
+      ],
+      "images": [
+        {
+          "src": "/assets/fastcampus-logo-dark.svg",
+          "loaded": true,
+          "natural": [
+            120,
+            19
+          ]
+        }
+      ],
+      "overflow": [],
+      "screenshot": "artifacts/part2/_qa/golden-orca-5-1280x800.png"
+    }
+  ],
+  "baseline": [
+    {
+      "slide": 2,
+      "screenshot": "artifacts/part2/_qa/orca-basics-2133-slide-2.png",
+      "sha256": "c332c85624e33d7c2cb9581d2698d3de5fc64370cc7bd9bc4a3d95c8ecc51552",
+      "status": "Previous assistant output; screenshot evidence only, not the current accepted HTML"
+    },
+    {
+      "slide": 4,
+      "screenshot": "artifacts/part2/_qa/orca-basics-2133-slide-4.png",
+      "sha256": "bb4b0d56ff1fa172f4020ed8646b3e816ce20258fe628ea5cbbe4523a530f0a0",
+      "status": "Previous assistant output; screenshot evidence only, not the current accepted HTML"
+    },
+    {
+      "slide": 5,
+      "screenshot": "artifacts/part2/_qa/orca-basics-2133-slide-5.png",
+      "sha256": "8ee9b281ecbea40863b6555efa1149302af133a83fb033afc06b4e25e17fdedc",
+      "status": "Previous assistant output; screenshot evidence only, not the current accepted HTML"
+    }
+  ],
+  "sha256": {
+    "artifacts/part2/outputs/ch01-02-what-is-orca.html": "c0c92f03377a2671b2c783d17a03a2fa88a5cefceea741ba7d98d0c6c6612568",
+    ".claude/skills/fastcampus-slide/assets/base-template.html": "d99a2683e2dba3bfc7cd449c6d3c8ff7ec81577d42cbd5905f4efbe09369ca5c",
+    "artifacts/part2/_images/ch01-02-what-is-orca--agent-office-v4.png": "6394b6e0693a7d5c2ad97231f3d4608c1f01587d6ab2097f68af29826941441b",
+    "assets/fastcampus-logo-dark.svg": "13e0e37df38498b4ca900ecad8e5fb722efefff176f851525a443d100ffd7d0e",
+    "assets/orca-logo.svg": "6545255de6cca93679d3419629d0fadae68432475549068e8779811c4aa21f89",
+    "assets/claude-code-logo.png": "9ef1d98492f68c5c7766162af827dd4e0c9cb0d76b78fce22798985a792fca63",
+    "assets/codex-logo.svg": "983fc436a025a9920ec2661d790e956f766f273a2240801e64c3d3d26feb7ad2",
+    "artifacts/part2/_qa/golden-orca-1-2133x1200.png": "8c01a062e63c4c10ce1cc0a7bf0b9536c5969a3536fb88b9f018f89d46959c7b",
+    "artifacts/part2/_qa/golden-orca-2-2133x1200.png": "83b0e0e71e8f4a17b2324ac9cf63e1c5a132bbd4241f64dd38e77bc0c02db6b1",
+    "artifacts/part2/_qa/golden-orca-3-2133x1200.png": "f77cd3078c47fc49ae0668d31d566bdf25dbf3630eddf74628399a2fb735791f",
+    "artifacts/part2/_qa/golden-orca-4-2133x1200.png": "51aca6ea2c681ff2679cdb6aedd900bf974b8182baf81e5e8d9bc626bbd94dec",
+    "artifacts/part2/_qa/golden-orca-5-2133x1200.png": "2864053c19a73224fa1b50813be12611e123618537861c1d85a5741714008bd4",
+    "artifacts/part2/_qa/golden-orca-1-1280x800.png": "66131eea7789ccd6374e60c6aa13a3d83debaff1ae73c404394912b4ebd39a36",
+    "artifacts/part2/_qa/golden-orca-2-1280x800.png": "ab01abf4d05a7a7e16e112c7220cead20e0d64aff097d8f255a1526e04f880bb",
+    "artifacts/part2/_qa/golden-orca-3-1280x800.png": "12d7c4beabf8cd48f0227928ee60b9eb1eb32cceb8f25e6153e821bf3285179a",
+    "artifacts/part2/_qa/golden-orca-4-1280x800.png": "dc3f0f89449a4f684a09e4bbb8ab5f0578320120a0b0219987ebd1e90191e182",
+    "artifacts/part2/_qa/golden-orca-5-1280x800.png": "58ea453682ed110536ebe1d8d9bc3b2addffbe1abcf0cfdc90284178ad15f2a5"
+  },
+  "passed": true,
+  "visual_review": "All 5 slides reviewed at both viewports; compared slides 2/4/5 to retained assistant screenshots.",
+  "reference": ".claude/skills/fastcampus-slide/references/goldenset-orca-basics.md",
+  "comparison": "artifacts/part2/_goldenset/ch01-02-what-is-orca/comparison.md",
+  "paired_documents": {
+    "artifacts/part2/_source/ch01-02-what-is-orca.md": "fce9bebcbcc551167f4e090f1e5a281670b370d093656328b3249dacc1c62579",
+    "artifacts/part2/_storyboard/ch01-02-what-is-orca.md": "1e4a66d09711db6b139f8c5c18bc023c1cf5ef3e76ab631fc40d259747fabdee",
+    "artifacts/part2/_script/ch01-02-what-is-orca.md": "cefec736696052e0ef4bde4099896f83d579da7a882f963574d58c7d19daca48"
+  }
+}
