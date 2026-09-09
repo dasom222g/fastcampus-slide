@@ -20,3 +20,6 @@ configs/*.local.*
 playwright/.auth/
 storage-state*.json
 storageState*.json
+
+# 스킬 품질측정 작업 폴더 — eval 산출물과 __pycache__가 쌓인다
+.claude/skills/*-workspace/
