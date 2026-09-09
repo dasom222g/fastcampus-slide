@@ -10,6 +10,8 @@ artifacts/*/_source
 artifacts/*/_script
 artifacts/*/_qa
 artifacts/*/_goldenset
+artifacts/*/_edu-note
+edu-note
 
 # 대시보드 — 생성물(dashboard/index.html)만 배포한다
 dashboard/src

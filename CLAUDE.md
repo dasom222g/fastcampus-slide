@@ -1,6 +1,8 @@
 # 패스트캠퍼스 Orca 강의 슬라이드
 
-이 저장소는 **패스트캠퍼스 Orca 강의의 이론 슬라이드**를 만들고 배포하는 곳이다. 다른 목적의 작업은 하지 않는다.
+이 저장소는 **패스트캠퍼스 Orca 강의**의 산출물을 만드는 곳이다 — 이론 슬라이드와 발표 대본, 그리고 수강생이 따라 하는 **실습자료(랩노트)**. 강의와 무관한 작업은 하지 않는다.
+
+실습자료는 공용 스킬 **`edu-note`**(원본은 `common-skills` 저장소, 전역 심링크로 Claude·Codex 양쪽에서 보인다)로 만들고, 이 강의의 맥락·경로·독자는 `edu-note/config.md`가 준다. 규격은 후츠릿 유튜브 실습자료와 공유한다.
 
 ## 모든 세션에서 먼저 읽는다
 
@@ -47,6 +49,8 @@
 ## 구조
 
 ```
+edu-note/config.md                 실습자료 스킬 바인딩 (맥락 문서·경로·독자)
+
 docs/
   curriculum.md                    상세 커리큘럼 (세션마다 읽는다)
   course-brief.md                  강의 기획서 (세션마다 읽는다)
@@ -58,6 +62,9 @@ artifacts/
     _source/<clip>.md              그 클립의 슬라이드 소스 (구성안·참고 자료)
     _storyboard/<clip>.md          구성 확정 문서 — HTML보다 먼저 저장한다
     _feedback/<clip>.md            슬라이드별 피드백 입력 파일
+    _edu-note/<clip>.md            그 클립의 실습자료 (랩노트) — `edu-note` 스킬
+    _edu-note/_source/<clip>.md    랩노트 원자료 (실습 진행 기록)
+    _edu-note/_feedback/<clip>.md  랩노트 피드백 입력 파일
     _images/                       이 파트의 이미지 (하위 폴더 없이 파일만)
 
 assets/                            모든 덱이 공유하는 에셋 (패스트캠퍼스 · Claude Code · Codex · Orca 로고)
