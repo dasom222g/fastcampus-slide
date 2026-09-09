@@ -1,0 +1,785 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>목표와 작업, 실행의 흐름</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css"><style>
+      :root {
+        --bg: #0d1117;
+        --bg-card: #161b22;
+        --text: #e6edf3;
+        --text-dim: #8b949e;
+        --text-muted: #59636e;
+        --brand: #fc1c49;
+        --purple: #9188ff;
+        --orange: #ff6d3b;
+        --yellow: #f0b429;
+        --green: #4ade80;
+        --gray: #8b949e;
+        --border: rgba(255, 255, 255, 0.08);
+        --dot: rgba(255, 255, 255, 0.055);
+        --title: clamp(2rem, 5.2vw, 3.8rem);
+        --statement: clamp(2rem, 3.8vw, 3.7rem);
+        --heading: clamp(1.5rem, 2.2vw, 2.25rem);
+        --body: clamp(1.1rem, 1.6vw, 1.42rem);
+        --gap: clamp(1.5rem, 3vw, 3rem);
+        --content-width: 86rem;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        font-family:
+          Pretendard,
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        font-size: clamp(13px, 1.35vw, 16px);
+        background: var(--bg);
+        color: var(--text);
+        word-break: keep-all;
+      }
+      body {
+        overflow: hidden;
+      }
+      button {
+        font: inherit;
+      }
+      .slide-deck {
+        position: fixed;
+        inset: 0;
+      }
+      .slide {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr) auto;
+        gap: clamp(1.5rem, 3.75vh, 3rem);
+        padding: clamp(2.6rem, 5.5vh, 4.2rem) clamp(4rem, 7.5vw, 7rem);
+        background:
+          radial-gradient(circle, var(--dot) 1px, transparent 1px) 0 0/26px 26px,
+          var(--bg);
+        overflow: hidden;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.36s ease;
+      }
+      .slide.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .slide__header {
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+        padding-bottom: clamp(0.9rem, 2.2vh, 1.6rem);
+        border-bottom: 1px solid var(--border);
+      }
+      .slide__label {
+        font-size: clamp(0.58rem, 0.85vw, 0.72rem);
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--brand);
+      }
+      .slide__title {
+        font-size: var(--title);
+        font-weight: 800;
+        line-height: 1.08;
+        letter-spacing: -0.015em;
+      }
+      .slide__sub {
+        font-size: clamp(1.05rem, 1.6vw, 1.28rem);
+        line-height: 1.5;
+        color: var(--text-dim);
+      }
+      .slide__body {
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: var(--gap);
+        overflow: hidden;
+        container-type: size;
+      }
+      .slide__footer {
+        border-top: 1px solid var(--border);
+        padding-top: clamp(0.5rem, 1.3vh, 0.9rem);
+      }
+      .fastcampus-logo {
+        display: block;
+        width: clamp(7.2rem, 9vw, 8.5rem);
+        height: auto;
+      }
+      .hl,
+      .tone-brand {
+        color: var(--brand);
+      }
+      .tone-purple {
+        color: var(--purple);
+      }
+      .tone-gray {
+        color: var(--gray);
+      }
+      .tone-yellow {
+        color: var(--yellow);
+      }
+      .tone-orange {
+        color: var(--orange);
+      }
+      .tone-green {
+        color: var(--green);
+      }
+      /* Shared roles: cover and split layouts inherit exactly the same type. */
+      .statement {
+        font-family: inherit;
+        font-size: var(--statement);
+        font-weight: 850;
+        line-height: 1.35;
+        letter-spacing: -0.035em;
+      }
+      .statement strong {
+        display: block;
+        color: var(--brand);
+        font-weight: 900;
+      }
+      .heading {
+        font-size: var(--heading);
+        font-weight: 800;
+        line-height: 1.35;
+        letter-spacing: -0.025em;
+      }
+      .copy {
+        font-size: var(--body);
+        line-height: 1.6;
+        color: var(--text-dim);
+      }
+      .eyebrow {
+        font-size: clamp(1rem, 1.5vw, 1.3rem);
+        line-height: 1.5;
+        color: var(--text-dim);
+      }
+      .diagram {
+        display: block;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+        color: var(--gray);
+      }
+      .symbols {
+        position: absolute;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+        pointer-events: none;
+      }
+      .content {
+        width: min(100%, var(--content-width));
+        margin-inline: auto;
+      }
+      /* Image slots are borderless. Replace the SVG slot with the clip's image. */
+      .scene {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.65fr);
+        gap: var(--gap);
+        align-items: center;
+        width: min(100%, 92rem);
+      }
+      .scene--visual-first {
+        grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+      }
+      .scene__copy {
+        display: flex;
+        flex-direction: column;
+        gap: clamp(1.3rem, 3vh, 2.5rem);
+      }
+      .scene__visual {
+        width: 100%;
+        height: min(52cqh, 28rem);
+        min-height: 15rem;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+      }
+      .scene--cover .scene__visual,
+      .scene--image .scene__visual {
+        height: min(78cqh, 34rem);
+      }
+      .scene__visual > img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border: 0;
+        box-shadow: none;
+      }
+      .scene__visual > .diagram {
+        min-height: 0;
+        flex: 1;
+      }
+      .scene__visual figcaption {
+        font-size: var(--body);
+        color: var(--text-dim);
+        text-align: center;
+      }
+      /* Open parallel concepts: diagram, heading, caption; no card shells. */
+      .triptych {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--gap);
+        align-items: start;
+      }
+      .concept {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: clamp(1rem, 2.6vh, 2rem);
+        min-width: 0;
+      }
+      .concept > .diagram {
+        height: clamp(11rem, 25vh, 19rem);
+      }
+      .concept .copy {
+        max-width: 17em;
+      }
+      /* Optional transition copy, never wrapped in a banner or bordered box. */
+      .handoff {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1.25rem;
+        color: var(--text-dim);
+        font-size: var(--body);
+        line-height: 1.5;
+      }
+      .handoff strong {
+        color: var(--text);
+        font-weight: 800;
+      }
+      .progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        z-index: 200;
+        background: var(--border);
+      }
+      .progress-fill {
+        height: 100%;
+        background: var(--brand);
+        transition: width 0.3s ease;
+      }
+      .nav-btn {
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 150;
+        width: clamp(1.9rem, 2.8vw, 2.5rem);
+        height: clamp(1.9rem, 2.8vw, 2.5rem);
+        display: grid;
+        place-items: center;
+        border: 1px solid var(--border);
+        border-radius: 3px;
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--text-dim);
+        cursor: pointer;
+      }
+      .nav-btn:hover:not(:disabled) {
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .nav-btn:disabled {
+        opacity: 0.1;
+        cursor: default;
+      }
+      #btn-prev {
+        left: clamp(0.4rem, 1.2vw, 1.1rem);
+      }
+      #btn-next {
+        right: clamp(0.4rem, 1.2vw, 1.1rem);
+      }
+      .dot-nav {
+        position: fixed;
+        bottom: 1.3rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        z-index: 150;
+      }
+      .dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.18);
+        border: 0;
+        cursor: pointer;
+        transition: all 0.22s ease;
+      }
+      .dot.active {
+        width: 22px;
+        border-radius: 3px;
+        background: var(--brand);
+      }
+      .slide-counter {
+        position: fixed;
+        bottom: 1.2rem;
+        right: 1.8rem;
+        font:
+          0.62rem Monaco,
+          monospace;
+        color: var(--text-muted);
+        z-index: 150;
+      }
+      @keyframes s-fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .anim-item {
+        opacity: 0;
+      }
+      .anim-item.do-fadeinup {
+        animation: s-fadeInUp 0.48s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .slide,
+        .progress-fill {
+          transition: none;
+        }
+        .anim-item.do-fadeinup {
+          animation-duration: 0.001s;
+        }
+      }
+
+      .status-one-line {
+        white-space: nowrap;
+        max-width: none;
+      }
+
+      /* STRUCTURE_BRANCH: root and children are content, connecting lines encode membership. */
+      .structure-tree {
+        width: min(100%, 72rem);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .structure-node {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        text-align: center;
+        min-width: 0;
+      }
+      .structure-node > .diagram {
+        width: 6rem;
+        height: 6rem;
+      }
+      .structure-tree__root {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+      .structure-tree__root > .diagram {
+        width: 5rem;
+        height: 5rem;
+      }
+      .structure-tree__stem {
+        height: 3rem;
+        border-left: 2px solid var(--gray);
+      }
+      .structure-tree__children {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+        position: relative;
+      }
+      .structure-tree__children::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 25%;
+        right: 25%;
+        border-top: 2px solid var(--gray);
+      }
+      .structure-tree__children > .structure-node {
+        position: relative;
+        padding: 3rem 1.5rem 0;
+      }
+      .structure-tree__children > .structure-node::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 0;
+        height: 2rem;
+        border-left: 2px solid var(--gray);
+      }
+      .structure-tree__root .copy {
+        margin-top: 0.45rem;
+      }
+      /* STRUCTURE_EXCHANGE: only the common scope gets a boundary, not every text node. */
+      .exchange {
+        position: relative;
+        aspect-ratio: 600/430;
+        width: 100%;
+        border: 1px solid var(--gray);
+        border-radius: 0.5rem;
+      }
+      .exchange__scope {
+        position: absolute;
+        top: 1rem;
+        left: 1.25rem;
+      }
+      .exchange > .diagram {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .exchange__node {
+        position: absolute;
+        width: 43%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+      .exchange__node--root {
+        top: 14%;
+        left: 28.5%;
+      }
+      .exchange__node--a {
+        bottom: 9%;
+        left: 3.5%;
+      }
+      .exchange__node--b {
+        bottom: 9%;
+        right: 3.5%;
+      }
+      .exchange__legend {
+        position: absolute;
+        top: 46%;
+        left: 37%;
+        width: 26%;
+        display: grid;
+        gap: 0.7rem;
+        text-align: center;
+      }
+      .exchange__legend .copy {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+      .line-key {
+        width: 1.5rem;
+        border-top: 2px solid var(--yellow);
+      }
+      .line-key--return {
+        border-top-style: dashed;
+      }
+      /* TRANSITION_COMPARE: mirror all four rows; the center is a transition arrow only. */
+      .transition-compare {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 4rem minmax(0, 1fr);
+        align-items: center;
+        gap: 2.5rem;
+        width: min(100%, var(--content-width));
+      }
+      .transition-side {
+        display: grid;
+        grid-template-rows: 2rem 5.5rem 12rem minmax(3.2rem, auto);
+        align-items: center;
+        justify-items: center;
+        text-align: center;
+        gap: 1rem;
+        min-width: 0;
+      }
+      .transition-side > .diagram {
+        height: 12rem;
+        width: 100%;
+      }
+      .transition-side > .copy {
+        max-width: 20em;
+      }
+      .transition-compare__arrow {
+        height: 4rem;
+      }
+    
+
+/* Clip-specific relationships; type roles remain inherited from the approved base. */
+.slide__body{overflow:visible}.slide__title b{color:var(--brand);font-weight:inherit}
+.mono{font-family:Monaco,monospace;font-size:1rem;line-height:1.6}
+.diagram{color:inherit}.icon{display:block;width:6rem;height:6rem;overflow:visible;flex:none}
+.icon--robot{width:7rem;height:7.25rem}.icon--human{width:6rem;height:6rem}.icon--file{width:5rem;height:6.2rem}
+.icon--folder{width:16rem;height:10.6rem}.center{text-align:center}.dim{color:var(--text-dim)}
+.cluster{display:flex;flex-direction:column;align-items:center;gap:1.1rem;min-width:0}
+.cluster .heading,.cluster .copy{white-space:nowrap}.inline{display:flex;align-items:center;justify-content:center;gap:1.4rem}
+.caption{font-size:var(--body);color:var(--text-dim);line-height:1.6;text-align:center}
+.map{position:relative;width:min(100%,86rem);height:min(100cqh,34rem);flex:none}
+.map--cover{height:28rem;width:100%}
+.slide__body>.map:has(+.anim-item){height:min(calc(100cqh - 5rem),34rem)}.map--wide{width:min(100%,94rem)}
+.map svg.wires{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.pin{position:absolute;transform:translate(-50%,-50%);text-align:center;min-width:0}
+.pin>.anim-item{display:flex;flex-direction:column;align-items:center;gap:.6rem}
+.pin .heading{white-space:nowrap}.pin .copy{white-space:nowrap}
+.wires path{stroke-width:2.2;fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round}
+.wires .draw{opacity:0}
+.wires .draw.do-fadeinup{animation:line-draw .65s linear both}
+.wires .return{stroke-dasharray:6 6;stroke-dashoffset:0}
+.wires .return.do-fadeinup{animation:soft-in .48s ease-out both}
+@keyframes line-draw{from{opacity:1;clip-path:inset(-12px 100% -12px -12px) stroke-box}to{opacity:1;clip-path:inset(-12px -12px -12px -12px) stroke-box}}
+.wires .draw.draw--reverse.do-fadeinup{animation-name:line-draw-reverse}
+@keyframes line-draw-reverse{from{opacity:1;clip-path:inset(-12px -12px -12px 100%) stroke-box}to{opacity:1;clip-path:inset(-12px -12px -12px -12px) stroke-box}}
+@keyframes soft-in{from{opacity:0}to{opacity:1}}
+.map .pin .anim-item.do-fadeinup{animation-name:soft-in}
+.scene{width:min(100%,92rem);grid-template-columns:minmax(0,1fr) minmax(0,1.45fr)}
+.scene--visual-first{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)}
+.scene--cover .scene__copy{gap:1.5rem}.statement strong{color:var(--brand)}
+.env{position:relative;width:100%;height:min(76cqh,30rem);border:1.5px solid var(--gray);border-radius:.6rem;padding:2rem}
+.env__title{position:absolute;top:1.25rem;left:1.6rem;display:flex;align-items:center;gap:.65rem;font-size:var(--heading);font-weight:750}
+.env__title img{width:2.4rem;height:2.4rem}.env .map{width:100%;height:100%}
+.env__caption{position:absolute;bottom:1.15rem;left:0;width:100%;font-size:var(--body);text-align:center;color:var(--gray)}
+.skill-tag{display:flex;align-items:center;gap:.8rem;font-size:var(--body);font-weight:650;color:var(--yellow)}
+.skill-tag .icon{width:2.8rem;height:3.5rem}
+.transition-compare{width:min(100%,90rem);gap:2rem;grid-template-columns:1fr 3.5rem 1fr}
+.transition-side{grid-template-rows:2rem 6.5rem 12rem 4.8rem;gap:1rem}
+.transition-side .heading{font-size:var(--heading)}.transition-side .copy{max-width:24em}
+.transition-side>.diagram{height:12rem;width:100%;max-width:25rem}
+.role-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7rem;width:min(100%,78rem)}
+.role-pair .role{display:flex;flex-direction:column;align-items:center;gap:1.3rem;text-align:center}
+.role-art{position:relative;width:17rem;height:14rem;display:flex;justify-content:center;align-items:center;gap:2rem}
+.role-art .icon--robot{width:8.5rem;height:9rem}.role-art .icon--file{width:5.2rem;height:7rem}
+.role-pair .statement{font-size:var(--statement)}.role-pair .copy{white-space:nowrap}
+.folder-art{position:relative}.folder-art .agent-badge{position:absolute;right:-2.1rem;top:-1.8rem;width:4.5rem;height:4.8rem}
+.folder-art .folder-name{position:absolute;left:0;right:0;top:35%;font-size:var(--body);font-weight:750;text-align:center}
+.folder-art .icon--folder{width:18rem;height:12rem}
+.message-grid{width:min(100%,76rem);display:grid;grid-template-columns:13rem minmax(0,1fr) 15rem;grid-template-rows:auto repeat(3,6.5rem);gap:1.4rem 2.5rem;align-items:center}
+.message-head{display:flex;align-items:center;gap:1rem}.message-head .icon{width:4rem;height:4.2rem}
+.message-line{position:relative;text-align:center;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem}
+.message-line .mono{font-size:1.45rem;font-weight:700}.message-line .copy{font-size:var(--body)}
+.message-line:after{content:'';position:absolute;top:52%;left:0;right:0;border-top:2px solid currentColor}
+.message-line:before{content:'';position:absolute;right:0;top:calc(52% - 5px);width:10px;height:10px;border-top:2px solid currentColor;border-right:2px solid currentColor;transform:rotate(45deg)}
+.message-line--back:before{left:0;right:auto;transform:rotate(-135deg)}
+.message-side{font-size:var(--body);text-align:center;color:var(--gray)}
+.goal-sheet{width:min(100%,77rem);display:grid;grid-template-columns:8rem minmax(0,1fr);gap:2.5rem;align-items:start}
+.goal-sheet>.icon{margin-top:1rem}.goal-request{font-size:var(--statement);font-weight:850;line-height:1.35;letter-spacing:-.035em}
+.goal-request strong{color:var(--brand)}.brief-lines{display:flex;flex-direction:column;gap:1.4rem;margin-top:2.8rem}
+.brief-line{display:grid;grid-template-columns:7rem 1fr;align-items:baseline;gap:1.5rem}.brief-line .heading{font-size:var(--body);color:var(--gray);font-weight:600}.brief-line .copy{color:var(--text);font-size:var(--heading)}
+.run-scope{width:min(100%,78rem);padding:2rem 2.5rem 2.2rem;border:1.5px solid var(--gray);border-radius:.7rem;position:relative}
+.run-title{display:flex;align-items:baseline;gap:1.3rem}.run-title .statement{font-size:var(--statement)}
+.run-tasks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3rem;padding:3.2rem .5rem 1rem}.task-sheet{display:flex;flex-direction:column;align-items:center;gap:1rem;text-align:center}
+.task-sheet .icon--file{width:6rem;height:7.5rem}.task-sheet .heading{white-space:nowrap}.task-sheet .mono{color:var(--gray)}
+.dispatch-scene{width:min(100%,82rem);display:grid;grid-template-columns:1fr 1.2fr 1.35fr;align-items:center;gap:2rem}
+.dispatch-link{text-align:center;display:flex;flex-direction:column;align-items:center;gap:1.2rem}.dispatch-link svg{width:100%;height:3rem}
+.worker-terminal{width:100%;max-width:24rem;border:1.5px solid var(--gray);border-radius:.4rem;position:relative;padding:3.2rem 2rem 1.8rem;display:flex;flex-direction:column;align-items:center;gap:1rem}
+.worker-terminal:before{content:'';position:absolute;top:1.8rem;left:0;right:0;border-top:1px solid var(--gray)}
+.worker-terminal:after{content:'•••';position:absolute;top:.1rem;left:1rem;letter-spacing:.2em;color:var(--gray)}
+[data-visual="goal-task-flow-6"] .pin .icon--robot{width:5.2rem;height:5.4rem}
+.status-badge{display:flex;align-items:center;gap:.55rem;justify-content:center;font-size:var(--body);white-space:nowrap}.status-badge .icon{width:1.65rem;height:1.65rem}
+.gate-node{position:relative;width:12rem;height:12rem;display:grid;place-items:center}.gate-node:before{content:'';position:absolute;inset:1.7rem;border:2px solid var(--yellow);transform:rotate(45deg);border-radius:.3rem}.gate-node span{z-index:1;font-size:var(--heading);font-weight:750;color:var(--yellow)}
+.flow-strip{width:min(100%,94rem);display:grid;grid-template-columns:repeat(4,minmax(0,1fr) 2.7rem) minmax(0,1fr);gap:.5rem;align-items:center}
+.flow-step{display:flex;flex-direction:column;align-items:center;gap:1.5rem;text-align:center;min-width:0}.flow-step .icon{width:6.5rem;height:7rem}.flow-step .heading{font-size:var(--heading);white-space:nowrap}.flow-step .mono{font-size:1rem;white-space:nowrap}
+.flow-arrow svg{width:100%;height:100%}.flow-arrow{width:100%;height:2.4rem;align-self:center;margin-top:-2.5rem}.flow-prefix{font-family:Monaco,monospace;font-size:1rem;color:var(--gray);margin-top:1rem}
+.flow-prefix span{font-family:inherit}.flow-footer{display:flex;flex-direction:column;gap:.8rem;align-items:center}
+@media(max-height:850px){
+ .map{height:min(100cqh,27rem)}.map--cover{height:25rem}.slide__body>.map:has(+.anim-item){height:min(calc(100cqh - 5rem),27rem)}.env{height:min(92cqh,25rem);padding:1.7rem}
+ .transition-side{grid-template-rows:1.7rem 5.5rem 10rem 4.5rem;gap:.7rem}.transition-side>.diagram{height:10rem}
+ .role-art{height:10rem}.role-pair .role{gap:1rem}.role-art .icon--robot{width:7rem;height:7rem}
+ .folder-art .icon--folder{width:15.5rem;height:10.3rem}.folder-art .agent-badge{width:3.8rem;height:4rem}
+ .message-grid{grid-template-rows:auto repeat(3,5.2rem);gap:1rem 2rem}.message-head .icon{width:3rem;height:3rem}
+ .brief-lines{gap:1rem;margin-top:1.8rem}.run-tasks{padding:2rem .5rem .5rem}.run-scope{padding:1.7rem 2rem}
+ .flow-step{gap:1.1rem}.flow-step .icon{width:5.6rem;height:6rem}.flow-strip{grid-template-columns:repeat(4,minmax(0,1fr) 1.8rem) minmax(0,1fr)}
+}
+@media(prefers-reduced-motion:reduce){.wires .draw.do-fadeinup,.wires .return.do-fadeinup{animation:none;opacity:1;stroke-dashoffset:0}.anim-item.do-fadeinup{animation:none;opacity:1;transform:none}}
+</style></head><body><svg class="symbols" aria-hidden="true"><defs><marker id="arrow-gray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="var(--gray)" stroke-width="1.5"/></marker><marker id="arrow-yellow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="var(--yellow)" stroke-width="1.5"/></marker><marker id="arrow-brand" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="var(--brand)" stroke-width="1.5"/></marker><marker id="arrow-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="var(--purple)" stroke-width="1.5"/></marker><marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="var(--green)" stroke-width="1.5"/></marker><marker id="arrow-orange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="var(--orange)" stroke-width="1.5"/></marker></defs></svg><div class="progress-bar"><div class="progress-fill" id="progress"></div></div><button class="nav-btn" id="btn-prev" aria-label="이전 슬라이드">←</button><button class="nav-btn" id="btn-next" aria-label="다음 슬라이드">→</button><nav class="dot-nav" id="dot-nav" aria-label="슬라이드 선택"></nav><div class="slide-counter"><span id="cur">1</span> / <span id="tot">0</span></div><div class="slide-deck" id="deck"><!-- 발표 노트: 앞에서는 누가 협업을 조율하는지 봤습니다. 이번에는 목표 하나가 어떤 단계를 거쳐 결과가 되는지 따라가겠습니다. -->
+<article class="slide active" data-index="0" data-visual="goal-task-flow-1"><header class="slide__header"><span class="slide__label">Part 4 · ch01-02 · 목표와 작업, 실행의 흐름</span><h1 class="slide__title">목표와 작업, <span class="hl">실행의 흐름</span></h1><p class="slide__sub">목표 하나가 작업으로 나뉘고, 실행과 검토를 거쳐 결과로 모입니다.</p></header><main class="slide__body"><div class="scene scene--cover"><div class="anim-item scene__copy" data-anim-step="0"><p class=statement>하나의 목표가<strong>결과가 되기까지</strong></p></div><div class="map map--cover"><svg class="wires" viewBox="0 0 1000 420" preserveAspectRatio="none" aria-hidden="true"><path class="anim-item draw tone-gray" data-anim-step="1" d="M145 210H325Q350 210 350 130H445" pathLength="1" marker-end="url(#arrow-gray)"/><path class="anim-item draw tone-gray" data-anim-step="1" d="M325 210Q350 210 350 302H445" pathLength="1" marker-end="url(#arrow-gray)"/><path class="anim-item draw tone-green" data-anim-step="5" d="M595 130H625Q650 130 650 210H830" pathLength="1" marker-end="url(#arrow-green)"/><path class="anim-item draw tone-green" data-anim-step="5" d="M595 302H625Q650 302 650 210" pathLength="1" /></svg><div class="pin " style="left:10%;top:50%;width:18%"><div class="anim-item " data-anim-step="0"><svg class="icon icon--file  tone-gray" viewBox="0 0 56 68" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3H35L50 18V63H7ZM35 3V18H50M17 29H38M17 39H36M17 49H31"/></svg><p class="copy">목표</p></div></div><div class="pin " style="left:52%;top:29%;width:20%"><div class="anim-item " data-anim-step="3"><svg class="icon icon--file  tone-brand" viewBox="0 0 56 68" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3H35L50 18V63H7ZM35 3V18H50M17 29H38M17 39H36M17 49H31"/></svg></div></div><div class="pin " style="left:52%;top:72%;width:20%"><div class="anim-item " data-anim-step="4"><svg class="icon icon--file  tone-purple" viewBox="0 0 56 68" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3H35L50 18V63H7ZM35 3V18H50M17 29H38M17 39H36M17 49H31"/></svg></div></div><div class="pin " style="left:90%;top:50%;width:18%"><div class="anim-item " data-anim-step="7"><svg class="icon icon--file  tone-green" viewBox="0 0 56 68" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3H35L50 18V63H7ZM35 3V18H50M17 29H38M17 39H36M17 49H31"/></svg><p class="copy">결과</p></div></div></div></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article>
+<!-- 발표 노트: 이번에는 회사 소개 콘텐츠를 만든다는 예시를 끝까지 사용합니다. 결과물뿐 아니라 어떤 자료와 말투를 따라야 하는지도 함께 줍니다. -->
+<article class="slide" data-index="1" data-visual="goal-task-flow-2"><header class="slide__header"><span class="slide__label">Part 4 · ch01-02 · 목표와 작업, 실행의 흐름</span><h1 class="slide__title">목표와 <span class="hl">완료 기준</span></h1><p class="slide__sub">무엇을 만들지와 어떤 결과면 되는지를 함께 전달합니다.</p></header><main class="slide__body"><div class="goal-sheet"><svg class="icon icon--human  " viewBox="0 0 60 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="30" cy="16" r="11"/><path d="M10 58V43C10 21 50 21 50 43V58"/></svg><div><div class="anim-item " data-anim-step="0"><p class="goal-request">회사 소개 자료로<br><strong>블로그와 카드뉴스 초안을 만들어줘</strong></p><div class="brief-lines"><div class="anim-item brief-line" data-anim-step="2"><h2 class="heading">입력</h2><p class="copy">회사 소개 자료</p></div><div class="anim-item brief-line" data-anim-step="3"><h2 class="heading">결과물</h2><p class="copy">블로그 · 카드뉴스</p></div><div class="anim-item brief-line" data-anim-step="4"><h2 class="heading">기준</h2><p class="copy">자료의 사실 · 회사 말투</p></div></div></div></div></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article>
+<!-- 발표 노트: Run은 이번 전체 작업의 묶음입니다. 그 안에 자료 정리, 블로그 초안, 카드뉴스 초안이라는 Task를 만듭니다. 만들었다고 실행까지 된 것은 아닙니다. -->
+<article class="slide" data-index="2" data-visual="goal-task-flow-3"><header class="slide__header"><span class="slide__label">Part 4 · ch01-02 · 목표와 작업, 실행의 흐름</span><h1 class="slide__title"><span class="hl">Run</span>과 Task</h1><p class="slide__sub">Run은 전체 목표의 작업과 메시지를 묶고, Task는 실행할 작업 하나를 담습니다.</p></header><main class="slide__body"><div class="run-scope"><div class="anim-item " data-anim-step="0"><div class="run-title"><h2 class="statement">Run</h2><p class="copy">회사 소개 콘텐츠 제작</p></div></div><div class="run-tasks"><div class="anim-item task-sheet" data-anim-step="2"><svg class="icon icon--file  tone-yellow" viewBox="0 0 56 68" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3H35L50 18V63H7ZM35 3V18H50M17 29H38M17 39H36M17 49H31"/></svg><p class="mono">Task</p><h2 class="heading">자료 정리</h2></div><div class="anim-item task-sheet" data-anim-step="3"><svg class="icon icon--file  tone-yellow" viewBox="0 0 56 68" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3H35L50 18V63H7ZM35 3V18H50M17 29H38M17 39H36M17 49H31"/></svg><p class="mono">Task</p><h2 class="heading">블로그 초안</h2></div><div class="anim-item task-sheet" data-anim-step="4"><svg class="icon icon--file  tone-yellow" viewBox="0 0 56 68" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3H35L50 18V63H7ZM35 3V18H50M17 29H38M17 39H36M17 49H31"/></svg><p class="mono">Task</p><h2 class="heading">카드뉴스 초안</h2></div></div></div><div class="anim-item " data-anim-step="6"><p class="caption">작업과 메시지를 같은 목표 아래 묶는 단위</p></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article>
+<!-- 발표 노트: 아직 정리되지 않은 자료를 쓰는 작업을 먼저 돌리지 않습니다. 자료 정리를 선행 작업으로 연결하고, 이후의 두 작업은 서로 기다릴 필요가 없게 설계합니다. -->
+<article class="slide" data-index="3" data-visual="goal-task-flow-4"><header class="slide__header"><span class="slide__label">Part 4 · ch01-02 · 목표와 작업, 실행의 흐름</span><h1 class="slide__title">작업의 <span class="hl">순서</span></h1><p class="slide__sub">자료 정리가 끝나면, 그 결과를 쓰는 두 작업을 시작할 수 있습니다.</p></header><main class="slide__body"><div class="map "><svg class="wires" viewBox="0 0 1000 420" preserveAspectRatio="none" aria-hidden="true"><path class="anim-item draw tone-yellow" data-anim-step="2" d="M295 212H436Q460 212 460 109H722" pathLength="1" marker-end="url(#arrow-yellow)"/><path class="anim-item draw tone-yellow" data-anim-step="3" d="M436 212Q460 212 460 321H722" pathLength="1" marker-end="url(#arrow-yellow)"/></svg><div class="pin " style="left:18%;top:47%;width:32%"><div class="anim-item " data-anim-step="0"><svg class="icon icon--file  tone-yellow" viewBox="0 0 56 68" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3H35L50 18V63H7ZM35 3V18H50M17 29H38M17 39H36M17 49H31"/></svg><h2 class="heading">자료 정리</h2><p class="copy">공통으로 사용할 핵심 내용</p></div></div><div class="pin " style="left:84%;top:22%;width:27%"><div class="anim-item " data-anim-step="5"><svg class="icon icon--file  tone-brand" viewBox="0 0 56 68" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3H35L50 18V63H7ZM35 3V18H50M17 29H38M17 39H36M17 49H31"/></svg><h2 class="heading">블로그 초안</h2></div></div><div class="pin " style="left:84%;top:73%;width:27%"><div class="anim-item " data-anim-step="6"><svg class="icon icon--file  tone-purple" viewBox="0 0 56 68" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3H35L50 18V63H7ZM35 3V18H50M17 29H38M17 39H36M17 49H31"/></svg><h2 class="heading">카드뉴스 초안</h2></div></div><div class="pin " style="left:20%;top:90%;width:38%"><div class="anim-item " data-anim-step="0"><p class="copy">먼저 끝나야 하는 작업</p></div></div><div class="pin " style="left:78%;top:94%;width:42%"><div class="anim-item " data-anim-step="7"><p class="copy">이후 나란히 진행할 작업</p></div></div></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article>
+<!-- 발표 노트: 현재 Orca에서는 worker-start가 터미널 준비와 작업 배정을 함께 처리합니다. Dispatch는 그 작업의 실행 시도와 담당자를 연결하는 기록입니다. -->
+<article class="slide" data-index="4" data-visual="goal-task-flow-5"><header class="slide__header"><span class="slide__label">Part 4 · ch01-02 · 목표와 작업, 실행의 흐름</span><h1 class="slide__title">배정과 <span class="hl">실행</span></h1><p class="slide__sub">Task를 워커에게 배정하면, 담당 에이전트가 작업을 시작합니다.</p></header><main class="slide__body"><div class="dispatch-scene"><div class="anim-item cluster tone-yellow" data-anim-step="0"><svg class="icon icon--file  tone-yellow" viewBox="0 0 56 68" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3H35L50 18V63H7ZM35 3V18H50M17 29H38M17 39H36M17 49H31"/></svg><h2 class="heading">Task</h2><p class="copy">블로그 초안 작성</p></div><div class="anim-item dispatch-link tone-yellow" data-anim-step="2"><h2 class="heading">Dispatch</h2><svg viewBox="0 0 100 30" fill="none" stroke="var(--yellow)" stroke-width="2.5" aria-hidden="true"><path d="M5 15H93M84 8L93 15L84 22"/></svg><p class="copy">작업과 담당자 연결</p></div><div class="anim-item worker-terminal tone-brand" data-anim-step="4"><svg class="icon icon--robot  tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><h2 class="heading">Worker</h2><p class="copy">실제 작업 수행</p></div></div><div class="anim-item " data-anim-step="6"><div class="inline"><span class="mono tone-yellow">worker-start</span><p class="copy">터미널 준비와 작업 배정을 함께 처리</p></div></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article>
+<!-- 발표 노트: 한 작업의 보고를 받아도 다른 작업이 남아 있으면 계속 관리합니다. 질문은 기준으로 답하고, 필요한 판단은 사람에게 확인합니다. -->
+<article class="slide" data-index="5" data-visual="goal-task-flow-6"><header class="slide__header"><span class="slide__label">Part 4 · ch01-02 · 목표와 작업, 실행의 흐름</span><h1 class="slide__title">실행 중의 <span class="hl">조율</span></h1><p class="slide__sub">코디네이터는 보고와 질문을 받아 다음 작업을 이어갑니다.</p></header><main class="slide__body"><div class="map map--wide"><svg class="wires" viewBox="0 0 1000 420" preserveAspectRatio="none" aria-hidden="true"><path class="anim-item draw tone-green" data-anim-step="2" d="M726 105H338" pathLength="1" marker-end="url(#arrow-green)"/><path class="anim-item draw tone-orange" data-anim-step="4" d="M726 310H338" pathLength="1" marker-end="url(#arrow-orange)"/><path class="anim-item draw tone-yellow" data-anim-step="6" d="M337 357H726" pathLength="1" marker-end="url(#arrow-yellow)"/></svg><div class="pin " style="left:18%;top:50%;width:31%"><div class="anim-item " data-anim-step="0"><svg class="icon icon--robot  tone-yellow" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><h2 class="heading">Coordinator</h2><p class="copy">보고 확인 · 질문 응답</p><p class="mono">check --wait</p></div></div><div class="pin " style="left:85%;top:22%;width:29%"><div class="anim-item " data-anim-step="1"><svg class="icon icon--robot  tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><h2 class="heading">Worker A</h2><p class="copy">블로그 초안</p><div class="status-badge tone-green"><svg class="icon icon--check  " viewBox="0 0 64 68" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="30" cy="30" r="24"/><path d="M17 30L26 39L43 20" stroke-width="3"/></svg>완료 보고</div></div></div><div class="pin " style="left:85%;top:74%;width:29%"><div class="anim-item " data-anim-step="3"><svg class="icon icon--robot  tone-purple" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><h2 class="heading">Worker B</h2><p class="copy">카드뉴스 초안</p><div class="status-badge tone-orange"><svg class="icon icon--question  " viewBox="0 0 64 68" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 9H51V44H31L18 55V44H9Z"/><path d="M24 21C24 12 39 13 38 22C38 27 30 28 30 34M30 39V40"/></svg>확인 질문</div></div></div><div class="pin " style="left:53%;top:18%;width:22%"><div class="anim-item " data-anim-step="2"><p class="mono">worker_done</p></div></div><div class="pin " style="left:53%;top:64%;width:22%"><div class="anim-item " data-anim-step="4"><p class="mono">question</p></div></div><div class="pin " style="left:53%;top:91%;width:22%"><div class="anim-item " data-anim-step="6"><p class="mono">reply</p></div></div></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article>
+<!-- 발표 노트: 완료했다는 보고만으로 품질까지 확인된 것은 아닙니다. 코디네이터가 관리하는 게이트에서 기준을 확인하고 다음 작업으로 이어갑니다. -->
+<article class="slide" data-index="6" data-visual="goal-task-flow-7"><header class="slide__header"><span class="slide__label">Part 4 · ch01-02 · 목표와 작업, 실행의 흐름</span><h1 class="slide__title">다음 단계의 <span class="hl">판단</span></h1><p class="slide__sub">필요한 판단을 통과한 뒤에 다음 작업을 진행합니다.</p></header><main class="slide__body"><div class="map "><svg class="wires" viewBox="0 0 1000 420" preserveAspectRatio="none" aria-hidden="true"><path class="anim-item draw tone-yellow" data-anim-step="1" d="M212 163H391" pathLength="1" marker-end="url(#arrow-yellow)"/><path class="anim-item draw tone-green" data-anim-step="4" d="M607 163H792" pathLength="1" marker-end="url(#arrow-green)"/><path class="anim-item draw tone-orange" data-anim-step="6" d="M495 253V333H174V244" pathLength="1" marker-end="url(#arrow-orange)"/></svg><div class="pin " style="left:16%;top:39%;width:25%"><div class="anim-item " data-anim-step="0"><svg class="icon icon--file  tone-brand" viewBox="0 0 56 68" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3H35L50 18V63H7ZM35 3V18H50M17 29H38M17 39H36M17 49H31"/></svg><h2 class="heading">초안 결과</h2></div></div><div class="pin " style="left:50%;top:35%;width:27%"><div class="anim-item " data-anim-step="2"><p class="mono">decision gate</p><div class="gate-node"><span>기준 확인</span></div></div></div><div class="pin " style="left:85%;top:39%;width:25%"><div class="anim-item " data-anim-step="5"><svg class="icon icon--file  tone-green" viewBox="0 0 56 68" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3H35L50 18V63H7ZM35 3V18H50M17 29H38M17 39H36M17 49H31"/></svg><h2 class="heading">다음 작업</h2></div></div><div class="pin " style="left:70%;top:30%;width:15%"><div class="anim-item " data-anim-step="4"><p class="copy">통과</p></div></div><div class="pin " style="left:34%;top:73%;width:15%"><div class="anim-item " data-anim-step="6"><p class="copy">보완</p></div></div></div><div class="anim-item " data-anim-step="7"><p class="caption">완료 보고와 통과 판단은 다릅니다.</p></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article>
+<!-- 발표 노트: 명령을 외우는 것이 목적은 아닙니다. 에이전트가 지금 작업을 만드는지 실행하는지 보고를 기다리는지 읽을 수 있으면 됩니다. -->
+<article class="slide" data-index="7" data-visual="goal-task-flow-8"><header class="slide__header"><span class="slide__label">Part 4 · ch01-02 · 목표와 작업, 실행의 흐름</span><h1 class="slide__title">한 번의 <span class="hl">실행 흐름</span></h1><p class="slide__sub">코디네이터가 스킬의 절차에 따라 생성부터 정리까지 이어갑니다.</p></header><main class="slide__body"><div class="flow-strip"><div class="anim-item flow-step tone-gray" data-anim-step="0"><svg class="icon icon--run  tone-gray" viewBox="0 0 64 68" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="8" width="50" height="48" rx="3"/><path d="M5 19H55M14 14H16M22 14H24M15 29H29M15 39H44M15 49H38"/></svg><h2 class="heading">Run 생성</h2><p class="mono">run-create</p></div><div class="anim-item flow-arrow" data-anim-step="1"><svg viewBox="0 0 36 30" fill="none" stroke="var(--gray)" stroke-width="2" aria-hidden="true"><path d="M2 15H33M26 8L33 15L26 22"/></svg></div><div class="anim-item flow-step tone-yellow" data-anim-step="2"><svg class="icon icon--list  tone-yellow" viewBox="0 0 64 68" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 5H50V57H10V12H16ZM20 5V13H39V5M20 26H41M20 37H41M20 48H36M14 26H15M14 37H15M14 48H15"/></svg><h2 class="heading">Task 설계</h2><p class="mono">task-create</p></div><div class="anim-item flow-arrow" data-anim-step="3"><svg viewBox="0 0 36 30" fill="none" stroke="var(--gray)" stroke-width="2" aria-hidden="true"><path d="M2 15H33M26 8L33 15L26 22"/></svg></div><div class="anim-item flow-step tone-brand" data-anim-step="4"><svg class="icon icon--robot  tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><h2 class="heading">워커 실행</h2><p class="mono">worker-start</p></div><div class="anim-item flow-arrow" data-anim-step="5"><svg viewBox="0 0 36 30" fill="none" stroke="var(--gray)" stroke-width="2" aria-hidden="true"><path d="M2 15H33M26 8L33 15L26 22"/></svg></div><div class="anim-item flow-step tone-yellow" data-anim-step="6"><svg class="icon icon--review  tone-yellow" viewBox="0 0 64 68" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 5H34L46 17V47H7ZM34 5V17H46M16 25H31M16 34H25"/><circle cx="40" cy="44" r="12"/><path d="M49 53L57 61M34 44L39 49L47 39"/></svg><h2 class="heading">보고 · 검토</h2><p class="mono">check --wait</p></div><div class="anim-item flow-arrow" data-anim-step="7"><svg viewBox="0 0 36 30" fill="none" stroke="var(--gray)" stroke-width="2" aria-hidden="true"><path d="M2 15H33M26 8L33 15L26 22"/></svg></div><div class="anim-item flow-step tone-green" data-anim-step="8"><svg class="icon icon--check  tone-green" viewBox="0 0 64 68" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="30" cy="30" r="24"/><path d="M17 30L26 39L43 20" stroke-width="3"/></svg><h2 class="heading">취합 · 정리</h2><p class="mono">worker-release</p></div></div><div class="flow-footer"><p class="flow-prefix">orca orchestration 뒤에 이어지는 명령명</p><div class="anim-item " data-anim-step="9"><p class="caption">결과를 확인한 뒤, 완료된 워커의 터미널을 정리합니다.</p></div></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article></div><script>
+      // 파일로 직접 여는 경우: 이 템플릿 위치와 정식 outputs 위치를 구분한다.
+      // 다른 깊이로 옮기면 루트 해석도 함께 확인한다. HTTP 경로에는 개입하지 않는다.
+      if (location.protocol === "file:") {
+        const depth =
+          /\/\.(claude|agents)\/skills\/fastcampus-slide\/assets\//.test(
+            location.pathname,
+          )
+            ? "../../../../"
+            : "../../../";
+        const root = new URL(depth, location.href);
+        document.querySelectorAll('img[src^="/"]').forEach((img) => {
+          img.src = new URL(img.getAttribute("src").slice(1), root).href;
+        });
+      }
+
+      /* 조작 규칙 (성공 기준):
+         페이지 이동은 좌우 nav-btn · 하단 dot · 키보드(←/→/스페이스)로만.
+         #deck/body/.slide에 이동용 click 리스너를 절대 달지 않는다 —
+         강의 중 화면을 가리키며 클릭해도 슬라이드가 넘어가면 안 된다. */
+      class SlidePresentation {
+        constructor() {
+          this.slides = Array.from(document.querySelectorAll(".slide"));
+          this.total = this.slides.length;
+          const requested = Number.parseInt(
+            new URLSearchParams(window.location.search).get("slide"),
+            10,
+          );
+          this.current =
+            Number.isInteger(requested) &&
+            requested >= 1 &&
+            requested <= this.total
+              ? requested - 1
+              : 0;
+          this.isAnimating = false;
+          this._init();
+        }
+        _init() {
+          this.slides.forEach((slide, i) =>
+            slide.classList.toggle("active", i === this.current),
+          );
+          document.getElementById("tot").textContent = this.total;
+          this._buildDots();
+          this._bindKeys();
+          this._bindButtons();
+          this._update();
+          this._runSlide(this.current);
+        }
+        /* 슬라이드 진입 시 .anim-item 을 순차 등장시킨다.
+           스토리보드의 "애니메이션 순서" = DOM 순서 */
+        _runSlide(i) {
+          const items = this.slides[i].querySelectorAll(".anim-item");
+          items.forEach(el => el.classList.remove('do-fadeinup'));
+          void this.slides[i].offsetWidth;
+          const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+          items.forEach((el,n) => {
+            const step = Number(el.dataset.animStep ?? n);
+            el.style.animationDelay = reduced ? '0ms' : `${150 + step * 260}ms`;
+            el.classList.add('do-fadeinup');
+          });
+        }
+        next() {
+          if (!this.isAnimating) this._go(this.current + 1);
+        }
+        prev() {
+          if (!this.isAnimating) this._go(this.current - 1);
+        }
+        _go(i) {
+          if (
+            i < 0 ||
+            i >= this.total ||
+            i === this.current ||
+            this.isAnimating
+          )
+            return;
+          this.isAnimating = true;
+          this.slides[this.current].classList.remove("active");
+          this.slides[i].classList.add("active");
+          this.current = i;
+          const url = new URL(window.location.href);
+          url.searchParams.set("slide", this.current + 1);
+          window.history.replaceState({}, "", url);
+          this._runSlide(i);
+          setTimeout(() => {
+            this.isAnimating = false;
+            this._update();
+          }, 420);
+          this._update();
+        }
+        _update() {
+          const pct = ((this.current + 1) / this.total) * 100;
+          document.getElementById("progress").style.width = pct + "%";
+          document.getElementById("cur").textContent = this.current + 1;
+          document.getElementById("btn-prev").disabled = this.current === 0;
+          document.getElementById("btn-next").disabled =
+            this.current === this.total - 1;
+          document
+            .querySelectorAll(".dot")
+            .forEach((d, i) =>
+              d.classList.toggle("active", i === this.current),
+            );
+        }
+        _buildDots() {
+          const nav = document.getElementById("dot-nav");
+          this.slides.forEach((_, i) => {
+            const b = document.createElement("button");
+            b.className = "dot" + (i === 0 ? " active" : "");
+            b.setAttribute("aria-label", `슬라이드 ${i + 1}`);
+            b.addEventListener("click", () => this._go(i));
+            nav.appendChild(b);
+          });
+        }
+        _bindButtons() {
+          document
+            .getElementById("btn-prev")
+            .addEventListener("click", () => this.prev());
+          document
+            .getElementById("btn-next")
+            .addEventListener("click", () => this.next());
+        }
+        _bindKeys() {
+          document.addEventListener("keydown", (e) => {
+            if (this.isAnimating) return;
+            if (e.key === "ArrowRight" || e.key === " ") {
+              e.preventDefault();
+              this.next();
+            }
+            if (e.key === "ArrowLeft") {
+              e.preventDefault();
+              this.prev();
+            }
+          });
+        }
+      }
+      document.querySelectorAll('.wires .draw').forEach(p=>{const a=p.getPointAtLength(0),b=p.getPointAtLength(p.getTotalLength()); if(b.x<a.x)p.classList.add('draw--reverse')}); window.presentation = new SlidePresentation();
+    </script>    <!-- file:// 로 열었을 때만 루트 절대경로(/assets, /artifacts)를 저장소 기준 경로로 바꾼다.
+         배포(https)에서는 아무 것도 하지 않는다. HTML의 경로 표기는 루트 절대경로 그대로 둔다. -->
+    <script>
+      (function () {
+        if (location.protocol !== "file:") return;
+        // 정식 덱은 경로의 /artifacts/ 앞이 저장소 루트다.
+        // 스킬 assets 안의 템플릿처럼 /artifacts/ 밖에 있는 파일은 깊이로 되짚는다.
+        var m = location.pathname.match(/^(.*\/)artifacts\//);
+        var root = m
+          ? m[1]
+          : new URL(
+              /\/\.(claude|agents)\/skills\/fastcampus-slide\/assets\//.test(
+                location.pathname,
+              )
+                ? "../../../../"
+                : "../../../",
+              location.href,
+            ).pathname;
+        function apply() {
+          document.querySelectorAll('img[src^="/"]').forEach(function (el) {
+            var s = el.getAttribute("src");
+            if (s.indexOf(root) === 0) return;
+            el.setAttribute("src", root + s.slice(1));
+          });
+        }
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", apply);
+        } else {
+          apply();
+        }
+      })();
+    </script>
+  </body></html>

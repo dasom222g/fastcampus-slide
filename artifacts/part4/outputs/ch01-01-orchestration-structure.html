@@ -1,0 +1,812 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>오케스트레이션 구조 살펴보기</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css"><style>
+      :root {
+        --bg: #0d1117;
+        --bg-card: #161b22;
+        --text: #e6edf3;
+        --text-dim: #8b949e;
+        --text-muted: #59636e;
+        --brand: #fc1c49;
+        --purple: #9188ff;
+        --orange: #ff6d3b;
+        --yellow: #f0b429;
+        --green: #4ade80;
+        --gray: #8b949e;
+        --border: rgba(255, 255, 255, 0.08);
+        --dot: rgba(255, 255, 255, 0.055);
+        --title: clamp(2rem, 5.2vw, 3.8rem);
+        --statement: clamp(2rem, 3.8vw, 3.7rem);
+        --heading: clamp(1.5rem, 2.2vw, 2.25rem);
+        --body: clamp(1.1rem, 1.6vw, 1.42rem);
+        --gap: clamp(1.5rem, 3vw, 3rem);
+        --content-width: 86rem;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        font-family:
+          Pretendard,
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        font-size: clamp(13px, 1.35vw, 16px);
+        background: var(--bg);
+        color: var(--text);
+        word-break: keep-all;
+      }
+      body {
+        overflow: hidden;
+      }
+      button {
+        font: inherit;
+      }
+      .slide-deck {
+        position: fixed;
+        inset: 0;
+      }
+      .slide {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr) auto;
+        gap: clamp(1.5rem, 3.75vh, 3rem);
+        padding: clamp(2.6rem, 5.5vh, 4.2rem) clamp(4rem, 7.5vw, 7rem);
+        background:
+          radial-gradient(circle, var(--dot) 1px, transparent 1px) 0 0/26px 26px,
+          var(--bg);
+        overflow: hidden;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.36s ease;
+      }
+      .slide.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .slide__header {
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+        padding-bottom: clamp(0.9rem, 2.2vh, 1.6rem);
+        border-bottom: 1px solid var(--border);
+      }
+      .slide__label {
+        font-size: clamp(0.58rem, 0.85vw, 0.72rem);
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--brand);
+      }
+      .slide__title {
+        font-size: var(--title);
+        font-weight: 800;
+        line-height: 1.08;
+        letter-spacing: -0.015em;
+      }
+      .slide__sub {
+        font-size: clamp(1.05rem, 1.6vw, 1.28rem);
+        line-height: 1.5;
+        color: var(--text-dim);
+      }
+      .slide__body {
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: var(--gap);
+        overflow: hidden;
+        container-type: size;
+      }
+      .slide__footer {
+        border-top: 1px solid var(--border);
+        padding-top: clamp(0.5rem, 1.3vh, 0.9rem);
+      }
+      .fastcampus-logo {
+        display: block;
+        width: clamp(7.2rem, 9vw, 8.5rem);
+        height: auto;
+      }
+      .hl,
+      .tone-brand {
+        color: var(--brand);
+      }
+      .tone-purple {
+        color: var(--purple);
+      }
+      .tone-gray {
+        color: var(--gray);
+      }
+      .tone-yellow {
+        color: var(--yellow);
+      }
+      .tone-orange {
+        color: var(--orange);
+      }
+      .tone-green {
+        color: var(--green);
+      }
+      /* Shared roles: cover and split layouts inherit exactly the same type. */
+      .statement {
+        font-family: inherit;
+        font-size: var(--statement);
+        font-weight: 850;
+        line-height: 1.35;
+        letter-spacing: -0.035em;
+      }
+      .statement strong {
+        display: block;
+        color: var(--brand);
+        font-weight: 900;
+      }
+      .heading {
+        font-size: var(--heading);
+        font-weight: 800;
+        line-height: 1.35;
+        letter-spacing: -0.025em;
+      }
+      .copy {
+        font-size: var(--body);
+        line-height: 1.6;
+        color: var(--text-dim);
+      }
+      .eyebrow {
+        font-size: clamp(1rem, 1.5vw, 1.3rem);
+        line-height: 1.5;
+        color: var(--text-dim);
+      }
+      .diagram {
+        display: block;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+        color: var(--gray);
+      }
+      .symbols {
+        position: absolute;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+        pointer-events: none;
+      }
+      .content {
+        width: min(100%, var(--content-width));
+        margin-inline: auto;
+      }
+      /* Image slots are borderless. Replace the SVG slot with the clip's image. */
+      .scene {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.65fr);
+        gap: var(--gap);
+        align-items: center;
+        width: min(100%, 92rem);
+      }
+      .scene--visual-first {
+        grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+      }
+      .scene__copy {
+        display: flex;
+        flex-direction: column;
+        gap: clamp(1.3rem, 3vh, 2.5rem);
+      }
+      .scene__visual {
+        width: 100%;
+        height: min(52cqh, 28rem);
+        min-height: 15rem;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+      }
+      .scene--cover .scene__visual,
+      .scene--image .scene__visual {
+        height: min(78cqh, 34rem);
+      }
+      .scene__visual > img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border: 0;
+        box-shadow: none;
+      }
+      .scene__visual > .diagram {
+        min-height: 0;
+        flex: 1;
+      }
+      .scene__visual figcaption {
+        font-size: var(--body);
+        color: var(--text-dim);
+        text-align: center;
+      }
+      /* Open parallel concepts: diagram, heading, caption; no card shells. */
+      .triptych {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--gap);
+        align-items: start;
+      }
+      .concept {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: clamp(1rem, 2.6vh, 2rem);
+        min-width: 0;
+      }
+      .concept > .diagram {
+        height: clamp(11rem, 25vh, 19rem);
+      }
+      .concept .copy {
+        max-width: 17em;
+      }
+      /* Optional transition copy, never wrapped in a banner or bordered box. */
+      .handoff {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1.25rem;
+        color: var(--text-dim);
+        font-size: var(--body);
+        line-height: 1.5;
+      }
+      .handoff strong {
+        color: var(--text);
+        font-weight: 800;
+      }
+      .progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        z-index: 200;
+        background: var(--border);
+      }
+      .progress-fill {
+        height: 100%;
+        background: var(--brand);
+        transition: width 0.3s ease;
+      }
+      .nav-btn {
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 150;
+        width: clamp(1.9rem, 2.8vw, 2.5rem);
+        height: clamp(1.9rem, 2.8vw, 2.5rem);
+        display: grid;
+        place-items: center;
+        border: 1px solid var(--border);
+        border-radius: 3px;
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--text-dim);
+        cursor: pointer;
+      }
+      .nav-btn:hover:not(:disabled) {
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .nav-btn:disabled {
+        opacity: 0.1;
+        cursor: default;
+      }
+      #btn-prev {
+        left: clamp(0.4rem, 1.2vw, 1.1rem);
+      }
+      #btn-next {
+        right: clamp(0.4rem, 1.2vw, 1.1rem);
+      }
+      .dot-nav {
+        position: fixed;
+        bottom: 1.3rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        z-index: 150;
+      }
+      .dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.18);
+        border: 0;
+        cursor: pointer;
+        transition: all 0.22s ease;
+      }
+      .dot.active {
+        width: 22px;
+        border-radius: 3px;
+        background: var(--brand);
+      }
+      .slide-counter {
+        position: fixed;
+        bottom: 1.2rem;
+        right: 1.8rem;
+        font:
+          0.62rem Monaco,
+          monospace;
+        color: var(--text-muted);
+        z-index: 150;
+      }
+      @keyframes s-fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .anim-item {
+        opacity: 0;
+      }
+      .anim-item.do-fadeinup {
+        animation: s-fadeInUp 0.48s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .slide,
+        .progress-fill {
+          transition: none;
+        }
+        .anim-item.do-fadeinup {
+          animation-duration: 0.001s;
+        }
+      }
+
+      .status-one-line {
+        white-space: nowrap;
+        max-width: none;
+      }
+
+      /* STRUCTURE_BRANCH: root and children are content, connecting lines encode membership. */
+      .structure-tree {
+        width: min(100%, 72rem);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .structure-node {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        text-align: center;
+        min-width: 0;
+      }
+      .structure-node > .diagram {
+        width: 6rem;
+        height: 6rem;
+      }
+      .structure-tree__root {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+      .structure-tree__root > .diagram {
+        width: 5rem;
+        height: 5rem;
+      }
+      .structure-tree__stem {
+        height: 3rem;
+        border-left: 2px solid var(--gray);
+      }
+      .structure-tree__children {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+        position: relative;
+      }
+      .structure-tree__children::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 25%;
+        right: 25%;
+        border-top: 2px solid var(--gray);
+      }
+      .structure-tree__children > .structure-node {
+        position: relative;
+        padding: 3rem 1.5rem 0;
+      }
+      .structure-tree__children > .structure-node::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 0;
+        height: 2rem;
+        border-left: 2px solid var(--gray);
+      }
+      .structure-tree__root .copy {
+        margin-top: 0.45rem;
+      }
+      /* STRUCTURE_EXCHANGE: only the common scope gets a boundary, not every text node. */
+      .exchange {
+        position: relative;
+        aspect-ratio: 600/430;
+        width: 100%;
+        border: 1px solid var(--gray);
+        border-radius: 0.5rem;
+      }
+      .exchange__scope {
+        position: absolute;
+        top: 1rem;
+        left: 1.25rem;
+      }
+      .exchange > .diagram {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .exchange__node {
+        position: absolute;
+        width: 43%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+      .exchange__node--root {
+        top: 14%;
+        left: 28.5%;
+      }
+      .exchange__node--a {
+        bottom: 9%;
+        left: 3.5%;
+      }
+      .exchange__node--b {
+        bottom: 9%;
+        right: 3.5%;
+      }
+      .exchange__legend {
+        position: absolute;
+        top: 46%;
+        left: 37%;
+        width: 26%;
+        display: grid;
+        gap: 0.7rem;
+        text-align: center;
+      }
+      .exchange__legend .copy {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+      .line-key {
+        width: 1.5rem;
+        border-top: 2px solid var(--yellow);
+      }
+      .line-key--return {
+        border-top-style: dashed;
+      }
+      /* TRANSITION_COMPARE: mirror all four rows; the center is a transition arrow only. */
+      .transition-compare {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 4rem minmax(0, 1fr);
+        align-items: center;
+        gap: 2.5rem;
+        width: min(100%, var(--content-width));
+      }
+      .transition-side {
+        display: grid;
+        grid-template-rows: 2rem 5.5rem 12rem minmax(3.2rem, auto);
+        align-items: center;
+        justify-items: center;
+        text-align: center;
+        gap: 1rem;
+        min-width: 0;
+      }
+      .transition-side > .diagram {
+        height: 12rem;
+        width: 100%;
+      }
+      .transition-side > .copy {
+        max-width: 20em;
+      }
+      .transition-compare__arrow {
+        height: 4rem;
+      }
+    
+
+/* Clip-specific relationships; type roles remain inherited from the approved base. */
+.slide__body{overflow:visible}.slide__title b{color:var(--brand);font-weight:inherit}
+.mono{font-family:Monaco,monospace;font-size:1rem;line-height:1.6}
+.diagram{color:inherit}.icon{display:block;width:6rem;height:6rem;overflow:visible;flex:none}
+.icon--robot{width:7rem;height:7.25rem}.icon--human{width:6rem;height:6rem}.icon--file{width:5rem;height:6.2rem}
+.icon--folder{width:16rem;height:10.6rem}.center{text-align:center}.dim{color:var(--text-dim)}
+.cluster{display:flex;flex-direction:column;align-items:center;gap:1.1rem;min-width:0}
+.cluster .heading,.cluster .copy{white-space:nowrap}.inline{display:flex;align-items:center;justify-content:center;gap:1.4rem}
+.caption{font-size:var(--body);color:var(--text-dim);line-height:1.6;text-align:center}
+.map{position:relative;width:min(100%,86rem);height:min(100cqh,34rem);flex:none}
+.map--cover{height:28rem;width:100%}
+.slide__body>.map:has(+.anim-item){height:min(calc(100cqh - 5rem),34rem)}.map--wide{width:min(100%,94rem)}
+.map svg.wires{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.pin{position:absolute;transform:translate(-50%,-50%);text-align:center;min-width:0}
+.pin>.anim-item{display:flex;flex-direction:column;align-items:center;gap:.6rem}
+.pin .heading{white-space:nowrap}.pin .copy{white-space:nowrap}
+.wires path{stroke-width:2.2;fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round}
+.wires .draw{opacity:0}
+.wires .draw.do-fadeinup{animation:line-draw .65s linear both}
+.wires .return{stroke-dasharray:6 6;stroke-dashoffset:0}
+.wires .return.do-fadeinup{animation:soft-in .48s ease-out both}
+@keyframes line-draw{from{opacity:1;clip-path:inset(-12px 100% -12px -12px) stroke-box}to{opacity:1;clip-path:inset(-12px -12px -12px -12px) stroke-box}}
+.wires .draw.draw--reverse.do-fadeinup{animation-name:line-draw-reverse}
+@keyframes line-draw-reverse{from{opacity:1;clip-path:inset(-12px -12px -12px 100%) stroke-box}to{opacity:1;clip-path:inset(-12px -12px -12px -12px) stroke-box}}
+@keyframes soft-in{from{opacity:0}to{opacity:1}}
+.map .pin .anim-item.do-fadeinup{animation-name:soft-in}
+.scene{width:min(100%,92rem);grid-template-columns:minmax(0,1fr) minmax(0,1.45fr)}
+.scene--visual-first{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)}
+.scene--cover .scene__copy{gap:1.5rem}.statement strong{color:var(--brand)}
+.env{position:relative;width:100%;height:min(76cqh,30rem);border:1.5px solid var(--gray);border-radius:.6rem;padding:2rem}
+.env__title{position:absolute;top:1.25rem;left:1.6rem;display:flex;align-items:center;gap:.65rem;font-size:var(--heading);font-weight:750}
+.env__title img{width:2.4rem;height:2.4rem}.env .map{width:100%;height:100%}
+.env__caption{position:absolute;bottom:1.15rem;left:0;width:100%;font-size:var(--body);text-align:center;color:var(--gray)}
+.skill-tag{display:flex;align-items:center;gap:.8rem;font-size:var(--body);font-weight:650;color:var(--yellow)}
+.skill-tag .icon{width:2.8rem;height:3.5rem}
+.transition-compare{width:min(100%,90rem);gap:2rem;grid-template-columns:1fr 3.5rem 1fr}
+.transition-side{grid-template-rows:2rem 6.5rem 12rem 4.8rem;gap:1rem}
+.transition-side .heading{font-size:var(--heading)}.transition-side .copy{max-width:24em}
+.transition-side>.diagram{height:12rem;width:100%;max-width:25rem}
+.role-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7rem;width:min(100%,78rem)}
+.role-pair .role{display:flex;flex-direction:column;align-items:center;gap:1.3rem;text-align:center}
+.role-art{position:relative;width:17rem;height:14rem;display:flex;justify-content:center;align-items:center;gap:2rem}
+.role-art .icon--robot{width:8.5rem;height:9rem}.role-art .icon--file{width:5.2rem;height:7rem}
+.role-pair .statement{font-size:var(--statement)}.role-pair .copy{white-space:nowrap}
+.folder-art{position:relative}.folder-art .agent-badge{position:absolute;right:-2.1rem;top:-1.8rem;width:4.5rem;height:4.8rem}
+.folder-art .folder-name{position:absolute;left:0;right:0;top:35%;font-size:var(--body);font-weight:750;text-align:center}
+.folder-art .icon--folder{width:18rem;height:12rem}
+.message-grid{width:min(100%,76rem);height:min(100cqh,28rem);min-height:0;display:grid;grid-template-columns:max-content minmax(0,1fr) max-content;grid-template-rows:repeat(3,minmax(0,1fr));gap:clamp(.35rem,1.5cqh,1.4rem) 2.5rem;align-items:center}
+.message-head{grid-row:1/-1;align-self:stretch;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem}
+.message-head--worker{grid-column:1}.message-head--coordinator{grid-column:3}.message-head .icon{width:6rem;height:6.2rem}.message-head>.heading{white-space:nowrap}
+.message-line{grid-column:2;position:relative;text-align:center;height:100%;min-height:0;display:grid;grid-template-rows:minmax(0,1fr) 12px minmax(0,1fr);justify-items:center;gap:0}
+.message-label{grid-row:1;align-self:end;display:flex;align-items:center;justify-content:center;gap:.65rem}.message-label>.icon{width:2rem;height:2.2rem}.message-line>.copy{grid-row:3;align-self:start}.message-line.do-fadeinup{animation-name:soft-in}
+.message-line .mono{font-size:1.45rem;font-weight:700}.message-line .copy{font-size:var(--body)}
+.message-line:after{content:'';position:absolute;top:50%;left:0;right:0;border-top:2px solid currentColor}
+.message-line:before{content:'';position:absolute;right:0;top:calc(50% - 5px);width:10px;height:10px;border-top:2px solid currentColor;border-right:2px solid currentColor;transform:rotate(45deg)}
+.message-line--back:before{left:0;right:auto;transform:rotate(-135deg)}
+.goal-sheet{width:min(100%,77rem);display:grid;grid-template-columns:8rem minmax(0,1fr);gap:2.5rem;align-items:start}
+.goal-sheet>.icon{margin-top:1rem}.goal-request{font-size:var(--statement);font-weight:850;line-height:1.35;letter-spacing:-.035em}
+.goal-request strong{color:var(--brand)}.brief-lines{display:flex;flex-direction:column;gap:1.4rem;margin-top:2.8rem}
+.brief-line{display:grid;grid-template-columns:7rem 1fr;align-items:baseline;gap:1.5rem}.brief-line .heading{font-size:var(--body);color:var(--gray);font-weight:600}.brief-line .copy{color:var(--text);font-size:var(--heading)}
+.run-scope{width:min(100%,78rem);padding:2rem 2.5rem 2.2rem;border:1.5px solid var(--gray);border-radius:.7rem;position:relative}
+.run-title{display:flex;align-items:baseline;gap:1.3rem}.run-title .statement{font-size:var(--statement)}
+.run-tasks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3rem;padding:3.2rem .5rem 1rem}.task-sheet{display:flex;flex-direction:column;align-items:center;gap:1rem;text-align:center}
+.task-sheet .icon--file{width:6rem;height:7.5rem}.task-sheet .heading{white-space:nowrap}.task-sheet .mono{color:var(--gray)}
+.dispatch-scene{width:min(100%,82rem);display:grid;grid-template-columns:1fr 1.2fr 1.35fr;align-items:center;gap:2rem}
+.dispatch-link{text-align:center;display:flex;flex-direction:column;align-items:center;gap:1.2rem}.dispatch-link svg{width:100%;height:3rem}
+.worker-terminal{width:100%;max-width:24rem;border:1.5px solid var(--gray);border-radius:.4rem;position:relative;padding:3.2rem 2rem 1.8rem;display:flex;flex-direction:column;align-items:center;gap:1rem}
+.worker-terminal:before{content:'';position:absolute;top:1.8rem;left:0;right:0;border-top:1px solid var(--gray)}
+.worker-terminal:after{content:'•••';position:absolute;top:.1rem;left:1rem;letter-spacing:.2em;color:var(--gray)}
+[data-visual="goal-task-flow-6"] .pin .icon--robot{width:5.2rem;height:5.4rem}
+.status-badge{display:flex;align-items:center;gap:.55rem;justify-content:center;font-size:var(--body);white-space:nowrap}.status-badge .icon{width:1.65rem;height:1.65rem}
+.gate-node{position:relative;width:12rem;height:12rem;display:grid;place-items:center}.gate-node:before{content:'';position:absolute;inset:1.7rem;border:2px solid var(--yellow);transform:rotate(45deg);border-radius:.3rem}.gate-node span{z-index:1;font-size:var(--heading);font-weight:750;color:var(--yellow)}
+.flow-strip{width:min(100%,94rem);display:grid;grid-template-columns:repeat(4,minmax(0,1fr) 2.7rem) minmax(0,1fr);gap:.5rem;align-items:center}
+.flow-step{display:flex;flex-direction:column;align-items:center;gap:1.5rem;text-align:center;min-width:0}.flow-step .icon{width:6.5rem;height:7rem}.flow-step .heading{font-size:var(--heading);white-space:nowrap}.flow-step .mono{font-size:1rem;white-space:nowrap}
+.flow-arrow svg{width:100%;height:100%}.flow-arrow{width:100%;height:2.4rem;align-self:center;margin-top:-2.5rem}.flow-prefix{font-family:Monaco,monospace;font-size:1rem;color:var(--gray);margin-top:1rem}
+.flow-prefix span{font-family:inherit}.flow-footer{display:flex;flex-direction:column;gap:.8rem;align-items:center}
+@media(max-height:850px){
+ .map{height:min(100cqh,27rem)}.map--cover{height:25rem}.slide__body>.map:has(+.anim-item){height:min(calc(100cqh - 5rem),27rem)}.env{height:min(92cqh,25rem);padding:1.7rem}
+ .transition-side{grid-template-rows:1.7rem 5.5rem 10rem 4.5rem;gap:.7rem}.transition-side>.diagram{height:10rem}
+ .role-art{height:10rem}.role-pair .role{gap:1rem}.role-art .icon--robot{width:7rem;height:7rem}
+ .folder-art .icon--folder{width:15.5rem;height:10.3rem}.folder-art .agent-badge{width:3.8rem;height:4rem}
+ .message-grid{height:min(100cqh,23rem);column-gap:2rem}.message-head .icon{width:5rem;height:5.2rem}
+ .brief-lines{gap:1rem;margin-top:1.8rem}.run-tasks{padding:2rem .5rem .5rem}.run-scope{padding:1.7rem 2rem}
+ .flow-step{gap:1.1rem}.flow-step .icon{width:5.6rem;height:6rem}.flow-strip{grid-template-columns:repeat(4,minmax(0,1fr) 1.8rem) minmax(0,1fr)}
+}
+@media(prefers-reduced-motion:reduce){.wires .draw.do-fadeinup,.wires .return.do-fadeinup{animation:none;opacity:1;stroke-dashoffset:0}.anim-item.do-fadeinup{animation:none;opacity:1;transform:none}}
+
+/* Approved two-column comparison: reference shell, current right diagram. */
+.orchestration-intro-scene{display:grid;grid-template-columns:1fr 4rem 1fr;align-items:center;gap:2.5rem;width:min(100%,90rem)}
+.orchestration-intro-current,.orchestration-intro-next{display:grid;grid-template-rows:2rem 5.5rem 12rem auto;align-items:center;justify-items:center;text-align:center;gap:1rem;min-width:0}
+.orchestration-intro-label{font-size:1.2rem;color:var(--text-dim);line-height:1.5}
+.orchestration-intro-current .name{font-size:2rem;font-weight:800;line-height:1.4;color:var(--orange)}
+.orchestration-intro-current>.diagram,.orchestration-intro-next>.diagram{height:12rem;width:100%}
+.orchestration-intro-transition .diagram{height:4rem}
+.orchestration-intro-title{font-family:Pretendard,sans-serif;font-size:2rem;font-weight:800;line-height:1.35;color:var(--brand)}
+.orchestration-intro-scene .body-copy{color:var(--text-dim);font-size:1.3rem;line-height:1.6;max-width:22em}
+
+.orchestration-intro-scene .diagram{display:block;flex:none;overflow:visible}
+.orchestration-intro-transition .diagram{width:100%}
+
+/* Workers can share a worktree; messages coordinate independent sessions. */
+.shared-communication{width:min(100%,86rem);display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr) minmax(0,.6fr);gap:2rem;align-items:center}
+.shared-worktree{position:relative;aspect-ratio:3/2;width:100%}
+.shared-folder-outline{position:absolute;inset:0;width:100%;height:100%}
+.shared-folder-title{position:absolute;left:5%;top:5%;font-size:var(--body);font-weight:700;color:var(--gray)}
+.shared-workers{position:absolute;inset:27% 7% 8%;display:grid;grid-template-rows:repeat(2,minmax(0,1fr));gap:1rem}
+.shared-worker{display:grid;grid-template-columns:4.8rem minmax(0,1fr) 3rem;align-items:center;gap:1rem}
+.shared-worker>.icon--robot{width:4.8rem;height:5rem}.shared-worker>.heading{font-size:var(--heading);white-space:nowrap}.shared-worker>.shared-result{width:3rem;height:3.8rem}
+.shared-reports{position:relative;align-self:stretch;min-width:0}.shared-reports>.copy{position:absolute;top:13%;left:0;right:0;text-align:center;white-space:nowrap}
+.shared-report-lines{position:absolute;inset:0;width:100%;height:100%;overflow:visible}.shared-report-lines path{stroke:currentColor;stroke-dasharray:6 6}.shared-report-lines .do-fadeinup{animation-name:soft-in}
+.shared-coordinator{display:flex;flex-direction:column;align-items:center;gap:1rem}.shared-coordinator>.heading{white-space:nowrap}
+.shared-folder-outline.do-fadeinup{animation-name:soft-in}
+@media(max-height:850px){.shared-communication{gap:1.5rem}.shared-worker{grid-template-columns:4rem minmax(0,1fr) 2.8rem;gap:.7rem}.shared-worker>.icon--robot{width:4rem;height:4.2rem}.shared-worker>.shared-result{width:2.8rem;height:3.5rem}}
+</style></head><body><svg class="symbols" aria-hidden="true"><defs><marker id="arrow-gray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="var(--gray)" stroke-width="1.5"/></marker><marker id="arrow-yellow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="var(--yellow)" stroke-width="1.5"/></marker><marker id="arrow-brand" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="var(--brand)" stroke-width="1.5"/></marker><marker id="arrow-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="var(--purple)" stroke-width="1.5"/></marker><marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="var(--green)" stroke-width="1.5"/></marker><marker id="arrow-orange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="var(--orange)" stroke-width="1.5"/></marker></defs></svg><div class="progress-bar"><div class="progress-fill" id="progress"></div></div><button class="nav-btn" id="btn-prev" aria-label="이전 슬라이드">←</button><button class="nav-btn" id="btn-next" aria-label="다음 슬라이드">→</button><nav class="dot-nav" id="dot-nav" aria-label="슬라이드 선택"></nav><div class="slide-counter"><span id="cur">1</span> / <span id="tot">0</span></div><div class="slide-deck" id="deck"><!-- 발표 노트: 앞에서 에이전트가 일할 공간을 나눴습니다. 이제 그 에이전트에게 누가 일을 나누고, 다음 일을 이어주는지 보겠습니다. -->
+<article class="slide active" data-index="0" data-visual="orchestration-structure-1"><header class="slide__header"><span class="slide__label">Part 4 · ch01-01 · 오케스트레이션 구조 살펴보기</span><h1 class="slide__title">오케스트레이션 <span class="hl">구조</span> 살펴보기</h1><p class="slide__sub">오케스트레이션은 여러 에이전트의 작업과 협업 흐름을 조율합니다.</p></header><main class="slide__body"><div class="scene scene--cover"><div class="anim-item scene__copy" data-anim-step="0"><p class=statement>목표는 하나<strong>일하는 에이전트는 여럿</strong></p></div><div class="map map--cover"><svg class="wires" viewBox="0 0 1000 420" preserveAspectRatio="none" aria-hidden="true"><path class="anim-item draw tone-gray" data-anim-step="1" d="M145 210H325Q350 210 350 130H445" pathLength="1" marker-end="url(#arrow-gray)"/><path class="anim-item draw tone-gray" data-anim-step="1" d="M325 210Q350 210 350 302H445" pathLength="1" marker-end="url(#arrow-gray)"/><path class="anim-item draw tone-green" data-anim-step="5" d="M595 130H625Q650 130 650 210H830" pathLength="1" marker-end="url(#arrow-green)"/><path class="anim-item draw tone-green" data-anim-step="5" d="M595 302H625Q650 302 650 210" pathLength="1" /></svg><div class="pin " style="left:10%;top:50%;width:18%"><div class="anim-item " data-anim-step="0"><svg class="icon icon--file  tone-gray" viewBox="0 0 56 68" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3H35L50 18V63H7ZM35 3V18H50M17 29H38M17 39H36M17 49H31"/></svg><p class="copy">목표</p></div></div><div class="pin " style="left:52%;top:29%;width:20%"><div class="anim-item " data-anim-step="3"><svg class="icon icon--robot  tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div></div><div class="pin " style="left:52%;top:72%;width:20%"><div class="anim-item " data-anim-step="4"><svg class="icon icon--robot  tone-purple" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div></div><div class="pin " style="left:90%;top:50%;width:18%"><div class="anim-item " data-anim-step="7"><svg class="icon icon--file  tone-green" viewBox="0 0 56 68" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3H35L50 18V63H7ZM35 3V18H50M17 29H38M17 39H36M17 49H31"/></svg><p class="copy">결과</p></div></div></div></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article>
+<!-- 발표 노트: 에이전트를 늘려도 결과를 복사하고 다음 담당자에게 전달하는 일은 남습니다. 오케스트레이션은 이 반복적인 연결을 담당합니다. -->
+<article class="slide" data-index="1" data-visual="orchestration-structure-2"><header class="slide__header"><span class="slide__label">Part 4 · ch01-01 · 오케스트레이션 구조 살펴보기</span><h1 class="slide__title">협업을 잇는 <span class="hl">역할</span></h1><p class="slide__sub">에이전트가 여럿이어도, 일을 나누고 넘겨줄 역할이 필요합니다.</p></header><main class="slide__body"><div class="orchestration-intro-scene"><div class="orchestration-intro-current anim-item" data-anim-step="0"><p class="orchestration-intro-label">사람이 직접 넘기면</p><h2 class="name">멀티 에이전트 과도기</h2><svg class="diagram" viewBox="0 0 300 150" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(12 51) scale(0.8)"><path d="M0 0H30L42 12V54H0ZM30 0V12H42M9 24H31M9 33H28M9 42H23" stroke="var(--gray)" stroke-width="2.5"/></g><path d="M61 76L110 76M103.0 79.8L110 76L103.0 72.2" stroke="var(--gray)" stroke-width="3"/><circle cx="150" cy="44" r="18" fill="var(--bg)" stroke="var(--gray)" stroke-width="3"/><path d="M118 120V103C118 69 182 69 182 103V120" stroke="var(--gray)" stroke-width="3"/><path d="M190 76L234 76M227.0 79.8L234 76L227.0 72.2" stroke="var(--gray)" stroke-width="3"/><g transform="translate(245 51) scale(0.8)"><path d="M0 0H30L42 12V54H0ZM30 0V12H42M9 24H31M9 33H28M9 42H23" stroke="var(--gray)" stroke-width="2.5"/></g></svg><p class="body-copy">에이전트가 여럿이어도, 자료 전달은 사람 몫</p></div><div class="orchestration-intro-transition anim-item" data-anim-step="2"><svg class="diagram" viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><path d="M5 25L95 25M88.0 28.8L95 25L88.0 21.2" stroke="var(--gray)" stroke-width="3"/></svg></div><div class="orchestration-intro-next anim-item" data-anim-step="3"><p class="orchestration-intro-label">협업 흐름으로 연결하면</p><h2 class="orchestration-intro-title">에이전트<br>오케스트레이션의 시대</h2><svg class="diagram" viewBox="0 0 400 180" fill="none" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><g stroke="var(--yellow)" transform="translate(176 5) scale(.85)"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></g><path d="M191 59L95 103M206 59L304 103" stroke="var(--yellow)"/><path d="M88 91L95 103L108 100M292 100L304 103L303 90" stroke="var(--yellow)"/><g stroke="var(--brand)" transform="translate(50 108)"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></g><g stroke="var(--purple)" transform="translate(292 108)"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></g><path d="M110 141H283" stroke="var(--gray)" stroke-dasharray="5 5"/></svg><p class="body-copy">목표 하나로 일을 나누고, 결과를 다음 담당자에게 전달</p></div></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article>
+<!-- 발표 노트: 스킬은 에이전트가 따르는 작업 지침과 도구 사용 절차입니다. 별도의 AI가 하나 더 생기는 것이 아니라, 이미 쓰는 에이전트가 이 지침으로 Orca의 도구를 사용합니다. -->
+<article class="slide" data-index="2" data-visual="orchestration-structure-3"><header class="slide__header"><span class="slide__label">Part 4 · ch01-01 · 오케스트레이션 구조 살펴보기</span><h1 class="slide__title">환경과 <span class="hl">스킬</span></h1><p class="slide__sub">Orca를 설치하는 것만으로 에이전트들이 저절로 협업하지는 않습니다.</p></header><main class="slide__body"><div class="scene scene--visual-first"><div class="env"><div class="env__title"><img src="/assets/orca-logo.svg" alt="">Orca</div><div class="map "><svg class="wires" viewBox="0 0 1000 420" preserveAspectRatio="none" aria-hidden="true"><path class="anim-item draw tone-yellow" data-anim-step="2" d="M360 152H480" pathLength="1" marker-end="url(#arrow-yellow)"/><path class="anim-item draw tone-yellow" data-anim-step="4" d="M618 190L406 273" pathLength="1" marker-end="url(#arrow-yellow)"/><path class="anim-item draw tone-yellow" data-anim-step="4" d="M655 192L789 273" pathLength="1" marker-end="url(#arrow-yellow)"/></svg><div class="pin " style="left:22%;top:32%;width:45%"><div class="anim-item " data-anim-step="1"><div class="skill-tag"><svg class="icon icon--file  " viewBox="0 0 56 68" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3H35L50 18V63H7ZM35 3V18H50M17 29H38M17 39H36M17 49H31"/></svg><span>오케스트레이션<br>스킬</span></div></div></div><div class="pin " style="left:63%;top:33%;width:24%"><div class="anim-item " data-anim-step="3"><svg class="icon icon--robot  tone-yellow" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div></div><div class="pin " style="left:36%;top:75%;width:22%"><div class="anim-item " data-anim-step="5"><svg class="icon icon--robot  tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div></div><div class="pin " style="left:82%;top:75%;width:22%"><div class="anim-item " data-anim-step="6"><svg class="icon icon--robot  tone-purple" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div></div></div><p class="env__caption">에이전트 실행 · 작업 공간 · 상태 관리</p></div><div class="anim-item scene__copy" data-anim-step="0"><p class=statement>Orca는 작업 환경<strong>협업은 스킬로</strong></p><p class="copy">분배 · 전달 · 취합</p></div></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article>
+<!-- 발표 노트: 팀장과 실무 담당자에 빗대면 쉽습니다. 코디네이터는 전체 목표와 순서를 관리하고, 워커는 맡은 범위의 결과물을 만듭니다. -->
+<article class="slide" data-index="3" data-visual="orchestration-structure-4"><header class="slide__header"><span class="slide__label">Part 4 · ch01-01 · 오케스트레이션 구조 살펴보기</span><h1 class="slide__title">조율과 <span class="hl">실행</span></h1><p class="slide__sub">협업을 조율하는 에이전트와 실제 작업을 수행하는 에이전트로 역할을 나눕니다.</p></header><main class="slide__body"><div class="role-pair"><div class="anim-item role" data-anim-step="0"><div class="role-art tone-yellow"><svg class="icon icon--robot  " viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><svg class="icon icon--list  " viewBox="0 0 64 68" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 5H50V57H10V12H16ZM20 5V13H39V5M20 26H41M20 37H41M20 48H36M14 26H15M14 37H15M14 48H15"/></svg></div><p class="statement tone-yellow">Coordinator</p><h2 class="heading">협업 조율</h2><p class="copy">일을 나누고, 배정하고, 결과를 확인</p></div><div class="anim-item role" data-anim-step="3"><div class="role-art tone-brand"><svg class="icon icon--robot  " viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><svg class="icon icon--file  " viewBox="0 0 56 68" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3H35L50 18V63H7ZM35 3V18H50M17 29H38M17 39H36M17 49H31"/></svg></div><p class="statement tone-brand">Worker</p><h2 class="heading">작업 수행</h2><p class="copy">맡은 작업을 실행하고, 결과를 보고</p></div></div><div class="anim-item " data-anim-step="5"><p class="caption">둘 다 이미 쓰는 에이전트가 맡는 역할입니다.</p></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article>
+<!-- 발표 노트: 사람이 매번 워커를 찾아다니는 대신 코디네이터가 배정과 보고를 연결합니다. 목표나 중요한 기준이 불명확하면 사람에게 다시 확인합니다. -->
+<article class="slide" data-index="4" data-visual="orchestration-structure-5"><header class="slide__header"><span class="slide__label">Part 4 · ch01-01 · 오케스트레이션 구조 살펴보기</span><h1 class="slide__title">협업의 <span class="hl">구조</span></h1><p class="slide__sub">사람은 목표와 기준을 주고, 코디네이터는 워커의 작업을 조율합니다.</p></header><main class="slide__body"><div class="map map--wide"><svg class="wires" viewBox="0 0 1000 420" preserveAspectRatio="none" aria-hidden="true"><path class="anim-item draw tone-gray" data-anim-step="1" d="M178 205H354" pathLength="1" marker-end="url(#arrow-gray)"/><path class="anim-item draw tone-yellow" data-anim-step="3" d="M544 180C665 180 603 100 771 100" pathLength="1" marker-end="url(#arrow-yellow)"/><path class="anim-item draw tone-yellow" data-anim-step="3" d="M544 239C665 239 603 321 771 321" pathLength="1" marker-end="url(#arrow-yellow)"/><path class="anim-item return tone-brand" data-anim-step="7" d="M773 145C677 145 655 211 550 211"  marker-end="url(#arrow-brand)"/><path class="anim-item return tone-purple" data-anim-step="7" d="M773 363C661 363 654 275 552 275"  marker-end="url(#arrow-purple)"/></svg><div class="pin " style="left:12%;top:48%;width:21%"><div class="anim-item " data-anim-step="0"><svg class="icon icon--human  " viewBox="0 0 60 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="30" cy="16" r="11"/><path d="M10 58V43C10 21 50 21 50 43V58"/></svg><h2 class="heading">사람</h2><p class="copy">목표 · 기준 · 필요한 판단</p></div></div><div class="pin " style="left:44%;top:48%;width:28%"><div class="anim-item " data-anim-step="2"><svg class="icon icon--robot  tone-yellow" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><h2 class="heading">Coordinator</h2><p class="copy">작업 분배 · 결과 확인</p></div></div><div class="pin " style="left:88%;top:24%;width:21%"><div class="anim-item " data-anim-step="5"><svg class="icon icon--robot  tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><h2 class="heading">Worker A</h2></div></div><div class="pin " style="left:88%;top:77%;width:21%"><div class="anim-item " data-anim-step="6"><svg class="icon icon--robot  tone-purple" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><h2 class="heading">Worker B</h2></div></div><div class="pin " style="left:68%;top:16%;width:18%"><div class="anim-item " data-anim-step="3"><p class="copy">작업 지시</p></div></div><div class="pin " style="left:65%;top:60%;width:18%"><div class="anim-item " data-anim-step="7"><p class="copy">질문 · 보고</p></div></div></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article>
+<!-- 발표 노트: 워크트리는 실제 작업 파일이 있는 곳입니다. 코디네이터는 보고에 적힌 위치에서 결과를 확인하고 다음 작업의 입력을 정합니다. -->
+<article class="slide" data-index="5" data-visual="orchestration-structure-6"><header class="slide__header"><span class="slide__label">Part 4 · ch01-01 · 오케스트레이션 구조 살펴보기</span><h1 class="slide__title">작업과 <span class="hl">소통</span></h1><p class="slide__sub">같은 공간에서 작업해도, 진행과 결과는 메시지로 공유합니다.</p></header><main class="slide__body"><div class="shared-communication"><div class="shared-worktree"><svg class="shared-folder-outline anim-item" data-anim-step="0" viewBox="0 0 600 400" preserveAspectRatio="none" fill="none" stroke="var(--gray)" stroke-width="2.5" stroke-linejoin="round" aria-hidden="true"><path d="M3 3H222L263 49H597V397H3Z"/><path d="M3 80H597"/></svg><p class="shared-folder-title anim-item" data-anim-step="0">같은 워크트리</p><div class="shared-workers"><div class="shared-worker anim-item" data-anim-step="1"><svg class="icon icon--robot tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><h2 class="heading tone-brand">Worker A</h2><svg class="icon shared-result tone-brand" viewBox="0 0 56 68" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3H35L50 18V63H7ZM35 3V18H50M17 29H38M17 39H36M17 49H31"/></svg></div><div class="shared-worker anim-item" data-anim-step="2"><svg class="icon icon--robot tone-purple" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><h2 class="heading tone-purple">Worker B</h2><svg class="icon shared-result tone-purple" viewBox="0 0 56 68" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3H35L50 18V63H7ZM35 3V18H50M17 29H38M17 39H36M17 49H31"/></svg></div></div></div><div class="shared-reports"><p class="copy anim-item" data-anim-step="6">진행 상황·결과 보고</p><svg class="shared-report-lines" viewBox="0 0 350 300" preserveAspectRatio="none" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="anim-item tone-brand" data-anim-step="4" d="M6 127C160 127 196 105 337 127" marker-end="url(#arrow-brand)"/><path class="anim-item tone-purple" data-anim-step="5" d="M6 223C160 223 196 171 337 140" marker-end="url(#arrow-purple)"/></svg></div><div class="shared-coordinator anim-item" data-anim-step="3"><svg class="icon icon--robot tone-yellow" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><h2 class="heading">Coordinator</h2></div></div><div class="anim-item" data-anim-step="7"><p class="caption">완료 보고에는 결과물 위치와 작업 내용을 함께 남깁니다.</p></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article>
+<!-- 발표 노트: 서로 다른 세션의 에이전트는 대화 맥락이 자동으로 합쳐지지 않습니다. 질문은 워커에서 코디네이터로, 답은 반대로, 결과 보고는 다시 코디네이터로 갑니다. -->
+<article class="slide" data-index="6" data-visual="orchestration-structure-split-worktrees"><header class="slide__header"><span class="slide__label">Part 4 · ch01-01 · 오케스트레이션 구조 살펴보기</span><h1 class="slide__title">서로 다른 <span class="hl">워크트리</span></h1><p class="slide__sub">공간을 나눠 작업해도, 진행과 결과는 메시지로 공유합니다.</p></header><main class="slide__body"><div class="map"><svg class="wires" viewBox="0 0 1000 420" preserveAspectRatio="none" aria-hidden="true"><path class="anim-item return tone-brand" data-anim-step="3" d="M256 231C256 150 366 123 417 108" marker-end="url(#arrow-brand)"/><path class="anim-item return tone-purple" data-anim-step="4" d="M744 231C744 150 635 123 584 108" marker-end="url(#arrow-purple)"/></svg><div class="pin" style="left:50%;top:22%;width:28%"><div class="anim-item" data-anim-step="0"><svg class="icon icon--robot tone-yellow" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><h2 class="heading">Coordinator</h2></div></div><div class="pin" style="left:23%;top:71%;width:37%"><div class="anim-item" data-anim-step="1"><div class="folder-art tone-brand"><svg class="icon icon--folder" viewBox="0 0 190 130" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8H57L75 28H185V123H5ZM5 43H185"/><g stroke="var(--gray)"><path d="M44 75H55L61 82V105H44ZM55 75V82H61M48 91H56M48 97H56M74 75H85L91 82V105H74ZM85 75V82H91M78 91H86M78 97H86"/></g><path d="M104 75H115L121 82V105H104ZM115 75V82H121M108 91H116M108 97H116"/></svg><svg class="icon icon--robot agent-badge" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><span class="folder-name">Worker A</span></div><h2 class="heading">작업 폴더 A</h2></div></div><div class="pin" style="left:77%;top:71%;width:37%"><div class="anim-item" data-anim-step="2"><div class="folder-art tone-purple"><svg class="icon icon--folder" viewBox="0 0 190 130" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8H57L75 28H185V123H5ZM5 43H185"/><g stroke="var(--gray)"><path d="M44 75H55L61 82V105H44ZM55 75V82H61M48 91H56M48 97H56M74 75H85L91 82V105H74ZM85 75V82H91M78 91H86M78 97H86"/></g><path d="M104 75H115L121 82V105H104ZM115 75V82H121M108 91H116M108 97H116"/></svg><svg class="icon icon--robot agent-badge" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><span class="folder-name">Worker B</span></div><h2 class="heading">작업 폴더 B</h2></div></div><div class="pin" style="left:50%;top:47%;width:34%"><div class="anim-item" data-anim-step="5"><p class="copy">진행 상황·결과 보고</p></div></div></div><div class="anim-item" data-anim-step="6"><p class="caption">완료 보고에는 결과물 위치와 작업 내용을 함께 남깁니다.</p></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article>
+<article class="slide" data-index="7" data-visual="orchestration-structure-7"><header class="slide__header"><span class="slide__label">Part 4 · ch01-01 · 오케스트레이션 구조 살펴보기</span><h1 class="slide__title">메시지의 <span class="hl">종류</span></h1><p class="slide__sub">질문·응답·결과 보고에 사용하는 대표 메시지입니다.</p></header><main class="slide__body"><div class="message-grid"><div class="message-head message-head--worker tone-brand"><svg class="icon icon--robot  " viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><h2 class="heading">Worker</h2></div><div class="anim-item message-line tone-orange" style="grid-row:1" data-anim-step="0"><div class="message-label"><svg class="icon icon--question  tone-orange" viewBox="0 0 64 68" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 9H51V44H31L18 55V44H9Z"/><path d="M24 21C24 12 39 13 38 22C38 27 30 28 30 34M30 39V40"/></svg><p class="mono">question</p></div><p class="copy">작업 중 필요한 질문</p></div><div class="anim-item message-line message-line--back tone-yellow" style="grid-row:2" data-anim-step="2"><div class="message-label"><svg class="icon icon--file  tone-yellow" viewBox="0 0 56 68" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3H35L50 18V63H7ZM35 3V18H50M17 29H38M17 39H36M17 49H31"/></svg><p class="mono">reply</p></div><p class="copy">질문에 대한 답변</p></div><div class="anim-item message-line tone-green" style="grid-row:3" data-anim-step="4"><div class="message-label"><svg class="icon icon--check  tone-green" viewBox="0 0 64 68" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="30" cy="30" r="24"/><path d="M17 30L26 39L43 20" stroke-width="3"/></svg><p class="mono">worker_done</p></div><p class="copy">작업 결과 보고</p></div><div class="message-head message-head--coordinator tone-yellow"><svg class="icon icon--robot  " viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><h2 class="heading">Coordinator</h2></div></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article></div><script>
+      // 파일로 직접 여는 경우: 이 템플릿 위치와 정식 outputs 위치를 구분한다.
+      // 다른 깊이로 옮기면 루트 해석도 함께 확인한다. HTTP 경로에는 개입하지 않는다.
+      if (location.protocol === "file:") {
+        const depth =
+          /\/\.(claude|agents)\/skills\/fastcampus-slide\/assets\//.test(
+            location.pathname,
+          )
+            ? "../../../../"
+            : "../../../";
+        const root = new URL(depth, location.href);
+        document.querySelectorAll('img[src^="/"]').forEach((img) => {
+          img.src = new URL(img.getAttribute("src").slice(1), root).href;
+        });
+      }
+
+      /* 조작 규칙 (성공 기준):
+         페이지 이동은 좌우 nav-btn · 하단 dot · 키보드(←/→/스페이스)로만.
+         #deck/body/.slide에 이동용 click 리스너를 절대 달지 않는다 —
+         강의 중 화면을 가리키며 클릭해도 슬라이드가 넘어가면 안 된다. */
+      class SlidePresentation {
+        constructor() {
+          this.slides = Array.from(document.querySelectorAll(".slide"));
+          this.total = this.slides.length;
+          const requested = Number.parseInt(
+            new URLSearchParams(window.location.search).get("slide"),
+            10,
+          );
+          this.current =
+            Number.isInteger(requested) &&
+            requested >= 1 &&
+            requested <= this.total
+              ? requested - 1
+              : 0;
+          this.isAnimating = false;
+          this._init();
+        }
+        _init() {
+          this.slides.forEach((slide, i) =>
+            slide.classList.toggle("active", i === this.current),
+          );
+          document.getElementById("tot").textContent = this.total;
+          this._buildDots();
+          this._bindKeys();
+          this._bindButtons();
+          this._update();
+          this._runSlide(this.current);
+        }
+        /* 슬라이드 진입 시 .anim-item 을 순차 등장시킨다.
+           스토리보드의 "애니메이션 순서" = DOM 순서 */
+        _runSlide(i) {
+          const items = this.slides[i].querySelectorAll(".anim-item");
+          items.forEach(el => el.classList.remove('do-fadeinup'));
+          void this.slides[i].offsetWidth;
+          const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+          items.forEach((el,n) => {
+            const step = Number(el.dataset.animStep ?? n);
+            el.style.animationDelay = reduced ? '0ms' : `${150 + step * 260}ms`;
+            el.classList.add('do-fadeinup');
+          });
+        }
+        next() {
+          if (!this.isAnimating) this._go(this.current + 1);
+        }
+        prev() {
+          if (!this.isAnimating) this._go(this.current - 1);
+        }
+        _go(i) {
+          if (
+            i < 0 ||
+            i >= this.total ||
+            i === this.current ||
+            this.isAnimating
+          )
+            return;
+          this.isAnimating = true;
+          this.slides[this.current].classList.remove("active");
+          this.slides[i].classList.add("active");
+          this.current = i;
+          const url = new URL(window.location.href);
+          url.searchParams.set("slide", this.current + 1);
+          window.history.replaceState({}, "", url);
+          this._runSlide(i);
+          setTimeout(() => {
+            this.isAnimating = false;
+            this._update();
+          }, 420);
+          this._update();
+        }
+        _update() {
+          const pct = ((this.current + 1) / this.total) * 100;
+          document.getElementById("progress").style.width = pct + "%";
+          document.getElementById("cur").textContent = this.current + 1;
+          document.getElementById("btn-prev").disabled = this.current === 0;
+          document.getElementById("btn-next").disabled =
+            this.current === this.total - 1;
+          document
+            .querySelectorAll(".dot")
+            .forEach((d, i) =>
+              d.classList.toggle("active", i === this.current),
+            );
+        }
+        _buildDots() {
+          const nav = document.getElementById("dot-nav");
+          this.slides.forEach((_, i) => {
+            const b = document.createElement("button");
+            b.className = "dot" + (i === 0 ? " active" : "");
+            b.setAttribute("aria-label", `슬라이드 ${i + 1}`);
+            b.addEventListener("click", () => this._go(i));
+            nav.appendChild(b);
+          });
+        }
+        _bindButtons() {
+          document
+            .getElementById("btn-prev")
+            .addEventListener("click", () => this.prev());
+          document
+            .getElementById("btn-next")
+            .addEventListener("click", () => this.next());
+        }
+        _bindKeys() {
+          document.addEventListener("keydown", (e) => {
+            if (this.isAnimating) return;
+            if (e.key === "ArrowRight" || e.key === " ") {
+              e.preventDefault();
+              this.next();
+            }
+            if (e.key === "ArrowLeft") {
+              e.preventDefault();
+              this.prev();
+            }
+          });
+        }
+      }
+      document.querySelectorAll('.wires .draw').forEach(p=>{const a=p.getPointAtLength(0),b=p.getPointAtLength(p.getTotalLength()); if(b.x<a.x)p.classList.add('draw--reverse')}); window.presentation = new SlidePresentation();
+    </script>    <!-- file:// 로 열었을 때만 루트 절대경로(/assets, /artifacts)를 저장소 기준 경로로 바꾼다.
+         배포(https)에서는 아무 것도 하지 않는다. HTML의 경로 표기는 루트 절대경로 그대로 둔다. -->
+    <script>
+      (function () {
+        if (location.protocol !== "file:") return;
+        // 정식 덱은 경로의 /artifacts/ 앞이 저장소 루트다.
+        // 스킬 assets 안의 템플릿처럼 /artifacts/ 밖에 있는 파일은 깊이로 되짚는다.
+        var m = location.pathname.match(/^(.*\/)artifacts\//);
+        var root = m
+          ? m[1]
+          : new URL(
+              /\/\.(claude|agents)\/skills\/fastcampus-slide\/assets\//.test(
+                location.pathname,
+              )
+                ? "../../../../"
+                : "../../../",
+              location.href,
+            ).pathname;
+        function apply() {
+          document.querySelectorAll('img[src^="/"]').forEach(function (el) {
+            var s = el.getAttribute("src");
+            if (s.indexOf(root) === 0) return;
+            el.setAttribute("src", root + s.slice(1));
+          });
+        }
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", apply);
+        } else {
+          apply();
+        }
+      })();
+    </script>
+  </body></html>
