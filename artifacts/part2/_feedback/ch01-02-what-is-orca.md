@@ -193,3 +193,7 @@ v1의 전체 크기, 약어, 이미지 영역, 하단 흐름 유지. 사람 중�
 ## 2026-09-08 — 수정본 골든셋 등록
 
 이전 assistant 제작본의 2·4·5장과 현재 수정본을 비교했다. 상세 판단 기준은 `.claude/skills/fastcampus-slide/references/goldenset-orca-basics.md`, 전후 화면은 `_goldenset/ch01-02-what-is-orca/comparison.md`, 검수 증거와 해시는 같은 폴더 `manifest.json`에 있다. HTML·대본·템플릿을 변경하지 않고 2133×1200과 1280×800에서 현재 5장 전체를 검수했다.
+
+## 표지 제목과 강조 수정 — 2026-09-09
+
+- 표지 제목을 클립명 ‘Orca는 어떤 도구인가’로 통일하고 ‘Orca’에 키컬러 적용. 표지 그림·서브텍스트·본문 구성 유지.

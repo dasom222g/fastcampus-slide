@@ -7,9 +7,9 @@
 목표: Orca의 정체, 실행 주체, 작업 공간의 기본 단위, 오케스트레이션 지원을 이해한다.
 근거: docs/curriculum.md, docs/course-brief.md, Orca CLI의 `orca skills get orca-cli`, https://www.onorca.dev/, https://git-scm.com/docs/git-worktree, https://github.com/stablyai/orca/blob/main/skill-guides/orchestration.md
 
-## 슬라이드 1/5 — Orca의 정체
+## 슬라이드 1/5 — Orca는 어떤 도구인가
 
-기존 표지 유지. 세 에이전트가 하나의 사무실에서 일하는 이미지와 큰 핵심 문구.
+표지 제목은 클립명 그대로 ‘Orca는 어떤 도구인가’이며, ‘Orca’에만 키컬러를 적용한다. 세 에이전트가 하나의 사무실에서 일하는 이미지와 큰 핵심 문구.
 이미지: /artifacts/part2/_images/ch01-02-what-is-orca--agent-office-v4.png
 좌측 그림·우측 선언문 사이 간격과 크기를 유지한다.
 
