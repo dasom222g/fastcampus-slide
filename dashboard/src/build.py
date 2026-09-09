@@ -232,10 +232,12 @@ def build_rows() -> tuple[list[dict], list[str], str]:
                 if given not in MANUAL_STATES:
                     die(f"Part {part} {clip} 의 「{stage}」 값이 이상하다: {given!r}")
                 if given != auto:
-                    reason = e.get(f"{stage}_사유", "")
-                    row["비고"] = (row["비고"] + " · " if row["비고"] else "") + (
-                        reason or f"{stage} 수기 지정"
-                    )
+                    reason = e.get(f"{stage}_사유", "") or f"{stage} 수기 지정"
+                    # 제작과 대본에 같은 사유가 걸리면 비고에 두 번 적히지 않게 한다
+                    if reason not in row["비고"]:
+                        row["비고"] = (
+                            row["비고"] + " · " if row["비고"] else ""
+                        ) + reason
                 value = None if given in (DUE, LATER) else given
             if value is None:
                 row["_미착수"] = True
