@@ -151,7 +151,8 @@ def build_rows() -> tuple[list[dict], list[str]]:
         fm = frontmatter(source_text)
         declared = declared_count(fm.get("슬라이드", ""))
         actual = slide_count(deck_text) if deck_text else None
-        row["장수"] = f"{declared or actual}장" if (declared or actual) else "—"
+        count = e.get("장수") or declared or actual
+        row["장수"] = f"{count}장" if count else "—"
 
         # 제작
         if deck_text:
