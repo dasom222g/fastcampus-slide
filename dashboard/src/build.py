@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""저장소를 스캔해 슬라이드 제작 현황을 다시 만든다.
+"""저장소를 스캔해 강의 제작 현황을 다시 만든다.
 
 만드는 것
   dashboard/index.html          보기용 대시보드
@@ -7,16 +7,26 @@
 
 읽는 것
   docs/curriculum.md            파트·챕터·클립의 번호·제목·길이 — 여기가 유일한 출처
-  dashboard/clips.json          슬라이드를 만들 클립 목록 + 촬영 상태(수기) + 예외
+  dashboard/clips.json          클립별 슬라이드 여부 · 촬영 상태(수기) · 파트별 납기 · 예외
   artifacts/<part>/outputs/     덱 HTML 존재 여부와 실제 장수
   artifacts/<part>/_source/     소스 frontmatter의 슬라이드 장수·상태
   artifacts/<part>/_script/     대본 존재 여부와 대본이 적은 장수
   artifacts/CONFIRMED.md        확정 여부
 
+상태 다섯 가지
+  완료      끝났다
+  작업중    손대고 있다
+  예정      아직 안 했지만 지금 납기에 속한 파트다 — 곧 해야 한다
+  시작전    아직 안 했고 납기도 뒤다 — 지금 신경 쓸 일이 아니다
+  해당없음  애초에 그 공정이 없다 (실습 클립의 제작·대본)
+
 판정 규칙
-  제작  HTML 없음 → 시작전 / 있고 확정 → 완료 / 있고 확정 아님 → 작업중
-  대본  _script 파일 없음 → 시작전 / 있음 → 완료
+  실습 클립(슬라이드: false)은 제작·대본이 없다 → 해당없음
+  제작  덱 없음 → 미착수 / 있고 확정 → 완료 / 있고 확정 아님 → 작업중
+  대본  파일 없음 → 미착수 / 있음 → 작업중(초안) / 촬영을 마쳤으면 → 완료
+        강사 검수는 촬영 때 이뤄지므로 촬영 완료를 대본 확정으로 본다.
   촬영  clips.json에 적힌 값 그대로 (자동 판정 불가)
+  미착수는 파트의 납기를 보고 예정 / 시작전으로 갈린다.
   clips.json에 제작·대본 키를 직접 적으면 그 값이 이긴다.
 """
 
@@ -33,15 +43,15 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 SRC = Path(__file__).resolve().parent
 
-DONE, WIP, TODO = "완료", "작업중", "시작전"
-STATES = (DONE, WIP, TODO)
-CLS = {DONE: "done", WIP: "wip", TODO: "todo"}
-GLYPH = {DONE: "●", WIP: "◐", TODO: "○"}
+DONE, WIP, DUE, LATER, NA = "완료", "작업중", "예정", "시작전", "해당없음"
+MANUAL_STATES = (DONE, WIP, DUE, LATER)
+CLS = {DONE: "done", WIP: "wip", DUE: "due", LATER: "later", NA: "na"}
+CHIP = {DONE: "완료", WIP: "작업중", DUE: "예정", LATER: "시작전", NA: "—"}
 
 STAGES = (
-    ("제작", "HTML 덱이 완성됐는가"),
-    ("대본", "화면과 일치하는 전체 대본이 있는가"),
-    ("촬영", "영상 수록을 마쳤는가"),
+    ("제작", "슬라이드 덱을 만들었는가", "슬라이드 클립"),
+    ("대본", "강사 검수까지 끝난 대본이 있는가", "슬라이드 클립"),
+    ("촬영", "영상 수록을 마쳤는가", "전체 클립"),
 )
 
 
@@ -55,13 +65,13 @@ def read(path: Path) -> str:
         return ""
 
 
-def parse_curriculum() -> dict[tuple[int, str], dict]:
-    """`- Ch01-01. 제목 (11분)` 줄을 파트·챕터와 함께 읽는다."""
+def parse_curriculum() -> "OrderedDict[tuple[int, str], dict]":
+    """`- Ch01-01. 제목 (11분)` 줄을 파트·챕터와 함께 커리큘럼 순서대로 읽는다."""
     text = read(ROOT / "docs" / "curriculum.md")
     if not text:
         die("docs/curriculum.md 를 찾을 수 없다.")
 
-    clips: dict[tuple[int, str], dict] = {}
+    clips: "OrderedDict[tuple[int, str], dict]" = OrderedDict()
     part_no, part_title, chapter = None, None, None
     for line in text.splitlines():
         m = re.match(r"^##\s+Part\s+(\d+)\.\s*(.+?)\s*$", line)
@@ -77,7 +87,7 @@ def parse_curriculum() -> dict[tuple[int, str], dict]:
             clips[(part_no, m.group(1))] = {
                 "파트번호": part_no,
                 "파트제목": part_title,
-                "챕터": chapter,
+                "챕터": chapter or "",
                 "클립": m.group(1),
                 "제목": m.group(2),
                 "길이": f"{m.group(3)}분",
@@ -110,43 +120,94 @@ def declared_count(value: str) -> int | None:
     return int(m.group(1)) if m else None
 
 
+# ── 납기 ────────────────────────────────────────────────────────────
+
+
+def due_parts(schedule: dict, rows_by_part: dict[int, list[dict]]) -> tuple[set[int], str]:
+    """지금 납기에 속한 파트를 고른다.
+
+    남은 일이 있는 파트들의 납기 중 가장 이른 날짜가 '지금 납기'다.
+    그 날짜를 가진 파트의 미착수 작업은 예정, 나머지는 시작전이 된다.
+    납기가 안 적힌 파트는 항상 시작전이다.
+    """
+    if not schedule:
+        return set(), ""
+
+    open_dates = []
+    for part, rows in rows_by_part.items():
+        raw = schedule.get(str(part))
+        if not raw:
+            continue
+        if any(r.get("_미착수") for r in rows):
+            open_dates.append(raw)
+    if not open_dates:
+        return set(), ""
+
+    nearest = min(open_dates)
+    return {int(p) for p, d in schedule.items() if d == nearest}, nearest
+
+
 # ── 판정 ────────────────────────────────────────────────────────────
 
 
-def build_rows() -> tuple[list[dict], list[str], int]:
+def build_rows() -> tuple[list[dict], list[str], str]:
     curriculum = parse_curriculum()
-    manifest_path = ROOT / "dashboard" / "clips.json"
     try:
-        manifest = json.loads(read(manifest_path) or "{}")
+        manifest = json.loads(read(ROOT / "dashboard" / "clips.json") or "{}")
     except json.JSONDecodeError as exc:
         die(f"dashboard/clips.json 을 읽을 수 없다 — {exc}")
 
-    entries = manifest.get("클립")
+    entries = {(e.get("파트"), e.get("클립")): e for e in manifest.get("클립", [])}
     if not entries:
         die("dashboard/clips.json 의 「클립」 목록이 비어 있다.")
+    for key in entries:
+        if key not in curriculum:
+            die(f"Part {key[0]} {key[1]} 은 커리큘럼에 없다. clips.json을 확인한다.")
+
+    schedule = {
+        str(k): v
+        for k, v in (manifest.get("납기") or {}).items()
+        if v and not str(k).startswith("_")
+    }
+    for raw in schedule.values():
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", raw):
+            die(f"납기일 형식이 이상하다: {raw!r} — YYYY-MM-DD 로 적는다.")
 
     confirmed = read(ROOT / "artifacts" / "CONFIRMED.md")
     rows, warnings = [], []
 
-    for e in entries:
-        part, clip = e.get("파트"), e.get("클립")
-        meta = curriculum.get((part, clip))
-        if not meta:
-            warnings.append(
-                f"Part {part} {clip} — 커리큘럼에 없는 클립이다. clips.json을 확인한다."
-            )
+    for key, meta in curriculum.items():
+        part, clip = key
+        e = entries.get(key, {})
+        row = dict(meta)
+        row["슬라이드"] = bool(e.get("슬라이드"))
+        row["비고"] = e.get("비고", "")
+        row["_미착수"] = False
+
+        shot = e.get("촬영", LATER)
+        if shot not in MANUAL_STATES:
+            die(f"Part {part} {clip} 의 「촬영」 값이 이상하다: {shot!r}")
+        if shot in (DUE, LATER):
+            row["_미착수"] = True
+            shot = None  # 납기를 보고 나중에 채운다
+
+        if not row["슬라이드"]:
+            if not e:
+                warnings.append(
+                    f"Part {part} {clip} — clips.json에 없다. 실습 클립으로 처리했다."
+                )
+            row.update({"장수": "—", "제작": NA, "대본": NA, "촬영": shot})
+            row["비고"] = row["비고"] or "실습"
+            rows.append(row)
             continue
 
         slug = e.get("슬러그")
-        row = dict(meta)
-        row["슬러그"] = slug
-        row["비고"] = e.get("비고", "")
-
         deck_text = source_text = script_text = ""
         if slug:
-            deck_text = read(ROOT / "artifacts" / f"part{part}" / "outputs" / f"{slug}.html")
-            source_text = read(ROOT / "artifacts" / f"part{part}" / "_source" / f"{slug}.md")
-            script_text = read(ROOT / "artifacts" / f"part{part}" / "_script" / f"{slug}.md")
+            base = ROOT / "artifacts" / f"part{part}"
+            deck_text = read(base / "outputs" / f"{slug}.html")
+            source_text = read(base / "_source" / f"{slug}.md")
+            script_text = read(base / "_script" / f"{slug}.md")
 
         fm = frontmatter(source_text)
         declared = declared_count(fm.get("슬라이드", ""))
@@ -154,56 +215,77 @@ def build_rows() -> tuple[list[dict], list[str], int]:
         count = e.get("장수") or declared or actual
         row["장수"] = f"{count}장" if count else "—"
 
-        # 제작
+        made = None
         if deck_text:
             is_confirmed = (slug in confirmed) or ("확정" in fm.get("상태", ""))
             made = DONE if is_confirmed else WIP
-        else:
-            made = TODO
-        # 대본
-        scripted = DONE if script_text.strip() else TODO
+
+        # 대본은 초안이 있어도 강사 검수 전이다. 검수는 촬영 때 이뤄진다.
+        scripted = None
+        if script_text.strip():
+            scripted = DONE if e.get("촬영") == DONE else WIP
 
         for stage, auto in (("제작", made), ("대본", scripted)):
+            value = auto
             if stage in e:
-                value = e[stage]
-                if value not in STATES:
-                    die(f"Part {part} {clip} 의 「{stage}」 값이 이상하다: {value!r}")
-                if value != auto:
+                given = e[stage]
+                if given not in MANUAL_STATES:
+                    die(f"Part {part} {clip} 의 「{stage}」 값이 이상하다: {given!r}")
+                if given != auto:
                     reason = e.get(f"{stage}_사유", "")
                     row["비고"] = (row["비고"] + " · " if row["비고"] else "") + (
                         reason or f"{stage} 수기 지정"
                     )
-                if stage == "제작":
-                    made = value
-                else:
-                    scripted = value
+                value = None if given in (DUE, LATER) else given
+            if value is None:
+                row["_미착수"] = True
+            row[stage] = value
 
-        shot = e.get("촬영", TODO)
-        if shot not in STATES:
-            die(f"Part {part} {clip} 의 「촬영」 값이 이상하다: {shot!r}")
+        row["촬영"] = shot
 
-        row["제작"], row["대본"], row["촬영"] = made, scripted, shot
-
-        if not row["비고"] and slug is None:
-            row["비고"] = "소스 없음"
-
-        # 어긋난 곳은 커밋 시점에 잡아준다
         label = f"Part {part} {clip}"
         if declared and actual and declared != actual:
-            warnings.append(
-                f"{label} — 소스는 {declared}장인데 덱은 {actual}장이다."
-            )
+            warnings.append(f"{label} — 소스는 {declared}장인데 덱은 {actual}장이다.")
         if script_text:
             sc = declared_count(script_text.splitlines()[0])
             ref = declared or actual
             if sc and ref and sc != ref:
                 warnings.append(f"{label} — 대본은 {sc}장인데 덱은 {ref}장이다.")
-        if slug and not deck_text and made != TODO and not e.get("제작_사유"):
-            warnings.append(f"{label} — 덱 HTML이 없는데 제작이 {made}로 적혀 있다.")
+        if slug and not deck_text and row["제작"] not in (None, NA):
+            if not e.get("제작_사유"):
+                warnings.append(
+                    f"{label} — 덱 HTML이 없는데 제작이 {row['제작']}로 적혀 있다."
+                )
 
         rows.append(row)
 
-    return rows, warnings, len(curriculum)
+    # 미착수 칸을 납기에 따라 예정 / 시작전으로 채운다
+    by_part: dict[int, list[dict]] = {}
+    for r in rows:
+        by_part.setdefault(r["파트번호"], []).append(r)
+    due, nearest = due_parts(schedule, by_part)
+
+    for r in rows:
+        fill = DUE if r["파트번호"] in due else LATER
+        for stage, _, _ in STAGES:
+            if r[stage] is None:
+                r[stage] = fill
+        r.pop("_미착수", None)
+
+    if schedule:
+        missing = sorted(set(by_part) - {int(p) for p in schedule})
+        if missing:
+            warnings.append(
+                "납기가 안 적힌 파트가 있다 (항상 시작전으로 둔다): "
+                + ", ".join(f"Part {p}" for p in missing)
+            )
+
+    return rows, warnings, nearest
+
+
+def stage_scope(rows: list[dict], stage: str) -> list[dict]:
+    """제작·대본은 슬라이드 클립만, 촬영은 전체 클립이 모집단이다."""
+    return [r for r in rows if r[stage] != NA]
 
 
 # ── 그리기 ──────────────────────────────────────────────────────────
@@ -213,82 +295,108 @@ def esc(s: str) -> str:
     return html.escape(s or "")
 
 
-def track_html(row: dict) -> str:
-    cells = []
-    for stage, _ in STAGES:
-        st = row[stage]
-        cells.append(
-            f'<span class="stage stage--{CLS[st]}" title="{stage} {st}">'
-            f'<span class="stage__dot" aria-hidden="true">{GLYPH[st]}</span>'
-            f'<span class="stage__txt">{st}</span></span>'
-        )
-    link = '<span class="track__link" aria-hidden="true"></span>'
-    return '<span class="track">' + link.join(cells) + "</span>"
+def chip(state: str, stage: str) -> str:
+    title = f"{stage} {state}" if state != NA else f"{stage} 해당없음 — 실습 클립"
+    return f'<span class="chip chip--{CLS[state]}" title="{title}">{CHIP[state]}</span>'
 
 
 def render_gates(rows: list[dict]) -> str:
-    total = len(rows)
     out = []
-    for i, (stage, hint) in enumerate(STAGES, start=1):
-        c = Counter(r[stage] for r in rows)
-        d, w = c[DONE], c[WIP]
-        wip_html = f"<em>작업중 {w}</em>" if w else ""
+    for i, (stage, hint, scope) in enumerate(STAGES, start=1):
+        pool = stage_scope(rows, stage)
+        total = len(pool) or 1
+        c = Counter(r[stage] for r in pool)
+        d, w, u = c[DONE], c[WIP], c[DUE]
+        extra = []
+        if w:
+            extra.append(f'<em class="n-wip">작업중 {w}</em>')
+        if u:
+            extra.append(f'<em class="n-due">예정 {u}</em>')
         out.append(f"""<li class="gate">
-        <span class="gate__step">{i}</span>
-        <div class="gate__body">
+        <div class="gate__head">
+          <span class="gate__step">{i}</span>
           <h3 class="gate__name">{stage}</h3>
-          <p class="gate__hint">{hint}</p>
-          <div class="gate__bar" role="img" aria-label="{stage} 완료 {d}, 작업중 {w}, 시작전 {c[TODO]}, 전체 {total}">
-            <span class="gate__fill gate__fill--done" style="width:{d / total * 100:.4f}%"></span>
-            <span class="gate__fill gate__fill--wip" style="width:{w / total * 100:.4f}%"></span>
-          </div>
-          <p class="gate__nums"><b>{d}</b><span class="gate__of">/{total} 완료</span>{wip_html}</p>
+          <span class="gate__scope">{scope} {len(pool)}개</span>
         </div>
+        <p class="gate__hint">{hint}</p>
+        <div class="gate__bar" role="img" aria-label="{stage} 완료 {d}, 작업중 {w}, 예정 {u}, 시작전 {c[LATER]}, 전체 {len(pool)}">
+          <span class="gate__fill gate__fill--done" style="width:{d / total * 100:.4f}%"></span>
+          <span class="gate__fill gate__fill--wip" style="width:{w / total * 100:.4f}%"></span>
+          <span class="gate__fill gate__fill--due" style="width:{u / total * 100:.4f}%"></span>
+        </div>
+        <p class="gate__nums">
+          <b>{d}</b><span class="gate__of">/ {len(pool)} 완료</span>
+          {"".join(extra)}
+        </p>
       </li>""")
     return "\n".join(out)
 
 
-def render_parts(rows: list[dict]) -> str:
-    parts: OrderedDict[int, list[dict]] = OrderedDict()
+HEAD_ROW = """<thead><tr>
+            <th scope="col" class="c-clip">클립</th>
+            <th scope="col" class="c-title">제목</th>
+            <th scope="col" class="c-len">길이</th>
+            <th scope="col" class="c-count">장수</th>
+            <th scope="col" class="c-stage"><span class="c-stage__n">1</span>제작</th>
+            <th scope="col" class="c-stage"><span class="c-stage__n">2</span>대본</th>
+            <th scope="col" class="c-stage"><span class="c-stage__n">3</span>촬영</th>
+            <th scope="col" class="c-note">비고</th>
+          </tr></thead>"""
+
+
+def render_parts(rows: list[dict], due_note: dict[int, str]) -> str:
+    parts: "OrderedDict[int, list[dict]]" = OrderedDict()
     for r in rows:
         parts.setdefault(r["파트번호"], []).append(r)
 
     out = []
     for no, rs in parts.items():
-        done = sum(1 for r in rs for s, _ in STAGES if r[s] == DONE)
-        total = len(rs) * len(STAGES)
-        pct = done / total * 100
-        title = esc(rs[0]["파트제목"])
+        slides = [r for r in rs if r["슬라이드"]]
+        cells = [(r, s) for r in rs for s, _, _ in STAGES if r[s] != NA]
+        done = sum(1 for r, s in cells if r[s] == DONE)
+        total = len(cells) or 1
+        due = due_note.get(no, "")
+        due_html = (
+            f'<span class="part__due{"" if not due else " is-due" if due[1] else ""}">{esc(due[0])}</span>'
+            if due
+            else ""
+        )
         out.append(f"""<section class="part">
-      <header class="part__head">
-        <h3 class="part__name">Part {no}</h3>
-        <span class="part__title">{title}</span>
-        <span class="part__meter" role="img" aria-label="공정 {done}/{total} 완료">
-          <span class="part__meter-fill" style="width:{pct:.4f}%"></span>
-        </span>
-        <span class="part__pct">{done}/{total}</span>
-      </header>
-      <div class="tablewrap">
-      <table class="grid">
-        <thead><tr>
-          <th scope="col" class="c-clip">클립</th>
-          <th scope="col" class="c-title">제목</th>
-          <th scope="col" class="c-num">길이</th>
-          <th scope="col" class="c-num">장수</th>
-          <th scope="col" class="c-track">제작 → 대본 → 촬영</th>
-          <th scope="col" class="c-note">비고</th>
-        </tr></thead>
-        <tbody>""")
+        <header class="part__head">
+          <h3 class="part__name">Part {no}</h3>
+          <span class="part__title">{esc(rs[0]["파트제목"])}</span>
+          {due_html}
+          <span class="part__tally">{len(rs)}클립 · 슬라이드 {len(slides)}</span>
+          <span class="part__meter" role="img" aria-label="공정 {done}/{total} 완료">
+            <span class="part__meter-fill" style="width:{done / total * 100:.4f}%"></span>
+          </span>
+          <span class="part__pct">{done}/{total}</span>
+        </header>
+        <div class="tablewrap">
+        <table class="grid">
+          {HEAD_ROW}
+          <tbody>""")
+        chapter = None
         for r in rs:
-            out.append(f"""<tr>
-            <td class="c-clip"><code>{esc(r["클립"])}</code></td>
-            <td class="c-title">{esc(r["제목"])}</td>
-            <td class="c-num">{esc(r["길이"])}</td>
-            <td class="c-num">{esc(r["장수"])}</td>
-            <td class="c-track">{track_html(r)}</td>
-            <td class="c-note">{esc(r["비고"])}</td>
-          </tr>""")
-        out.append("        </tbody>\n      </table>\n      </div>\n    </section>")
+            if r["챕터"] != chapter:
+                chapter = r["챕터"]
+                if chapter:
+                    out.append(
+                        '<tr class="chap"><th colspan="8" scope="colgroup">'
+                        f"{esc(chapter)}</th></tr>"
+                    )
+            cls = "" if r["슬라이드"] else ' class="row--practice"'
+            out.append(f"""<tr{cls}>
+              <td class="c-clip"><code>{esc(r["클립"])}</code></td>
+              <td class="c-title">{esc(r["제목"])}</td>
+              <td class="c-len">{esc(r["길이"])}</td>
+              <td class="c-count">{esc(r["장수"])}</td>
+              <td class="c-stage">{chip(r["제작"], "제작")}</td>
+              <td class="c-stage">{chip(r["대본"], "대본")}</td>
+              <td class="c-stage">{chip(r["촬영"], "촬영")}</td>
+              <td class="c-note">{esc(r["비고"])}</td>
+            </tr>""")
+        out.append("          </tbody>\n        </table>\n        </div>\n      </section>")
     return "\n".join(out)
 
 
@@ -300,67 +408,87 @@ def render_warnings(warnings: list[str]) -> str:
         )
     items = "".join(f"<li>{esc(w)}</li>" for w in warnings)
     return (
-        f'<p class="check check--warn"><b>{len(warnings)}건이 어긋난다.</b></p>'
+        f'<p class="check check--warn"><b>{len(warnings)}건 확인이 필요하다.</b></p>'
         f'<ul class="checklist">{items}</ul>'
     )
 
 
-def render_html(rows: list[dict], warnings: list[str], all_clips: int) -> str:
+def render_html(rows: list[dict], warnings: list[str], nearest: str, schedule: dict) -> str:
     template = read(SRC / "template.html")
     if not template:
         die("dashboard/src/template.html 을 찾을 수 없다.")
-    counts = {
-        stage: Counter(r[stage] for r in rows) for stage, _ in STAGES
+    slides = [r for r in rows if r["슬라이드"]]
+    note = {
+        int(p): (f"납기 {d}", d == nearest) for p, d in schedule.items()
     }
+    due_line = (
+        f"지금 납기는 <b>{esc(nearest)}</b>다. 그 납기에 속한 파트의 미착수 작업만 "
+        "<b>예정</b>이고, 뒤 파트는 <b>시작전</b>이다."
+        if nearest
+        else "납기일이 아직 안 적혀 있어 미착수는 모두 <b>시작전</b>이다. "
+        "<code>dashboard/clips.json</code>의 <code>납기</code>에 파트별 날짜를 적으면 "
+        "그 납기의 파트가 <b>예정</b>으로 갈린다."
+    )
     return (
         template.replace("{{GATES}}", render_gates(rows))
-        .replace("{{PARTS}}", render_parts(rows))
+        .replace("{{PARTS}}", render_parts(rows, note))
         .replace("{{WARNINGS}}", render_warnings(warnings))
-        .replace("{{TOTAL}}", str(len(rows)))
-        .replace("{{ALL_CLIPS}}", str(all_clips))
-        .replace("{{NO_SLIDE}}", str(all_clips - len(rows)))
-        .replace("{{SHOT_DONE}}", str(counts["촬영"][DONE]))
+        .replace("{{DUE_LINE}}", due_line)
+        .replace("{{ALL_CLIPS}}", str(len(rows)))
+        .replace("{{SLIDE_CLIPS}}", str(len(slides)))
+        .replace("{{PRACTICE_CLIPS}}", str(len(rows) - len(slides)))
         .replace("{{BUILT}}", date.today().isoformat())
     )
 
 
-def render_markdown(rows: list[dict], warnings: list[str], all_clips: int) -> str:
+def render_markdown(rows: list[dict], warnings: list[str], nearest: str) -> str:
+    slides = [r for r in rows if r["슬라이드"]]
     L = [
         "---",
-        "문서: 슬라이드 제작 현황",
+        "문서: 강의 제작 현황",
         "상태: dashboard/src/build.py 가 생성한다 — 직접 고치지 않는다",
         f"최종 생성: {date.today().isoformat()}",
         "---",
         "",
-        "# 슬라이드 제작 현황",
+        "# 강의 제작 현황",
         "",
-        f"커리큘럼 {all_clips}클립 중 슬라이드가 필요한 **{len(rows)}클립**을 "
-        "제작 → 대본 → 촬영 순으로 추적한다.",
-        "촬영만 수기이고 나머지는 저장소를 스캔해 판정한다. 고칠 곳은 `dashboard/clips.json`이다.",
+        f"커리큘럼 {len(rows)}클립 전체를 제작 → 대본 → 촬영 순으로 추적한다.",
+        f"슬라이드를 만드는 클립은 {len(slides)}개, 나머지 {len(rows) - len(slides)}개는 "
+        "화면 시연·실습이라 제작·대본이 **해당없음**이다.",
         "",
-        "| 공정 | 완료 | 작업중 | 시작전 |",
-        "|---|---:|---:|---:|",
+        "상태는 다섯 가지다 — **완료 · 작업중 · 예정**(지금 납기의 미착수) **· "
+        "시작전**(납기가 뒤) **· 해당없음**.",
+        f"지금 납기: {nearest or '미지정 — 미착수는 모두 시작전'}",
+        "",
+        "| 공정 | 모집단 | 완료 | 작업중 | 예정 | 시작전 |",
+        "|---|---|---:|---:|---:|---:|",
     ]
-    for stage, _ in STAGES:
-        c = Counter(r[stage] for r in rows)
-        L.append(f"| {stage} | {c[DONE]} | {c[WIP]} | {c[TODO]} |")
+    for stage, _, scope in STAGES:
+        pool = stage_scope(rows, stage)
+        c = Counter(r[stage] for r in pool)
+        L.append(
+            f"| {stage} | {scope} {len(pool)}개 | {c[DONE]} | {c[WIP]} | {c[DUE]} | {c[LATER]} |"
+        )
     L.append("")
 
     if warnings:
-        L.append("## 어긋난 곳")
-        L.append("")
-        L += [f"- {w}" for w in warnings]
-        L.append("")
+        L += ["## 확인이 필요한 곳", ""] + [f"- {w}" for w in warnings] + [""]
 
-    parts: OrderedDict[int, list[dict]] = OrderedDict()
+    parts: "OrderedDict[int, list[dict]]" = OrderedDict()
     for r in rows:
         parts.setdefault(r["파트번호"], []).append(r)
     for no, rs in parts.items():
-        L.append(f"## Part {no}. {rs[0]['파트제목']}")
-        L.append("")
-        L.append("| 클립 | 제목 | 길이 | 장수 | 제작 | 대본 | 촬영 | 비고 |")
-        L.append("|---|---|---|---|---|---|---|---|")
+        L += [f"## Part {no}. {rs[0]['파트제목']}", ""]
+        chapter = None
         for r in rs:
+            if r["챕터"] != chapter:
+                chapter = r["챕터"]
+                if chapter:
+                    L += [f"### {chapter}", ""]
+                L += [
+                    "| 클립 | 제목 | 길이 | 장수 | 제작 | 대본 | 촬영 | 비고 |",
+                    "|---|---|---|---|---|---|---|---|",
+                ]
             L.append(
                 "| "
                 + " | ".join(
@@ -382,11 +510,22 @@ def die(message: str) -> None:
 
 def main() -> int:
     quiet = "--quiet" in sys.argv
-    rows, warnings, all_clips = build_rows()
+    rows, warnings, nearest = build_rows()
+    try:
+        manifest = json.loads(read(ROOT / "dashboard" / "clips.json") or "{}")
+    except json.JSONDecodeError:
+        manifest = {}
+    schedule = {
+        str(k): v
+        for k, v in (manifest.get("납기") or {}).items()
+        if v and not str(k).startswith("_")
+    }
 
     targets = {
-        ROOT / "dashboard" / "index.html": render_html(rows, warnings, all_clips),
-        ROOT / "docs" / "production-status.md": render_markdown(rows, warnings, all_clips) + "\n",
+        ROOT / "dashboard" / "index.html": render_html(rows, warnings, nearest, schedule),
+        ROOT
+        / "docs"
+        / "production-status.md": render_markdown(rows, warnings, nearest) + "\n",
     }
     changed = []
     for path, content in targets.items():
@@ -396,10 +535,13 @@ def main() -> int:
             changed.append(path.relative_to(ROOT))
 
     if not quiet or changed or warnings:
-        counts = " · ".join(
-            f"{s} {Counter(r[s] for r in rows)[DONE]}/{len(rows)}" for s, _ in STAGES
-        )
-        print(f"대시보드 {len(rows)}클립 — {counts}")
+        summary = []
+        for stage, _, _ in STAGES:
+            pool = stage_scope(rows, stage)
+            summary.append(
+                f"{stage} {Counter(r[stage] for r in pool)[DONE]}/{len(pool)}"
+            )
+        print(f"대시보드 {len(rows)}클립 — " + " · ".join(summary))
         for path in changed:
             print(f"  갱신 {path}")
         if not changed:
