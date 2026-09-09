@@ -187,7 +187,7 @@
         나 대신 일하는 AI 팀 만들기 — 이론 클립의 강의 슬라이드입니다.<br />
         커리큘럼의 파트 → 챕터 → 클립 순서 그대로 정렬되어 있습니다.
       </p>
-      <div class="count"><i></i><b>10개</b> 덱 · <b>4개</b> 파트</div>
+      <div class="count"><i></i><b>12개</b> 덱 · <b>4개</b> 파트</div>
 
       <!-- 새 덱을 만들면:
            1) 그 클립이 속한 파트 <section class="part">를 찾는다 (없으면 파트 블록부터 만든다)
@@ -211,7 +211,7 @@
           <div class="chapter__title">Chapter 1. 오리엔테이션</div>
           <ul>
             <li>
-              <a href="https://docs.google.com/presentation/d/1ni-MU5mTo5C84FhhQTc89fGOJOx1VnbZ0SWzbKLgUz4/edit?usp=drive_link" target="_blank" rel="noopener">
+              <a href="https://drive.google.com/drive/folders/10iJGHcCjkvVRyoUXa0dkUkxrdGDzhZSl" target="_blank" rel="noopener">
                 <span class="clip">Ch01-01</span>
                 <span class="name">강의 소개와 최종 결과물</span>
                 <span class="meta"><span class="ext">Google Slides</span><span class="status status--confirmed">확정</span></span>
@@ -219,7 +219,7 @@
               </a>
             </li>
             <li>
-              <a href="https://docs.google.com/presentation/d/1YTfdEa2p06JhmDgxCXm7YGbmHS32B6hI6_VXSgCL7bg/edit?usp=drive_link" target="_blank" rel="noopener">
+              <a href="https://drive.google.com/drive/folders/10iJGHcCjkvVRyoUXa0dkUkxrdGDzhZSl" target="_blank" rel="noopener">
                 <span class="clip">Ch01-02</span>
                 <span class="name">강의 로드맵과 선수 지식</span>
                 <span class="meta"><span class="ext">Google Slides</span><span class="status status--confirmed">확정</span></span>
@@ -280,7 +280,7 @@
               <a href="/part2/outputs/ch02-01-setup-prep" target="_blank" rel="noopener">
                 <span class="clip">Ch02-01</span>
                 <span class="name">설치 전 준비물과 환경 체크</span>
-                <span class="meta">4장<span class="status status--confirmed">확정</span></span>
+                <span class="meta">3장<span class="status status--confirmed">확정</span></span>
                 <span class="go">열기 ↗</span>
               </a>
             </li>
@@ -319,7 +319,7 @@
               <a href="/part3/outputs/ch01-03-branch-vs-worktree" target="_blank" rel="noopener">
                 <span class="clip">Ch01-03</span>
                 <span class="name">브랜치와 워크트리 차이</span>
-                <span class="meta">7장<span class="status status--confirmed">확정</span></span>
+                <span class="meta">8장<span class="status status--confirmed">확정</span></span>
                 <span class="go">열기 ↗</span>
               </a>
             </li>
@@ -331,7 +331,28 @@
         <div class="part__head">
           <span class="part__no">PART 4</span>
           <span class="part__title">오케스트레이션과 스킬</span>
-          <span class="part__meta">1개 덱</span>
+          <span class="part__meta">3개 덱</span>
+        </div>
+        <div class="chapter">
+          <div class="chapter__title">Chapter 1. 오케스트레이션이란</div>
+          <ul>
+            <li>
+              <a href="/part4/outputs/ch01-01-orchestration-structure" target="_blank" rel="noopener">
+                <span class="clip">Ch01-01</span>
+                <span class="name">오케스트레이션 구조 살펴보기</span>
+                <span class="meta">8장<span class="status status--working">작업중</span></span>
+                <span class="go">열기 ↗</span>
+              </a>
+            </li>
+            <li>
+              <a href="/part4/outputs/ch01-02-goal-task-flow" target="_blank" rel="noopener">
+                <span class="clip">Ch01-02</span>
+                <span class="name">목표와 작업, 실행의 흐름</span>
+                <span class="meta">8장<span class="status status--working">작업중</span></span>
+                <span class="go">열기 ↗</span>
+              </a>
+            </li>
+          </ul>
         </div>
         <div class="chapter">
           <div class="chapter__title">Chapter 2. 첫 오케스트레이션 돌려보기</div>
@@ -352,5 +373,30 @@
         슬라이드가 있는 클립만 여기에 나열됩니다. 번호가 비어 있는 자리가 곧 아직 덱이 없는 클립입니다.
       </footer>
     </main>
+      <!-- file:// 로 열었을 때만 덱 링크를 실제 파일 경로로 바꾼다. 배포(https)에서는 rewrite가 처리하므로 동작하지 않는다. -->
+    <script>
+      (function () {
+        if (location.protocol !== "file:") return;
+        var root = location.pathname.replace(/[^/]*$/, "");
+        function apply() {
+          document.querySelectorAll('a[href^="/"]').forEach(function (a) {
+            var h = a.getAttribute("href");
+            var m = h.match(/^\/(part\d+)\/outputs\/([^/?#]+)$/);
+            a.setAttribute(
+              "href",
+              m ? root + "artifacts/" + m[1] + "/outputs/" + m[2] + ".html" : root + h.slice(1)
+            );
+          });
+          document.querySelectorAll('img[src^="/"]').forEach(function (el) {
+            el.setAttribute("src", root + el.getAttribute("src").slice(1));
+          });
+        }
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", apply);
+        } else {
+          apply();
+        }
+      })();
+    </script>
   </body>
 </html>
