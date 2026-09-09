@@ -16,7 +16,7 @@
 상태 다섯 가지
   완료      끝났다
   작업중    손대고 있다
-  예정      아직 안 했지만 지금 납기에 속한 파트다 — 곧 해야 한다
+  예정      아직 안 했지만 곧 해야 한다 — 앞 공정이 끝났거나 지금 납기의 파트다
   시작전    아직 안 했고 납기도 뒤다 — 지금 신경 쓸 일이 아니다
   해당없음  애초에 그 공정이 없다 (실습 클립의 제작·대본)
 
@@ -26,7 +26,10 @@
   대본  파일 없음 → 미착수 / 있음 → 작업중(초안) / 촬영을 마쳤으면 → 완료
         강사 검수는 촬영 때 이뤄지므로 촬영 완료를 대본 확정으로 본다.
   촬영  clips.json에 적힌 값 그대로 (자동 판정 불가)
-  미착수는 파트의 납기를 보고 예정 / 시작전으로 갈린다.
+  미착수는 두 가지로 갈린다.
+    앞 공정이 완료면 → 예정 (제작 완료 → 대본 예정, 대본 완료 → 촬영 예정)
+    그 밖에는 파트의 납기를 보고 → 지금 납기면 예정, 아니면 시작전
+    이미 완료·작업중인 칸은 건드리지 않는다.
   clips.json에 제작·대본 키를 직접 적으면 그 값이 이긴다.
 """
 
@@ -267,11 +270,15 @@ def build_rows() -> tuple[list[dict], list[str], str]:
         by_part.setdefault(r["파트번호"], []).append(r)
     due, nearest = due_parts(schedule, by_part)
 
+    names = [s for s, _, _ in STAGES]
     for r in rows:
-        fill = DUE if r["파트번호"] in due else LATER
-        for stage, _, _ in STAGES:
-            if r[stage] is None:
-                r[stage] = fill
+        by_due = DUE if r["파트번호"] in due else LATER
+        for i, stage in enumerate(names):
+            if r[stage] is not None:
+                continue
+            # 앞 공정이 끝났으면 이 공정이 바로 다음 차례다 — 납기와 무관하게 예정.
+            prev_done = i > 0 and r[names[i - 1]] == DONE
+            r[stage] = DUE if prev_done else by_due
         r.pop("_미착수", None)
 
     if schedule:
