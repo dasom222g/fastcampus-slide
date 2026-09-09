@@ -113,7 +113,7 @@ def declared_count(value: str) -> int | None:
 # ── 판정 ────────────────────────────────────────────────────────────
 
 
-def build_rows() -> tuple[list[dict], list[str]]:
+def build_rows() -> tuple[list[dict], list[str], int]:
     curriculum = parse_curriculum()
     manifest_path = ROOT / "dashboard" / "clips.json"
     try:
@@ -203,7 +203,7 @@ def build_rows() -> tuple[list[dict], list[str]]:
 
         rows.append(row)
 
-    return rows, warnings
+    return rows, warnings, len(curriculum)
 
 
 # ── 그리기 ──────────────────────────────────────────────────────────
@@ -305,7 +305,7 @@ def render_warnings(warnings: list[str]) -> str:
     )
 
 
-def render_html(rows: list[dict], warnings: list[str]) -> str:
+def render_html(rows: list[dict], warnings: list[str], all_clips: int) -> str:
     template = read(SRC / "template.html")
     if not template:
         die("dashboard/src/template.html 을 찾을 수 없다.")
@@ -317,12 +317,14 @@ def render_html(rows: list[dict], warnings: list[str]) -> str:
         .replace("{{PARTS}}", render_parts(rows))
         .replace("{{WARNINGS}}", render_warnings(warnings))
         .replace("{{TOTAL}}", str(len(rows)))
+        .replace("{{ALL_CLIPS}}", str(all_clips))
+        .replace("{{NO_SLIDE}}", str(all_clips - len(rows)))
         .replace("{{SHOT_DONE}}", str(counts["촬영"][DONE]))
         .replace("{{BUILT}}", date.today().isoformat())
     )
 
 
-def render_markdown(rows: list[dict], warnings: list[str]) -> str:
+def render_markdown(rows: list[dict], warnings: list[str], all_clips: int) -> str:
     L = [
         "---",
         "문서: 슬라이드 제작 현황",
@@ -332,7 +334,8 @@ def render_markdown(rows: list[dict], warnings: list[str]) -> str:
         "",
         "# 슬라이드 제작 현황",
         "",
-        f"슬라이드가 필요한 **{len(rows)}클립**을 제작 → 대본 → 촬영 순으로 추적한다.",
+        f"커리큘럼 {all_clips}클립 중 슬라이드가 필요한 **{len(rows)}클립**을 "
+        "제작 → 대본 → 촬영 순으로 추적한다.",
         "촬영만 수기이고 나머지는 저장소를 스캔해 판정한다. 고칠 곳은 `dashboard/clips.json`이다.",
         "",
         "| 공정 | 완료 | 작업중 | 시작전 |",
@@ -379,11 +382,11 @@ def die(message: str) -> None:
 
 def main() -> int:
     quiet = "--quiet" in sys.argv
-    rows, warnings = build_rows()
+    rows, warnings, all_clips = build_rows()
 
     targets = {
-        ROOT / "dashboard" / "index.html": render_html(rows, warnings),
-        ROOT / "docs" / "production-status.md": render_markdown(rows, warnings) + "\n",
+        ROOT / "dashboard" / "index.html": render_html(rows, warnings, all_clips),
+        ROOT / "docs" / "production-status.md": render_markdown(rows, warnings, all_clips) + "\n",
     }
     changed = []
     for path, content in targets.items():
