@@ -1683,8 +1683,8 @@
     }
   ],
   "sha256": {
-    "artifacts/part2/outputs/ch01-02-what-is-orca.html": "c0c92f03377a2671b2c783d17a03a2fa88a5cefceea741ba7d98d0c6c6612568",
-    ".claude/skills/fastcampus-slide/assets/base-template.html": "d99a2683e2dba3bfc7cd449c6d3c8ff7ec81577d42cbd5905f4efbe09369ca5c",
+    "artifacts/part2/outputs/ch01-02-what-is-orca.html": "1cfbc7d1d370e2681cf392e4f387e407b5b46ebb35fb7dc728435053f9b7d98d",
+    ".claude/skills/fastcampus-slide/assets/base-template.html": "d1f611aa61a1ad3c4e38be90ae950be5de4310ec01230fa853e164b66821e0ee",
     "artifacts/part2/_images/ch01-02-what-is-orca--agent-office-v4.png": "6394b6e0693a7d5c2ad97231f3d4608c1f01587d6ab2097f68af29826941441b",
     "assets/fastcampus-logo-dark.svg": "13e0e37df38498b4ca900ecad8e5fb722efefff176f851525a443d100ffd7d0e",
     "assets/orca-logo.svg": "6545255de6cca93679d3419629d0fadae68432475549068e8779811c4aa21f89",
@@ -1709,5 +1709,11 @@
     "artifacts/part2/_source/ch01-02-what-is-orca.md": "fce9bebcbcc551167f4e090f1e5a281670b370d093656328b3249dacc1c62579",
     "artifacts/part2/_storyboard/ch01-02-what-is-orca.md": "1e4a66d09711db6b139f8c5c18bc023c1cf5ef3e76ab631fc40d259747fabdee",
     "artifacts/part2/_script/ch01-02-what-is-orca.md": "cefec736696052e0ef4bde4099896f83d579da7a882f963574d58c7d19daca48"
-  }
+  },
+  "sha256_updated_on": "2026-09-09",
+  "sha256_update_note": "2026-09-09: file:// 로 열었을 때만 동작하는 이미지 경로 보정 스크립트를 </body> 앞에 덧붙였다. CSS·마크업·문구·이미지는 건드리지 않았고 http/https 렌더링은 동일하다. 아래 sha256은 그 변경 이후 값이며, registration_* 항목은 등록 시점 기록이므로 그대로 둔다.",
+  "sha256_changed_files": [
+    "artifacts/part2/outputs/ch01-02-what-is-orca.html",
+    ".claude/skills/fastcampus-slide/assets/base-template.html"
+  ]
 }

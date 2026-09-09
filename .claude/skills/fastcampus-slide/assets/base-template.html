@@ -1254,21 +1254,36 @@
       </article>
     </div>
     <script>
-      // 파일로 직접 여는 경우: 이 템플릿 위치와 정식 outputs 위치를 구분한다.
-      // 다른 깊이로 옮기면 루트 해석도 함께 확인한다. HTTP 경로에는 개입하지 않는다.
-      if (location.protocol === "file:") {
-        const depth =
-          /\/\.(claude|agents)\/skills\/fastcampus-slide\/assets\//.test(
-            location.pathname,
-          )
-            ? "../../../../"
-            : "../../../";
-        const root = new URL(depth, location.href);
-        document.querySelectorAll('img[src^="/"]').forEach((img) => {
-          img.src = new URL(img.getAttribute("src").slice(1), root).href;
-        });
-      }
-
+      // file:// 로 열었을 때만 경로를 보정한다. 정식 덱과 같은 코드다 —
+      // 이 템플릿을 복사해 만든 덱이 그대로 동작해야 한다. HTTP 경로에는 개입하지 않는다.
+      (function () {
+        if (location.protocol !== "file:") return;
+        // 정식 덱은 경로의 /artifacts/ 앞이 저장소 루트다.
+        // 스킬 assets 안의 템플릿처럼 /artifacts/ 밖에 있는 파일은 깊이로 되짚는다.
+        var m = location.pathname.match(/^(.*\/)artifacts\//);
+        var root = m
+          ? m[1]
+          : new URL(
+              /\/\.(claude|agents)\/skills\/fastcampus-slide\/assets\//.test(
+                location.pathname,
+              )
+                ? "../../../../"
+                : "../../../",
+              location.href,
+            ).pathname;
+        function apply() {
+          document.querySelectorAll('img[src^="/"]').forEach(function (el) {
+            var s = el.getAttribute("src");
+            if (s.indexOf(root) === 0) return;
+            el.setAttribute("src", root + s.slice(1));
+          });
+        }
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", apply);
+        } else {
+          apply();
+        }
+      })();
       /* 조작 규칙 (성공 기준):
          페이지 이동은 좌우 nav-btn · 하단 dot · 키보드(←/→/스페이스)로만.
          #deck/body/.slide에 이동용 click 리스너를 절대 달지 않는다 —

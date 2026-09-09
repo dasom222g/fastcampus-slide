@@ -426,7 +426,7 @@
     "assets/fastcampus-logo-dark.svg": "13e0e37df38498b4ca900ecad8e5fb722efefff176f851525a443d100ffd7d0e"
   },
   "sha256": {
-    "artifacts/part2/outputs/ch01-01-terminal-problem.html": "824bfde03fc8231cf2ef91f9f80cc69f6d2c4920e3d36e323db96654a2462864",
+    "artifacts/part2/outputs/ch01-01-terminal-problem.html": "142db55ae27f1f3874e054a7dad62ab12e000053d41b5eb7785608ee1183dfdc",
     "artifacts/part2/_images/ch01-01-terminal-problem--three-agents.png": "c3ad53f1026b9450ae24d0f5a20393e785c068e69af348c9080d270dcb49f990",
     "assets/fastcampus-logo-dark.svg": "13e0e37df38498b4ca900ecad8e5fb722efefff176f851525a443d100ffd7d0e",
     "assets/orca-logo.svg": "6545255de6cca93679d3419629d0fadae68432475549068e8779811c4aa21f89",
@@ -442,5 +442,10 @@
   },
   "non_visual_metadata_removed": [],
   "visual_content_unchanged_after_asset_migration": true,
-  "registration_html_sha256": "b5736be44fd1d559b40fb9103475662bf54b0aa3f360e33c2fe066b0a160ac81"
+  "registration_html_sha256": "b5736be44fd1d559b40fb9103475662bf54b0aa3f360e33c2fe066b0a160ac81",
+  "sha256_updated_on": "2026-09-09",
+  "sha256_update_note": "2026-09-09: file:// 로 열었을 때만 동작하는 이미지 경로 보정 스크립트를 </body> 앞에 덧붙였다. CSS·마크업·문구·이미지는 건드리지 않았고 http/https 렌더링은 동일하다. 아래 sha256은 그 변경 이후 값이며, registration_* 항목은 등록 시점 기록이므로 그대로 둔다.",
+  "sha256_changed_files": [
+    "artifacts/part2/outputs/ch01-01-terminal-problem.html"
+  ]
 }
