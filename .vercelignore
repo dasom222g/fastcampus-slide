@@ -10,3 +10,10 @@ artifacts/*/_source
 artifacts/*/_script
 artifacts/*/_qa
 artifacts/*/_goldenset
+
+# 대시보드 — 생성물(dashboard/index.html)만 배포한다
+dashboard/src
+dashboard/hooks
+dashboard/clips.json
+dashboard/install.sh
+dashboard/README.md

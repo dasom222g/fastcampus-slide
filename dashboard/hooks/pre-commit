@@ -1,0 +1,30 @@
+#!/bin/sh
+# 커밋할 때마다 제작 현황 대시보드를 다시 만들고 결과물을 이 커밋에 넣는다.
+#
+# 설치    sh dashboard/install.sh
+# 건너뛰기 git commit --no-verify
+#
+# 경로는 저장소 루트 기준 상대경로만 쓴다.
+# macOS에서 한글 경로는 유니코드 정규화가 갈려 절대경로를 주면
+# git이 "outside repository"로 거부한다.
+
+set -e
+
+cd "$(git rev-parse --show-toplevel)"
+
+if ! command -v python3 >/dev/null 2>&1; then
+  echo "pre-commit: python3 이 없어 대시보드를 갱신하지 못했다." >&2
+  echo "            그대로 커밋하려면 git commit --no-verify" >&2
+  exit 1
+fi
+
+python3 dashboard/src/build.py --quiet
+
+# 생성물을 이 커밋에 넣는다.
+# git diff 로 거르지 않는다 — 아직 추적되지 않은 새 파일은 diff에 잡히지 않는다.
+# 내용이 그대로면 git add 는 아무 일도 하지 않으므로 매번 더한다.
+for f in dashboard/index.html docs/production-status.md; do
+  [ -f "$f" ] && git add -- "$f"
+done
+
+exit 0

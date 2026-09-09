@@ -3,6 +3,10 @@
   "trailingSlash": false,
   "rewrites": [
     {
+      "source": "/dashboard",
+      "destination": "/dashboard/index.html"
+    },
+    {
       "source": "/:part/outputs/:clip",
       "destination": "/artifacts/:part/outputs/:clip"
     },

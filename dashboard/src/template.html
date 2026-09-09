@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Orca 강의 제작 보드</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&display=swap">
+    <style>
+      :root {
+        --ground: #faf7f8;
+        --surface: #ffffff;
+        --surface-2: #f4eff1;
+        --ink: #1b1418;
+        --ink-mid: #574a50;
+        --ink-dim: #8c7d84;
+        --rule: #e7dee1;
+        --rule-soft: #f0e9eb;
+        --brand: #d40f37;
+        --done: #16704f;
+        --done-soft: #dcefe6;
+        --wip: #a2620a;
+        --wip-soft: #f8ecd8;
+        --todo: #b6a8ae;
+        --sans: "IBM Plex Sans KR", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+        --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+      :root:not([data-theme="light"]) {
+        color-scheme: light;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          --ground: #141013;
+          --surface: #1c171a;
+          --surface-2: #241d21;
+          --ink: #f3ecef;
+          --ink-mid: #bdb0b6;
+          --ink-dim: #8e8188;
+          --rule: #342a2f;
+          --rule-soft: #271f23;
+          --brand: #ff4d6d;
+          --done: #58c69b;
+          --done-soft: #16362b;
+          --wip: #e2a950;
+          --wip-soft: #3a2c17;
+          --todo: #5f5257;
+          color-scheme: dark;
+        }
+      }
+      :root[data-theme="dark"] {
+        --ground: #141013;
+        --surface: #1c171a;
+        --surface-2: #241d21;
+        --ink: #f3ecef;
+        --ink-mid: #bdb0b6;
+        --ink-dim: #8e8188;
+        --rule: #342a2f;
+        --rule-soft: #271f23;
+        --brand: #ff4d6d;
+        --done: #58c69b;
+        --done-soft: #16362b;
+        --wip: #e2a950;
+        --wip-soft: #3a2c17;
+        --todo: #5f5257;
+        color-scheme: dark;
+      }
+
+      body {
+        background: var(--ground);
+        color: var(--ink);
+        font-family: var(--sans);
+        font-weight: 400;
+        line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+      }
+      .wrap {
+        max-width: 68rem;
+        margin: 0 auto;
+        padding: clamp(2rem, 5vw, 4.5rem) clamp(1.1rem, 4vw, 2.5rem) 5rem;
+        display: flex;
+        flex-direction: column;
+        gap: clamp(2.2rem, 4vw, 3.4rem);
+      }
+
+      /* ── 머리 ── */
+      .masthead { display: flex; flex-direction: column; gap: 0.75rem; }
+      .eyebrow {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--brand);
+      }
+      h1 {
+        font-size: clamp(1.85rem, 4.6vw, 2.9rem);
+        font-weight: 700;
+        line-height: 1.18;
+        letter-spacing: -0.02em;
+        text-wrap: balance;
+        margin: 0;
+      }
+      .standfirst {
+        font-size: clamp(1rem, 1.6vw, 1.12rem);
+        color: var(--ink-mid);
+        max-width: 46ch;
+        font-weight: 300;
+      }
+      .standfirst b { font-weight: 600; color: var(--ink); }
+      .stamp {
+        font-family: var(--mono);
+        font-size: 0.76rem;
+        color: var(--ink-dim);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem 1.1rem;
+        padding-top: 0.35rem;
+        border-top: 1px solid var(--rule);
+        margin-top: 0.4rem;
+      }
+
+      /* ── 공정 3관문 ── */
+      .gates {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+        gap: 1px;
+        background: var(--rule);
+        border: 1px solid var(--rule);
+        border-radius: 3px;
+        overflow: hidden;
+      }
+      .gate {
+        background: var(--surface);
+        padding: 1.35rem 1.4rem 1.5rem;
+        display: flex;
+        gap: 0.85rem;
+        align-items: flex-start;
+      }
+      .gate__step {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: var(--ink-dim);
+        border: 1px solid var(--rule);
+        border-radius: 50%;
+        width: 1.55rem;
+        height: 1.55rem;
+        display: grid;
+        place-items: center;
+        flex: none;
+        margin-top: 0.12rem;
+      }
+      .gate__body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.3rem; }
+      .gate__name { font-size: 1.05rem; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
+      .gate__hint { font-size: 0.82rem; color: var(--ink-dim); margin: 0; font-weight: 300; }
+      .gate__bar {
+        display: flex;
+        height: 5px;
+        background: var(--surface-2);
+        border-radius: 99px;
+        overflow: hidden;
+        margin-top: 0.55rem;
+      }
+      .gate__fill--done { background: var(--done); }
+      .gate__fill--wip { background: var(--wip); }
+      .gate__nums {
+        margin: 0.15rem 0 0;
+        font-family: var(--mono);
+        font-size: 0.8rem;
+        color: var(--ink-dim);
+        font-variant-numeric: tabular-nums;
+        display: flex;
+        align-items: baseline;
+        gap: 0.5rem;
+      }
+      .gate__nums b { font-size: 1.4rem; font-weight: 600; color: var(--ink); letter-spacing: -0.02em; }
+      .gate__nums em { font-style: normal; color: var(--wip); }
+      .gate__of { margin-left: -0.28rem; }
+
+      /* ── 본문 단락 ── */
+      .note {
+        font-size: 0.93rem;
+        color: var(--ink-mid);
+        max-width: 62ch;
+        font-weight: 300;
+      }
+      .note + .note { margin-top: 0.7rem; }
+      .note b { font-weight: 600; color: var(--ink); }
+      .note code, .grid code, .legend code {
+        font-family: var(--mono);
+        font-size: 0.86em;
+        background: var(--surface-2);
+        padding: 0.1em 0.36em;
+        border-radius: 2px;
+      }
+
+      h2 {
+        font-size: 0.78rem;
+        font-family: var(--mono);
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--ink-dim);
+        margin: 0 0 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid var(--rule);
+      }
+
+      /* ── 범례 ── */
+      .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1.5rem;
+        font-size: 0.84rem;
+        color: var(--ink-mid);
+        font-weight: 300;
+      }
+      .legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
+      .legend i { font-style: normal; font-size: 0.72rem; }
+      .legend .l-done i { color: var(--done); }
+      .legend .l-wip i { color: var(--wip); }
+      .legend .l-todo i { color: var(--todo); }
+
+      /* ── 파트 ── */
+      .parts { display: flex; flex-direction: column; gap: 2.1rem; }
+      .part__head {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding-bottom: 0.55rem;
+        border-bottom: 2px solid var(--ink);
+        margin-bottom: 0;
+      }
+      .part__name { font-size: 1.02rem; font-weight: 700; margin: 0; letter-spacing: -0.01em; }
+      .part__count {
+        font-family: var(--mono);
+        font-size: 0.74rem;
+        color: var(--ink-dim);
+        font-variant-numeric: tabular-nums;
+      }
+      .part__meter {
+        flex: 1;
+        min-width: 3rem;
+        max-width: 12rem;
+        margin-left: auto;
+        height: 4px;
+        background: var(--surface-2);
+        border-radius: 99px;
+        overflow: hidden;
+        display: block;
+      }
+      .part__meter-fill { display: block; height: 100%; background: var(--done); }
+      .part__pct {
+        font-family: var(--mono);
+        font-size: 0.74rem;
+        color: var(--ink-dim);
+        font-variant-numeric: tabular-nums;
+        flex: none;
+      }
+
+      /* ── 표 ── */
+      .tablewrap { overflow-x: auto; }
+      .grid {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.89rem;
+        min-width: 46rem;
+      }
+      .grid th {
+        text-align: left;
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--ink-dim);
+        padding: 0.7rem 0.7rem 0.6rem;
+        border-bottom: 1px solid var(--rule);
+        white-space: nowrap;
+      }
+      .grid td {
+        padding: 0.62rem 0.7rem;
+        border-bottom: 1px solid var(--rule-soft);
+        vertical-align: middle;
+      }
+      .grid tbody tr:last-child td { border-bottom: 0; }
+      .c-clip { white-space: nowrap; }
+      .c-clip code { background: none; padding: 0; color: var(--ink-mid); font-weight: 600; }
+      .c-title { font-weight: 500; min-width: 15rem; }
+      .c-num {
+        font-family: var(--mono);
+        font-size: 0.82rem;
+        color: var(--ink-dim);
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+      }
+      .c-track { white-space: nowrap; width: 1%; }
+      .c-note { color: var(--ink-dim); font-size: 0.82rem; font-weight: 300; min-width: 12rem; }
+
+      /* ── 공정 트랙 ── */
+      .track { display: inline-flex; align-items: center; }
+      .track__link { width: 0.6rem; height: 1px; background: var(--rule); flex: none; }
+      .stage {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        font-weight: 600;
+        padding: 0.2rem 0.45rem;
+        border-radius: 2px;
+        border: 1px solid transparent;
+        white-space: nowrap;
+      }
+      .stage__dot { font-size: 0.62rem; line-height: 1; }
+      .stage--done { color: var(--done); background: var(--done-soft); border-color: transparent; }
+      .stage--wip { color: var(--wip); background: var(--wip-soft); }
+      .stage--todo { color: var(--todo); background: transparent; border-color: var(--rule); }
+
+      /* ── 남는 클립 ── */
+      .rest {
+        background: var(--surface);
+        border: 1px solid var(--rule);
+        border-radius: 3px;
+        padding: 1.3rem 1.4rem;
+      }
+      .rest h3 { margin: 0 0 0.45rem; font-size: 0.98rem; font-weight: 600; }
+
+      .check { margin: 0; font-size: 0.93rem; font-weight: 300; }
+  .check b { font-weight: 600; }
+  .check--ok b { color: var(--done); }
+  .check--warn b { color: var(--wip); }
+  .checklist {
+    margin: 0.6rem 0 0;
+    padding-left: 1.1rem;
+    font-size: 0.87rem;
+    color: var(--ink-mid);
+    font-weight: 300;
+    line-height: 1.9;
+  }
+
+  footer {
+        font-family: var(--mono);
+        font-size: 0.74rem;
+        color: var(--ink-dim);
+        border-top: 1px solid var(--rule);
+        padding-top: 1rem;
+        line-height: 1.8;
+      }
+
+      @media (max-width: 34rem) {
+        .part__meter { display: none; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * { animation: none !important; transition: none !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+
+      <header class="masthead">
+        <p class="eyebrow">Orca 강의 · 이론 슬라이드</p>
+        <h1>슬라이드 제작 현황</h1>
+        <p class="standfirst">
+          슬라이드가 필요한 <b>{{TOTAL}}클립</b>을 제작 → 대본 → 촬영 세 공정으로 추적한다.
+          커밋할 때마다 저장소를 다시 읽어 이 화면을 새로 만든다.
+        </p>
+        <p class="stamp">
+          <span>생성 {{BUILT}}</span>
+          <span>전체 10파트 · 72클립 · 약 12시간</span>
+          <span>슬라이드 대상 {{TOTAL}}클립</span>
+        </p>
+      </header>
+
+      <ol class="gates">
+{{GATES}}
+      </ol>
+
+      <section>
+        <h2>읽는 법</h2>
+        <p class="note">
+          공정은 <b>제작 → 대본 → 촬영</b> 순으로 흐른다. 각 칸은 <b>완료 · 작업중 · 시작전</b> 셋 중 하나다.
+          한 줄을 왼쪽에서 오른쪽으로 읽으면 그 클립이 어디까지 갔는지가 보인다.
+        </p>
+        <p class="note">
+          <b>제작과 대본은 저장소를 스캔해 자동으로 판정한다.</b>
+          덱 HTML이 있으면 작업중, <code>CONFIRMED.md</code>나 소스 상태에 확정이 있으면 완료다.
+          대본은 <code>_script/&lt;clip&gt;.md</code>가 있으면 완료다.
+        </p>
+        <p class="note">
+          <b>촬영만 손으로 적는다.</b> 저장소에 촬영 기록이 없기 때문이다.
+          <code>dashboard/clips.json</code>에서 해당 클립의 <code>촬영</code>을 <code>완료</code>로 바꾸고 커밋하면 이 화면에 반영된다.
+        </p>
+        <p class="note" style="margin-top: 1.1rem">
+          <span class="legend">
+            <span class="l-done"><i>●</i> 완료</span>
+            <span class="l-wip"><i>◐</i> 작업중</span>
+            <span class="l-todo"><i>○</i> 시작전</span>
+          </span>
+        </p>
+      </section>
+
+      <section>
+        <h2>맞물림 검사</h2>
+        {{WARNINGS}}
+      </section>
+
+      <section>
+        <h2>클립별 현황</h2>
+        <div class="parts">
+{{PARTS}}
+        </div>
+      </section>
+
+      <section class="rest">
+        <h3>슬라이드를 만들지 않는 40클립</h3>
+        <p class="note">
+          화면 시연과 실습이 본체인 클립이다. 덱을 만들지 않으므로 이 표에 없고 촬영만 진행한다.
+          필요하면 도입 1장짜리 덱을 붙일 수 있다 — Part 4 <code>Ch02-01</code>이 그 방식이다.
+        </p>
+        <p class="note">
+          Part 2 <code>Ch02-02</code>(설치와 에이전트 연결하기)가 여기 해당한다.
+          슬라이드는 없지만 <b>촬영은 마쳤다.</b> Part 2 Chapter 2는 세 클립 모두 촬영이 끝난 상태다.
+        </p>
+      </section>
+
+      <footer>
+        <code>dashboard/src/build.py</code>가 만든다. 이 파일을 직접 고치지 않는다 — 다음 커밋에서 덮어쓴다.<br>
+        번호·제목·길이 <code>docs/curriculum.md</code> · 장수 <code>_source</code>와 덱 HTML ·
+        대본 <code>_script</code> · 확정 <code>artifacts/CONFIRMED.md</code> · 촬영 <code>dashboard/clips.json</code>
+      </footer>
+
+    </div>
+  </body>
+</html>
