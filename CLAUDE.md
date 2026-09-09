@@ -24,13 +24,13 @@
 
 ## 슬라이드와 발표 대본을 한 세트로 제공
 
-앞으로 제작하는 덱은 최종 화면과 일치하는 전체 대본을 같은 루트의 `<part>/_script/<clip>.md`에 함께 저장한다. 내용·제목·장수가 바뀌면 대본도 갱신한다. 형식은 `## {클립 제목} 슬라이드 대본 (N장)`과 `## 슬라이드 i/N — {실제 제목}`이며, 말투는 사용자가 준 Hermes Bot Mode 대본처럼 자연스러운 강의 구어체다. 세부 기준은 `.claude/skills/fastcampus-slide/references/narration-script.md`를 따른다.
+앞으로 제작하는 덱은 최종 화면과 일치하는 전체 대본을 같은 루트의 `<part>/_script/<clip>.md`에 함께 저장한다. 내용·제목·장수가 바뀌면 대본도 갱신한다. 형식은 `## {클립 제목} 슬라이드 대본 (N장)`과 `## 슬라이드 i/N — {실제 제목}`이며, 말투는 사용자가 준 Hermes Bot Mode 대본처럼 자연스러운 강의 구어체다. 대본을 쓰거나 고칠 때는 **`fastcampus-script` 스킬**을 쓴다 — 흐름 패턴·말투·예제 대본·템플릿이 전부 그 안에 있다. 덱은 `fastcampus-slide`, 대본은 `fastcampus-script`로 나뉜다.
 
 ## 디자인 시스템을 먼저 쓴다
 
-**슬라이드마다 CSS를 새로 짜지 않는다.** `.claude/skills/fastcampus-slide/assets/base-template.html`의 확정 디자인을 반영한 중립 템플릿 8종과 `references/slide-layouts.md`의 선택표를 먼저 본다. 장면·관계·열린 3열·구조도·전환 비교 중 의미에 맞는 패턴을 선택하며 카드 격자에 억지로 맞추지 않는다. 같은 역할의 타이포는 사용자가 지정한 기준 장을 따른다. 최신 기준은 터미널 문제 골든셋이다.
+**슬라이드마다 CSS를 새로 짜지 않는다.** `.claude/skills/fastcampus-slide/assets/base-template.html`의 확정 디자인을 반영한 중립 템플릿 9종과 `references/slide-layouts.md`의 선택표를 먼저 본다. 장면·관계·열린 3열·구조도·전환 비교 중 의미에 맞는 패턴을 선택하며 카드 격자에 억지로 맞추지 않는다. 같은 역할의 타이포는 사용자가 지정한 기준 장을 따른다. 최신 기준은 터미널 문제 골든셋이다.
 
-스킬 원본은 `.claude/skills/fastcampus-slide/`이며 `.agents/skills/fastcampus-slide`는 그 원본에 연결된 심볼릭 링크다.
+스킬 원본은 `.claude/skills/` 아래에 있고(`fastcampus-slide`=덱, `fastcampus-script`=대본), `.agents/skills/`의 같은 이름들은 그 원본에 연결된 심볼릭 링크다.
 
 ## 그림을 아끼지 않는다
 
@@ -131,7 +131,7 @@ vercel dev    # http://localhost:3000/<part>/outputs/<clip>
 
 ## 확정 덱 정리 (사용자 지정)
 
-**승격 시 작업 파일에 심볼릭 링크를 만들지 않는다.** 선택된 파일과 필요한 에셋을 정식 경로에 실제로 복사하거나 이동하고 참조 경로를 갱신한다. 임시·비교 작업 폴더는 언제든 삭제 가능해야 하며, 그 폴더에서 정식 파일을 가리키는 링크도 금지한다. 삭제 전후 정식 파일이 보존되는지 검증한다. 스킬 원본 공유용 `.agents/skills/fastcampus-slide` 링크는 이 작업 파일 규칙과 별개다.
+**승격 시 작업 파일에 심볼릭 링크를 만들지 않는다.** 선택된 파일과 필요한 에셋을 정식 경로에 실제로 복사하거나 이동하고 참조 경로를 갱신한다. 임시·비교 작업 폴더는 언제든 삭제 가능해야 하며, 그 폴더에서 정식 파일을 가리키는 링크도 금지한다. 삭제 전후 정식 파일이 보존되는지 검증한다. 스킬 원본 공유용 `.agents/skills/` 링크들은 이 작업 파일 규칙과 별개다.
 
 확정 목록은 `artifacts/CONFIRMED.md`와 `artifacts/_maintenance/confirmed-decks.json`을 따른다. 확정 목록에 있는 덱의 비교본을 다시 만들지 않는다. 슬라이드 요소 이미지·생성 후보는 각 `artifacts/partN/_images/`에 파일로 바로 보존한다. 검수용 슬라이드 캡처·브라우저 스크린샷·컨택트시트는 `artifacts/partN/_qa/`에 따로 둔다. `_images/`에 검수 캡처를 섞지 않는다. 클립별 하위 폴더나 파트 밖 통합 이미지 폴더를 만들지 않는다. HTML은 해당 루트 절대경로를 참조한다. 이전 이미지 경로와 현재 파일 대응은 `artifacts/_maintenance/image-manifest.json`에서 확인한다. Git 3개 덱은 `artifacts/part3/outputs/`로 승격했다. 비교 폴더와 버전별 인덱스는 정리했으며 승격 기록의 이전 경로는 이력으로만 남긴다.
 

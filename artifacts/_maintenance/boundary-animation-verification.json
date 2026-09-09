@@ -1,0 +1,925 @@
+[
+  {
+    "file": "artifacts/part2/outputs/ch01-02-what-is-orca.html",
+    "slide": 2,
+    "initial": {
+      "frameOpacity": 0,
+      "frameTransform": "none",
+      "parentOpacity": 1,
+      "parentBorder": "rgba(0, 0, 0, 0)",
+      "delays": [
+        {
+          "cls": "scope-frame anim-item do-fadeinup",
+          "delay": 150,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "orca-agent-workspace__root anim-item do-fadeinup",
+          "delay": 410,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "orca-agent-workspace__stem anim-item do-fadeinup",
+          "delay": 670,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "orca-agent-workspace__agents anim-item do-fadeinup",
+          "delay": 930,
+          "opacity": 0,
+          "clip": "none"
+        }
+      ]
+    },
+    "middle": {
+      "frameOpacity": 0.971409,
+      "frameTransform": "none",
+      "parentOpacity": 1,
+      "parentBorder": "rgba(0, 0, 0, 0)",
+      "delays": [
+        {
+          "cls": "scope-frame anim-item do-fadeinup",
+          "delay": 150,
+          "opacity": 0.971409,
+          "clip": "none"
+        },
+        {
+          "cls": "orca-agent-workspace__root anim-item do-fadeinup",
+          "delay": 410,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "orca-agent-workspace__stem anim-item do-fadeinup",
+          "delay": 670,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "orca-agent-workspace__agents anim-item do-fadeinup",
+          "delay": 930,
+          "opacity": 0,
+          "clip": "none"
+        }
+      ]
+    },
+    "final": {
+      "frameOpacity": 1,
+      "frameTransform": "none",
+      "parentOpacity": 1,
+      "parentBorder": "rgba(0, 0, 0, 0)",
+      "delays": [
+        {
+          "cls": "scope-frame anim-item do-fadeinup",
+          "delay": 150,
+          "opacity": 1,
+          "clip": "none"
+        },
+        {
+          "cls": "orca-agent-workspace__root anim-item do-fadeinup",
+          "delay": 410,
+          "opacity": 1,
+          "clip": "none"
+        },
+        {
+          "cls": "orca-agent-workspace__stem anim-item do-fadeinup",
+          "delay": 670,
+          "opacity": 1,
+          "clip": "none"
+        },
+        {
+          "cls": "orca-agent-workspace__agents anim-item do-fadeinup",
+          "delay": 930,
+          "opacity": 1,
+          "clip": "none"
+        }
+      ]
+    },
+    "reduced": {
+      "frame": 1,
+      "items": [
+        {
+          "opacity": 1,
+          "delay": "0s"
+        },
+        {
+          "opacity": 1,
+          "delay": "0s"
+        },
+        {
+          "opacity": 1,
+          "delay": "0s"
+        },
+        {
+          "opacity": 1,
+          "delay": "0s"
+        }
+      ],
+      "match": true
+    },
+    "reentry": "pass"
+  },
+  {
+    "file": "artifacts/part3/outputs/ch01-03-branch-vs-worktree.html",
+    "slide": 7,
+    "initial": {
+      "frameOpacity": 0,
+      "frameTransform": "none",
+      "parentOpacity": 1,
+      "parentBorder": "rgba(0, 0, 0, 0)",
+      "delays": [
+        {
+          "cls": "scope-frame anim-item do-fadeinup",
+          "delay": 150,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "anim-item do-fadeinup",
+          "delay": 150,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "anim-item bw-unit-node do-fadeinup",
+          "delay": 410,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "anim-item bw-unit-node do-fadeinup",
+          "delay": 930,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "anim-item scene__copy do-fadeinup",
+          "delay": 1450,
+          "opacity": 0,
+          "clip": "none"
+        }
+      ]
+    },
+    "middle": {
+      "frameOpacity": 0.971409,
+      "frameTransform": "none",
+      "parentOpacity": 1,
+      "parentBorder": "rgba(0, 0, 0, 0)",
+      "delays": [
+        {
+          "cls": "scope-frame anim-item do-fadeinup",
+          "delay": 150,
+          "opacity": 0.971409,
+          "clip": "none"
+        },
+        {
+          "cls": "anim-item do-fadeinup",
+          "delay": 150,
+          "opacity": 0.800573,
+          "clip": "none"
+        },
+        {
+          "cls": "anim-item bw-unit-node do-fadeinup",
+          "delay": 410,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "anim-item bw-unit-node do-fadeinup",
+          "delay": 930,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "anim-item scene__copy do-fadeinup",
+          "delay": 1450,
+          "opacity": 0,
+          "clip": "none"
+        }
+      ]
+    },
+    "final": {
+      "frameOpacity": 1,
+      "frameTransform": "none",
+      "parentOpacity": 1,
+      "parentBorder": "rgba(0, 0, 0, 0)",
+      "delays": [
+        {
+          "cls": "scope-frame anim-item do-fadeinup",
+          "delay": 150,
+          "opacity": 1,
+          "clip": "none"
+        },
+        {
+          "cls": "anim-item do-fadeinup",
+          "delay": 150,
+          "opacity": 1,
+          "clip": "none"
+        },
+        {
+          "cls": "anim-item bw-unit-node do-fadeinup",
+          "delay": 410,
+          "opacity": 1,
+          "clip": "none"
+        },
+        {
+          "cls": "anim-item bw-unit-node do-fadeinup",
+          "delay": 930,
+          "opacity": 1,
+          "clip": "none"
+        },
+        {
+          "cls": "anim-item scene__copy do-fadeinup",
+          "delay": 1450,
+          "opacity": 1,
+          "clip": "none"
+        }
+      ]
+    },
+    "reduced": {
+      "frame": 1,
+      "items": [
+        {
+          "opacity": 1,
+          "delay": "0s"
+        },
+        {
+          "opacity": 1,
+          "delay": "0s"
+        },
+        {
+          "opacity": 1,
+          "delay": "0s"
+        },
+        {
+          "opacity": 1,
+          "delay": "0s"
+        },
+        {
+          "opacity": 1,
+          "delay": "0s"
+        }
+      ],
+      "match": true
+    },
+    "reentry": "pass"
+  },
+  {
+    "file": "artifacts/part4/outputs/ch01-01-orchestration-structure.html",
+    "slide": 3,
+    "initial": {
+      "frameOpacity": 0,
+      "frameTransform": "none",
+      "parentOpacity": 1,
+      "parentBorder": "rgba(0, 0, 0, 0)",
+      "delays": [
+        {
+          "cls": "scope-frame anim-item do-fadeinup",
+          "delay": 150,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "env__title scope-caption anim-item do-fadeinup",
+          "delay": 150,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "anim-item draw tone-yellow do-fadeinup",
+          "delay": 670,
+          "opacity": 1,
+          "clip": "inset(-12px 100% -12px -12px) stroke-box"
+        },
+        {
+          "cls": "anim-item draw tone-yellow draw--reverse do-fadeinup",
+          "delay": 1190,
+          "opacity": 1,
+          "clip": "inset(-12px -12px -12px 100%) stroke-box"
+        },
+        {
+          "cls": "anim-item draw tone-yellow do-fadeinup",
+          "delay": 1190,
+          "opacity": 1,
+          "clip": "inset(-12px 100% -12px -12px) stroke-box"
+        },
+        {
+          "cls": "anim-item do-fadeinup",
+          "delay": 410,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "anim-item do-fadeinup",
+          "delay": 930,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "anim-item do-fadeinup",
+          "delay": 1450,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "anim-item do-fadeinup",
+          "delay": 1710,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "env__caption scope-caption anim-item do-fadeinup",
+          "delay": 150,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "anim-item scene__copy do-fadeinup",
+          "delay": 150,
+          "opacity": 0,
+          "clip": "none"
+        }
+      ]
+    },
+    "middle": {
+      "frameOpacity": 0.971409,
+      "frameTransform": "none",
+      "parentOpacity": 1,
+      "parentBorder": "rgba(0, 0, 0, 0)",
+      "delays": [
+        {
+          "cls": "scope-frame anim-item do-fadeinup",
+          "delay": 150,
+          "opacity": 0.971409,
+          "clip": "none"
+        },
+        {
+          "cls": "env__title scope-caption anim-item do-fadeinup",
+          "delay": 150,
+          "opacity": 0.971409,
+          "clip": "none"
+        },
+        {
+          "cls": "anim-item draw tone-yellow do-fadeinup",
+          "delay": 670,
+          "opacity": 1,
+          "clip": "inset(-12px 100% -12px -12px) stroke-box"
+        },
+        {
+          "cls": "anim-item draw tone-yellow draw--reverse do-fadeinup",
+          "delay": 1190,
+          "opacity": 1,
+          "clip": "inset(-12px -12px -12px 100%) stroke-box"
+        },
+        {
+          "cls": "anim-item draw tone-yellow do-fadeinup",
+          "delay": 1190,
+          "opacity": 1,
+          "clip": "inset(-12px 100% -12px -12px) stroke-box"
+        },
+        {
+          "cls": "anim-item do-fadeinup",
+          "delay": 410,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "anim-item do-fadeinup",
+          "delay": 930,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "anim-item do-fadeinup",
+          "delay": 1450,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "anim-item do-fadeinup",
+          "delay": 1710,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "env__caption scope-caption anim-item do-fadeinup",
+          "delay": 150,
+          "opacity": 0.971409,
+          "clip": "none"
+        },
+        {
+          "cls": "anim-item scene__copy do-fadeinup",
+          "delay": 150,
+          "opacity": 0.800573,
+          "clip": "none"
+        }
+      ]
+    },
+    "final": {
+      "frameOpacity": 1,
+      "frameTransform": "none",
+      "parentOpacity": 1,
+      "parentBorder": "rgba(0, 0, 0, 0)",
+      "delays": [
+        {
+          "cls": "scope-frame anim-item do-fadeinup",
+          "delay": 150,
+          "opacity": 1,
+          "clip": "none"
+        },
+        {
+          "cls": "env__title scope-caption anim-item do-fadeinup",
+          "delay": 150,
+          "opacity": 1,
+          "clip": "none"
+        },
+        {
+          "cls": "anim-item draw tone-yellow do-fadeinup",
+          "delay": 670,
+          "opacity": 1,
+          "clip": "inset(-12px calc(0% - 12px) -12px -12px) stroke-box"
+        },
+        {
+          "cls": "anim-item draw tone-yellow draw--reverse do-fadeinup",
+          "delay": 1190,
+          "opacity": 1,
+          "clip": "inset(-12px -12px -12px calc(0% - 12px)) stroke-box"
+        },
+        {
+          "cls": "anim-item draw tone-yellow do-fadeinup",
+          "delay": 1190,
+          "opacity": 1,
+          "clip": "inset(-12px calc(0% - 12px) -12px -12px) stroke-box"
+        },
+        {
+          "cls": "anim-item do-fadeinup",
+          "delay": 410,
+          "opacity": 1,
+          "clip": "none"
+        },
+        {
+          "cls": "anim-item do-fadeinup",
+          "delay": 930,
+          "opacity": 1,
+          "clip": "none"
+        },
+        {
+          "cls": "anim-item do-fadeinup",
+          "delay": 1450,
+          "opacity": 1,
+          "clip": "none"
+        },
+        {
+          "cls": "anim-item do-fadeinup",
+          "delay": 1710,
+          "opacity": 1,
+          "clip": "none"
+        },
+        {
+          "cls": "env__caption scope-caption anim-item do-fadeinup",
+          "delay": 150,
+          "opacity": 1,
+          "clip": "none"
+        },
+        {
+          "cls": "anim-item scene__copy do-fadeinup",
+          "delay": 150,
+          "opacity": 1,
+          "clip": "none"
+        }
+      ]
+    },
+    "reduced": {
+      "frame": 1,
+      "items": [
+        {
+          "opacity": 1,
+          "delay": "0s"
+        },
+        {
+          "opacity": 1,
+          "delay": "0s"
+        },
+        {
+          "opacity": 1,
+          "delay": "0s"
+        },
+        {
+          "opacity": 1,
+          "delay": "0s"
+        },
+        {
+          "opacity": 1,
+          "delay": "0s"
+        },
+        {
+          "opacity": 1,
+          "delay": "0s"
+        },
+        {
+          "opacity": 1,
+          "delay": "0s"
+        },
+        {
+          "opacity": 1,
+          "delay": "0s"
+        },
+        {
+          "opacity": 1,
+          "delay": "0s"
+        },
+        {
+          "opacity": 1,
+          "delay": "0s"
+        },
+        {
+          "opacity": 1,
+          "delay": "0s"
+        }
+      ],
+      "match": true
+    },
+    "reentry": "pass"
+  },
+  {
+    "file": "artifacts/part4/outputs/ch01-02-goal-task-flow.html",
+    "slide": 3,
+    "initial": {
+      "frameOpacity": 0,
+      "frameTransform": "none",
+      "parentOpacity": 1,
+      "parentBorder": "rgba(0, 0, 0, 0)",
+      "delays": [
+        {
+          "cls": "scope-frame anim-item do-fadeinup",
+          "delay": 150,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "run-detail-header anim-item do-fadeinup",
+          "delay": 410,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "copy run-group-label anim-item do-fadeinup",
+          "delay": 670,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "run-detail-task anim-item do-fadeinup",
+          "delay": 930,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "run-detail-task anim-item do-fadeinup",
+          "delay": 1190,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "run-detail-task anim-item do-fadeinup",
+          "delay": 1450,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "run-detail-mail anim-item do-fadeinup",
+          "delay": 1710,
+          "opacity": 0,
+          "clip": "none"
+        }
+      ]
+    },
+    "middle": {
+      "frameOpacity": 0.971409,
+      "frameTransform": "none",
+      "parentOpacity": 1,
+      "parentBorder": "rgba(0, 0, 0, 0)",
+      "delays": [
+        {
+          "cls": "scope-frame anim-item do-fadeinup",
+          "delay": 150,
+          "opacity": 0.971409,
+          "clip": "none"
+        },
+        {
+          "cls": "run-detail-header anim-item do-fadeinup",
+          "delay": 410,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "copy run-group-label anim-item do-fadeinup",
+          "delay": 670,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "run-detail-task anim-item do-fadeinup",
+          "delay": 930,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "run-detail-task anim-item do-fadeinup",
+          "delay": 1190,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "run-detail-task anim-item do-fadeinup",
+          "delay": 1450,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "run-detail-mail anim-item do-fadeinup",
+          "delay": 1710,
+          "opacity": 0,
+          "clip": "none"
+        }
+      ]
+    },
+    "final": {
+      "frameOpacity": 1,
+      "frameTransform": "none",
+      "parentOpacity": 1,
+      "parentBorder": "rgba(0, 0, 0, 0)",
+      "delays": [
+        {
+          "cls": "scope-frame anim-item do-fadeinup",
+          "delay": 150,
+          "opacity": 1,
+          "clip": "none"
+        },
+        {
+          "cls": "run-detail-header anim-item do-fadeinup",
+          "delay": 410,
+          "opacity": 1,
+          "clip": "none"
+        },
+        {
+          "cls": "copy run-group-label anim-item do-fadeinup",
+          "delay": 670,
+          "opacity": 1,
+          "clip": "none"
+        },
+        {
+          "cls": "run-detail-task anim-item do-fadeinup",
+          "delay": 930,
+          "opacity": 1,
+          "clip": "none"
+        },
+        {
+          "cls": "run-detail-task anim-item do-fadeinup",
+          "delay": 1190,
+          "opacity": 1,
+          "clip": "none"
+        },
+        {
+          "cls": "run-detail-task anim-item do-fadeinup",
+          "delay": 1450,
+          "opacity": 1,
+          "clip": "none"
+        },
+        {
+          "cls": "run-detail-mail anim-item do-fadeinup",
+          "delay": 1710,
+          "opacity": 1,
+          "clip": "none"
+        }
+      ]
+    },
+    "reduced": {
+      "frame": 1,
+      "items": [
+        {
+          "opacity": 1,
+          "delay": "0s"
+        },
+        {
+          "opacity": 1,
+          "delay": "0s"
+        },
+        {
+          "opacity": 1,
+          "delay": "0s"
+        },
+        {
+          "opacity": 1,
+          "delay": "0s"
+        },
+        {
+          "opacity": 1,
+          "delay": "0s"
+        },
+        {
+          "opacity": 1,
+          "delay": "0s"
+        },
+        {
+          "opacity": 1,
+          "delay": "0s"
+        }
+      ],
+      "match": true
+    },
+    "reentry": "pass"
+  },
+  {
+    "file": ".claude/skills/fastcampus-slide/assets/base-template.html",
+    "slide": 9,
+    "initial": {
+      "frameOpacity": 0,
+      "frameTransform": "none",
+      "parentOpacity": 1,
+      "parentBorder": "rgba(0, 0, 0, 0)",
+      "delays": [
+        {
+          "cls": "scope-frame anim-item do-fadeinup",
+          "delay": 150,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "scope-panel__header anim-item do-fadeinup",
+          "delay": 410,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "copy anim-item do-fadeinup",
+          "delay": 670,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "scope-panel__item anim-item do-fadeinup",
+          "delay": 930,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "scope-panel__item anim-item do-fadeinup",
+          "delay": 1190,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "scope-panel__item anim-item do-fadeinup",
+          "delay": 1450,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "scope-panel__shared anim-item do-fadeinup",
+          "delay": 1710,
+          "opacity": 0,
+          "clip": "none"
+        }
+      ]
+    },
+    "middle": {
+      "frameOpacity": 0.971409,
+      "frameTransform": "none",
+      "parentOpacity": 1,
+      "parentBorder": "rgba(0, 0, 0, 0)",
+      "delays": [
+        {
+          "cls": "scope-frame anim-item do-fadeinup",
+          "delay": 150,
+          "opacity": 0.971409,
+          "clip": "none"
+        },
+        {
+          "cls": "scope-panel__header anim-item do-fadeinup",
+          "delay": 410,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "copy anim-item do-fadeinup",
+          "delay": 670,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "scope-panel__item anim-item do-fadeinup",
+          "delay": 930,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "scope-panel__item anim-item do-fadeinup",
+          "delay": 1190,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "scope-panel__item anim-item do-fadeinup",
+          "delay": 1450,
+          "opacity": 0,
+          "clip": "none"
+        },
+        {
+          "cls": "scope-panel__shared anim-item do-fadeinup",
+          "delay": 1710,
+          "opacity": 0,
+          "clip": "none"
+        }
+      ]
+    },
+    "final": {
+      "frameOpacity": 1,
+      "frameTransform": "none",
+      "parentOpacity": 1,
+      "parentBorder": "rgba(0, 0, 0, 0)",
+      "delays": [
+        {
+          "cls": "scope-frame anim-item do-fadeinup",
+          "delay": 150,
+          "opacity": 1,
+          "clip": "none"
+        },
+        {
+          "cls": "scope-panel__header anim-item do-fadeinup",
+          "delay": 410,
+          "opacity": 1,
+          "clip": "none"
+        },
+        {
+          "cls": "copy anim-item do-fadeinup",
+          "delay": 670,
+          "opacity": 1,
+          "clip": "none"
+        },
+        {
+          "cls": "scope-panel__item anim-item do-fadeinup",
+          "delay": 930,
+          "opacity": 1,
+          "clip": "none"
+        },
+        {
+          "cls": "scope-panel__item anim-item do-fadeinup",
+          "delay": 1190,
+          "opacity": 1,
+          "clip": "none"
+        },
+        {
+          "cls": "scope-panel__item anim-item do-fadeinup",
+          "delay": 1450,
+          "opacity": 1,
+          "clip": "none"
+        },
+        {
+          "cls": "scope-panel__shared anim-item do-fadeinup",
+          "delay": 1710,
+          "opacity": 1,
+          "clip": "none"
+        }
+      ]
+    },
+    "reduced": {
+      "frame": 1,
+      "items": [
+        {
+          "opacity": 1,
+          "delay": "0s"
+        },
+        {
+          "opacity": 1,
+          "delay": "0s"
+        },
+        {
+          "opacity": 1,
+          "delay": "0s"
+        },
+        {
+          "opacity": 1,
+          "delay": "0s"
+        },
+        {
+          "opacity": 1,
+          "delay": "0s"
+        },
+        {
+          "opacity": 1,
+          "delay": "0s"
+        },
+        {
+          "opacity": 1,
+          "delay": "0s"
+        }
+      ],
+      "match": true
+    },
+    "reentry": "pass"
+  }
+]

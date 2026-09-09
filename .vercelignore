@@ -17,3 +17,6 @@ dashboard/hooks
 dashboard/clips.json
 dashboard/install.sh
 dashboard/README.md
+
+# 작업용 대본 샘플 — 배포 대상 아님
+script-sample

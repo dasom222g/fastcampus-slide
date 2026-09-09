@@ -1,0 +1,456 @@
+[
+  {
+    "file": "artifacts/part1/outputs/ch02-01-single-agent-limits.html",
+    "slides": [
+      {
+        "slide": 1,
+        "title": "에이전트 하나로되는 일과 안 되는 일",
+        "visual": "single-title-cover",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 2,
+        "title": "하나로 되는 일",
+        "visual": "hero-list",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 3,
+        "title": "단일 에이전트의 한계",
+        "visual": "single-problem-outcomes",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 4,
+        "title": "왜 안 되는가",
+        "visual": "single-source-causes",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 5,
+        "title": "멀티 에이전트가 필요한 이유",
+        "visual": "single-solution-cards",
+        "static": false,
+        "boundaries": []
+      }
+    ]
+  },
+  {
+    "file": "artifacts/part2/outputs/ch01-01-terminal-problem.html",
+    "slides": [
+      {
+        "slide": 1,
+        "title": "터미널 여러 개의 문제",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 2,
+        "title": "에이전트가 일하는 자리",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 3,
+        "title": "멀티 에이전트를 쓰려면",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 4,
+        "title": "터미널 여러 개의 문제",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 5,
+        "title": "무엇이 필요한가",
+        "static": false,
+        "boundaries": []
+      }
+    ]
+  },
+  {
+    "file": "artifacts/part2/outputs/ch01-02-what-is-orca.html",
+    "slides": [
+      {
+        "slide": 1,
+        "title": "Orca의 정체",
+        "visual": "orca-office-scene",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 2,
+        "title": "Orca 안에서 일하는 AI",
+        "visual": "orca-agent-workspace",
+        "static": false,
+        "boundaries": [
+          {
+            "class": "orca-agent-workspace",
+            "tag": "DIV",
+            "border": true,
+            "bg": false,
+            "animated": false,
+            "children": 3,
+            "animation": "none",
+            "pseudoBefore": "none",
+            "pseudoAfter": "none"
+          }
+        ]
+      },
+      {
+        "slide": 3,
+        "title": "IDE와 ADE",
+        "visual": "ide-ade-v1-enriched",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 4,
+        "title": "Orca의 작업 단위",
+        "visual": "orca-work-unit",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 5,
+        "title": "오케스트레이션까지",
+        "visual": "orca-orchestration-capability",
+        "static": false,
+        "boundaries": []
+      }
+    ]
+  },
+  {
+    "file": "artifacts/part3/outputs/ch01-01-what-is-git.html",
+    "slides": [
+      {
+        "slide": 1,
+        "title": "Git이란 - 버전 관리가 없다면",
+        "visual": "git-cover",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 2,
+        "title": "이름으로 남긴 버전",
+        "visual": "file-versions",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 3,
+        "title": "Git의 역할",
+        "visual": "hero",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 4,
+        "title": "Git이 바꾸는 것",
+        "visual": "open-benefits",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 5,
+        "title": "Git과 GitHub",
+        "visual": "git-github",
+        "static": false,
+        "boundaries": []
+      }
+    ]
+  },
+  {
+    "file": "artifacts/part3/outputs/ch01-02-repo-and-flow.html",
+    "slides": [
+      {
+        "slide": 1,
+        "title": "저장소와 작업흐름",
+        "visual": "repo-cover",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 2,
+        "title": "저장소란",
+        "visual": "repo-definition",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 3,
+        "title": "버전 관리를 위한 3 단계",
+        "visual": "repo-area-step",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 4,
+        "title": "버전 관리를 위한 3 단계",
+        "visual": "repo-area-step",
+        "static": true,
+        "boundaries": []
+      },
+      {
+        "slide": 5,
+        "title": "버전 관리를 위한 3 단계",
+        "visual": "repo-area-step",
+        "static": true,
+        "boundaries": []
+      },
+      {
+        "slide": 6,
+        "title": "기록으로 남는 순간 - commit",
+        "visual": "repo-commit",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 7,
+        "title": "내 기록과 원격 기록",
+        "visual": "repo-remote",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 8,
+        "title": "한 번의 작업 흐름",
+        "visual": "repo-overview",
+        "static": false,
+        "boundaries": []
+      }
+    ]
+  },
+  {
+    "file": "artifacts/part3/outputs/ch01-03-branch-vs-worktree.html",
+    "slides": [
+      {
+        "slide": 1,
+        "title": "브랜치와 워크트리 차이",
+        "visual": "bw-cover",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 2,
+        "title": "한 폴더에서 겹치는 작업",
+        "visual": "bw-shared-file-problem",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 3,
+        "title": "따로 이어가는 작업 이력",
+        "visual": "bw-branch",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 4,
+        "title": "한 번에 한 시점만",
+        "visual": "bw-time-machine",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 5,
+        "title": "워크트리란",
+        "visual": "bw-origin-alternative",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 6,
+        "title": "브랜치와 워크트리의 관계",
+        "visual": "bw-branch-folder-alternative",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 7,
+        "title": "Orca의 작업 단위",
+        "visual": "bw-orca-unit",
+        "static": false,
+        "boundaries": [
+          {
+            "class": "bw-unit-window",
+            "tag": "DIV",
+            "border": true,
+            "bg": false,
+            "animated": false,
+            "children": 3,
+            "animation": "none",
+            "pseudoBefore": "none",
+            "pseudoAfter": "none"
+          }
+        ]
+      },
+      {
+        "slide": 8,
+        "title": "한 창에서 작업 전환",
+        "visual": "bw-orca-switch",
+        "static": false,
+        "boundaries": []
+      }
+    ]
+  },
+  {
+    "file": "artifacts/part4/outputs/ch01-01-orchestration-structure.html",
+    "slides": [
+      {
+        "slide": 1,
+        "title": "오케스트레이션 구조 살펴보기",
+        "visual": "orchestration-structure-1",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 2,
+        "title": "협업을 잇는 역할",
+        "visual": "orchestration-structure-2",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 3,
+        "title": "환경과 스킬",
+        "visual": "orchestration-structure-3",
+        "static": false,
+        "boundaries": [
+          {
+            "class": "env",
+            "tag": "DIV",
+            "border": true,
+            "bg": false,
+            "animated": false,
+            "children": 7,
+            "animation": "none",
+            "pseudoBefore": "none",
+            "pseudoAfter": "none"
+          }
+        ]
+      },
+      {
+        "slide": 4,
+        "title": "조율과 실행",
+        "visual": "orchestration-structure-4",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 5,
+        "title": "협업의 구조",
+        "visual": "orchestration-structure-5",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 6,
+        "title": "작업과 소통",
+        "visual": "orchestration-structure-6",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 7,
+        "title": "서로 다른 워크트리",
+        "visual": "orchestration-structure-split-worktrees",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 8,
+        "title": "메시지의 종류",
+        "visual": "orchestration-structure-7",
+        "static": false,
+        "boundaries": []
+      }
+    ]
+  },
+  {
+    "file": "artifacts/part4/outputs/ch01-02-goal-task-flow.html",
+    "slides": [
+      {
+        "slide": 1,
+        "title": "목표와 작업, 실행의 흐름",
+        "visual": "goal-task-flow-1",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 2,
+        "title": "목표와 완료 기준",
+        "visual": "goal-task-flow-2",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 3,
+        "title": "Run이란",
+        "visual": "goal-task-flow-run-detail",
+        "static": false,
+        "boundaries": [
+          {
+            "class": "run-detail",
+            "tag": "DIV",
+            "border": true,
+            "bg": false,
+            "animated": false,
+            "children": 6,
+            "animation": "none",
+            "pseudoBefore": "none",
+            "pseudoAfter": "none"
+          }
+        ]
+      },
+      {
+        "slide": 4,
+        "title": "오케스트레이션 실행 흐름",
+        "visual": "goal-task-flow-8",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 5,
+        "title": "Task의 의존 관계",
+        "visual": "goal-task-flow-4",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 6,
+        "title": "배정과 실행",
+        "visual": "goal-task-flow-5",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 7,
+        "title": "실행 중의 조율",
+        "visual": "goal-task-flow-6",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 8,
+        "title": "다음 단계의 판단",
+        "visual": "goal-task-flow-7",
+        "static": false,
+        "boundaries": []
+      },
+      {
+        "slide": 9,
+        "title": "목표는 오케스트레이터에게",
+        "visual": "goal-task-flow-handoff",
+        "static": false,
+        "boundaries": []
+      }
+    ]
+  }
+]

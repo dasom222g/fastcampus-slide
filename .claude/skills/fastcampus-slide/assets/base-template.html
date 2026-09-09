@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>FastCampus 슬라이드 템플릿 · 공통 디자인 8개 패턴</title>
+    <title>FastCampus 슬라이드 템플릿 · 공통 디자인 9개 패턴</title>
     <!-- TEMPLATE ONLY: 실제 강의 내용·제품명·작업 캡처를 넣지 않는다.
      사용법: 이 파일을 복사 → 필요한 article 선택 → 모든 data-slot/제목/부제 교체.
      diagram의 공통 shape 정의를 유지하거나 사용한 도형만 각 SVG에 펼친다.
@@ -527,6 +527,26 @@
       .transition-compare__arrow {
         height: 4rem;
       }
+
+/* Animate the semantic boundary separately; never hide or move its children as a group. */
+.motion-scope{position:relative;border-color:transparent!important}
+.motion-scope>.scope-frame{position:absolute;inset:-1.5px;display:block;border:1.5px solid var(--gray);border-radius:inherit;pointer-events:none}
+.motion-scope>.scope-frame.anim-item.do-fadeinup,.scope-caption.anim-item.do-fadeinup{animation-name:scope-fade;animation-duration:.48s;animation-timing-function:cubic-bezier(.23,1,.32,1);animation-fill-mode:both;transform:none}
+@keyframes scope-fade{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.motion-scope>.scope-frame.anim-item,.scope-caption.anim-item{opacity:1;animation:none!important;transform:none}}
+
+      /* CONTAINED_STRUCTURE: a semantic scope, followed by independently revealed contents. */
+      .scope-panel{width:min(100%,78rem);border:1.5px solid var(--gray);border-radius:.7rem;padding:2rem 2.4rem}
+      .scope-panel__header{display:flex;align-items:baseline;gap:1.6rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
+      .scope-panel__content{display:grid;grid-template-columns:minmax(0,2.2fr) minmax(0,1fr);gap:2rem;padding-top:1.6rem}
+      .scope-panel__items{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.5rem;margin-top:1.5rem}
+      .scope-panel__item,.scope-panel__shared{display:flex;flex-direction:column;align-items:center;gap:.8rem;text-align:center}
+      .scope-panel__item .diagram{width:6rem;height:7rem}
+      .scope-panel__shared{border-left:1px solid var(--border);padding-left:1.5rem}
+      .scope-panel__shared .diagram{width:7rem;height:8rem}
+      .scope-panel .anim-item.do-fadeinup{animation-name:scope-fade}
+      [data-motion="none"] .anim-item{opacity:1;animation:none!important}
+      @media(max-height:650px){.scope-panel{padding:1.2rem}.scope-panel__header{padding-bottom:1rem}.scope-panel__content{gap:1.2rem;padding-top:1rem}.scope-panel__items{gap:1rem;margin-top:1rem}.scope-panel__item .diagram{width:4rem;height:5rem}.scope-panel__shared .diagram{width:5rem;height:6rem}}
     </style>
   </head>
   <body>
@@ -571,7 +591,7 @@
     </button>
     <div class="dot-nav" id="dot-nav"></div>
     <div class="slide-counter">
-      <span id="cur">1</span> / <span id="tot">8</span>
+      <span id="cur">1</span> / <span id="tot">9</span>
     </div>
     <div class="slide-deck" id="deck">
       <!-- Confirmed structure 1: replace all data-slot fields and visuals from the new clip storyboard. -->
@@ -1252,6 +1272,49 @@
           />
         </footer>
       </article>
+      <!-- Pattern 09: neutral slots only. Boundary and content are siblings, not nested animation wrappers. -->
+      <article data-index="8" class="slide" data-pattern="CONTAINED_STRUCTURE">
+        <header class="slide__header">
+          <span class="slide__label">Pattern 09 · CONTAINED STRUCTURE</span>
+          <h1 class="slide__title" data-slot="title">하나의 범위에 <span class="hl">속하는 것</span></h1>
+          <p class="slide__sub" data-slot="subtitle">공통 범위와 그 안에 연결된 항목의 관계를 설명합니다.</p>
+        </header>
+        <main class="slide__body">
+          <div class="scope-panel motion-scope" data-slot="scope-container">
+            <span class="scope-frame anim-item" data-anim-step="0" aria-hidden="true"></span>
+            <div class="scope-panel__header anim-item" data-anim-step="1">
+              <h2 class="heading" data-slot="scope-name">상위 범위</h2>
+              <p class="copy" data-slot="scope-purpose">전체를 묶는 공통 목적</p>
+            </div>
+            <div class="scope-panel__content">
+              <section>
+                <p class="copy anim-item" data-anim-step="2" data-slot="members-label">범위에 속한 개별 항목</p>
+                <div class="scope-panel__items">
+                <div class="scope-panel__item anim-item" data-anim-step="3">
+                  <svg class="diagram" viewBox="0 0 100 100" fill="none" stroke="var(--brand)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg>
+                  <h2 class="heading" data-slot="member-a">항목 A</h2>
+                </div>
+                <div class="scope-panel__item anim-item" data-anim-step="4">
+                  <svg class="diagram" viewBox="0 0 100 100" fill="none" stroke="var(--purple)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg>
+                  <h2 class="heading" data-slot="member-b">항목 B</h2>
+                </div>
+                <div class="scope-panel__item anim-item" data-anim-step="5">
+                  <svg class="diagram" viewBox="0 0 100 100" fill="none" stroke="var(--gray)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg>
+                  <h2 class="heading" data-slot="member-c">항목 C</h2>
+                </div>
+                </div>
+              </section>
+              <section class="scope-panel__shared anim-item" data-anim-step="6">
+                <p class="copy" data-slot="shared-label">함께 연결된 정보</p>
+                <svg class="diagram" viewBox="0 0 100 100" fill="none" stroke="var(--gray)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-folder"/></svg>
+                <h2 class="heading" data-slot="shared-title">공유 정보</h2>
+                <p class="copy" data-slot="shared-description">공통으로 확인할 내용</p>
+              </section>
+            </div>
+          </div>
+        </main>
+        <footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
+      </article>
     </div>
     <script>
       // file:// 로 열었을 때만 경로를 보정한다. 정식 덱과 같은 코드다 —
@@ -1319,13 +1382,17 @@
         /* 슬라이드 진입 시 .anim-item 을 순차 등장시킨다.
            스토리보드의 "애니메이션 순서" = DOM 순서 */
         _runSlide(i) {
-          const items = this.slides[i].querySelectorAll(".anim-item");
-          items.forEach((el) => {
-            el.classList.remove("do-fadeinup");
-            void el.offsetWidth; /* reflow — 재진입 시 재생 */
-          });
-          items.forEach((el, n) => {
-            setTimeout(() => el.classList.add("do-fadeinup"), 150 + n * 260);
+          const slide = this.slides[i];
+          const items = [...slide.querySelectorAll('.anim-item')];
+          items.forEach(el => el.classList.remove('do-fadeinup'));
+          void slide.offsetWidth;
+          const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+          const instant = reduced || slide.dataset.motion === 'none';
+          items.forEach((el,n) => {
+            const requested = Number(el.dataset.animStep ?? n);
+            const step = Number.isFinite(requested) ? Math.max(0, requested) : n;
+            el.style.animationDelay = instant ? '0ms' : `${150 + step * 260}ms`;
+            el.classList.add('do-fadeinup');
           });
         }
         next() {
