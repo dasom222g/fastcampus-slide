@@ -19,6 +19,8 @@
 
 **감이 안 잡히면 이 표의 정답 파일부터 읽는다.** 분석보다 실물이 빠르다.
 
+각 절의 「내가 쓴 것」은 비교용 초고다. 파일은 정리했고 `git show 66f83da:<경로>`로 꺼내 볼 수 있다.
+
 ## 뒤집힌 규칙 — 읽을 때 건너뛴다
 
 | 절 | 앞에서 한 말 | 뒤집은 절 | 지금 |
@@ -375,7 +377,7 @@
 # 두 번째 정답 — 터미널 여러 개의 문제 (2026-09-09 강사 확정)
 
 **정답 대본**: `artifacts/part2/_script/ch01-01-terminal-problem.md` (5장, 6분, 1,578자 = **분당 263자**)
-**내가 쓴 것**: `artifacts/part2/_script/ch01-01-terminal-problem-claude.md` (953자 = 분당 159자)
+**내가 쓴 것**: `git show 66f83da:artifacts/part2/_script/ch01-01-terminal-problem-claude.md` (953자 = 분당 159자)
 
 정답 두 편이 생겼으니 규칙을 둘 다에 맞춰야 한다. 하나에만 맞춘 규칙이 다른 하나를 망친다.
 
@@ -514,7 +516,7 @@ Ch01-01 터미널 여러 개의 문제   6분   1,578자   263자/분
 # 세 번째 정답 — Orca는 어떤 도구인가 (2026-09-09 강사 확정)
 
 **정답**: `artifacts/part2/_script/ch01-02-what-is-orca.md` — 2026-09-10에 덱이 6장으로 늘면서 개정됨 (6장, 7분, 1,578자 = **분당 225자**). 아래 15~22번은 5장 시절 초판(1,274자·182자/분)과의 대조이며 그대로 유효하다.
-**내가 쓴 것**: `artifacts/part2/_script/ch01-02-what-is-orca-claude.md` (1,472자 = 분당 210자)
+**내가 쓴 것**: `git show 66f83da:artifacts/part2/_script/ch01-02-what-is-orca-claude.md` (1,472자 = 분당 210자)
 
 이번엔 **내 것이 길었다.** 앞 두 번은 짧아서 틀렸는데 이번엔 반대다.
 
@@ -680,7 +682,7 @@ Ch01-01 정답은 회수를 했고(`같은 책상을 셋이 쓰고 있는 겁니
 # 네 번째 정답 — Git이란 (2026-09-10)
 
 **정답**: `artifacts/part3/_script/ch01-01-what-is-git.md` (5장, 8분, 1,349자 = **분당 169자**)
-**내가 쓴 것**: `artifacts/part3/_script/ch01-01-what-is-git-claude.md` (1,563자 = 분당 195자)
+**내가 쓴 것**: `git show 66f83da:artifacts/part3/_script/ch01-01-what-is-git-claude.md` (1,563자 = 분당 195자)
 
 ## 27. 밀도는 채점 항목에서 뺐다
 
@@ -802,7 +804,7 @@ Ch01-01 Git이란              249자   ← 이번 정답
 # 다섯 번째 정답 — 저장소와 작업흐름 (2026-09-10)
 
 **정답**: `artifacts/part3/_script/ch01-02-repo-and-flow.md` (8장, 10분, 2,757자 = **분당 276자**)
-**내가 쓴 것**: `artifacts/part3/_script/ch01-02-repo-and-flow-claude.md` (2,242자 = 분당 224자)
+**내가 쓴 것**: `git show 66f83da:artifacts/part3/_script/ch01-02-repo-and-flow-claude.md` (2,242자 = 분당 224자)
 
 ```
               표지    2    3    4    5    6    7    8
@@ -943,7 +945,7 @@ Ch01-01 Git이란              249자   ← 이번 정답
 # 여섯 번째 정답 — 브랜치와 워크트리 (2026-09-10)
 
 **정답**: `artifacts/part3/_script/ch01-03-branch-vs-worktree.md` (8장, 10분, 2,731자 = **분당 273자**)
-**내가 쓴 것**: `artifacts/part3/_script/ch01-03-branch-vs-worktree-claude.md` (2,400자 = 분당 240자)
+**내가 쓴 것**: `git show 66f83da:artifacts/part3/_script/ch01-03-branch-vs-worktree-claude.md` (2,400자 = 분당 240자)
 
 ```
               표지    2    3    4    5    6    7    8
@@ -1065,7 +1067,7 @@ Git 개념이 세 영상째다. 수강생은 이쯤 지친다. 표지가 **끝�
 # 일곱 번째 정답 — 오케스트레이션 구조 살펴보기 (2026-09-10)
 
 **정답**: `artifacts/part4/_script/ch01-01-orchestration-structure.md` (8장, 7분, 2,188자 = **분당 313자**)
-**내가 쓴 것**: `artifacts/part4/_script/ch01-01-orchestration-structure-claude.md` (2,178자 = 분당 311자)
+**내가 쓴 것**: `git show 66f83da:artifacts/part4/_script/ch01-01-orchestration-structure-claude.md` (2,178자 = 분당 311자)
 
 ```
               표지    2    3    4    5    6    7    8
@@ -1185,7 +1187,7 @@ Git 개념이 세 영상째다. 수강생은 이쯤 지친다. 표지가 **끝�
 # 여덟 번째 정답 — 목표와 작업, 실행의 흐름 (2026-09-10)
 
 **정답**: `artifacts/part4/_script/ch01-02-goal-task-flow.md` (9장, 8분, 2,655자 = **분당 332자**)
-**내가 쓴 것**: `artifacts/part4/_script/ch01-02-goal-task-flow-claude.md` (2,675자 = 분당 334자)
+**내가 쓴 것**: `git show 66f83da:artifacts/part4/_script/ch01-02-goal-task-flow-claude.md` (2,675자 = 분당 334자)
 
 ```
               표지    2    3    4    5    6    7    8    9
