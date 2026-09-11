@@ -46,22 +46,22 @@ input::placeholder{color:var(--muted);opacity:1}
 <header class="masthead"><div><p class="eyebrow">ORCA · COURSE</p><h1>강의 작업 현황</h1><p class="standfirst">자료 제작부터 촬영까지</p></div><p class="stamp"><strong>10 Parts · 72 Clips</strong>업데이트 {{BUILT}}</p></header>
 <nav class="delivery" id="deliveries" aria-label="납품 차수 선택"></nav>
 <main class="workspace">
-<div class="toolbar"><div class="scope"><h2 id="scope-title">전체 납품</h2><button class="text-button" id="reset">전체 보기</button></div><div class="filters"><label class="field-label" for="kind">클립 유형</label><select id="kind"><option value="all">모든 유형</option><option value="theory">이론</option><option value="practice">실습</option></select><label class="field-label" for="status">작업 상태</label><select id="status"><option value="all">모든 상태</option><option value="active">작업중</option><option value="open">미완료</option><option value="done">전 공정 완료</option></select><label class="field-label" for="search">클립 검색</label><input id="search" type="search" placeholder="제목 · 번호 검색"></div></div>
+<div class="toolbar"><div class="scope"><h2 id="scope-title">전체 납품</h2><button class="text-button" id="reset">전체 보기</button></div><div class="filters"><label class="field-label" for="kind">클립 유형</label><select id="kind"><option value="all">모든 유형</option><option value="theory">이론</option><option value="practice">실습</option></select><label class="field-label" for="status">작업 상태</label><select id="status"><option value="all">모든 상태</option><option value="active">작업중</option><option value="open">미완료</option><option value="done">촬영 완료</option></select><label class="field-label" for="search">클립 검색</label><input id="search" type="search" placeholder="제목 · 번호 검색"></div></div>
 <section class="metrics" id="metrics" aria-label="선택한 클립의 공정 현황"></section>
-<div class="flows"><span><b class="flow-kind flow-kind--theory">이론</b>슬라이드<span class="arrow">→</span>대본<span class="arrow">→</span>촬영</span><span><b class="flow-kind flow-kind--practice">실습</b>실습자료<span class="arrow">→</span>촬영</span></div>
+<div class="flows"><span><b class="flow-kind flow-kind--theory">이론</b>슬라이드<span class="arrow">→</span>대본<span class="arrow">→</span>촬영</span><span><b class="flow-kind flow-kind--practice">실습</b>실습자료(필요 시)<span class="arrow">→</span>촬영</span></div>
 <div class="list-meta"><p id="list-count" role="status" aria-live="polite"></p><div class="legend" aria-label="상태 범례"><span><i class="done"></i>완료</span><span><i class="wip"></i>작업중</span><span><i class="due"></i>예정</span><span><i></i>시작전</span></div></div>
 <noscript>필터를 사용하려면 JavaScript를 켜주세요. 전체 클립 현황은 아래에서 확인할 수 있습니다.</noscript>
 <div class="parts">{{PARTS}}</div><div class="empty" id="empty" hidden><strong>조건에 맞는 클립이 없습니다.</strong>납품 차수나 필터를 바꿔보세요.</div>
 </main>
-<footer class="foot"><details><summary>상태 기준</summary><p>제작은 이론의 슬라이드, 실습의 실습자료를 뜻합니다. 실습은 대본 없이 촬영으로 이어집니다. 촬영 완료와 자료 제작 완료는 별도로 관리합니다.</p><p>앞 공정이 완료되면 다음 공정은 예정입니다. 납기일을 등록하면 해당 납기의 미착수 작업도 예정으로 표시됩니다. 차수별 ‘전 공정 완료’는 필요한 공정을 모두 마친 클립 수입니다.</p>{{WARNINGS}}</details><span>이론 · 실습 통합 작업 보드</span></footer>
+<footer class="foot"><details><summary>상태 기준</summary><p>촬영 완료가 클립의 최종 완료입니다. 실습자료가 필요 없는 클립은 자료 제작을 ‘해당 없음’으로 표시하고 제작 집계에서 제외합니다.</p><p>앞 공정이 완료되면 다음 공정은 예정입니다. 납기일을 등록하면 해당 납기의 미착수 작업도 예정으로 표시됩니다. 납품 진행률과 완료 필터는 촬영 상태를 기준으로 합니다.</p>{{WARNINGS}}</details><span>이론 · 실습 통합 작업 보드</span></footer>
 </div>
 <script id="dashboard-data" type="application/json">{{DATA}}</script>
 <script>
 (() => {
 const {rows,batches}=JSON.parse(document.getElementById('dashboard-data').textContent);
 const stages=['제작','대본','촬영'];
-const completed=r=>stages.every(s=>r[s]==='완료'||r[s]==='해당없음');
-const active=r=>stages.some(s=>r[s]==='작업중');
+const completed=r=>r['촬영']==='완료';
+const active=r=>!completed(r)&&stages.some(s=>r[s]==='작업중');
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const el=id=>document.getElementById(id);
 let batch='all';
@@ -77,7 +77,7 @@ function drawBatches(){
   const parts=[...new Set(pool.map(r=>r['파트번호']))];
   const contiguous=parts.every((p,i)=>i===0||p===parts[i-1]+1);
   const range=parts.length?'Part '+(contiguous&&parts.length>1?parts[0]+'–'+parts.at(-1):parts.join(' · ')):'파트 배정 전';
-  return `<button class="batch" type="button" data-batch="${n}" aria-pressed="${batch===String(n)}"><span class="batch-top"><span class="batch-title">${n?n+'차 납품':'미배정'}</span><span class="batch-date">${esc(b['납기']||'')}</span></span><span class="batch-range">${range}</span><span class="batch-progress"><b>${done}</b><span>/ ${pool.length}클립</span><em>전 공정 완료</em></span><span class="batch-bar"><i style="width:${pool.length?done/pool.length*100:0}%"></i></span><span class="batch-bottom"><span>작업중 ${wip} · 미완료 ${pool.length-done}</span><span class="selected">${batch===String(n)?'선택됨':'클립 보기 →'}</span></span></button>`;
+  return `<button class="batch" type="button" data-batch="${n}" aria-pressed="${batch===String(n)}"><span class="batch-top"><span class="batch-title">${n?n+'차 납품':'미배정'}</span><span class="batch-date">${esc(b['납기']||'')}</span></span><span class="batch-range">${range}</span><span class="batch-progress"><b>${done}</b><span>/ ${pool.length}클립</span><em>촬영 완료</em></span><span class="batch-bar"><i style="width:${pool.length?done/pool.length*100:0}%"></i></span><span class="batch-bottom"><span>작업중 ${wip} · 미완료 ${pool.length-done}</span><span class="selected">${batch===String(n)?'선택됨':'클립 보기 →'}</span></span></button>`;
  }).join('');
 }
 function render(){
@@ -92,7 +92,7 @@ function render(){
   section.querySelector('.part__tally').textContent=`${clips.length}클립`;
   section.querySelectorAll('.chap').forEach(ch=>{let next=ch.nextElementSibling,show=false;while(next&&!next.classList.contains('chap')){if(!next.hidden)show=true;next=next.nextElementSibling;}ch.hidden=!show;});
  });
- const metrics=[['슬라이드','제작',filtered.filter(r=>r['슬라이드']),'이론'],['실습자료','제작',filtered.filter(r=>!r['슬라이드']),'실습'],['대본','대본',filtered.filter(r=>r['대본']!=='해당없음'),'이론'],['촬영','촬영',filtered,'전체']];
+ const metrics=[['슬라이드','제작',filtered.filter(r=>r['슬라이드']),'이론'],['실습자료','제작',filtered.filter(r=>!r['슬라이드']&&r['제작']!=='해당없음'),'실습'],['대본','대본',filtered.filter(r=>r['대본']!=='해당없음'),'이론'],['촬영','촬영',filtered,'전체']];
  el('metrics').innerHTML=metrics.map(([label,stage,pool,type])=>{
   const done=pool.filter(r=>r[stage]==='완료').length,wip=pool.filter(r=>r[stage]==='작업중').length,due=pool.filter(r=>r[stage]==='예정').length;
   return `<div class="metric"><p class="metric-label">${label}<span>· ${type}</span></p><p class="metric-value"><b>${done}</b><span>/ ${pool.length} 완료</span></p><p class="metric-note"><strong>작업중 ${wip}</strong> · 예정 ${due}</p></div>`;

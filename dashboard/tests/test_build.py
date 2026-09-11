@@ -67,6 +67,21 @@ class WorkflowTests(unittest.TestCase):
         with self.assertRaises(SystemExit):
             build.delivery_config({'납품차수': [{'차수': 1, '파트': [1], '납기': '2026-02-30'}]})
 
+    def test_optional_material_is_excluded_from_production_scope(self):
+        rows, _ = self.rows({(3, 'Ch02-01'): {'실습자료': '해당없음', '촬영': '작업중'}})
+        r = rows[(3, 'Ch02-01')]
+        self.assertEqual((r['제작'], r['대본'], r['촬영']), ('해당없음', '해당없음', '작업중'))
+        self.assertEqual(len(build.stage_scope(list(rows.values()), '제작')), 71)
+        self.assertEqual(len(build.stage_scope(list(rows.values()), '촬영')), 72)
+
+    def test_completed_recording_cannot_hold_up_next_delivery(self):
+        by_part = {
+            1: [{'촬영': '완료', '제작': '시작전', '대본': '해당없음'}],
+            2: [{'촬영': '작업중', '제작': '완료', '대본': '완료'}],
+        }
+        parts, deadline = build.due_parts({'1': '2026-09-01', '2': '2026-10-01'}, by_part)
+        self.assertEqual((parts, deadline), ({2}, '2026-10-01'))
+
     def test_completed_theory_is_preserved(self):
         rows, _ = self.rows({})
         r = rows[(4, 'Ch01-01')]

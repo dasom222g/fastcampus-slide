@@ -46,9 +46,9 @@ input::placeholder{color:var(--muted);opacity:1}
 <header class="masthead"><div><p class="eyebrow">ORCA · COURSE</p><h1>강의 작업 현황</h1><p class="standfirst">자료 제작부터 촬영까지</p></div><p class="stamp"><strong>10 Parts · 72 Clips</strong>업데이트 2026-09-11</p></header>
 <nav class="delivery" id="deliveries" aria-label="납품 차수 선택"></nav>
 <main class="workspace">
-<div class="toolbar"><div class="scope"><h2 id="scope-title">전체 납품</h2><button class="text-button" id="reset">전체 보기</button></div><div class="filters"><label class="field-label" for="kind">클립 유형</label><select id="kind"><option value="all">모든 유형</option><option value="theory">이론</option><option value="practice">실습</option></select><label class="field-label" for="status">작업 상태</label><select id="status"><option value="all">모든 상태</option><option value="active">작업중</option><option value="open">미완료</option><option value="done">전 공정 완료</option></select><label class="field-label" for="search">클립 검색</label><input id="search" type="search" placeholder="제목 · 번호 검색"></div></div>
+<div class="toolbar"><div class="scope"><h2 id="scope-title">전체 납품</h2><button class="text-button" id="reset">전체 보기</button></div><div class="filters"><label class="field-label" for="kind">클립 유형</label><select id="kind"><option value="all">모든 유형</option><option value="theory">이론</option><option value="practice">실습</option></select><label class="field-label" for="status">작업 상태</label><select id="status"><option value="all">모든 상태</option><option value="active">작업중</option><option value="open">미완료</option><option value="done">촬영 완료</option></select><label class="field-label" for="search">클립 검색</label><input id="search" type="search" placeholder="제목 · 번호 검색"></div></div>
 <section class="metrics" id="metrics" aria-label="선택한 클립의 공정 현황"></section>
-<div class="flows"><span><b class="flow-kind flow-kind--theory">이론</b>슬라이드<span class="arrow">→</span>대본<span class="arrow">→</span>촬영</span><span><b class="flow-kind flow-kind--practice">실습</b>실습자료<span class="arrow">→</span>촬영</span></div>
+<div class="flows"><span><b class="flow-kind flow-kind--theory">이론</b>슬라이드<span class="arrow">→</span>대본<span class="arrow">→</span>촬영</span><span><b class="flow-kind flow-kind--practice">실습</b>실습자료(필요 시)<span class="arrow">→</span>촬영</span></div>
 <div class="list-meta"><p id="list-count" role="status" aria-live="polite"></p><div class="legend" aria-label="상태 범례"><span><i class="done"></i>완료</span><span><i class="wip"></i>작업중</span><span><i class="due"></i>예정</span><span><i></i>시작전</span></div></div>
 <noscript>필터를 사용하려면 JavaScript를 켜주세요. 전체 클립 현황은 아래에서 확인할 수 있습니다.</noscript>
 <div class="parts"><section class="part" data-part="1" data-batch="1">
@@ -57,10 +57,10 @@ input::placeholder{color:var(--muted);opacity:1}
           <span class="part__title">왜 팀이 필요한가 (강의 개요)</span>
           
           <span class="part__tally">3클립</span>
-          <span class="part__meter" role="img" aria-label="공정 9/9 완료">
+          <span class="part__meter" role="img" aria-label="촬영 3/3 완료">
             <span class="part__meter-fill" style="width:100.0000%"></span>
           </span>
-          <span class="part__pct">9/9</span>
+          <span class="part__pct">3/3</span>
         </header>
         <div class="tablewrap">
         <table class="grid">
@@ -117,10 +117,10 @@ input::placeholder{color:var(--muted);opacity:1}
           <span class="part__title">Orca 설치 및 기본 사용</span>
           
           <span class="part__tally">5클립</span>
-          <span class="part__meter" role="img" aria-label="공정 11/13 완료">
-            <span class="part__meter-fill" style="width:84.6154%"></span>
+          <span class="part__meter" role="img" aria-label="촬영 5/5 완료">
+            <span class="part__meter-fill" style="width:100.0000%"></span>
           </span>
-          <span class="part__pct">11/13</span>
+          <span class="part__pct">5/5</span>
         </header>
         <div class="tablewrap">
         <table class="grid">
@@ -197,10 +197,10 @@ input::placeholder{color:var(--muted);opacity:1}
           <span class="part__title">Git과 워크트리</span>
           
           <span class="part__tally">5클립</span>
-          <span class="part__meter" role="img" aria-label="공정 9/13 완료">
-            <span class="part__meter-fill" style="width:69.2308%"></span>
+          <span class="part__meter" role="img" aria-label="촬영 3/5 완료">
+            <span class="part__meter-fill" style="width:60.0000%"></span>
           </span>
-          <span class="part__pct">9/13</span>
+          <span class="part__pct">3/5</span>
         </header>
         <div class="tablewrap">
         <table class="grid">
@@ -277,10 +277,10 @@ input::placeholder{color:var(--muted);opacity:1}
           <span class="part__title">오케스트레이션과 스킬</span>
           
           <span class="part__tally">8클립</span>
-          <span class="part__meter" role="img" aria-label="공정 6/20 완료">
-            <span class="part__meter-fill" style="width:30.0000%"></span>
+          <span class="part__meter" role="img" aria-label="촬영 2/8 완료">
+            <span class="part__meter-fill" style="width:25.0000%"></span>
           </span>
-          <span class="part__pct">6/20</span>
+          <span class="part__pct">2/8</span>
         </header>
         <div class="tablewrap">
         <table class="grid">
@@ -389,10 +389,10 @@ input::placeholder{color:var(--muted);opacity:1}
           <span class="part__title">기획팀: 리서치부터 기획서까지 (순차 파이프라인)</span>
           
           <span class="part__tally">15클립</span>
-          <span class="part__meter" role="img" aria-label="공정 0/35 완료">
+          <span class="part__meter" role="img" aria-label="촬영 0/15 완료">
             <span class="part__meter-fill" style="width:0.0000%"></span>
           </span>
-          <span class="part__pct">0/35</span>
+          <span class="part__pct">0/15</span>
         </header>
         <div class="tablewrap">
         <table class="grid">
@@ -572,10 +572,10 @@ input::placeholder{color:var(--muted);opacity:1}
           <span class="part__title">영업팀: 제안서·견적서 검증하기 (교차 검증)</span>
           
           <span class="part__tally">9클립</span>
-          <span class="part__meter" role="img" aria-label="공정 0/20 완료">
+          <span class="part__meter" role="img" aria-label="촬영 0/9 완료">
             <span class="part__meter-fill" style="width:0.0000%"></span>
           </span>
-          <span class="part__pct">0/20</span>
+          <span class="part__pct">0/9</span>
         </header>
         <div class="tablewrap">
         <table class="grid">
@@ -694,10 +694,10 @@ input::placeholder{color:var(--muted);opacity:1}
           <span class="part__title">디자인팀: Best 시안 머지하기 (병렬)</span>
           
           <span class="part__tally">10클립</span>
-          <span class="part__meter" role="img" aria-label="공정 0/22 완료">
+          <span class="part__meter" role="img" aria-label="촬영 0/10 완료">
             <span class="part__meter-fill" style="width:0.0000%"></span>
           </span>
-          <span class="part__pct">0/22</span>
+          <span class="part__pct">0/10</span>
         </header>
         <div class="tablewrap">
         <table class="grid">
@@ -827,10 +827,10 @@ input::placeholder{color:var(--muted);opacity:1}
           <span class="part__title">콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&amp;R 분배)</span>
           
           <span class="part__tally">11클립</span>
-          <span class="part__meter" role="img" aria-label="공정 0/25 완료">
+          <span class="part__meter" role="img" aria-label="촬영 0/11 완료">
             <span class="part__meter-fill" style="width:0.0000%"></span>
           </span>
-          <span class="part__pct">0/25</span>
+          <span class="part__pct">0/11</span>
         </header>
         <div class="tablewrap">
         <table class="grid">
@@ -970,10 +970,10 @@ input::placeholder{color:var(--muted);opacity:1}
           <span class="part__title">모바일로 진행 상황 확인하기</span>
           
           <span class="part__tally">2클립</span>
-          <span class="part__meter" role="img" aria-label="공정 0/5 완료">
+          <span class="part__meter" role="img" aria-label="촬영 0/2 완료">
             <span class="part__meter-fill" style="width:0.0000%"></span>
           </span>
-          <span class="part__pct">0/5</span>
+          <span class="part__pct">0/2</span>
         </header>
         <div class="tablewrap">
         <table class="grid">
@@ -1019,10 +1019,10 @@ input::placeholder{color:var(--muted);opacity:1}
           <span class="part__title">토큰 아끼는 법</span>
           
           <span class="part__tally">4클립</span>
-          <span class="part__meter" role="img" aria-label="공정 0/12 완료">
+          <span class="part__meter" role="img" aria-label="촬영 0/4 완료">
             <span class="part__meter-fill" style="width:0.0000%"></span>
           </span>
-          <span class="part__pct">0/12</span>
+          <span class="part__pct">0/4</span>
         </header>
         <div class="tablewrap">
         <table class="grid">
@@ -1085,15 +1085,15 @@ input::placeholder{color:var(--muted);opacity:1}
         </div>
       </section></div><div class="empty" id="empty" hidden><strong>조건에 맞는 클립이 없습니다.</strong>납품 차수나 필터를 바꿔보세요.</div>
 </main>
-<footer class="foot"><details><summary>상태 기준</summary><p>제작은 이론의 슬라이드, 실습의 실습자료를 뜻합니다. 실습은 대본 없이 촬영으로 이어집니다. 촬영 완료와 자료 제작 완료는 별도로 관리합니다.</p><p>앞 공정이 완료되면 다음 공정은 예정입니다. 납기일을 등록하면 해당 납기의 미착수 작업도 예정으로 표시됩니다. 차수별 ‘전 공정 완료’는 필요한 공정을 모두 마친 클립 수입니다.</p><p class="check check--ok"><b>어긋난 곳 없음.</b> 소스의 장수, 덱의 실제 장수, 대본의 장수가 모두 맞는다.</p></details><span>이론 · 실습 통합 작업 보드</span></footer>
+<footer class="foot"><details><summary>상태 기준</summary><p>촬영 완료가 클립의 최종 완료입니다. 실습자료가 필요 없는 클립은 자료 제작을 ‘해당 없음’으로 표시하고 제작 집계에서 제외합니다.</p><p>앞 공정이 완료되면 다음 공정은 예정입니다. 납기일을 등록하면 해당 납기의 미착수 작업도 예정으로 표시됩니다. 납품 진행률과 완료 필터는 촬영 상태를 기준으로 합니다.</p><p class="check check--ok"><b>어긋난 곳 없음.</b> 소스의 장수, 덱의 실제 장수, 대본의 장수가 모두 맞는다.</p></details><span>이론 · 실습 통합 작업 보드</span></footer>
 </div>
 <script id="dashboard-data" type="application/json">{"rows": [{"파트번호": 1, "파트제목": "왜 팀이 필요한가 (강의 개요)", "챕터": "Chapter 1. 오리엔테이션", "클립": "Ch01-01", "제목": "강의 소개와 최종 결과물", "길이": "11분", "슬라이드": true, "비고": "Google Slides로 제작·확정", "차수": 1, "장수": "8장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 1, "파트제목": "왜 팀이 필요한가 (강의 개요)", "챕터": "Chapter 1. 오리엔테이션", "클립": "Ch01-02", "제목": "강의 로드맵과 선수 지식", "길이": "9분", "슬라이드": true, "비고": "Google Slides로 제작·확정", "차수": 1, "장수": "7장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 1, "파트제목": "왜 팀이 필요한가 (강의 개요)", "챕터": "Chapter 2. 단일 에이전트의 한계", "클립": "Ch02-01", "제목": "에이전트 하나로 되는 일과 안 되는 일", "길이": "14분", "슬라이드": true, "비고": "", "차수": 1, "장수": "5장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 2, "파트제목": "Orca 설치 및 기본 사용", "챕터": "Chapter 1. Orca는 왜 나왔는가", "클립": "Ch01-01", "제목": "터미널 여러 개의 문제", "길이": "6분", "슬라이드": true, "비고": "", "차수": 1, "장수": "5장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 2, "파트제목": "Orca 설치 및 기본 사용", "챕터": "Chapter 1. Orca는 왜 나왔는가", "클립": "Ch01-02", "제목": "Orca는 어떤 도구인가", "길이": "7분", "슬라이드": true, "비고": "", "차수": 1, "장수": "6장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 2, "파트제목": "Orca 설치 및 기본 사용", "챕터": "Chapter 2. Orca 설치와 첫 실행", "클립": "Ch02-01", "제목": "설치 전 준비물과 환경 체크", "길이": "5분", "슬라이드": true, "비고": "", "차수": 1, "장수": "3장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 2, "파트제목": "Orca 설치 및 기본 사용", "챕터": "Chapter 2. Orca 설치와 첫 실행", "클립": "Ch02-02", "제목": "설치와 에이전트 연결하기", "길이": "10분", "슬라이드": false, "비고": "실습", "차수": 1, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 2, "파트제목": "Orca 설치 및 기본 사용", "챕터": "Chapter 2. Orca 설치와 첫 실행", "클립": "Ch02-03", "제목": "화면 구조와 보드 읽는 법", "길이": "8분", "슬라이드": false, "비고": "실습", "차수": 1, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 3, "파트제목": "Git과 워크트리", "챕터": "Chapter 1. 비개발자를 위한 Git 개념", "클립": "Ch01-01", "제목": "Git이란 - 버전 관리가 없다면", "길이": "8분", "슬라이드": true, "비고": "", "차수": 1, "장수": "5장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 3, "파트제목": "Git과 워크트리", "챕터": "Chapter 1. 비개발자를 위한 Git 개념", "클립": "Ch01-02", "제목": "저장소와 작업흐름", "길이": "10분", "슬라이드": true, "비고": "", "차수": 1, "장수": "8장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 3, "파트제목": "Git과 워크트리", "챕터": "Chapter 1. 비개발자를 위한 Git 개념", "클립": "Ch01-03", "제목": "브랜치와 워크트리", "길이": "10분", "슬라이드": true, "비고": "", "차수": 1, "장수": "8장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 3, "파트제목": "Git과 워크트리", "챕터": "Chapter 2. Git 설치와 저장소 만들기", "클립": "Ch02-01", "제목": "Git 설치와 초기 설정", "길이": "7분", "슬라이드": false, "비고": "실습", "차수": 1, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "작업중"}, {"파트번호": 3, "파트제목": "Git과 워크트리", "챕터": "Chapter 2. Git 설치와 저장소 만들기", "클립": "Ch02-02", "제목": "GitHub 가입 및 Orca에 연결하기", "길이": "13분", "슬라이드": false, "비고": "실습", "차수": 1, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "작업중"}, {"파트번호": 4, "파트제목": "오케스트레이션과 스킬", "챕터": "Chapter 1. 오케스트레이션이란", "클립": "Ch01-01", "제목": "오케스트레이션 구조 살펴보기", "길이": "7분", "슬라이드": true, "비고": "", "차수": 1, "장수": "8장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 4, "파트제목": "오케스트레이션과 스킬", "챕터": "Chapter 1. 오케스트레이션이란", "클립": "Ch01-02", "제목": "목표와 작업, 실행의 흐름", "길이": "8분", "슬라이드": true, "비고": "", "차수": 1, "장수": "9장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 4, "파트제목": "오케스트레이션과 스킬", "챕터": "Chapter 2. 첫 오케스트레이션 돌려보기", "클립": "Ch02-01", "제목": "오케스트레이션 스킬 설치하기", "길이": "10분", "슬라이드": false, "비고": "실습", "차수": 1, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "작업중"}, {"파트번호": 4, "파트제목": "오케스트레이션과 스킬", "챕터": "Chapter 2. 첫 오케스트레이션 돌려보기", "클립": "Ch02-02", "제목": "목표 하나로 요청하기", "길이": "11분", "슬라이드": false, "비고": "실습", "차수": 1, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "작업중"}, {"파트번호": 4, "파트제목": "오케스트레이션과 스킬", "챕터": "Chapter 3. 스킬 알아보기", "클립": "Ch03-01", "제목": "스킬과 플러그인이란", "길이": "10분", "슬라이드": true, "비고": "강사 지정: Part 4까지 미완료 이론 클립 제작 진행", "차수": 1, "장수": "—", "제작": "작업중", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 4, "파트제목": "오케스트레이션과 스킬", "챕터": "Chapter 3. 스킬 알아보기", "클립": "Ch03-02", "제목": "1인 회사 운영에 유용한 스킬 모음", "길이": "10분", "슬라이드": true, "비고": "강사 지정: Part 4까지 미완료 이론 클립 제작 진행", "차수": 1, "장수": "—", "제작": "작업중", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 4, "파트제목": "오케스트레이션과 스킬", "챕터": "Chapter 4. 회사 문서 만들기", "클립": "Ch04-01", "제목": "스킬로 회사 소개서와 말투 규칙 만들기", "길이": "14분", "슬라이드": false, "비고": "실습", "차수": 1, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "작업중"}, {"파트번호": 4, "파트제목": "오케스트레이션과 스킬", "챕터": "Chapter 4. 회사 문서 만들기", "클립": "Ch04-02", "제목": "회사 사규 작성하기", "길이": "14분", "슬라이드": false, "비고": "실습", "차수": 1, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "작업중"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 1. 앞으로 만들 4가지 프로젝트", "클립": "Ch01-01", "제목": "4가지 협업 패턴과 프로젝트 미리보기", "길이": "10분", "슬라이드": true, "비고": "패턴 4가지 이름·정의 노출", "차수": 2, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 1. 앞으로 만들 4가지 프로젝트", "클립": "Ch01-02", "제목": "멀티 에이전트가 오히려 나빠지는 3가지 이유", "길이": "10분", "슬라이드": true, "비고": "맥락 붕괴 · 유령 위임 · 검증 오류", "차수": 2, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 2. 기획팀 설계와 스킬 설치", "클립": "Ch02-01", "제목": "기획팀 구조와 업무 흐름", "길이": "11분", "슬라이드": true, "비고": "", "차수": 2, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 2. 기획팀 설계와 스킬 설치", "클립": "Ch02-02", "제목": "순차 파이프라인이란", "길이": "11분", "슬라이드": true, "비고": "패턴 01 순차 파이프라인", "차수": 2, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 2. 기획팀 설계와 스킬 설치", "클립": "Ch02-03", "제목": "기획 전 필수 스킬 써보기", "길이": "11분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 3. 산출물 표준화하기", "클립": "Ch03-01", "제목": "시장 조사 노트 표준화", "길이": "10분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 3. 산출물 표준화하기", "클립": "Ch03-02", "제목": "아이템 후보 표준화", "길이": "11분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 3. 산출물 표준화하기", "클립": "Ch03-03", "제목": "판매 아이템 기획서 양식 표준화", "길이": "11분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 4. 단계별로 나눠서 실행하기", "클립": "Ch04-01", "제목": "시장 조사 단계 실행하기", "길이": "11분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 4. 단계별로 나눠서 실행하기", "클립": "Ch04-02", "제목": "아이템 후보 도출 단계 실행하기", "길이": "11분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 4. 단계별로 나눠서 실행하기", "클립": "Ch04-03", "제목": "기획서 작성 단계 실행하기", "길이": "10분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 4. 단계별로 나눠서 실행하기", "클립": "Ch04-04", "제목": "품질 게이트로 통과 기준 세우기", "길이": "10분", "슬라이드": true, "비고": "유령 위임 대응 개념", "차수": 2, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 5. 파이프라인으로 한 번에 돌리기", "클립": "Ch05-01", "제목": "단계와 품질 게이트를 담은 파이프라인 프롬프트 작성하기", "길이": "14분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 5. 파이프라인으로 한 번에 돌리기", "클립": "Ch05-02", "제목": "목표 하나로 처음부터 끝까지 실행하기", "길이": "15분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 5. 파이프라인으로 한 번에 돌리기", "클립": "Ch05-03", "제목": "결과물 점검하고 프롬프트 다듬기", "길이": "14분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 6, "파트제목": "영업팀: 제안서·견적서 검증하기 (교차 검증)", "챕터": "Chapter 1. 교차 검증이란", "클립": "Ch01-01", "제목": "Generator–Evaluator 패턴이란", "길이": "10분", "슬라이드": true, "비고": "패턴 02 교차 검증", "차수": 2, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 6, "파트제목": "영업팀: 제안서·견적서 검증하기 (교차 검증)", "챕터": "Chapter 1. 교차 검증이란", "클립": "Ch01-02", "제목": "평가에 다른 모델을 쓰는 이유", "길이": "10분", "슬라이드": true, "비고": "검증 오류 대응 개념", "차수": 2, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 6, "파트제목": "영업팀: 제안서·견적서 검증하기 (교차 검증)", "챕터": "Chapter 2. 제안서·견적서 설계", "클립": "Ch02-01", "제목": "클라이언트 브리프에서 요구사항 뽑기", "길이": "11분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 6, "파트제목": "영업팀: 제안서·견적서 검증하기 (교차 검증)", "챕터": "Chapter 2. 제안서·견적서 설계", "클립": "Ch02-02", "제목": "통과 기준 체크리스트 만들기", "길이": "10분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 6, "파트제목": "영업팀: 제안서·견적서 검증하기 (교차 검증)", "챕터": "Chapter 3. 생성과 검증 붙이기", "클립": "Ch03-01", "제목": "브리프 하나로 제안서 초안 만들기", "길이": "11분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 6, "파트제목": "영업팀: 제안서·견적서 검증하기 (교차 검증)", "챕터": "Chapter 3. 생성과 검증 붙이기", "클립": "Ch03-02", "제목": "다른 모델로 검증하고 반려 사유 받기", "길이": "11분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 6, "파트제목": "영업팀: 제안서·견적서 검증하기 (교차 검증)", "챕터": "Chapter 3. 생성과 검증 붙이기", "클립": "Ch03-03", "제목": "견적 항목과 가격 근거 검증하기", "길이": "10분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 6, "파트제목": "영업팀: 제안서·견적서 검증하기 (교차 검증)", "챕터": "Chapter 4. 교차 검증 루프 돌리기", "클립": "Ch04-01", "제목": "반려 사유 반영해서 다시 만들기", "길이": "9분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 6, "파트제목": "영업팀: 제안서·견적서 검증하기 (교차 검증)", "챕터": "Chapter 4. 교차 검증 루프 돌리기", "클립": "Ch04-02", "제목": "통과할 때까지 도는 루프 완성하기", "길이": "8분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 7, "파트제목": "디자인팀: Best 시안 머지하기 (병렬)", "챕터": "Chapter 1. 내 책상을 복제한다는 것", "클립": "Ch01-01", "제목": "워크트리로 작업 공간 분리하기", "길이": "10분", "슬라이드": true, "비고": "Part 3 워크트리 회수", "차수": 2, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 7, "파트제목": "디자인팀: Best 시안 머지하기 (병렬)", "챕터": "Chapter 1. 내 책상을 복제한다는 것", "클립": "Ch01-02", "제목": "Orca에서 워크트리 만들기", "길이": "7분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 7, "파트제목": "디자인팀: Best 시안 머지하기 (병렬)", "챕터": "Chapter 2. 워크트리 병렬 실행 — 다른 에이전트 + 동일 작업", "클립": "Ch02-01", "제목": "같은 작업도 에이전트에 따라 결과가 갈린다", "길이": "7분", "슬라이드": true, "비고": "패턴 03 병렬 실행의 근거", "차수": 2, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 7, "파트제목": "디자인팀: Best 시안 머지하기 (병렬)", "챕터": "Chapter 2. 워크트리 병렬 실행 — 다른 에이전트 + 동일 작업", "클립": "Ch02-02", "제목": "두 에이전트에 같은 작업 동시에 시키기", "길이": "9분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 7, "파트제목": "디자인팀: Best 시안 머지하기 (병렬)", "챕터": "Chapter 3. Best 시안 선택과 머지", "클립": "Ch03-01", "제목": "두 결과물 눈으로 비교하고 고르기", "길이": "9분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 7, "파트제목": "디자인팀: Best 시안 머지하기 (병렬)", "챕터": "Chapter 3. Best 시안 선택과 머지", "클립": "Ch03-02", "제목": "Best 시안 머지하기", "길이": "10분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 7, "파트제목": "디자인팀: Best 시안 머지하기 (병렬)", "챕터": "Chapter 4. 브라우저에서 직접 고치기 (디자인 모드)", "클립": "Ch04-01", "제목": "요소 클릭과 주석으로 수정 요청하기", "길이": "10분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 7, "파트제목": "디자인팀: Best 시안 머지하기 (병렬)", "챕터": "Chapter 4. 브라우저에서 직접 고치기 (디자인 모드)", "클립": "Ch04-02", "제목": "diff로 반영 확인하기", "길이": "10분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 7, "파트제목": "디자인팀: Best 시안 머지하기 (병렬)", "챕터": "Chapter 5. 개발자도구로 스타일 바꾸기", "클립": "Ch05-01", "제목": "개발자도구 켜고 요소 클릭해보기", "길이": "9분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 7, "파트제목": "디자인팀: Best 시안 머지하기 (병렬)", "챕터": "Chapter 5. 개발자도구로 스타일 바꾸기", "클립": "Ch05-02", "제목": "AI가 헷갈리지 않게 요소 이름으로 요청하기", "길이": "9분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 8, "파트제목": "콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&R 분배)", "챕터": "Chapter 1. 콘텐츠팀 설계와 스킬 설치", "클립": "Ch01-01", "제목": "콘텐츠팀 구조와 업무 흐름", "길이": "9분", "슬라이드": true, "비고": "패턴 04 R&R 분배", "차수": 3, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 8, "파트제목": "콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&R 분배)", "챕터": "Chapter 1. 콘텐츠팀 설계와 스킬 설치", "클립": "Ch01-02", "제목": "팔리는 글 쓰는 스킬 팩 설치하기", "길이": "11분", "슬라이드": false, "비고": "실습", "차수": 3, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 8, "파트제목": "콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&R 분배)", "챕터": "Chapter 2. 소재 선정과 산출물 표준화", "클립": "Ch02-01", "제목": "회차 소재 선정 기준", "길이": "9분", "슬라이드": true, "비고": "", "차수": 3, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 8, "파트제목": "콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&R 분배)", "챕터": "Chapter 2. 소재 선정과 산출물 표준화", "클립": "Ch02-02", "제목": "세 플랫폼 산출물 표준화", "길이": "10분", "슬라이드": false, "비고": "실습", "차수": 3, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 8, "파트제목": "콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&R 분배)", "챕터": "Chapter 3. 플랫폼별 조건 정하기", "클립": "Ch03-01", "제목": "한 명이 세 플랫폼을 다 쓰면 생기는 일", "길이": "10분", "슬라이드": true, "비고": "R&R 분배가 필요한 이유", "차수": 3, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 8, "파트제목": "콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&R 분배)", "챕터": "Chapter 3. 플랫폼별 조건 정하기", "클립": "Ch03-02", "제목": "블로그 조건 정하기", "길이": "9분", "슬라이드": false, "비고": "실습", "차수": 3, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 8, "파트제목": "콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&R 분배)", "챕터": "Chapter 3. 플랫폼별 조건 정하기", "클립": "Ch03-03", "제목": "카드뉴스 조건 정하기", "길이": "9분", "슬라이드": false, "비고": "실습", "차수": 3, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 8, "파트제목": "콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&R 분배)", "챕터": "Chapter 3. 플랫폼별 조건 정하기", "클립": "Ch03-04", "제목": "소셜 조건 정하기", "길이": "8분", "슬라이드": false, "비고": "실습", "차수": 3, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 8, "파트제목": "콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&R 분배)", "챕터": "Chapter 4. 세 플랫폼 병렬 실행", "클립": "Ch04-01", "제목": "소재 하나를 세 플랫폼에 뿌리기", "길이": "11분", "슬라이드": false, "비고": "실습", "차수": 3, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 8, "파트제목": "콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&R 분배)", "챕터": "Chapter 4. 세 플랫폼 병렬 실행", "클립": "Ch04-02", "제목": "세 결과물 한 번에 받아보기", "길이": "11분", "슬라이드": false, "비고": "실습", "차수": 3, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 8, "파트제목": "콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&R 분배)", "챕터": "Chapter 5. 매일 돌리는 공장 만들기", "클립": "Ch05-01", "제목": "예약 자동화로 반복 실행 걸기", "길이": "11분", "슬라이드": false, "비고": "실습", "차수": 3, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 9, "파트제목": "모바일로 진행 상황 확인하기", "챕터": "Chapter 1. 모바일 연결과 원격 확인", "클립": "Ch01-01", "제목": "모바일의 역할", "길이": "9분", "슬라이드": true, "비고": "", "차수": 3, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 9, "파트제목": "모바일로 진행 상황 확인하기", "챕터": "Chapter 1. 모바일 연결과 원격 확인", "클립": "Ch01-02", "제목": "작업 상태 확인하고 승인 응답하기", "길이": "11분", "슬라이드": false, "비고": "실습", "차수": 3, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 10, "파트제목": "토큰 아끼는 법", "챕터": "Chapter 1. 멀티 에이전트는 왜 비싼가", "클립": "Ch01-01", "제목": "팀을 굴리면 토큰이 몇 배로 드는가", "길이": "10분", "슬라이드": true, "비고": "", "차수": 3, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 10, "파트제목": "토큰 아끼는 법", "챕터": "Chapter 2. 토큰 아끼기 - 실전", "클립": "Ch02-01", "제목": "모델 분리 설계 전략", "길이": "10분", "슬라이드": true, "비고": "", "차수": 3, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 10, "파트제목": "토큰 아끼는 법", "챕터": "Chapter 2. 토큰 아끼기 - 실전", "클립": "Ch02-02", "제목": "극강의 미니멀리즘 스킬 - Ponytail 사용하기", "길이": "10분", "슬라이드": true, "비고": "쓰면 안 되는 이유가 개념부", "차수": 3, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 10, "파트제목": "토큰 아끼는 법", "챕터": "Chapter 3. 강의 마무리", "클립": "Ch03-01", "제목": "강의 정리", "길이": "10분", "슬라이드": true, "비고": "마무리 덱", "차수": 3, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}], "batches": [{"차수": 1, "납기": "", "파트": [1, 2, 3, 4]}, {"차수": 2, "납기": "", "파트": [5, 6, 7]}, {"차수": 3, "납기": "", "파트": [8, 9, 10]}]}</script>
 <script>
 (() => {
 const {rows,batches}=JSON.parse(document.getElementById('dashboard-data').textContent);
 const stages=['제작','대본','촬영'];
-const completed=r=>stages.every(s=>r[s]==='완료'||r[s]==='해당없음');
-const active=r=>stages.some(s=>r[s]==='작업중');
+const completed=r=>r['촬영']==='완료';
+const active=r=>!completed(r)&&stages.some(s=>r[s]==='작업중');
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const el=id=>document.getElementById(id);
 let batch='all';
@@ -1109,7 +1109,7 @@ function drawBatches(){
   const parts=[...new Set(pool.map(r=>r['파트번호']))];
   const contiguous=parts.every((p,i)=>i===0||p===parts[i-1]+1);
   const range=parts.length?'Part '+(contiguous&&parts.length>1?parts[0]+'–'+parts.at(-1):parts.join(' · ')):'파트 배정 전';
-  return `<button class="batch" type="button" data-batch="${n}" aria-pressed="${batch===String(n)}"><span class="batch-top"><span class="batch-title">${n?n+'차 납품':'미배정'}</span><span class="batch-date">${esc(b['납기']||'')}</span></span><span class="batch-range">${range}</span><span class="batch-progress"><b>${done}</b><span>/ ${pool.length}클립</span><em>전 공정 완료</em></span><span class="batch-bar"><i style="width:${pool.length?done/pool.length*100:0}%"></i></span><span class="batch-bottom"><span>작업중 ${wip} · 미완료 ${pool.length-done}</span><span class="selected">${batch===String(n)?'선택됨':'클립 보기 →'}</span></span></button>`;
+  return `<button class="batch" type="button" data-batch="${n}" aria-pressed="${batch===String(n)}"><span class="batch-top"><span class="batch-title">${n?n+'차 납품':'미배정'}</span><span class="batch-date">${esc(b['납기']||'')}</span></span><span class="batch-range">${range}</span><span class="batch-progress"><b>${done}</b><span>/ ${pool.length}클립</span><em>촬영 완료</em></span><span class="batch-bar"><i style="width:${pool.length?done/pool.length*100:0}%"></i></span><span class="batch-bottom"><span>작업중 ${wip} · 미완료 ${pool.length-done}</span><span class="selected">${batch===String(n)?'선택됨':'클립 보기 →'}</span></span></button>`;
  }).join('');
 }
 function render(){
@@ -1124,7 +1124,7 @@ function render(){
   section.querySelector('.part__tally').textContent=`${clips.length}클립`;
   section.querySelectorAll('.chap').forEach(ch=>{let next=ch.nextElementSibling,show=false;while(next&&!next.classList.contains('chap')){if(!next.hidden)show=true;next=next.nextElementSibling;}ch.hidden=!show;});
  });
- const metrics=[['슬라이드','제작',filtered.filter(r=>r['슬라이드']),'이론'],['실습자료','제작',filtered.filter(r=>!r['슬라이드']),'실습'],['대본','대본',filtered.filter(r=>r['대본']!=='해당없음'),'이론'],['촬영','촬영',filtered,'전체']];
+ const metrics=[['슬라이드','제작',filtered.filter(r=>r['슬라이드']),'이론'],['실습자료','제작',filtered.filter(r=>!r['슬라이드']&&r['제작']!=='해당없음'),'실습'],['대본','대본',filtered.filter(r=>r['대본']!=='해당없음'),'이론'],['촬영','촬영',filtered,'전체']];
  el('metrics').innerHTML=metrics.map(([label,stage,pool,type])=>{
   const done=pool.filter(r=>r[stage]==='완료').length,wip=pool.filter(r=>r[stage]==='작업중').length,due=pool.filter(r=>r[stage]==='예정').length;
   return `<div class="metric"><p class="metric-label">${label}<span>· ${type}</span></p><p class="metric-value"><b>${done}</b><span>/ ${pool.length} 완료</span></p><p class="metric-note"><strong>작업중 ${wip}</strong> · 예정 ${due}</p></div>`;

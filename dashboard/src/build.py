@@ -18,10 +18,10 @@
   작업중    손대고 있다
   예정      아직 안 했지만 곧 해야 한다 — 앞 공정이 끝났거나 지금 납기의 파트다
   시작전    아직 안 했고 납기도 뒤다 — 지금 신경 쓸 일이 아니다
-  해당없음  애초에 그 공정이 없다 (실습 클립의 대본)
+  해당없음  애초에 그 공정이 없다 (실습 대본, 불필요한 실습자료)
 
 판정 규칙
-  실습 클립(슬라이드: false)은 실습자료 제작 → 촬영. 대본만 해당없음
+  실습 클립(슬라이드: false)은 실습자료 제작 → 촬영. 대본은 해당없음, 실습자료도 필요 없으면 해당없음
   제작  덱 없음 → 미착수 / 있고 확정 → 완료 / 있고 확정 아님 → 작업중
   대본  파일 없음 → 미착수 / 있음 → 작업중(초안) / 촬영을 마쳤으면 → 완료
         강사 검수는 촬영 때 이뤄지므로 촬영 완료를 대본 확정으로 본다.
@@ -171,7 +171,7 @@ def due_parts(schedule: dict, rows_by_part: dict[int, list[dict]]) -> tuple[set[
         raw = schedule.get(str(part))
         if not raw:
             continue
-        if any(any(r.get(stage) not in (DONE, NA) for stage, _, _ in STAGES) for r in rows):
+        if any(r.get("촬영") != DONE for r in rows):
             open_dates.append(raw)
     if not open_dates:
         return set(), ""
@@ -224,7 +224,7 @@ def build_rows() -> tuple[list[dict], list[str], str]:
                     f"Part {part} {clip} — clips.json에 없다. 실습 클립으로 처리했다."
                 )
             material = e.get("실습자료", LATER)
-            if material not in MANUAL_STATES:
+            if material not in (*MANUAL_STATES, NA):
                 die(f"Part {part} {clip} 의 실습자료 상태가 올바르지 않다.")
             if material in (DUE, LATER):
                 material = None
@@ -366,9 +366,8 @@ def render_parts(rows: list[dict], due_note: dict[int, str]) -> str:
     out = []
     for no, rs in parts.items():
         slides = [r for r in rs if r["슬라이드"]]
-        cells = [(r, s) for r in rs for s, _, _ in STAGES if r[s] != NA]
-        done = sum(1 for r, s in cells if r[s] == DONE)
-        total = len(cells) or 1
+        done = sum(r["촬영"] == DONE for r in rs)
+        total = len(rs) or 1
         due = due_note.get(no, "")
         due_html = (
             f'<span class="part__due{"" if not due else " is-due" if due[1] else ""}">{esc(due[0])}</span>'
@@ -381,7 +380,7 @@ def render_parts(rows: list[dict], due_note: dict[int, str]) -> str:
           <span class="part__title">{esc(rs[0]["파트제목"])}</span>
           {due_html}
           <span class="part__tally">{len(rs)}클립</span>
-          <span class="part__meter" role="img" aria-label="공정 {done}/{total} 완료">
+          <span class="part__meter" role="img" aria-label="촬영 {done}/{total} 완료">
             <span class="part__meter-fill" style="width:{done / total * 100:.4f}%"></span>
           </span>
           <span class="part__pct">{done}/{total}</span>
@@ -453,7 +452,8 @@ def render_markdown(rows: list[dict], warnings: list[str], nearest: str) -> str:
         "",
         f"커리큘럼 {len(rows)}클립의 자료 제작과 촬영을 추적한다. 이론은 슬라이드 → 대본 → 촬영 순이다.",
         f"슬라이드를 만드는 클립은 {len(slides)}개, 나머지 {len(rows) - len(slides)}개는 "
-        "실습자료 제작 → 촬영으로 진행하며, 대본만 **해당없음**이다.",
+        "실습자료 제작(필요 시) → 촬영으로 진행한다. 대본과 불필요한 실습자료는 **해당없음**이다.",
+        "촬영 완료를 클립의 최종 완료로 본다. 해당없음인 공정은 집계에서 제외한다.",
         "",
         "상태는 다섯 가지다 — **완료 · 작업중 · 예정**(앞 공정 완료 또는 지금 납기) **· "
         "시작전**(납기가 뒤) **· 해당없음**.",
