@@ -1,0 +1,732 @@
+{
+  "updated": "2026-09-10",
+  "source_of_truth": "현재 승인 HTML. 해시는 이번 검수 시점의 증거이며 이후 사용자 수정으로 바뀔 수 있음.",
+  "pattern_count": 29,
+  "template": ".claude/skills/fastcampus-slide/assets/base-template.html",
+  "patterns": [
+    {
+      "number": 1,
+      "id": "COVER_SCENE",
+      "title": "클립 제목의 핵심어",
+      "source": "artifacts/part2/outputs/ch01-01-terminal-problem.html",
+      "source_slide": 1,
+      "why": "제목·부제·핵심 장면으로 클립을 연다.",
+      "use_when": "표지",
+      "avoid": "소스 덱의 실제 내용과 장수까지 복사하지 않는다.",
+      "motion": "stagger",
+      "provenance": "기존 승인 템플릿 유지; 현재 대응 예시를 연결함"
+    },
+    {
+      "number": 2,
+      "id": "SCENE_PAIR",
+      "title": "관계와 핵심 문장",
+      "source": "artifacts/part2/outputs/ch01-01-terminal-problem.html",
+      "source_slide": 2,
+      "why": "큰 도식과 큰 선언문을 같은 비중으로 둔다.",
+      "use_when": "큰 대상의 정의",
+      "avoid": "소스 덱의 실제 내용과 장수까지 복사하지 않는다.",
+      "motion": "stagger",
+      "provenance": "기존 승인 템플릿 유지; 현재 대응 예시를 연결함"
+    },
+    {
+      "number": 3,
+      "id": "SCENE_IMAGE",
+      "title": "장면과 설명",
+      "source": "artifacts/part2/outputs/ch01-01-terminal-problem.html",
+      "source_slide": 3,
+      "why": "그림의 상황과 한 문장 주장을 대응시킨다.",
+      "use_when": "상황을 체감시키는 장면",
+      "avoid": "소스 덱의 실제 내용과 장수까지 복사하지 않는다.",
+      "motion": "stagger",
+      "provenance": "기존 승인 템플릿 유지; 현재 대응 예시를 연결함"
+    },
+    {
+      "number": 4,
+      "id": "OPEN_TRIPTYCH",
+      "title": "세 개념의 병렬 배치",
+      "source": "artifacts/part2/outputs/ch01-01-terminal-problem.html",
+      "source_slide": 4,
+      "why": "동등한 세 관점을 열린 열에 둔다.",
+      "use_when": "동등한 3개 관점",
+      "avoid": "소스 덱의 실제 내용과 장수까지 복사하지 않는다.",
+      "motion": "stagger",
+      "provenance": "기존 승인 템플릿 유지; 현재 대응 예시를 연결함"
+    },
+    {
+      "number": 5,
+      "id": "STATUS_TRIPTYCH",
+      "title": "상태를 포함한 세 관점",
+      "source": "artifacts/part2/outputs/ch01-01-terminal-problem.html",
+      "source_slide": 5,
+      "why": "한 창 안의 다른 상태와 두 대응 관점을 보여준다.",
+      "use_when": "통합 상태와 요구사항",
+      "avoid": "소스 덱의 실제 내용과 장수까지 복사하지 않는다.",
+      "motion": "stagger",
+      "provenance": "기존 승인 템플릿 유지; 현재 대응 예시를 연결함"
+    },
+    {
+      "number": 6,
+      "id": "STRUCTURE_BRANCH",
+      "title": "상위와 하위의 구조",
+      "source": "artifacts/part3/outputs/ch01-03-branch-vs-worktree.html",
+      "source_slide": 5,
+      "why": "상위 대상과 동등한 하위 둘의 관계. 기존 등록 패턴 유지.",
+      "use_when": "상하 분류·분기",
+      "avoid": "소스 덱의 실제 내용과 장수까지 복사하지 않는다.",
+      "motion": "stagger",
+      "provenance": "기존 승인 템플릿 유지; 현재 대응 예시를 연결함"
+    },
+    {
+      "number": 7,
+      "id": "STRUCTURE_EXCHANGE",
+      "title": "주체 사이의 요청과 결과",
+      "source": "artifacts/part4/outputs/ch01-01-orchestration-structure.html",
+      "source_slide": 5,
+      "why": "조율 주체와 둘의 요청·결과. 기존 등록 패턴 유지.",
+      "use_when": "요청과 반환",
+      "avoid": "소스 덱의 실제 내용과 장수까지 복사하지 않는다.",
+      "motion": "stagger",
+      "provenance": "기존 승인 템플릿 유지; 현재 대응 예시를 연결함"
+    },
+    {
+      "number": 8,
+      "id": "TRANSITION_COMPARE",
+      "title": "방식의 변화",
+      "source": "artifacts/part4/outputs/ch01-01-orchestration-structure.html",
+      "source_slide": 2,
+      "why": "같은 네 행에서 직접 전달과 협업 연결을 대비한다.",
+      "use_when": "기존→전환 대비",
+      "avoid": "소스 덱의 실제 내용과 장수까지 복사하지 않는다.",
+      "motion": "stagger",
+      "provenance": "기존 승인 템플릿 유지; 현재 대응 예시를 연결함"
+    },
+    {
+      "number": 9,
+      "id": "CONTAINED_STRUCTURE",
+      "title": "하나의 범위에 속하는 것",
+      "source": "artifacts/part4/outputs/ch01-02-goal-task-flow.html",
+      "source_slide": 3,
+      "why": "범위·공통 목적·개별 항목·공유 정보를 한 경계에 둔다.",
+      "use_when": "논리적 포함",
+      "avoid": "소스 덱의 실제 내용과 장수까지 복사하지 않는다.",
+      "motion": "stagger",
+      "provenance": "기존 승인 템플릿 유지; 현재 대응 예시를 연결함"
+    },
+    {
+      "number": 10,
+      "id": "OPERATING_DEFAULT_COMPARE",
+      "title": "같은 환경, 달라진 기본 방식",
+      "source": "artifacts/part2/outputs/ch01-02-what-is-orca.html",
+      "source_slide": 3,
+      "why": "한 화면의 같은 틀 안에서 1→여럿 차이를 보여준다.",
+      "use_when": "사용 방식의 기본 전제 비교",
+      "avoid": "이 장의 논점이 공간 분리가 아니라면 개별 폴더를 붙이지 않는다.",
+      "motion": "stagger"
+    },
+    {
+      "number": 11,
+      "id": "OBJECT_DETAIL_COMPARE",
+      "title": "차이를 만드는 작은 요소",
+      "source": "artifacts/part3/outputs/ch01-02-repo-and-flow.html",
+      "source_slide": 2,
+      "why": "같은 폴더 골격 안의 작은 숨은 항목이 차이를 증명한다.",
+      "use_when": "대상의 구성 차이 설명",
+      "avoid": "작은 메타데이터를 주요 파일보다 크게 그리거나 별도 주인공으로 만들지 않는다.",
+      "motion": "stagger"
+    },
+    {
+      "number": 12,
+      "id": "STAGE_FOCUS",
+      "title": "전체 구조 안의 현재 단계",
+      "source": "artifacts/part3/outputs/ch01-02-repo-and-flow.html",
+      "source_slide": "3–5",
+      "why": "복제한 세 장에서 같은 지도·다른 강조만 바뀐다.",
+      "use_when": "단계별 설명을 연속 장으로 제시",
+      "avoid": "영역·행위·상태를 같은 라벨로 섞지 않는다.",
+      "motion": "static"
+    },
+    {
+      "number": 13,
+      "id": "RECORD_ANATOMY",
+      "title": "한 기록에 담기는 것",
+      "source": "artifacts/part3/outputs/ch01-02-repo-and-flow.html",
+      "source_slide": 6,
+      "why": "기록물 그림과 메타데이터의 역할이 분리돼 읽힌다.",
+      "use_when": "구조화된 결과의 구성 설명",
+      "avoid": "한 사례의 값을 항목 정의로 대신하지 않는다.",
+      "motion": "stagger"
+    },
+    {
+      "number": 14,
+      "id": "SPACE_TRANSFER",
+      "title": "두 공간 사이의 전달",
+      "source": "artifacts/part3/outputs/ch01-02-repo-and-flow.html",
+      "source_slide": 7,
+      "why": "같은 높이의 큰 대상 둘과 그 사이 동작으로 방향이 보인다.",
+      "use_when": "서로 다른 위치의 결과 전달",
+      "avoid": "설명하지 않을 역방향 명령을 관성적으로 추가하지 않는다.",
+      "motion": "stagger"
+    },
+    {
+      "number": 15,
+      "id": "PROCESS_STRIP",
+      "title": "처음부터 끝까지 작업 흐름",
+      "source": "artifacts/part3/outputs/ch01-02-repo-and-flow.html",
+      "source_slide": 8,
+      "why": "색·같은 크기·같은 간격·연결선이 연속 읽기를 만든다.",
+      "use_when": "전체 작업의 순서",
+      "avoid": "고친다 같은 모호한 문장 대신 실제 작업 단위 이름을 쓴다.",
+      "motion": "stagger"
+    },
+    {
+      "number": 16,
+      "id": "HISTORY_BRANCH",
+      "title": "같은 출발점, 다른 기록",
+      "source": "artifacts/part3/outputs/ch01-03-branch-vs-worktree.html",
+      "source_slide": 3,
+      "why": "선이 출발점부터 자라며 같은 시점에서 두 기록이 갈라진다.",
+      "use_when": "분기된 이력이나 대안의 발생",
+      "avoid": "모든 점을 무명으로 두지 않는다. 시점 라벨을 붙인다.",
+      "motion": "path-draw"
+    },
+    {
+      "number": 17,
+      "id": "SOURCE_TO_SPACES",
+      "title": "공통 출발점과 독립 공간",
+      "source": "artifacts/part3/outputs/ch01-03-branch-vs-worktree.html",
+      "source_slide": 5,
+      "why": "세로 분기 구조가 작은 원본과 큰 작업 폴더의 우선순위를 만든다.",
+      "use_when": "동일 기준에서 독립 공간을 준비",
+      "avoid": "복제 순서와 공유 관계를 혼동하지 않는다. 연결 끝은 폴더 윗면을 기준으로 잡는다.",
+      "motion": "stagger"
+    },
+    {
+      "number": 18,
+      "id": "HISTORY_SPACE_MAPPING",
+      "title": "기록과 작업 공간의 대응",
+      "source": "artifacts/part3/outputs/ch01-03-branch-vs-worktree.html",
+      "source_slide": 6,
+      "why": "줄기→폴더→담당 역할을 시간차로 보여준다.",
+      "use_when": "논리적 이력과 물리적 공간의 매핑",
+      "avoid": "줄기 A와 공간 B를 같은 색으로 섞거나 동시에 전부 등장시키지 않는다.",
+      "motion": "path-draw"
+    },
+    {
+      "number": 19,
+      "id": "CLICK_WORKSPACE",
+      "title": "한 화면에서 선택 전환",
+      "source": "artifacts/part3/outputs/ch01-03-branch-vs-worktree.html",
+      "source_slide": 8,
+      "why": "자동 전환을 제거하되 클릭에 따른 부드러운 전환은 유지한다.",
+      "use_when": "한 창에서 다른 대상을 오가며 설명",
+      "avoid": "자동 타이머를 넣지 않는다. 탭의 클릭이 덱 이동으로 이어지지 않게 한다.",
+      "motion": "click-crossfade"
+    },
+    {
+      "number": 20,
+      "id": "SHARED_SPACE_EXCHANGE",
+      "title": "같은 공간에서 소통",
+      "source": "artifacts/part4/outputs/ch01-01-orchestration-structure.html",
+      "source_slide": 6,
+      "why": "모든 주체를 한 경계 안에 두어 바깥 주체가 다른 공간으로 읽히는 오해를 막는다.",
+      "use_when": "같은 공간에서 독립 주체가 소통",
+      "avoid": "코디네이터를 경계 밖에 두거나 폴더를 배너처럼 가로로 늘리지 않는다.",
+      "motion": "stagger"
+    },
+    {
+      "number": 21,
+      "id": "SEPARATE_SPACE_EXCHANGE",
+      "title": "다른 공간에서도 같은 소통",
+      "source": "artifacts/part4/outputs/ch01-01-orchestration-structure.html",
+      "source_slide": 7,
+      "why": "앞 장의 소통 관계를 고정한 채 공간만 나눈다.",
+      "use_when": "같은 공간/서로 다른 공간의 연속 설명",
+      "avoid": "분리된 공간만 가능한 필수 조건처럼 표현하지 않는다.",
+      "motion": "stagger"
+    },
+    {
+      "number": 22,
+      "id": "MESSAGE_TYPES",
+      "title": "오가는 메시지의 종류",
+      "source": "artifacts/part4/outputs/ch01-01-orchestration-structure.html",
+      "source_slide": 8,
+      "why": "주체는 세 메시지 전체의 수직 중앙, 아이콘은 메시지 바로 옆이다.",
+      "use_when": "메시지 종류와 발신/수신 매핑",
+      "avoid": "좌우 위치를 바꿀 때 화살표 의미도 함께 바꾼다. 예제 방향을 고정 규칙으로 쓰지 않는다.",
+      "motion": "stagger"
+    },
+    {
+      "number": 23,
+      "id": "GOAL_ACCEPTANCE",
+      "title": "목표와 완료 판단",
+      "source": "artifacts/part4/outputs/ch01-02-goal-task-flow.html",
+      "source_slide": 2,
+      "why": "요청 자체에 완료 조건을 포함하고 아래에서 같은 조건을 분해한다.",
+      "use_when": "작업을 맡기는 명확한 요청 예시",
+      "avoid": "막연한 말투·잘 만들기만으로 완료를 정의하지 않는다. 실제 덱에서는 관찰 가능한 조건으로 교체한다.",
+      "motion": "stagger"
+    },
+    {
+      "number": 24,
+      "id": "TASK_DEPENDENCY",
+      "title": "먼저 끝나야 하는 작업",
+      "source": "artifacts/part4/outputs/ch01-02-goal-task-flow.html",
+      "source_slide": 5,
+      "why": "전제 조건→후속 작업으로 읽으며 병렬 수행은 결과로만 남는다.",
+      "use_when": "의존 관계와 선행 조건",
+      "avoid": "후속 둘을 동시에 한다는 설명으로 선행 조건의 핵심을 대체하지 않는다.",
+      "motion": "stagger"
+    },
+    {
+      "number": 25,
+      "id": "ASSIGNMENT_PAIRS",
+      "title": "작업과 담당자를 연결",
+      "source": "artifacts/part4/outputs/ch01-02-goal-task-flow.html",
+      "source_slide": 6,
+      "why": "작업 A→배정→역할 A의 행과 작업 B 행을 충분히 띄운다.",
+      "use_when": "할 일과 담당자 배정",
+      "avoid": "앞에서 쓴 A/B를 상세 업무명으로 갑자기 바꾸지 않는다. 배정 라벨은 선 위에 붙인다.",
+      "motion": "stagger"
+    },
+    {
+      "number": 26,
+      "id": "REVIEW_LOOP",
+      "title": "검토 뒤의 다음 행동",
+      "source": "artifacts/part4/outputs/ch01-02-goal-task-flow.html",
+      "source_slide": 8,
+      "why": "추상적인 다음작업 대신 동일한 작업 식별자로 분기와 루프를 표시한다.",
+      "use_when": "검증과 재작업 판단",
+      "avoid": "보완처럼 흐릿한 말로 되돌아갈 대상을 숨기지 않는다.",
+      "motion": "stagger"
+    },
+    {
+      "number": 27,
+      "id": "DELEGATION_HIERARCHY",
+      "title": "목표를 전달할 한 주체",
+      "source": "artifacts/part4/outputs/ch01-02-goal-task-flow.html",
+      "source_slide": 9,
+      "why": "상단 요청자·조율자와 하단 담당자의 위계로 수평 반복을 끊는다.",
+      "use_when": "전체 협업의 마지막 정리와 첫 장 회수",
+      "avoid": "사람→모든 실행 주체 직접선을 그려 조율자를 우회하지 않는다. 작업 수와 담당자 수는 실제 설계에 맞춘다.",
+      "motion": "stagger"
+    },
+    {
+      "number": 28,
+      "id": "CAUSE_ROWS",
+      "title": "현상이 생기는 이유",
+      "source": "artifacts/part1/outputs/ch02-01-single-agent-limits.html",
+      "source_slide": 4,
+      "why": "시각적으로 동일한 행의 번호가 앞의 현상과 뒤의 해결을 이어준다.",
+      "use_when": "문제→원인→대응의 가운데 장",
+      "avoid": "품질 문제를 기다림의 원인·병렬 처리와 연결하지 않는다.",
+      "motion": "stagger"
+    },
+    {
+      "number": 29,
+      "id": "CLICK_TIMELINE",
+      "title": "한 대상의 현재 위치",
+      "source": "artifacts/part3/outputs/ch01-03-branch-vs-worktree.html",
+      "source_slide": 4,
+      "why": "진입 때 관계·차량 등장, 클릭 때만 한 객체가 이동한다.",
+      "use_when": "한 번에 한 위치라는 제약을 비유로 설명",
+      "avoid": "페이지 진입과 이동을 묶지 않는다. 클릭 전 정지 구간을 이동 키프레임에 남기지 않는다.",
+      "motion": "click-travel"
+    }
+  ],
+  "decks": [
+    {
+      "file": "artifacts/part1/outputs/ch02-01-single-agent-limits.html",
+      "sha256": "aa5e8cf93256966804d0f3e85d15fb17ccf70bbdd1621d2d80d96c7aa7333190",
+      "slides": [
+        {
+          "number": 1,
+          "title": "에이전트 하나로되는 일과 안 되는 일",
+          "visual": "single-title-cover"
+        },
+        {
+          "number": 2,
+          "title": "하나로 되는 일",
+          "visual": "hero-list"
+        },
+        {
+          "number": 3,
+          "title": "단일 에이전트의 한계",
+          "visual": "single-problem-outcomes"
+        },
+        {
+          "number": 4,
+          "title": "왜 안 되는가",
+          "visual": "single-source-causes"
+        },
+        {
+          "number": 5,
+          "title": "멀티 에이전트가 필요한 이유",
+          "visual": "single-solution-cards"
+        }
+      ],
+      "basis": "사용자 완료·최종 승인 및 후속 수정. 촬영 상태는 이 manifest가 변경하지 않음.",
+      "screenshots": [
+        "artifacts/part1/_qa/golden-20260910--ch02-01-single-agent-limits--01--1280x800.png",
+        "artifacts/part1/_qa/golden-20260910--ch02-01-single-agent-limits--02--1280x800.png",
+        "artifacts/part1/_qa/golden-20260910--ch02-01-single-agent-limits--03--1280x800.png",
+        "artifacts/part1/_qa/golden-20260910--ch02-01-single-agent-limits--04--1280x800.png",
+        "artifacts/part1/_qa/golden-20260910--ch02-01-single-agent-limits--05--1280x800.png"
+      ]
+    },
+    {
+      "file": "artifacts/part2/outputs/ch01-01-terminal-problem.html",
+      "sha256": "142db55ae27f1f3874e054a7dad62ab12e000053d41b5eb7785608ee1183dfdc",
+      "slides": [
+        {
+          "number": 1,
+          "title": "터미널 여러 개의 문제",
+          "visual": null
+        },
+        {
+          "number": 2,
+          "title": "에이전트가 일하는 자리",
+          "visual": null
+        },
+        {
+          "number": 3,
+          "title": "멀티 에이전트를 쓰려면",
+          "visual": null
+        },
+        {
+          "number": 4,
+          "title": "터미널 여러 개의 문제",
+          "visual": null
+        },
+        {
+          "number": 5,
+          "title": "무엇이 필요한가",
+          "visual": null
+        }
+      ],
+      "basis": "사용자 완료·최종 승인 및 후속 수정. 촬영 상태는 이 manifest가 변경하지 않음.",
+      "screenshots": [
+        "artifacts/part2/_qa/golden-20260910--ch01-01-terminal-problem--01--1280x800.png",
+        "artifacts/part2/_qa/golden-20260910--ch01-01-terminal-problem--02--1280x800.png",
+        "artifacts/part2/_qa/golden-20260910--ch01-01-terminal-problem--03--1280x800.png",
+        "artifacts/part2/_qa/golden-20260910--ch01-01-terminal-problem--04--1280x800.png",
+        "artifacts/part2/_qa/golden-20260910--ch01-01-terminal-problem--05--1280x800.png"
+      ]
+    },
+    {
+      "file": "artifacts/part2/outputs/ch01-02-what-is-orca.html",
+      "sha256": "fd796785740ad02d71a07344ff8d7d1ac981c65fdf7f0226742d84fa82d4a362",
+      "slides": [
+        {
+          "number": 1,
+          "title": "Orca는 어떤 도구인가",
+          "visual": "orca-office-scene"
+        },
+        {
+          "number": 2,
+          "title": "Orca 안에서 일하는 AI",
+          "visual": "orca-agent-workspace"
+        },
+        {
+          "number": 3,
+          "title": "기존 도구의 한계를 깬 도구",
+          "visual": "orca-operating-default"
+        },
+        {
+          "number": 4,
+          "title": "IDE와 ADE",
+          "visual": "ide-ade-v1-enriched"
+        },
+        {
+          "number": 5,
+          "title": "Orca의 작업 단위",
+          "visual": "orca-work-unit"
+        },
+        {
+          "number": 6,
+          "title": "오케스트레이션까지",
+          "visual": "orca-orchestration-capability"
+        }
+      ],
+      "basis": "사용자 완료·최종 승인 및 후속 수정. 촬영 상태는 이 manifest가 변경하지 않음.",
+      "screenshots": [
+        "artifacts/part2/_qa/golden-20260910--ch01-02-what-is-orca--01--1280x800.png",
+        "artifacts/part2/_qa/golden-20260910--ch01-02-what-is-orca--02--1280x800.png",
+        "artifacts/part2/_qa/golden-20260910--ch01-02-what-is-orca--03--1280x800.png",
+        "artifacts/part2/_qa/golden-20260910--ch01-02-what-is-orca--04--1280x800.png",
+        "artifacts/part2/_qa/golden-20260910--ch01-02-what-is-orca--05--1280x800.png",
+        "artifacts/part2/_qa/golden-20260910--ch01-02-what-is-orca--06--1280x800.png"
+      ]
+    },
+    {
+      "file": "artifacts/part3/outputs/ch01-02-repo-and-flow.html",
+      "sha256": "e61e97bd205a98a2ca6f7029cb81453e34f401be72f6193d5ff94cde4c4b1508",
+      "slides": [
+        {
+          "number": 1,
+          "title": "저장소와 작업흐름",
+          "visual": "repo-cover"
+        },
+        {
+          "number": 2,
+          "title": "저장소란",
+          "visual": "repo-definition"
+        },
+        {
+          "number": 3,
+          "title": "버전 관리를 위한 3 단계",
+          "visual": "repo-area-step"
+        },
+        {
+          "number": 4,
+          "title": "버전 관리를 위한 3 단계",
+          "visual": "repo-area-step"
+        },
+        {
+          "number": 5,
+          "title": "버전 관리를 위한 3 단계",
+          "visual": "repo-area-step"
+        },
+        {
+          "number": 6,
+          "title": "기록으로 남는 순간 - commit",
+          "visual": "repo-commit"
+        },
+        {
+          "number": 7,
+          "title": "내 기록과 원격 기록",
+          "visual": "repo-remote"
+        },
+        {
+          "number": 8,
+          "title": "한 번의 작업 흐름",
+          "visual": "repo-overview"
+        }
+      ],
+      "basis": "사용자 완료·최종 승인 및 후속 수정. 촬영 상태는 이 manifest가 변경하지 않음.",
+      "screenshots": [
+        "artifacts/part3/_qa/golden-20260910--ch01-02-repo-and-flow--01--1280x800.png",
+        "artifacts/part3/_qa/golden-20260910--ch01-02-repo-and-flow--02--1280x800.png",
+        "artifacts/part3/_qa/golden-20260910--ch01-02-repo-and-flow--03--1280x800.png",
+        "artifacts/part3/_qa/golden-20260910--ch01-02-repo-and-flow--04--1280x800.png",
+        "artifacts/part3/_qa/golden-20260910--ch01-02-repo-and-flow--05--1280x800.png",
+        "artifacts/part3/_qa/golden-20260910--ch01-02-repo-and-flow--06--1280x800.png",
+        "artifacts/part3/_qa/golden-20260910--ch01-02-repo-and-flow--07--1280x800.png",
+        "artifacts/part3/_qa/golden-20260910--ch01-02-repo-and-flow--08--1280x800.png"
+      ]
+    },
+    {
+      "file": "artifacts/part3/outputs/ch01-03-branch-vs-worktree.html",
+      "sha256": "35be5816c09bbe82b0e632e21b3bcf4901acb60b2220c99ebdac26ac0889d2de",
+      "slides": [
+        {
+          "number": 1,
+          "title": "브랜치와 워크트리",
+          "visual": "bw-cover"
+        },
+        {
+          "number": 2,
+          "title": "한 폴더에서 겹치는 작업",
+          "visual": "bw-shared-file-problem"
+        },
+        {
+          "number": 3,
+          "title": "따로 이어가는 작업 이력",
+          "visual": "bw-branch"
+        },
+        {
+          "number": 4,
+          "title": "한 번에 한 시점만",
+          "visual": "bw-time-machine"
+        },
+        {
+          "number": 5,
+          "title": "워크트리란",
+          "visual": "bw-origin-alternative"
+        },
+        {
+          "number": 6,
+          "title": "브랜치와 워크트리의 관계",
+          "visual": "bw-branch-folder-alternative"
+        },
+        {
+          "number": 7,
+          "title": "Orca의 작업 단위",
+          "visual": "bw-orca-unit"
+        },
+        {
+          "number": 8,
+          "title": "한 창에서 작업 전환",
+          "visual": "bw-orca-switch"
+        }
+      ],
+      "basis": "사용자 완료·최종 승인 및 후속 수정. 촬영 상태는 이 manifest가 변경하지 않음.",
+      "screenshots": [
+        "artifacts/part3/_qa/golden-20260910--ch01-03-branch-vs-worktree--01--1280x800.png",
+        "artifacts/part3/_qa/golden-20260910--ch01-03-branch-vs-worktree--02--1280x800.png",
+        "artifacts/part3/_qa/golden-20260910--ch01-03-branch-vs-worktree--03--1280x800.png",
+        "artifacts/part3/_qa/golden-20260910--ch01-03-branch-vs-worktree--04--1280x800.png",
+        "artifacts/part3/_qa/golden-20260910--ch01-03-branch-vs-worktree--05--1280x800.png",
+        "artifacts/part3/_qa/golden-20260910--ch01-03-branch-vs-worktree--06--1280x800.png",
+        "artifacts/part3/_qa/golden-20260910--ch01-03-branch-vs-worktree--07--1280x800.png",
+        "artifacts/part3/_qa/golden-20260910--ch01-03-branch-vs-worktree--08--1280x800.png"
+      ]
+    },
+    {
+      "file": "artifacts/part4/outputs/ch01-01-orchestration-structure.html",
+      "sha256": "d22ccda1e0f339b6ee1b93761fca6921d65bb4d4b1a33621355c7c993963d87e",
+      "slides": [
+        {
+          "number": 1,
+          "title": "오케스트레이션 구조 살펴보기",
+          "visual": "orchestration-structure-1"
+        },
+        {
+          "number": 2,
+          "title": "협업을 잇는 역할",
+          "visual": "orchestration-structure-2"
+        },
+        {
+          "number": 3,
+          "title": "환경과 스킬",
+          "visual": "orchestration-structure-3"
+        },
+        {
+          "number": 4,
+          "title": "조율과 실행",
+          "visual": "orchestration-structure-4"
+        },
+        {
+          "number": 5,
+          "title": "협업의 구조",
+          "visual": "orchestration-structure-5"
+        },
+        {
+          "number": 6,
+          "title": "작업과 소통",
+          "visual": "orchestration-structure-6"
+        },
+        {
+          "number": 7,
+          "title": "서로 다른 워크트리",
+          "visual": "orchestration-structure-split-worktrees"
+        },
+        {
+          "number": 8,
+          "title": "메시지의 종류",
+          "visual": "orchestration-structure-7"
+        }
+      ],
+      "basis": "사용자 완료·최종 승인 및 후속 수정. 촬영 상태는 이 manifest가 변경하지 않음.",
+      "screenshots": [
+        "artifacts/part4/_qa/golden-20260910--ch01-01-orchestration-structure--01--1280x800.png",
+        "artifacts/part4/_qa/golden-20260910--ch01-01-orchestration-structure--02--1280x800.png",
+        "artifacts/part4/_qa/golden-20260910--ch01-01-orchestration-structure--03--1280x800.png",
+        "artifacts/part4/_qa/golden-20260910--ch01-01-orchestration-structure--04--1280x800.png",
+        "artifacts/part4/_qa/golden-20260910--ch01-01-orchestration-structure--05--1280x800.png",
+        "artifacts/part4/_qa/golden-20260910--ch01-01-orchestration-structure--06--1280x800.png",
+        "artifacts/part4/_qa/golden-20260910--ch01-01-orchestration-structure--07--1280x800.png",
+        "artifacts/part4/_qa/golden-20260910--ch01-01-orchestration-structure--08--1280x800.png"
+      ]
+    },
+    {
+      "file": "artifacts/part4/outputs/ch01-02-goal-task-flow.html",
+      "sha256": "009e671078a7c717c7fa9b26f7c1bba55bf827fd92adcf227ba8ba88f30e3ce1",
+      "slides": [
+        {
+          "number": 1,
+          "title": "목표와 작업, 실행의 흐름",
+          "visual": "goal-task-flow-1"
+        },
+        {
+          "number": 2,
+          "title": "목표와 완료 기준",
+          "visual": "goal-task-flow-2"
+        },
+        {
+          "number": 3,
+          "title": "Run이란",
+          "visual": "goal-task-flow-run-detail"
+        },
+        {
+          "number": 4,
+          "title": "오케스트레이션 실행 흐름",
+          "visual": "goal-task-flow-8"
+        },
+        {
+          "number": 5,
+          "title": "Task의 의존 관계",
+          "visual": "goal-task-flow-4"
+        },
+        {
+          "number": 6,
+          "title": "배정과 실행",
+          "visual": "goal-task-flow-5"
+        },
+        {
+          "number": 7,
+          "title": "실행 중의 조율",
+          "visual": "goal-task-flow-6"
+        },
+        {
+          "number": 8,
+          "title": "다음 단계의 판단",
+          "visual": "goal-task-flow-7"
+        },
+        {
+          "number": 9,
+          "title": "목표는 오케스트레이터에게",
+          "visual": "goal-task-flow-handoff"
+        }
+      ],
+      "basis": "사용자 완료·최종 승인 및 후속 수정. 촬영 상태는 이 manifest가 변경하지 않음.",
+      "screenshots": [
+        "artifacts/part4/_qa/golden-20260910--ch01-02-goal-task-flow--01--1280x800.png",
+        "artifacts/part4/_qa/golden-20260910--ch01-02-goal-task-flow--02--1280x800.png",
+        "artifacts/part4/_qa/golden-20260910--ch01-02-goal-task-flow--03--1280x800.png",
+        "artifacts/part4/_qa/golden-20260910--ch01-02-goal-task-flow--04--1280x800.png",
+        "artifacts/part4/_qa/golden-20260910--ch01-02-goal-task-flow--05--1280x800.png",
+        "artifacts/part4/_qa/golden-20260910--ch01-02-goal-task-flow--06--1280x800.png",
+        "artifacts/part4/_qa/golden-20260910--ch01-02-goal-task-flow--07--1280x800.png",
+        "artifacts/part4/_qa/golden-20260910--ch01-02-goal-task-flow--08--1280x800.png",
+        "artifacts/part4/_qa/golden-20260910--ch01-02-goal-task-flow--09--1280x800.png"
+      ]
+    },
+    {
+      "file": "artifacts/part3/outputs/ch01-01-what-is-git.html",
+      "sha256": "d4858d1963af51f7d56be8e55cb9750363cc66ab59d6e2fbc521bed7e6115123",
+      "slides": [
+        {
+          "number": 1,
+          "title": "Git이란 - 버전 관리가 없다면"
+        },
+        {
+          "number": 2,
+          "title": "이름으로 남긴 버전"
+        },
+        {
+          "number": 3,
+          "title": "Git의 역할"
+        },
+        {
+          "number": 4,
+          "title": "Git이 바꾸는 것"
+        },
+        {
+          "number": 5,
+          "title": "Git과 GitHub"
+        }
+      ],
+      "basis": "완료 덱. 버전 파일 비교·열린 3열·좌우 도구 비교는 기존 구조로 재사용하며 이름만 다른 중복 패턴을 추가하지 않음.",
+      "screenshots": [
+        "artifacts/part3/_qa/golden-20260910--ch01-01-what-is-git--01--1280x800.png",
+        "artifacts/part3/_qa/golden-20260910--ch01-01-what-is-git--02--1280x800.png",
+        "artifacts/part3/_qa/golden-20260910--ch01-01-what-is-git--03--1280x800.png",
+        "artifacts/part3/_qa/golden-20260910--ch01-01-what-is-git--04--1280x800.png",
+        "artifacts/part3/_qa/golden-20260910--ch01-01-what-is-git--05--1280x800.png"
+      ]
+    }
+  ],
+  "completed": "2026-09-11",
+  "template_sha256": "40e5d19e2023e6f5619b0a8d72bcc648b5222539242b158e5760c682346f2f90",
+  "reference_deck_edits": false
+}

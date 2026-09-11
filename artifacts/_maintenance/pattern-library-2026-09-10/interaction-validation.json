@@ -1,0 +1,22 @@
+{
+  "checks": {
+    "tabDoesNotAutoplay": true,
+    "tabFades": true,
+    "tabChanges": true,
+    "clickDoesNotNavigate": true,
+    "tabResets": true,
+    "carDoesNotAutoplay": true,
+    "carMovesImmediately": true,
+    "carHasNoOutline": true,
+    "carArrives": true,
+    "carCanReplay": true,
+    "carResets": true,
+    "carKeyboardStarts": true
+  },
+  "reducedMotion": {
+    "enabled": true,
+    "before": 820,
+    "after": 530,
+    "animation": "none"
+  }
+}

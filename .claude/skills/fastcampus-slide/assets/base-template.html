@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>FastCampus 슬라이드 템플릿 · 공통 디자인 9개 패턴</title>
+    <title>FastCampus 슬라이드 템플릿 · 공통 디자인 29개 패턴</title>
     <!-- TEMPLATE ONLY: 실제 강의 내용·제품명·작업 캡처를 넣지 않는다.
      사용법: 이 파일을 복사 → 필요한 article 선택 → 모든 data-slot/제목/부제 교체.
      diagram의 공통 shape 정의를 유지하거나 사용한 도형만 각 SVG에 펼친다.
@@ -75,6 +75,7 @@
         pointer-events: none;
         transition: opacity 0.36s ease;
       }
+      .slide[data-motion="none"]{transition:none}
       .slide.active {
         opacity: 1;
         pointer-events: auto;
@@ -547,7 +548,74 @@
       .scope-panel .anim-item.do-fadeinup{animation-name:scope-fade}
       [data-motion="none"] .anim-item{opacity:1;animation:none!important}
       @media(max-height:650px){.scope-panel{padding:1.2rem}.scope-panel__header{padding-bottom:1rem}.scope-panel__content{gap:1.2rem;padding-top:1rem}.scope-panel__items{gap:1rem;margin-top:1rem}.scope-panel__item .diagram{width:4rem;height:5rem}.scope-panel__shared .diagram{width:5rem;height:6rem}}
-    </style>
+/* Approved pattern families 10–29. Geometry is shared by role; slots contain no lecture copy. */
+.tx-body{--art:clamp(4rem,18cqh,10rem);--tx-space:clamp(.6rem,2.2cqh,1.5rem)}
+.tx-body .anim-item.do-fadeinup{animation-name:scope-fade}
+.tx-art{display:block;width:var(--art);height:var(--art);flex-shrink:0}
+.tx-item{display:flex;flex-direction:column;gap:.7rem;align-items:center;text-align:center;min-width:0}
+.tx-item .heading{color:inherit}.tx-item .copy{color:var(--gray)}
+.tx-compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3.5rem;width:min(100%,80rem)}
+.tx-compare-side{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.5rem;min-width:0}
+.tx-window{width:100%;padding:2.8rem 1.5rem 1.5rem;border:1.5px solid transparent;border-radius:.4rem;position:relative}
+.tx-window-bar{position:absolute;top:.25rem;left:1rem;color:var(--gray);letter-spacing:.2rem}
+.tx-agents{display:flex;justify-content:center;gap:1.5rem}.tx-agents .tx-art{width:min(6rem,10vw);height:min(6rem,10vw)}.tx-agents .heading{font-size:var(--body)}
+.tx-folder-art{width:min(100%,23rem);height:min(42cqh,18rem);position:relative}
+.tx-folder-art>.tx-art{width:100%;height:100%}.tx-files{position:absolute;inset:41% 30% 23%;display:flex;justify-content:center}.tx-files .tx-art{width:33%;height:100%}
+.tx-hidden-detail{position:absolute;right:19%;bottom:23%;font-size:.75rem;opacity:.35;border:1px dashed currentColor;padding:.05rem .5rem}
+.tx-arrow{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.3rem;width:100%;min-width:0}
+.tx-arrow>svg{width:100%;height:1.6rem;overflow:visible}.tx-arrow--back>svg{transform:scaleX(-1)}.tx-arrow>.copy{color:inherit;font-size:var(--body);white-space:nowrap}
+.tx-transfer{width:min(100%,78rem);display:grid;grid-template-columns:1fr .65fr 1fr;align-items:center;gap:2rem}
+.tx-transfer .tx-art{width:min(20rem,36cqh);height:min(20rem,36cqh)}
+.tx-process,.tx-stage-row{display:grid;grid-template-columns:1fr .32fr 1fr .32fr 1fr .32fr 1fr;align-items:center;gap:1rem;width:min(100%,86rem)}
+.tx-process .heading{font-size:var(--body)}.tx-process .tx-arrow>.copy{font-size:1rem}
+.tx-stage-focus{width:min(100%,80rem);display:flex;flex-direction:column;align-items:center;gap:2rem}.tx-stage-row{grid-template-columns:1fr .3fr 1fr .3fr 1fr}
+.tx-stage{display:flex;flex-direction:column;align-items:center;gap:.7rem;opacity:.34}.tx-stage .heading{color:inherit}.tx-stage-note{text-align:center}
+.tx-stage-focus[data-focus="1"] [data-stage="1"],.tx-stage-focus[data-focus="2"] [data-stage="2"],.tx-stage-focus[data-focus="3"] [data-stage="3"]{opacity:1}
+.tx-record{display:grid;grid-template-columns:1fr 1.5fr;align-items:center;gap:5rem;width:min(100%,72rem)}.tx-record>.tx-item .tx-art{width:min(23rem,38cqh);height:min(23rem,38cqh)}
+.tx-fields{display:flex;flex-direction:column;gap:1.5rem}.tx-fields>div{display:grid;grid-template-columns:7rem minmax(0,1fr);gap:1.5rem;align-items:baseline}.tx-fields dt{font-size:var(--body);color:var(--gray)}.tx-fields dd{margin:0}
+.tx-graph{position:relative;width:min(100%,76rem);height:min(100cqh,36rem);min-height:0;flex-shrink:0}
+.tx-wires{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.tx-node{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,calc(var(--node-art)/-2));display:flex;flex-direction:column;align-items:center;gap:.6rem;text-align:center;max-width:29%;--node-art:clamp(3.3rem,15cqh,8rem)}
+.tx-node .tx-art{width:var(--node-art);height:var(--node-art)}.tx-node .heading{white-space:nowrap;font-size:var(--heading)}.tx-node .copy{white-space:nowrap;font-size:var(--body)}
+.tx-history .tx-node{--node-art:3rem}.tx-history .tx-node .copy{font-size:var(--body)}
+.tx-origin [data-node="origin"]{--node-art:min(8rem,17cqh)}.tx-origin [data-node="origin"] .heading{position:absolute;left:calc(100% + .8rem);top:40%}.tx-origin [data-node="origin"] .heading{font-size:var(--body)}
+.tx-origin [data-node="a"],.tx-origin [data-node="b"]{--node-art:min(20rem,33cqh)}
+.tx-history-spaces .tx-node{--node-art:min(17rem,28cqh)}.tx-history-spaces [data-node="seed"]{--node-art:2.5rem}.tx-history-spaces .tx-node .heading{font-size:var(--body)}
+.tx-label{position:absolute;left:34%;color:var(--brand)}.tx-label--a{top:14%}.tx-label--b{top:62%;color:var(--purple)}
+.tx-draw.do-fadeinup{animation:none!important;opacity:1}.tx-draw.do-fadeinup path{stroke-dasharray:1;stroke-dashoffset:1;animation:tx-grow .85s linear both;animation-delay:var(--draw-delay,0s)}
+@keyframes tx-grow{to{stroke-dashoffset:0}}
+.tx-switch{width:min(100%,70rem);height:min(100cqh,31rem);border:1.5px solid transparent;border-radius:.45rem;display:grid;grid-template-columns:13rem 1fr;padding:1.3rem;gap:2rem}
+.tx-switch-tabs{display:flex;flex-direction:column;gap:.75rem;padding-right:1.3rem;border-right:1px solid var(--border)}
+.tx-switch-tabs button{appearance:none;border:0;background:transparent;color:var(--gray);padding:1rem;text-align:left;cursor:pointer;border-radius:.25rem;font-size:var(--body)}
+.tx-switch-tabs button[aria-selected="true"]{background:var(--bg-card);color:var(--brand)}.tx-switch-tabs button[data-panel="b"][aria-selected="true"]{color:var(--purple)}
+.tx-switch-tabs button:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.tx-switch-content{position:relative;min-height:0}.tx-panel{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s ease,visibility .3s}
+.tx-panel.active{opacity:1;visibility:visible;pointer-events:auto}.tx-panel .anim-item{opacity:1;animation:none!important}
+.tx-shared{position:relative;width:min(100%,56rem);height:min(100cqh,34rem);border:1.5px solid transparent;border-radius:.4rem;padding:2.8rem 1.5rem 2.2rem}
+.tx-space-label{position:absolute;top:.65rem;left:1.3rem}.tx-shared .tx-graph{width:100%;height:100%}.tx-shared-note{position:absolute;left:43%;top:18%;font-size:var(--body)}
+.tx-shared .tx-node{--node-art:min(7rem,15cqh)}.tx-shared .tx-node .heading{font-size:var(--body)}
+.tx-messages{width:min(100%,78rem);height:min(100cqh,32rem);display:grid;grid-template-columns:max-content minmax(0,1fr) max-content;grid-template-rows:repeat(3,minmax(0,1fr));gap:.65rem 2rem;align-items:center}
+.tx-message-left{grid-column:1;grid-row:1/-1}.tx-message-right{grid-column:3;grid-row:1/-1}.tx-messages>.tx-item .tx-art{width:6rem;height:6rem}.tx-messages>.tx-item .heading{font-size:var(--body)}
+.tx-message{grid-column:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.2rem}.tx-message-name{display:flex;align-items:center;gap:.6rem}.tx-message-name .tx-art{width:2rem;height:2rem}.tx-message-name .heading{font-size:var(--body)}.tx-message>.copy{font-size:var(--body)}
+.tx-brief{width:min(100%,80rem);display:grid;grid-template-columns:7rem 1fr;gap:2.5rem}.tx-brief>.tx-art{width:6rem;height:7rem}.tx-brief .statement{font-size:var(--heading)}.tx-brief>div>.copy{margin-top:.8rem;color:var(--text)}.tx-brief .tx-fields{margin-top:1.6rem;gap:.9rem}.tx-brief dd{font-size:var(--body)}
+.tx-bottom-note{position:absolute;bottom:0;width:100%;text-align:center}
+.tx-dispatch{width:min(100%,72rem);display:flex;flex-direction:column;gap:clamp(2rem,8cqh,5.12rem)}.tx-dispatch-row{display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;gap:3rem}.tx-dispatch .tx-art{width:clamp(3rem,16cqh,8rem);height:clamp(3rem,16cqh,8rem)}
+.tx-dispatch .heading{font-size:var(--heading)}.tx-dispatch .tx-arrow{transform:translateY(-1rem)}
+.tx-pass-label{position:absolute;top:25%;left:66%;color:var(--purple)}.tx-return-label{position:absolute;top:77%;left:29%;color:var(--orange)}
+.tx-delegation .tx-node{gap:.6rem}.tx-delegation .tx-node{--node-art:min(7rem,15cqh)}.tx-delegation .tx-node .heading{font-size:var(--body)}.tx-delegation .tx-node .copy{font-size:1.05rem}
+.tx-cause-list{width:min(100%,75rem);display:flex;flex-direction:column;gap:clamp(1rem,5cqh,3rem)}.tx-cause{display:grid;grid-template-columns:4rem 1fr;gap:2rem;align-items:baseline}.tx-cause .copy{margin-top:.6rem}.tx-number{font-size:var(--heading);font-weight:800}
+.tx-time{position:relative;width:min(100%,80rem,calc(94cqh * 2.5));aspect-ratio:5/2}.tx-time>svg{width:100%;height:100%;overflow:visible}.tx-time-label{position:absolute;transform:translateX(-50%);white-space:nowrap}.tx-time-car{transform:translate(820px,125px);cursor:pointer}.tx-time-car:focus{outline:none}.tx-time-car:focus-visible>circle{fill:var(--yellow)}.tx-time-branch{clip-path:inset(0 100% 0 0)}.tx-time-new{opacity:0}
+.tx-time.is-running .tx-time-car{animation:tx-time-travel 4s linear both}.tx-time.is-running .tx-time-branch{animation:tx-time-reveal 1.6s linear 2.2s both}.tx-time.is-running .tx-time-new{animation:scope-fade .3s ease 3.8s both}
+@keyframes tx-time-travel{0%{transform:translate(820px,125px);animation-timing-function:cubic-bezier(.23,1,.32,1)}40%,55%{transform:translate(220px,125px)}65%{transform:translate(299px,152px)}75%{transform:translate(355px,212px)}85%{transform:translate(422px,272px)}95%,100%{transform:translate(530px,300px)}}
+@keyframes tx-time-reveal{from{clip-path:inset(0 78% 0 0)}to{clip-path:inset(0 27% 0 0)}}
+@media(max-height:650px){.tx-compare-side{gap:.8rem}.tx-fields{gap:.8rem}.tx-graph{height:100cqh}.tx-node{gap:.3rem}.tx-node .heading{font-size:var(--body)}.tx-node .copy{font-size:1rem}.tx-messages>.tx-item .tx-art{width:4.5rem;height:4.5rem}.tx-shared{padding-top:2rem;padding-bottom:1rem}.tx-brief .tx-fields{margin-top:.8rem;gap:.45rem}.tx-brief .statement{font-size:var(--heading)}.tx-stage-focus{gap:1rem}.tx-switch{grid-template-columns:10rem 1fr}.tx-record{gap:2rem}.tx-delegation .tx-node .copy{font-size:.95rem}}
+@media(prefers-reduced-motion:reduce){.tx-draw.do-fadeinup path{animation:none;stroke-dashoffset:0}.tx-panel{transition:none}.tx-time.is-running .tx-time-car{animation:none;transform:translate(530px,300px)}.tx-time.is-running .tx-time-branch{animation:none;clip-path:none}.tx-time.is-running .tx-time-new{animation:none;opacity:1}}
+
+    @media(max-height:650px){.structure-tree{gap:0}.structure-tree__stem{height:1.5rem}.structure-tree__children{padding-top:0}.structure-tree__children>.structure-node{padding-top:1.8rem;gap:.65rem}.structure-tree__children>.structure-node::before{height:1.2rem}.structure-node>.diagram{height:min(22cqh,7rem)}.exchange{height:min(100cqh,23rem);min-height:0}.transition-side{gap:.5rem;grid-template-rows:auto auto minmax(0,1fr) auto}.transition-side>.diagram{height:min(30cqh,8rem)}.transition-compare{height:100cqh}.tx-delegation [data-node="person"],.tx-delegation [data-node="center"]{top:19%}}
+.tx-origin [data-node="a"],.tx-origin [data-node="b"]{top:60%}.tx-history-spaces [data-node="b"]{top:65%}.tx-history [data-node="branch"]{top:69%}.tx-history-spaces .tx-label--b{top:55%}
+.tx-folder-scope{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.tx-agent-badge{position:absolute;right:-1.5rem;top:0;width:2.6rem;height:2.6rem}.tx-delegation [data-node="a"],.tx-delegation [data-node="b"],.tx-delegation [data-node="c"]{top:65%}
+.tx-delegation [data-node="center"] .heading{position:absolute;left:calc(100% + 1rem);top:.4rem}.tx-delegation [data-node="center"] .copy{position:absolute;left:calc(100% + 1rem);top:2.5rem}@media(max-height:650px){.tx-delegation [data-node="a"],.tx-delegation [data-node="b"],.tx-delegation [data-node="c"]{top:60%}.tx-delegation [data-node="center"] .copy{top:2rem}}
+</style>
   </head>
   <body>
     <svg class="symbols" aria-hidden="true">
@@ -578,7 +646,8 @@
           />
           <path d="M38 37C38 22 64 24 61 39C60 46 50 46 50 55M50 65V66" />
         </g>
-      </defs>
+<g id="shape-agent"><rect x="18" y="10" width="64" height="48" rx="22" fill="var(--text)" stroke="var(--gray)"/><rect x="27" y="27" width="46" height="14" rx="7" fill="var(--bg)" stroke="none"/><path d="M36 34H64" stroke-width="5"/><path d="M30 60Q20 67 20 81H80Q80 67 70 60"/></g><g id="shape-point"><circle cx="50" cy="50" r="10" fill="var(--bg)"/></g><g id="shape-cloud"><path d="M22 72C0 72 0 34 26 34C32 6 69 7 76 32C101 29 109 72 82 72Z"/></g><g id="shape-gate"><path d="M50 9L91 50L50 91L9 50Z"/><path d="M36 50L46 61L66 39"/></g><marker id="tx-arrowhead" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto-start-reverse"><path d="M1 1L7 4L1 7" fill="none" stroke="context-stroke" stroke-width="1.4"/></marker>
+      <marker id="tx-tip-brand" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="var(--brand)" stroke-width="1.4"/></marker><marker id="tx-tip-purple" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="var(--purple)" stroke-width="1.4"/></marker><marker id="tx-tip-gray" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="var(--gray)" stroke-width="1.4"/></marker><marker id="tx-tip-yellow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="var(--yellow)" stroke-width="1.4"/></marker><marker id="tx-tip-orange" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="var(--orange)" stroke-width="1.4"/></marker><marker id="tx-tip-green" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="var(--green)" stroke-width="1.4"/></marker><g id="shape-workspace"><use href="#shape-folder"/><g stroke="var(--gray)" stroke-width="1.6"><path d="M29 45H36L41 50V68H29ZM36 45V50H41M33 56H37M33 61H37"/><path d="M45 45H52L57 50V68H45ZM52 45V50H57M49 56H53M49 61H53"/></g><path stroke-width="1.6" d="M61 45H68L73 50V68H61ZM68 45V50H73M65 56H69M65 61H69"/></g></defs>
     </svg>
     <div class="progress-bar">
       <div class="progress-fill" id="progress"></div>
@@ -591,7 +660,7 @@
     </button>
     <div class="dot-nav" id="dot-nav"></div>
     <div class="slide-counter">
-      <span id="cur">1</span> / <span id="tot">9</span>
+      <span id="cur">1</span> / <span id="tot">29</span>
     </div>
     <div class="slide-deck" id="deck">
       <!-- Confirmed structure 1: replace all data-slot fields and visuals from the new clip storyboard. -->
@@ -1315,6 +1384,993 @@
         </main>
         <footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
       </article>
+
+<!-- OPERATING_DEFAULT_COMPARE: artifacts/part2/outputs/ch01-02-what-is-orca.html / slide 3; neutral slots, not lecture copy. -->
+<article class="slide" data-index="9" data-pattern="OPERATING_DEFAULT_COMPARE" >
+<header class="slide__header">
+<span class="slide__label">Pattern 10 · OPERATING DEFAULT COMPARE</span>
+<h1 class="slide__title" data-slot="title">같은 환경, 달라진 <span class="hl">기본 방식</span>
+</h1>
+<p class="slide__sub" data-slot="subtitle">같은 골격에서 수와 운영 방식의 차이를 보여줍니다.</p>
+</header>
+<main class="slide__body tx-body">
+<div class="tx-compare">
+<section class="tx-compare-side">
+<h2 class="heading anim-item" data-slot="mode-name">기존 방식</h2>
+<div class="tx-window motion-scope">
+<span class="scope-frame anim-item" data-anim-step="1" aria-hidden="true">
+</span>
+<span class="tx-window-bar anim-item" data-anim-step="1" aria-hidden="true">•••</span>
+<div class="tx-agents">
+<div class="tx-item anim-item tone-brand " data-anim-step="2">
+<svg class="tx-art tone-brand " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-agent"/>
+</svg>
+<h2 class="heading" data-slot="name">대상 A</h2>
+</div>
+</div>
+</div>
+<p class="copy anim-item" data-slot="caption">한 대상씩 처리</p>
+</section>
+<section class="tx-compare-side">
+<h2 class="heading anim-item" data-slot="mode-name">바뀐 방식</h2>
+<div class="tx-window motion-scope">
+<span class="scope-frame anim-item" data-anim-step="5" aria-hidden="true">
+</span>
+<span class="tx-window-bar anim-item" data-anim-step="5" aria-hidden="true">•••</span>
+<div class="tx-agents">
+<div class="tx-item anim-item tone-brand " data-anim-step="6">
+<svg class="tx-art tone-brand " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-agent"/>
+</svg>
+<h2 class="heading" data-slot="name">대상 A</h2>
+</div>
+<div class="tx-item anim-item tone-purple " data-anim-step="6">
+<svg class="tx-art tone-purple " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-agent"/>
+</svg>
+<h2 class="heading" data-slot="name">대상 B</h2>
+</div>
+<div class="tx-item anim-item tone-gray " data-anim-step="6">
+<svg class="tx-art tone-gray " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-agent"/>
+</svg>
+<h2 class="heading" data-slot="name">대상 C</h2>
+</div>
+</div>
+</div>
+<p class="copy anim-item" data-slot="caption">여러 대상을 함께 관리</p>
+</section>
+</div>
+</main>
+<footer class="slide__footer">
+<img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus">
+</footer>
+</article>
+<!-- OBJECT_DETAIL_COMPARE: artifacts/part3/outputs/ch01-02-repo-and-flow.html / slide 2; neutral slots, not lecture copy. -->
+<article class="slide" data-index="10" data-pattern="OBJECT_DETAIL_COMPARE" >
+<header class="slide__header">
+<span class="slide__label">Pattern 11 · OBJECT DETAIL COMPARE</span>
+<h1 class="slide__title" data-slot="title">차이를 만드는 <span class="hl">작은 요소</span>
+</h1>
+<p class="slide__sub" data-slot="subtitle">기본 모양은 유지하고, 달라지는 부분만 강조합니다.</p>
+</header>
+<main class="slide__body tx-body">
+<div class="tx-compare">
+<section class="tx-compare-side anim-item tone-gray" data-anim-step="0">
+<h2 class="heading" data-slot="object-name">기본 대상</h2>
+<div class="tx-folder-art">
+<svg class="tx-art tone-gray " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-workspace"/>
+</svg>
+<div class="tx-files">
+<svg class="tx-art tone-gray " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-document"/>
+</svg>
+<svg class="tx-art tone-gray " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-document"/>
+</svg>
+<svg class="tx-art tone-gray " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-document"/>
+</svg>
+</div>
+</div>
+<p class="copy" data-slot="copy">기본 내용만 보관</p>
+</section>
+<section class="tx-compare-side anim-item tone-brand" data-anim-step="1">
+<h2 class="heading" data-slot="object-name">추가 구조가 있는 대상</h2>
+<div class="tx-folder-art">
+<svg class="tx-art tone-brand " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-workspace"/>
+</svg>
+<div class="tx-files">
+<svg class="tx-art tone-gray " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-document"/>
+</svg>
+<svg class="tx-art tone-gray " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-document"/>
+</svg>
+<svg class="tx-art tone-gray " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-document"/>
+</svg>
+</div>
+<span class="tx-hidden-detail" data-slot="small-detail">숨은 항목</span>
+</div>
+<p class="copy" data-slot="copy">기본 내용 + 추가 정보</p>
+</section>
+</div>
+</main>
+<footer class="slide__footer">
+<img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus">
+</footer>
+</article>
+<!-- STAGE_FOCUS: artifacts/part3/outputs/ch01-02-repo-and-flow.html / slide 3–5; neutral slots, not lecture copy. -->
+<article class="slide" data-index="11" data-pattern="STAGE_FOCUS" data-motion="none">
+<header class="slide__header">
+<span class="slide__label">Pattern 12 · STAGE FOCUS</span>
+<h1 class="slide__title" data-slot="title">전체 구조 안의 <span class="hl">현재 단계</span>
+</h1>
+<p class="slide__sub" data-slot="subtitle">영역의 위치를 유지하며 한 단계씩 설명합니다.</p>
+</header>
+<main class="slide__body tx-body">
+<div class="tx-stage-focus" data-focus="1">
+<div class="tx-stage-row">
+<section class="tx-stage tone-brand" data-stage="1">
+<svg class="tx-art tone-brand " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-document"/>
+</svg>
+<h2 class="heading" data-slot="area-name">영역 A</h2>
+<p class="copy" data-slot="copy">이곳에서 다루는 내용</p>
+</section>
+<div class="tx-arrow anim-item tone-gray" data-anim-step="1">
+<span class="copy" data-slot="relation">전환 1</span>
+<svg viewBox="0 0 120 22" preserveAspectRatio="none" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M3 11H115M107 4L115 11L107 18"/>
+</svg>
+</div>
+<section class="tx-stage tone-yellow" data-stage="2">
+<svg class="tx-art tone-yellow " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-working"/>
+</svg>
+<h2 class="heading" data-slot="area-name">영역 B</h2>
+<p class="copy" data-slot="copy">이곳에서 다루는 내용</p>
+</section>
+<div class="tx-arrow anim-item tone-gray" data-anim-step="1">
+<span class="copy" data-slot="relation">전환 2</span>
+<svg viewBox="0 0 120 22" preserveAspectRatio="none" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M3 11H115M107 4L115 11L107 18"/>
+</svg>
+</div>
+<section class="tx-stage tone-purple" data-stage="3">
+<svg class="tx-art tone-purple " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-workspace"/>
+</svg>
+<h2 class="heading" data-slot="area-name">영역 C</h2>
+<p class="copy" data-slot="copy">이곳에서 다루는 내용</p>
+</section>
+</div>
+<p class="copy tx-stage-note" data-slot="active-explanation">현재 강조한 영역에서 하는 일 한 줄</p>
+</div>
+</main>
+<footer class="slide__footer">
+<img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus">
+</footer>
+</article>
+<!-- RECORD_ANATOMY: artifacts/part3/outputs/ch01-02-repo-and-flow.html / slide 6; neutral slots, not lecture copy. -->
+<article class="slide" data-index="12" data-pattern="RECORD_ANATOMY" >
+<header class="slide__header">
+<span class="slide__label">Pattern 13 · RECORD ANATOMY</span>
+<h1 class="slide__title" data-slot="title">한 기록에 <span class="hl">담기는 것</span>
+</h1>
+<p class="slide__sub" data-slot="subtitle">대표 대상 하나와 그 안의 항목을 대응시킵니다.</p>
+</header>
+<main class="slide__body tx-body">
+<div class="tx-record">
+<div class="tx-item anim-item tone-brand " data-anim-step="0">
+<svg class="tx-art tone-brand " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-document"/>
+</svg>
+<h2 class="heading" data-slot="name">기록 단위</h2>
+<p class="copy" data-slot="copy">하나의 결과를 남기는 단위</p>
+</div>
+<dl class="tx-fields">
+<div class="anim-item" data-anim-step="1">
+<dt class="heading" data-slot="field-name">결과</dt>
+<dd class="copy" data-slot="field-meaning">무엇을 남겼는가</dd>
+</div>
+<div class="anim-item" data-anim-step="2">
+<dt class="heading" data-slot="field-name">작성 정보</dt>
+<dd class="copy" data-slot="field-meaning">누가 언제 남겼는가</dd>
+</div>
+<div class="anim-item" data-anim-step="3">
+<dt class="heading" data-slot="field-name">설명</dt>
+<dd class="copy" data-slot="field-meaning">무슨 작업을 했는가</dd>
+</div>
+</dl>
+</div>
+</main>
+<footer class="slide__footer">
+<img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus">
+</footer>
+</article>
+<!-- SPACE_TRANSFER: artifacts/part3/outputs/ch01-02-repo-and-flow.html / slide 7; neutral slots, not lecture copy. -->
+<article class="slide" data-index="13" data-pattern="SPACE_TRANSFER" >
+<header class="slide__header">
+<span class="slide__label">Pattern 14 · SPACE TRANSFER</span>
+<h1 class="slide__title" data-slot="title">두 공간 사이의 <span class="hl">전달</span>
+</h1>
+<p class="slide__sub" data-slot="subtitle">공간 이름과 전달 동작을 따로 표시합니다.</p>
+</header>
+<main class="slide__body tx-body">
+<div class="tx-transfer">
+<div class="tx-item anim-item tone-brand " data-anim-step="0">
+<svg class="tx-art tone-brand " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-workspace"/>
+</svg>
+<h2 class="heading" data-slot="name">출발 공간</h2>
+<p class="copy" data-slot="copy">여기에 있는 기록</p>
+</div>
+<div class="tx-arrow anim-item tone-brand" data-anim-step="1">
+<span class="copy" data-slot="relation">전달 작업</span>
+<svg viewBox="0 0 120 22" preserveAspectRatio="none" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M3 11H115M107 4L115 11L107 18"/>
+</svg>
+</div>
+<div class="tx-item anim-item tone-gray " data-anim-step="2">
+<svg class="tx-art tone-gray " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-cloud"/>
+</svg>
+<h2 class="heading" data-slot="name">도착 공간</h2>
+<p class="copy" data-slot="copy">전달한 기록을 공유</p>
+</div>
+</div>
+</main>
+<footer class="slide__footer">
+<img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus">
+</footer>
+</article>
+<!-- PROCESS_STRIP: artifacts/part3/outputs/ch01-02-repo-and-flow.html / slide 8; neutral slots, not lecture copy. -->
+<article class="slide" data-index="14" data-pattern="PROCESS_STRIP" >
+<header class="slide__header">
+<span class="slide__label">Pattern 15 · PROCESS STRIP</span>
+<h1 class="slide__title" data-slot="title">처음부터 끝까지 <span class="hl">작업 흐름</span>
+</h1>
+<p class="slide__sub" data-slot="subtitle">동등한 단계와 방향을 하나의 선상에 둡니다.</p>
+</header>
+<main class="slide__body tx-body">
+<div class="tx-process">
+<div class="tx-item anim-item tone-brand " data-anim-step="0">
+<svg class="tx-art tone-brand " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-document"/>
+</svg>
+<h2 class="heading" data-slot="name">작업 단위 A</h2>
+<p class="copy" data-slot="copy">영역 또는 위치</p>
+</div>
+<div class="tx-arrow anim-item tone-yellow" data-anim-step="1">
+<span class="copy" data-slot="relation">전환 1</span>
+<svg viewBox="0 0 120 22" preserveAspectRatio="none" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M3 11H115M107 4L115 11L107 18"/>
+</svg>
+</div>
+<div class="tx-item anim-item tone-yellow " data-anim-step="2">
+<svg class="tx-art tone-yellow " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-working"/>
+</svg>
+<h2 class="heading" data-slot="name">작업 단위 B</h2>
+<p class="copy" data-slot="copy">영역 또는 위치</p>
+</div>
+<div class="tx-arrow anim-item tone-purple" data-anim-step="3">
+<span class="copy" data-slot="relation">전환 2</span>
+<svg viewBox="0 0 120 22" preserveAspectRatio="none" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M3 11H115M107 4L115 11L107 18"/>
+</svg>
+</div>
+<div class="tx-item anim-item tone-purple " data-anim-step="4">
+<svg class="tx-art tone-purple " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-workspace"/>
+</svg>
+<h2 class="heading" data-slot="name">작업 단위 C</h2>
+<p class="copy" data-slot="copy">영역 또는 위치</p>
+</div>
+<div class="tx-arrow anim-item tone-gray" data-anim-step="5">
+<span class="copy" data-slot="relation">전환 3</span>
+<svg viewBox="0 0 120 22" preserveAspectRatio="none" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M3 11H115M107 4L115 11L107 18"/>
+</svg>
+</div>
+<div class="tx-item anim-item tone-gray " data-anim-step="6">
+<svg class="tx-art tone-gray " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-cloud"/>
+</svg>
+<h2 class="heading" data-slot="name">작업 단위 D</h2>
+<p class="copy" data-slot="copy">영역 또는 위치</p>
+</div>
+</div>
+</main>
+<footer class="slide__footer">
+<img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus">
+</footer>
+</article>
+<!-- HISTORY_BRANCH: artifacts/part3/outputs/ch01-03-branch-vs-worktree.html / slide 3; neutral slots, not lecture copy. -->
+<article class="slide" data-index="15" data-pattern="HISTORY_BRANCH" >
+<header class="slide__header">
+<span class="slide__label">Pattern 16 · HISTORY BRANCH</span>
+<h1 class="slide__title" data-slot="title">같은 출발점, <span class="hl">다른 기록</span>
+</h1>
+<p class="slide__sub" data-slot="subtitle">공통 출발점과 갈라진 뒤의 차이를 구분합니다.</p>
+</header>
+<main class="slide__body tx-body">
+<div class="tx-graph tx-history">
+<svg class="tx-wires" aria-hidden="true">
+<g class="tx-link anim-item tone-brand tx-draw" data-anim-step="1" data-from="start" data-to="main" data-route="draw">
+<path fill="none" stroke="currentColor" stroke-width="2.5"  />
+</g>
+<g class="tx-link anim-item tone-purple tx-draw" data-anim-step="3" data-from="start" data-to="branch" data-route="draw">
+<path fill="none" stroke="currentColor" stroke-width="2.5"  />
+</g>
+</svg>
+<div class="tx-node tone-gray anim-item" data-node="start" data-anim-step="0" style="--x:12%;--y:35%">
+<svg class="tx-art tone-gray " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-point"/>
+</svg>
+<h2 class="heading" data-slot="node-name">공통 시점</h2>
+</div>
+<div class="tx-node tone-brand anim-item" data-node="main" data-anim-step="2" style="--x:80%;--y:35%">
+<svg class="tx-art tone-brand " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-point"/>
+</svg>
+<h2 class="heading" data-slot="node-name">줄기 A</h2>
+<p class="copy" data-slot="copy">이어지는 기록</p>
+</div>
+<div class="tx-node tone-purple anim-item" data-node="branch" data-anim-step="4" style="--x:80%;--y:76%">
+<svg class="tx-art tone-purple " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-point"/>
+</svg>
+<h2 class="heading" data-slot="node-name">줄기 B</h2>
+<p class="copy" data-slot="copy">갈라진 기록</p>
+</div>
+</div>
+</main>
+<footer class="slide__footer">
+<img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus">
+</footer>
+</article>
+<!-- SOURCE_TO_SPACES: artifacts/part3/outputs/ch01-03-branch-vs-worktree.html / slide 5; neutral slots, not lecture copy. -->
+<article class="slide" data-index="16" data-pattern="SOURCE_TO_SPACES" >
+<header class="slide__header">
+<span class="slide__label">Pattern 17 · SOURCE TO SPACES</span>
+<h1 class="slide__title" data-slot="title">공통 출발점과 <span class="hl">독립 공간</span>
+</h1>
+<p class="slide__sub" data-slot="subtitle">상위 대상은 작게, 실제 작업하는 두 공간은 크게 보여줍니다.</p>
+</header>
+<main class="slide__body tx-body">
+<div class="tx-graph tx-origin">
+<svg class="tx-wires" aria-hidden="true">
+<g class="tx-link anim-item tone-brand " data-anim-step="1" data-from="origin" data-to="a" data-route="tree">
+<path fill="none" stroke="currentColor" stroke-width="2.5"  marker-end="url(#tx-tip-brand)"/>
+</g>
+<g class="tx-link anim-item tone-purple " data-anim-step="1" data-from="origin" data-to="b" data-route="tree">
+<path fill="none" stroke="currentColor" stroke-width="2.5"  marker-end="url(#tx-tip-purple)"/>
+</g>
+</svg>
+<div class="tx-node tone-gray anim-item" data-node="origin" data-anim-step="0" style="--x:50%;--y:15%">
+<svg class="tx-art tone-gray " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-workspace"/>
+</svg>
+<h2 class="heading" data-slot="node-name">원본 시점</h2>
+</div>
+<div class="tx-node tone-brand anim-item" data-node="a" data-anim-step="2" style="--x:26%;--y:66%">
+<svg class="tx-art tone-brand " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-workspace"/>
+</svg>
+<h2 class="heading" data-slot="node-name">공간 A</h2>
+<p class="copy" data-slot="copy">각자의 작업</p>
+</div>
+<div class="tx-node tone-purple anim-item" data-node="b" data-anim-step="3" style="--x:74%;--y:66%">
+<svg class="tx-art tone-purple " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-workspace"/>
+</svg>
+<h2 class="heading" data-slot="node-name">공간 B</h2>
+<p class="copy" data-slot="copy">각자의 작업</p>
+</div>
+</div>
+</main>
+<footer class="slide__footer">
+<img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus">
+</footer>
+</article>
+<!-- HISTORY_SPACE_MAPPING: artifacts/part3/outputs/ch01-03-branch-vs-worktree.html / slide 6; neutral slots, not lecture copy. -->
+<article class="slide" data-index="17" data-pattern="HISTORY_SPACE_MAPPING" >
+<header class="slide__header">
+<span class="slide__label">Pattern 18 · HISTORY SPACE MAPPING</span>
+<h1 class="slide__title" data-slot="title">기록과 작업 공간의 <span class="hl">대응</span>
+</h1>
+<p class="slide__sub" data-slot="subtitle">같은 이름과 색으로 기록의 줄기와 실제 공간을 연결합니다.</p>
+</header>
+<main class="slide__body tx-body">
+<div class="tx-graph tx-history-spaces">
+<svg class="tx-wires" aria-hidden="true">
+<g class="tx-link anim-item tone-brand tx-draw" data-anim-step="1" data-from="seed" data-to="a" data-route="draw">
+<path fill="none" stroke="currentColor" stroke-width="2.5"  />
+</g>
+<g class="tx-link anim-item tone-purple tx-draw" data-anim-step="4" data-from="seed" data-to="b" data-route="draw">
+<path fill="none" stroke="currentColor" stroke-width="2.5"  />
+</g>
+</svg>
+<div class="tx-node tone-gray anim-item" data-node="seed" data-anim-step="0" style="--x:8%;--y:27%">
+<svg class="tx-art tone-gray " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-point"/>
+</svg>
+<h2 class="heading" data-slot="node-name">공통 시점</h2>
+</div>
+<div class="tx-node tone-brand anim-item" data-node="a" data-anim-step="3" style="--x:77%;--y:27%">
+<svg class="tx-art tone-brand " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-workspace"/>
+</svg>
+<svg class="tx-agent-badge" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+<use href="#shape-agent"/>
+</svg>
+<h2 class="heading" data-slot="node-name">공간 A</h2>
+<p class="copy" data-slot="copy">담당 역할 A</p>
+</div>
+<div class="tx-node tone-purple anim-item" data-node="b" data-anim-step="6" style="--x:77%;--y:73%">
+<svg class="tx-art tone-purple " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-workspace"/>
+</svg>
+<svg class="tx-agent-badge" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+<use href="#shape-agent"/>
+</svg>
+<h2 class="heading" data-slot="node-name">공간 B</h2>
+<p class="copy" data-slot="copy">담당 역할 B</p>
+</div>
+<p class="copy tx-label tx-label--a" data-slot="history-a">줄기 A</p>
+<p class="copy tx-label tx-label--b" data-slot="history-b">줄기 B</p>
+</div>
+</main>
+<footer class="slide__footer">
+<img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus">
+</footer>
+</article>
+<!-- CLICK_WORKSPACE: artifacts/part3/outputs/ch01-03-branch-vs-worktree.html / slide 8; neutral slots, not lecture copy. -->
+<article class="slide" data-index="18" data-pattern="CLICK_WORKSPACE" >
+<header class="slide__header">
+<span class="slide__label">Pattern 19 · CLICK WORKSPACE</span>
+<h1 class="slide__title" data-slot="title">한 화면에서 <span class="hl">선택 전환</span>
+</h1>
+<p class="slide__sub" data-slot="subtitle">공간을 클릭하면 해당 내용이 나타납니다.</p>
+</header>
+<main class="slide__body tx-body">
+<div class="tx-switch motion-scope" data-default-panel="a">
+<span class="scope-frame anim-item" data-anim-step="0" aria-hidden="true">
+</span>
+<div class="tx-switch-tabs anim-item" data-anim-step="1" role="tablist" aria-label="공간 선택">
+<button type="button" role="tab" data-panel="a" aria-selected="true">공간 A</button>
+<button type="button" role="tab" data-panel="b" aria-selected="false" tabindex="-1">공간 B</button>
+</div>
+<div class="tx-switch-content anim-item" data-anim-step="2">
+<section role="tabpanel" data-panel-view="a" class="tx-panel active">
+<div class="tx-item anim-item tone-brand " data-anim-step="2">
+<svg class="tx-art tone-brand " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-workspace"/>
+</svg>
+<h2 class="heading" data-slot="name">공간 A의 내용</h2>
+<p class="copy" data-slot="copy">선택한 공간에서 확인하는 결과</p>
+</div>
+</section>
+<section role="tabpanel" data-panel-view="b" class="tx-panel">
+<div class="tx-item anim-item tone-purple " data-anim-step="2">
+<svg class="tx-art tone-purple " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-workspace"/>
+</svg>
+<h2 class="heading" data-slot="name">공간 B의 내용</h2>
+<p class="copy" data-slot="copy">다른 공간에서 확인하는 결과</p>
+</div>
+</section>
+</div>
+</div>
+</main>
+<footer class="slide__footer">
+<img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus">
+</footer>
+</article>
+<!-- SHARED_SPACE_EXCHANGE: artifacts/part4/outputs/ch01-01-orchestration-structure.html / slide 6; neutral slots, not lecture copy. -->
+<article class="slide" data-index="19" data-pattern="SHARED_SPACE_EXCHANGE" >
+<header class="slide__header">
+<span class="slide__label">Pattern 20 · SHARED SPACE EXCHANGE</span>
+<h1 class="slide__title" data-slot="title">같은 공간에서 <span class="hl">소통</span>
+</h1>
+<p class="slide__sub" data-slot="subtitle">함께 일하는 공간과 메시지 관계를 한 번에 보여줍니다.</p>
+</header>
+<main class="slide__body tx-body">
+<div class="tx-shared motion-scope">
+<svg class="tx-folder-scope anim-item" data-anim-step="0" viewBox="0 0 1000 500" preserveAspectRatio="none" fill="none" stroke="var(--gray)" stroke-width="1.5" aria-hidden="true">
+<path vector-effect="non-scaling-stroke" d="M1 40V1H270L315 40H999V499H1Z"/>
+</svg>
+<p class="copy anim-item tx-space-label" data-slot="scope">공통 작업 공간</p>
+<div class="tx-graph ">
+<svg class="tx-wires" aria-hidden="true">
+<g class="tx-link anim-item tone-brand " data-anim-step="4" data-from="a" data-to="center" data-route="curve">
+<path fill="none" stroke="currentColor" stroke-width="2.5"  marker-end="url(#tx-tip-brand)"/>
+</g>
+<g class="tx-link anim-item tone-purple " data-anim-step="4" data-from="b" data-to="center" data-route="curve">
+<path fill="none" stroke="currentColor" stroke-width="2.5"  marker-end="url(#tx-tip-purple)"/>
+</g>
+</svg>
+<div class="tx-node tone-brand anim-item" data-node="a" data-anim-step="1" style="--x:22%;--y:25%">
+<svg class="tx-art tone-brand " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-agent"/>
+</svg>
+<h2 class="heading" data-slot="node-name">역할 A</h2>
+</div>
+<div class="tx-node tone-purple anim-item" data-node="b" data-anim-step="2" style="--x:22%;--y:73%">
+<svg class="tx-art tone-purple " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-agent"/>
+</svg>
+<h2 class="heading" data-slot="node-name">역할 B</h2>
+</div>
+<div class="tx-node tone-yellow anim-item" data-node="center" data-anim-step="3" style="--x:76%;--y:49%">
+<svg class="tx-art tone-yellow " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-agent"/>
+</svg>
+<h2 class="heading" data-slot="node-name">조율 역할</h2>
+</div>
+</div>
+<p class="copy tx-shared-note anim-item" data-slot="relation">메시지로 소통</p>
+</div>
+</main>
+<footer class="slide__footer">
+<img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus">
+</footer>
+</article>
+<!-- SEPARATE_SPACE_EXCHANGE: artifacts/part4/outputs/ch01-01-orchestration-structure.html / slide 7; neutral slots, not lecture copy. -->
+<article class="slide" data-index="20" data-pattern="SEPARATE_SPACE_EXCHANGE" >
+<header class="slide__header">
+<span class="slide__label">Pattern 21 · SEPARATE SPACE EXCHANGE</span>
+<h1 class="slide__title" data-slot="title">다른 공간에서도 <span class="hl">같은 소통</span>
+</h1>
+<p class="slide__sub" data-slot="subtitle">작업 공간의 배치와 소통 방식을 구분합니다.</p>
+</header>
+<main class="slide__body tx-body">
+<div class="tx-graph tx-split">
+<svg class="tx-wires" aria-hidden="true">
+<g class="tx-link anim-item tone-brand " data-anim-step="3" data-from="a" data-to="center" data-route="curve">
+<path fill="none" stroke="currentColor" stroke-width="2.5"  marker-end="url(#tx-tip-brand)"/>
+</g>
+<g class="tx-link anim-item tone-purple " data-anim-step="3" data-from="b" data-to="center" data-route="curve">
+<path fill="none" stroke="currentColor" stroke-width="2.5"  marker-end="url(#tx-tip-purple)"/>
+</g>
+</svg>
+<div class="tx-node tone-brand anim-item" data-node="a" data-anim-step="0" style="--x:22%;--y:25%">
+<svg class="tx-art tone-brand " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-workspace"/>
+</svg>
+<h2 class="heading" data-slot="node-name">공간 A</h2>
+<p class="copy" data-slot="copy">담당 역할 A</p>
+</div>
+<div class="tx-node tone-purple anim-item" data-node="b" data-anim-step="1" style="--x:22%;--y:73%">
+<svg class="tx-art tone-purple " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-workspace"/>
+</svg>
+<h2 class="heading" data-slot="node-name">공간 B</h2>
+<p class="copy" data-slot="copy">담당 역할 B</p>
+</div>
+<div class="tx-node tone-yellow anim-item" data-node="center" data-anim-step="2" style="--x:77%;--y:49%">
+<svg class="tx-art tone-yellow " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-agent"/>
+</svg>
+<h2 class="heading" data-slot="node-name">조율 역할</h2>
+<p class="copy" data-slot="copy">메시지로 소통</p>
+</div>
+</div>
+</main>
+<footer class="slide__footer">
+<img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus">
+</footer>
+</article>
+<!-- MESSAGE_TYPES: artifacts/part4/outputs/ch01-01-orchestration-structure.html / slide 8; neutral slots, not lecture copy. -->
+<article class="slide" data-index="21" data-pattern="MESSAGE_TYPES" >
+<header class="slide__header">
+<span class="slide__label">Pattern 22 · MESSAGE TYPES</span>
+<h1 class="slide__title" data-slot="title">오가는 메시지의 <span class="hl">종류</span>
+</h1>
+<p class="slide__sub" data-slot="subtitle">이름·설명·방향을 같은 행에서 읽습니다.</p>
+</header>
+<main class="slide__body tx-body">
+<div class="tx-messages">
+<div class="tx-item anim-item tone-yellow tx-message-left" data-anim-step="0">
+<svg class="tx-art tone-yellow " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-agent"/>
+</svg>
+<h2 class="heading" data-slot="name">조율 역할</h2>
+</div>
+<div class="tx-message anim-item tone-orange" data-anim-step="1">
+<div class="tx-message-name">
+<svg class="tx-art tone-orange " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-waiting"/>
+</svg>
+<h2 class="heading" data-slot="message-name">메시지 A</h2>
+</div>
+<div class="tx-arrow anim-item tone-orange tx-arrow--back" data-anim-step="1">
+<svg viewBox="0 0 120 22" preserveAspectRatio="none" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M3 11H115M107 4L115 11L107 18"/>
+</svg>
+</div>
+<p class="copy" data-slot="copy">도움이 필요한 질문</p>
+</div>
+<div class="tx-message anim-item tone-yellow" data-anim-step="2">
+<div class="tx-message-name">
+<svg class="tx-art tone-yellow " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-document"/>
+</svg>
+<h2 class="heading" data-slot="message-name">메시지 B</h2>
+</div>
+<div class="tx-arrow anim-item tone-yellow" data-anim-step="2">
+<svg viewBox="0 0 120 22" preserveAspectRatio="none" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M3 11H115M107 4L115 11L107 18"/>
+</svg>
+</div>
+<p class="copy" data-slot="copy">질문에 대한 응답</p>
+</div>
+<div class="tx-message anim-item tone-green" data-anim-step="3">
+<div class="tx-message-name">
+<svg class="tx-art tone-green " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-done"/>
+</svg>
+<h2 class="heading" data-slot="message-name">메시지 C</h2>
+</div>
+<div class="tx-arrow anim-item tone-green tx-arrow--back" data-anim-step="3">
+<svg viewBox="0 0 120 22" preserveAspectRatio="none" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M3 11H115M107 4L115 11L107 18"/>
+</svg>
+</div>
+<p class="copy" data-slot="copy">작업 결과 보고</p>
+</div>
+<div class="tx-item anim-item tone-brand tx-message-right" data-anim-step="0">
+<svg class="tx-art tone-brand " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-agent"/>
+</svg>
+<h2 class="heading" data-slot="name">실행 역할</h2>
+</div>
+</div>
+</main>
+<footer class="slide__footer">
+<img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus">
+</footer>
+</article>
+<!-- GOAL_ACCEPTANCE: artifacts/part4/outputs/ch01-02-goal-task-flow.html / slide 2; neutral slots, not lecture copy. -->
+<article class="slide" data-index="22" data-pattern="GOAL_ACCEPTANCE" >
+<header class="slide__header">
+<span class="slide__label">Pattern 23 · GOAL ACCEPTANCE</span>
+<h1 class="slide__title" data-slot="title">목표와 <span class="hl">완료 판단</span>
+</h1>
+<p class="slide__sub" data-slot="subtitle">요청문과 아래의 입력·결과물·기준이 서로 대응해야 합니다.</p>
+</header>
+<main class="slide__body tx-body">
+<div class="tx-brief">
+<svg class="tx-art tone-gray " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-person"/>
+</svg>
+<div>
+<p class="statement anim-item" data-slot="request">입력 자료를 바탕으로<br>
+<span class="hl">결과물 A와 B</span>를 만들어줘</p>
+<p class="copy anim-item" data-slot="acceptance-request">확인할 조건을 충족하고, 지정한 형태로 제출해줘.</p>
+<dl class="tx-fields">
+<div class="anim-item" data-anim-step="1">
+<dt class="copy" data-slot="field-name">입력</dt>
+<dd class="heading" data-slot="field-value">사용할 자료</dd>
+</div>
+<div class="anim-item" data-anim-step="2">
+<dt class="copy" data-slot="field-name">결과물</dt>
+<dd class="heading" data-slot="field-value">만들 대상 A · B</dd>
+</div>
+<div class="anim-item" data-anim-step="3">
+<dt class="copy" data-slot="field-name">완료 기준</dt>
+<dd class="heading" data-slot="field-value">확인할 조건 · 제출 형태</dd>
+</div>
+</dl>
+</div>
+</div>
+</main>
+<footer class="slide__footer">
+<img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus">
+</footer>
+</article>
+<!-- TASK_DEPENDENCY: artifacts/part4/outputs/ch01-02-goal-task-flow.html / slide 5; neutral slots, not lecture copy. -->
+<article class="slide" data-index="23" data-pattern="TASK_DEPENDENCY" >
+<header class="slide__header">
+<span class="slide__label">Pattern 24 · TASK DEPENDENCY</span>
+<h1 class="slide__title" data-slot="title">먼저 끝나야 하는 <span class="hl">작업</span>
+</h1>
+<p class="slide__sub" data-slot="subtitle">이전 결과가 있어야 다음 작업을 시작할 수 있습니다.</p>
+</header>
+<main class="slide__body tx-body">
+<div class="tx-graph ">
+<svg class="tx-wires" aria-hidden="true">
+<g class="tx-link anim-item tone-yellow " data-anim-step="1" data-from="a" data-to="b" data-route="">
+<path fill="none" stroke="currentColor" stroke-width="2.5"  marker-end="url(#tx-tip-yellow)"/>
+</g>
+<g class="tx-link anim-item tone-yellow " data-anim-step="1" data-from="a" data-to="c" data-route="">
+<path fill="none" stroke="currentColor" stroke-width="2.5"  marker-end="url(#tx-tip-yellow)"/>
+</g>
+</svg>
+<div class="tx-node tone-yellow anim-item" data-node="a" data-anim-step="0" style="--x:18%;--y:49%">
+<svg class="tx-art tone-yellow " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-document"/>
+</svg>
+<h2 class="heading" data-slot="node-name">작업 A</h2>
+<p class="copy" data-slot="copy">선행 결과</p>
+</div>
+<div class="tx-node tone-brand anim-item" data-node="b" data-anim-step="2" style="--x:78%;--y:25%">
+<svg class="tx-art tone-brand " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-document"/>
+</svg>
+<h2 class="heading" data-slot="node-name">작업 B</h2>
+</div>
+<div class="tx-node tone-purple anim-item" data-node="c" data-anim-step="3" style="--x:78%;--y:73%">
+<svg class="tx-art tone-purple " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-document"/>
+</svg>
+<h2 class="heading" data-slot="node-name">작업 C</h2>
+</div>
+<p class="copy tx-bottom-note anim-item" data-slot="dependency-condition">이전 작업 완료 후 시작 가능</p>
+</div>
+</main>
+<footer class="slide__footer">
+<img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus">
+</footer>
+</article>
+<!-- ASSIGNMENT_PAIRS: artifacts/part4/outputs/ch01-02-goal-task-flow.html / slide 6; neutral slots, not lecture copy. -->
+<article class="slide" data-index="24" data-pattern="ASSIGNMENT_PAIRS" >
+<header class="slide__header">
+<span class="slide__label">Pattern 25 · ASSIGNMENT PAIRS</span>
+<h1 class="slide__title" data-slot="title">작업과 담당자를 <span class="hl">연결</span>
+</h1>
+<p class="slide__sub" data-slot="subtitle">같은 식별자로 작업과 실행 주체의 대응을 보여줍니다.</p>
+</header>
+<main class="slide__body tx-body">
+<div class="tx-dispatch">
+<div class="tx-dispatch-row">
+<div class="tx-item anim-item tone-brand " data-anim-step="0">
+<svg class="tx-art tone-brand " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-document"/>
+</svg>
+<h2 class="heading" data-slot="name">작업 A</h2>
+</div>
+<div class="tx-arrow anim-item tone-yellow" data-anim-step="1">
+<span class="copy" data-slot="relation">배정</span>
+<svg viewBox="0 0 120 22" preserveAspectRatio="none" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M3 11H115M107 4L115 11L107 18"/>
+</svg>
+</div>
+<div class="tx-item anim-item tone-brand " data-anim-step="2">
+<svg class="tx-art tone-brand " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-agent"/>
+</svg>
+<h2 class="heading" data-slot="name">담당 역할 A</h2>
+</div>
+</div>
+<div class="tx-dispatch-row">
+<div class="tx-item anim-item tone-purple " data-anim-step="3">
+<svg class="tx-art tone-purple " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-document"/>
+</svg>
+<h2 class="heading" data-slot="name">작업 B</h2>
+</div>
+<div class="tx-arrow anim-item tone-yellow" data-anim-step="4">
+<span class="copy" data-slot="relation">배정</span>
+<svg viewBox="0 0 120 22" preserveAspectRatio="none" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+<path d="M3 11H115M107 4L115 11L107 18"/>
+</svg>
+</div>
+<div class="tx-item anim-item tone-purple " data-anim-step="5">
+<svg class="tx-art tone-purple " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-agent"/>
+</svg>
+<h2 class="heading" data-slot="name">담당 역할 B</h2>
+</div>
+</div>
+</div>
+</main>
+<footer class="slide__footer">
+<img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus">
+</footer>
+</article>
+<!-- REVIEW_LOOP: artifacts/part4/outputs/ch01-02-goal-task-flow.html / slide 8; neutral slots, not lecture copy. -->
+<article class="slide" data-index="25" data-pattern="REVIEW_LOOP" >
+<header class="slide__header">
+<span class="slide__label">Pattern 26 · REVIEW LOOP</span>
+<h1 class="slide__title" data-slot="title">검토 뒤의 <span class="hl">다음 행동</span>
+</h1>
+<p class="slide__sub" data-slot="subtitle">통과와 재작업이 어디로 이어지는지 보여줍니다.</p>
+</header>
+<main class="slide__body tx-body">
+<div class="tx-graph tx-review">
+<svg class="tx-wires" aria-hidden="true">
+<g class="tx-link anim-item tone-brand " data-anim-step="1" data-from="a" data-to="gate" data-route="">
+<path fill="none" stroke="currentColor" stroke-width="2.5"  marker-end="url(#tx-tip-brand)"/>
+</g>
+<g class="tx-link anim-item tone-purple " data-anim-step="3" data-from="gate" data-to="b" data-route="">
+<path fill="none" stroke="currentColor" stroke-width="2.5"  marker-end="url(#tx-tip-purple)"/>
+</g>
+<g class="tx-link anim-item tone-orange " data-anim-step="5" data-from="gate" data-to="a" data-route="return">
+<path fill="none" stroke="currentColor" stroke-width="2.5" stroke-dasharray="6 5" marker-end="url(#tx-tip-orange)"/>
+</g>
+</svg>
+<div class="tx-node tone-brand anim-item" data-node="a" data-anim-step="0" style="--x:15%;--y:48%">
+<svg class="tx-art tone-brand " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-document"/>
+</svg>
+<h2 class="heading" data-slot="node-name">작업 A</h2>
+<p class="copy" data-slot="copy">완료 결과</p>
+</div>
+<div class="tx-node tone-yellow anim-item" data-node="gate" data-anim-step="2" style="--x:50%;--y:48%">
+<svg class="tx-art tone-yellow " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-gate"/>
+</svg>
+<h2 class="heading" data-slot="node-name">판단</h2>
+<p class="copy" data-slot="copy">기준 확인</p>
+</div>
+<div class="tx-node tone-purple anim-item" data-node="b" data-anim-step="4" style="--x:85%;--y:48%">
+<svg class="tx-art tone-purple " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-document"/>
+</svg>
+<h2 class="heading" data-slot="node-name">작업 B</h2>
+<p class="copy" data-slot="copy">다음 작업</p>
+</div>
+<p class="copy tx-pass-label" data-slot="pass">기준 충족</p>
+<p class="copy tx-return-label" data-slot="retry">재작업</p>
+</div>
+</main>
+<footer class="slide__footer">
+<img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus">
+</footer>
+</article>
+<!-- DELEGATION_HIERARCHY: artifacts/part4/outputs/ch01-02-goal-task-flow.html / slide 9; neutral slots, not lecture copy. -->
+<article class="slide" data-index="26" data-pattern="DELEGATION_HIERARCHY" >
+<header class="slide__header">
+<span class="slide__label">Pattern 27 · DELEGATION HIERARCHY</span>
+<h1 class="slide__title" data-slot="title">목표를 전달할 <span class="hl">한 주체</span>
+</h1>
+<p class="slide__sub" data-slot="subtitle">요청 창구와 실제 작업 주체를 층으로 구분합니다.</p>
+</header>
+<main class="slide__body tx-body">
+<div class="tx-graph tx-delegation">
+<svg class="tx-wires" aria-hidden="true">
+<g class="tx-link anim-item tone-yellow " data-anim-step="1" data-from="person" data-to="center" data-route="">
+<path fill="none" stroke="currentColor" stroke-width="2.5"  marker-end="url(#tx-tip-yellow)"/>
+</g>
+<g class="tx-link anim-item tone-yellow " data-anim-step="3" data-from="center" data-to="a" data-route="curve">
+<path fill="none" stroke="currentColor" stroke-width="2.5"  marker-end="url(#tx-tip-yellow)"/>
+</g>
+<g class="tx-link anim-item tone-yellow " data-anim-step="3" data-from="center" data-to="b" data-route="curve">
+<path fill="none" stroke="currentColor" stroke-width="2.5"  marker-end="url(#tx-tip-yellow)"/>
+</g>
+<g class="tx-link anim-item tone-yellow " data-anim-step="3" data-from="center" data-to="c" data-route="curve">
+<path fill="none" stroke="currentColor" stroke-width="2.5"  marker-end="url(#tx-tip-yellow)"/>
+</g>
+</svg>
+<div class="tx-node tone-gray anim-item" data-node="person" data-anim-step="0" style="--x:18%;--y:16%">
+<svg class="tx-art tone-gray " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-person"/>
+</svg>
+<h2 class="heading" data-slot="node-name">요청자</h2>
+<p class="copy" data-slot="copy">목표 전달</p>
+</div>
+<div class="tx-node tone-yellow anim-item" data-node="center" data-anim-step="2" style="--x:62%;--y:16%">
+<svg class="tx-art tone-yellow " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-agent"/>
+</svg>
+<h2 class="heading" data-slot="node-name">조율 역할</h2>
+<p class="copy" data-slot="copy">분배 · 결과 취합</p>
+</div>
+<div class="tx-node tone-brand anim-item" data-node="a" data-anim-step="4" style="--x:23%;--y:71%">
+<svg class="tx-art tone-brand " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-agent"/>
+</svg>
+<h2 class="heading" data-slot="node-name">담당 A</h2>
+<p class="copy" data-slot="copy">작업 A</p>
+<p class="copy" data-slot="worker-action">작업 수행</p>
+</div>
+<div class="tx-node tone-purple anim-item" data-node="b" data-anim-step="5" style="--x:53%;--y:71%">
+<svg class="tx-art tone-purple " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-agent"/>
+</svg>
+<h2 class="heading" data-slot="node-name">담당 B</h2>
+<p class="copy" data-slot="copy">작업 B</p>
+<p class="copy" data-slot="worker-action">작업 수행</p>
+</div>
+<div class="tx-node tone-gray anim-item" data-node="c" data-anim-step="6" style="--x:83%;--y:71%">
+<svg class="tx-art tone-gray " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<use href="#shape-agent"/>
+</svg>
+<h2 class="heading" data-slot="node-name">담당 C</h2>
+<p class="copy" data-slot="copy">작업 C</p>
+<p class="copy" data-slot="worker-action">작업 수행</p>
+</div>
+</div>
+</main>
+<footer class="slide__footer">
+<img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus">
+</footer>
+</article>
+<!-- CAUSE_ROWS: artifacts/part1/outputs/ch02-01-single-agent-limits.html / slide 4; neutral slots, not lecture copy. -->
+<article class="slide" data-index="27" data-pattern="CAUSE_ROWS" >
+<header class="slide__header">
+<span class="slide__label">Pattern 28 · CAUSE ROWS</span>
+<h1 class="slide__title" data-slot="title">현상이 생기는 <span class="hl">이유</span>
+</h1>
+<p class="slide__sub" data-slot="subtitle">앞 장의 문제와 같은 순서로 원인을 설명합니다.</p>
+</header>
+<main class="slide__body tx-body">
+<div class="tx-cause-list">
+<section class="tx-cause anim-item" data-anim-step="0">
+<span class="tx-number tone-brand">01</span>
+<div>
+<h2 class="heading" data-slot="cause">문제가 생기는 원인 A</h2>
+<p class="copy" data-slot="mechanism">이 원인이 앞 장의 현상을 만드는 이유</p>
+</div>
+</section>
+<section class="tx-cause anim-item" data-anim-step="1">
+<span class="tx-number tone-purple">02</span>
+<div>
+<h2 class="heading" data-slot="cause">문제가 생기는 원인 B</h2>
+<p class="copy" data-slot="mechanism">이 원인이 앞 장의 현상을 만드는 이유</p>
+</div>
+</section>
+<section class="tx-cause anim-item" data-anim-step="2">
+<span class="tx-number tone-yellow">03</span>
+<div>
+<h2 class="heading" data-slot="cause">문제가 생기는 원인 C</h2>
+<p class="copy" data-slot="mechanism">이 원인이 앞 장의 현상을 만드는 이유</p>
+</div>
+</section>
+</div>
+</main>
+<footer class="slide__footer">
+<img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus">
+</footer>
+</article>
+<!-- CLICK_TIMELINE: artifacts/part3/outputs/ch01-03-branch-vs-worktree.html / slide 4; neutral slots, not lecture copy. -->
+<article class="slide" data-index="28" data-pattern="CLICK_TIMELINE" >
+<header class="slide__header">
+<span class="slide__label">Pattern 29 · CLICK TIMELINE</span>
+<h1 class="slide__title" data-slot="title">한 대상의 <span class="hl">현재 위치</span>
+</h1>
+<p class="slide__sub" data-slot="subtitle">대상을 클릭하면 과거 시점으로 돌아가 새 경로를 따라갑니다.</p>
+</header>
+<main class="slide__body tx-body">
+<div class="tx-time">
+<svg viewBox="0 0 1000 400" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-label="시점 A에서 갈라진 두 경로">
+<g class="anim-item" data-anim-step="0" stroke="var(--gray)" stroke-width="3">
+<path d="M80 125H890"/>
+<circle cx="220" cy="125" r="8" fill="var(--bg)"/>
+<circle cx="520" cy="125" r="8" fill="var(--bg)"/>
+<circle cx="820" cy="125" r="8" fill="var(--bg)"/>
+</g>
+<path class="tx-time-branch" d="M220 125C350 125 340 300 530 300H720" stroke="var(--purple)" stroke-width="3"/>
+<g class="anim-item" data-anim-step="2">
+<g class="tx-time-car" role="button" tabindex="0" aria-label="이동 시작 또는 다시 재생">
+<rect x="-85" y="-95" width="170" height="110" fill="transparent"/>
+<g stroke="var(--text)" stroke-width="2.5">
+<path d="M-75-28L-63-47H-35L-15-77H25L49-47H69L77-28Z" fill="var(--bg-card)"/>
+<path d="M-25-48L-10-69H21L39-48Z"/>
+<circle cx="-43" cy="-25" r="12" fill="var(--bg)"/>
+<circle cx="44" cy="-25" r="12" fill="var(--bg)"/>
+</g>
+<circle r="7" fill="var(--brand)"/>
+</g>
+</g>
+</svg>
+<p class="copy tx-time-label anim-item" data-anim-step="1" style="left:22%;top:36%" data-slot="past-point">시점 A</p>
+<p class="copy tx-time-label anim-item" data-anim-step="1" style="left:52%;top:36%" data-slot="middle-point">시점 B</p>
+<p class="copy tx-time-label anim-item" data-anim-step="1" style="left:82%;top:36%" data-slot="start-point">현재 시점</p>
+<p class="copy tx-time-label tx-time-new" style="left:53%;top:81%" data-slot="new-point">새 경로의 시점</p>
+</div>
+</main>
+<footer class="slide__footer">
+<img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus">
+</footer>
+</article>
     </div>
     <script>
       // file:// 로 열었을 때만 경로를 보정한다. 정식 덱과 같은 코드다 —
@@ -1351,6 +2407,49 @@
          페이지 이동은 좌우 nav-btn · 하단 dot · 키보드(←/→/스페이스)로만.
          #deck/body/.slide에 이동용 click 리스너를 절대 달지 않는다 —
          강의 중 화면을 가리키며 클릭해도 슬라이드가 넘어가면 안 된다. */
+// A connector uses visible icon bounds; labels are not endpoint anchors.
+function drawPatternConnections(){
+ document.querySelectorAll('.tx-graph').forEach(graph=>{
+  const svg=graph.querySelector('.tx-wires');const rect=graph.getBoundingClientRect();
+  if(!rect.width||!rect.height)return;
+  svg.setAttribute('viewBox',`0 0 ${rect.width} ${rect.height}`);
+  const anchor=(node)=>{const r=node.querySelector('.tx-art').getBoundingClientRect();return {x:r.x-rect.x+r.width/2,y:r.y-rect.y+r.height/2,w:r.width,h:r.height}};
+  graph.querySelectorAll('.tx-link').forEach(link=>{
+   const f=graph.querySelector(`[data-node="${link.dataset.from}"]`),t=graph.querySelector(`[data-node="${link.dataset.to}"]`);if(!f||!t)return;
+   const a=anchor(f),b=anchor(t),route=link.dataset.route||'',path=link.querySelector('path');let d;const gap=12;
+   if(route.includes('tree')){const y=(a.y+a.h*.3+b.y-b.h*.3)/2;d=`M${a.x} ${a.y+a.h*.32+gap}V${y}H${b.x}V${b.y-b.h*.32-gap}`;}
+   else if(route.includes('return')){const fromBottom=f.getBoundingClientRect().bottom-rect.y+gap,toBottom=t.getBoundingClientRect().bottom-rect.y+gap,y=Math.min(rect.height*.9,Math.max(fromBottom,toBottom)+25);d=`M${a.x} ${fromBottom}V${y}H${b.x}V${toBottom}`;}
+   else if(Math.abs(b.y-a.y)>rect.height*.26&&graph.classList.contains('tx-delegation')){const x1=a.x+(b.x<a.x?-15:15),y1=a.y+a.h*.4+gap,x2=b.x,y2=b.y-b.h*.4-gap;d=`M${x1} ${y1}C${x1} ${(y1+y2)/2} ${x2} ${(y1+y2)/2} ${x2} ${y2}`;}
+   else{const sign=b.x>a.x?1:-1,x1=a.x+sign*(a.w*.4+gap),x2=b.x-sign*(b.w*.4+gap);d=route.includes('curve')||Math.abs(b.y-a.y)>20?`M${x1} ${a.y}C${x1+(x2-x1)*.55} ${a.y} ${x2-(x2-x1)*.35} ${b.y} ${x2} ${b.y}`:`M${x1} ${a.y}L${x2} ${b.y}`;}
+   path.setAttribute('d',d);if(route.includes('draw'))path.setAttribute('pathLength','1');
+  });
+ });
+}
+const patternObserver=new ResizeObserver(()=>requestAnimationFrame(drawPatternConnections));
+document.querySelectorAll('.tx-graph').forEach(e=>patternObserver.observe(e));
+document.fonts.ready.then(drawPatternConnections);
+function selectPatternPanel(root,id){
+ root.querySelectorAll('[data-panel]').forEach(b=>{const active=b.dataset.panel===id;b.setAttribute('aria-selected',active);b.tabIndex=active?0:-1;});
+ root.querySelectorAll('[data-panel-view]').forEach(p=>{const active=p.dataset.panelView===id;p.classList.toggle('active',active);p.setAttribute('aria-hidden',!active);p.inert=!active;});
+}
+document.querySelectorAll('.tx-switch').forEach((root,n)=>{
+ root.querySelectorAll('[data-panel]').forEach(button=>{
+  const id=button.dataset.panel;button.id=`tx-tab-${n}-${id}`;button.setAttribute('aria-controls',`tx-panel-${n}-${id}`);
+  const panel=root.querySelector(`[data-panel-view="${id}"]`);panel.id=`tx-panel-${n}-${id}`;panel.setAttribute('aria-labelledby',button.id);
+  button.addEventListener('click',()=>selectPatternPanel(root,id));
+  button.addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key))return;event.preventDefault();event.stopPropagation();const buttons=[...root.querySelectorAll('[data-panel]')],next=buttons[(buttons.indexOf(button)+(event.key==='ArrowLeft'||event.key==='ArrowUp'?-1:1)+buttons.length)%buttons.length];next.focus();selectPatternPanel(root,next.dataset.panel);});
+ });selectPatternPanel(root,root.dataset.defaultPanel);
+});
+document.querySelectorAll('.tx-time-car').forEach(car=>{
+ const root=car.closest('.tx-time');const run=e=>{e.preventDefault();e.stopPropagation();root.classList.remove('is-running');void root.offsetWidth;root.classList.add('is-running');};
+ car.addEventListener('pointerdown',e=>e.preventDefault());car.addEventListener('click',run);car.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')run(e);});
+});
+function resetPatternInteractions(slide){
+ slide.querySelectorAll('.tx-time').forEach(e=>e.classList.remove('is-running'));
+ slide.querySelectorAll('.tx-switch').forEach(e=>selectPatternPanel(e,e.dataset.defaultPanel));
+ requestAnimationFrame(drawPatternConnections);
+}
+
       class SlidePresentation {
         constructor() {
           this.slides = Array.from(document.querySelectorAll(".slide"));
@@ -1383,6 +2482,7 @@
            스토리보드의 "애니메이션 순서" = DOM 순서 */
         _runSlide(i) {
           const slide = this.slides[i];
+          resetPatternInteractions(slide);
           const items = [...slide.querySelectorAll('.anim-item')];
           items.forEach(el => el.classList.remove('do-fadeinup'));
           void slide.offsetWidth;
@@ -1392,6 +2492,7 @@
             const requested = Number(el.dataset.animStep ?? n);
             const step = Number.isFinite(requested) ? Math.max(0, requested) : n;
             el.style.animationDelay = instant ? '0ms' : `${150 + step * 260}ms`;
+            el.style.setProperty('--draw-delay',el.style.animationDelay);
             el.classList.add('do-fadeinup');
           });
         }
@@ -1456,6 +2557,7 @@
         }
         _bindKeys() {
           document.addEventListener("keydown", (e) => {
+            if (e.target.closest(".tx-switch, .tx-time-car")) return;
             if (this.isAnimating) return;
             if (e.key === "ArrowRight" || e.key === " ") {
               e.preventDefault();

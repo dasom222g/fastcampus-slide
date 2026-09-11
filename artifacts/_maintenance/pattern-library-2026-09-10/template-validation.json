@@ -1,0 +1,872 @@
+[
+  {
+    "pattern": "COVER_SCENE",
+    "index": "0",
+    "viewport": [
+      1280,
+      800
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "SCENE_PAIR",
+    "index": "1",
+    "viewport": [
+      1280,
+      800
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "SCENE_IMAGE",
+    "index": "2",
+    "viewport": [
+      1280,
+      800
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "OPEN_TRIPTYCH",
+    "index": "3",
+    "viewport": [
+      1280,
+      800
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "STATUS_TRIPTYCH",
+    "index": "4",
+    "viewport": [
+      1280,
+      800
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "STRUCTURE_BRANCH",
+    "index": "5",
+    "viewport": [
+      1280,
+      800
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "STRUCTURE_EXCHANGE",
+    "index": "6",
+    "viewport": [
+      1280,
+      800
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "TRANSITION_COMPARE",
+    "index": "7",
+    "viewport": [
+      1280,
+      800
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "CONTAINED_STRUCTURE",
+    "index": "8",
+    "viewport": [
+      1280,
+      800
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "OPERATING_DEFAULT_COMPARE",
+    "index": "9",
+    "viewport": [
+      1280,
+      800
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "OBJECT_DETAIL_COMPARE",
+    "index": "10",
+    "viewport": [
+      1280,
+      800
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "STAGE_FOCUS",
+    "index": "11",
+    "viewport": [
+      1280,
+      800
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "RECORD_ANATOMY",
+    "index": "12",
+    "viewport": [
+      1280,
+      800
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "SPACE_TRANSFER",
+    "index": "13",
+    "viewport": [
+      1280,
+      800
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "PROCESS_STRIP",
+    "index": "14",
+    "viewport": [
+      1280,
+      800
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "HISTORY_BRANCH",
+    "index": "15",
+    "viewport": [
+      1280,
+      800
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "SOURCE_TO_SPACES",
+    "index": "16",
+    "viewport": [
+      1280,
+      800
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "HISTORY_SPACE_MAPPING",
+    "index": "17",
+    "viewport": [
+      1280,
+      800
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "CLICK_WORKSPACE",
+    "index": "18",
+    "viewport": [
+      1280,
+      800
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "SHARED_SPACE_EXCHANGE",
+    "index": "19",
+    "viewport": [
+      1280,
+      800
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "SEPARATE_SPACE_EXCHANGE",
+    "index": "20",
+    "viewport": [
+      1280,
+      800
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "MESSAGE_TYPES",
+    "index": "21",
+    "viewport": [
+      1280,
+      800
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "GOAL_ACCEPTANCE",
+    "index": "22",
+    "viewport": [
+      1280,
+      800
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "TASK_DEPENDENCY",
+    "index": "23",
+    "viewport": [
+      1280,
+      800
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "ASSIGNMENT_PAIRS",
+    "index": "24",
+    "viewport": [
+      1280,
+      800
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "REVIEW_LOOP",
+    "index": "25",
+    "viewport": [
+      1280,
+      800
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "CAUSE_ROWS",
+    "index": "27",
+    "viewport": [
+      1280,
+      800
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "CLICK_TIMELINE",
+    "index": "28",
+    "viewport": [
+      1280,
+      800
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "COVER_SCENE",
+    "index": "0",
+    "viewport": [
+      2133,
+      1200
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "SCENE_PAIR",
+    "index": "1",
+    "viewport": [
+      2133,
+      1200
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "SCENE_IMAGE",
+    "index": "2",
+    "viewport": [
+      2133,
+      1200
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "OPEN_TRIPTYCH",
+    "index": "3",
+    "viewport": [
+      2133,
+      1200
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "STATUS_TRIPTYCH",
+    "index": "4",
+    "viewport": [
+      2133,
+      1200
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "STRUCTURE_BRANCH",
+    "index": "5",
+    "viewport": [
+      2133,
+      1200
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "STRUCTURE_EXCHANGE",
+    "index": "6",
+    "viewport": [
+      2133,
+      1200
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "TRANSITION_COMPARE",
+    "index": "7",
+    "viewport": [
+      2133,
+      1200
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "CONTAINED_STRUCTURE",
+    "index": "8",
+    "viewport": [
+      2133,
+      1200
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "OPERATING_DEFAULT_COMPARE",
+    "index": "9",
+    "viewport": [
+      2133,
+      1200
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "OBJECT_DETAIL_COMPARE",
+    "index": "10",
+    "viewport": [
+      2133,
+      1200
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "STAGE_FOCUS",
+    "index": "11",
+    "viewport": [
+      2133,
+      1200
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "RECORD_ANATOMY",
+    "index": "12",
+    "viewport": [
+      2133,
+      1200
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "SPACE_TRANSFER",
+    "index": "13",
+    "viewport": [
+      2133,
+      1200
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "PROCESS_STRIP",
+    "index": "14",
+    "viewport": [
+      2133,
+      1200
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "HISTORY_BRANCH",
+    "index": "15",
+    "viewport": [
+      2133,
+      1200
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "SOURCE_TO_SPACES",
+    "index": "16",
+    "viewport": [
+      2133,
+      1200
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "HISTORY_SPACE_MAPPING",
+    "index": "17",
+    "viewport": [
+      2133,
+      1200
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "CLICK_WORKSPACE",
+    "index": "18",
+    "viewport": [
+      2133,
+      1200
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "SHARED_SPACE_EXCHANGE",
+    "index": "19",
+    "viewport": [
+      2133,
+      1200
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "SEPARATE_SPACE_EXCHANGE",
+    "index": "20",
+    "viewport": [
+      2133,
+      1200
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "MESSAGE_TYPES",
+    "index": "21",
+    "viewport": [
+      2133,
+      1200
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "GOAL_ACCEPTANCE",
+    "index": "22",
+    "viewport": [
+      2133,
+      1200
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "TASK_DEPENDENCY",
+    "index": "23",
+    "viewport": [
+      2133,
+      1200
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "ASSIGNMENT_PAIRS",
+    "index": "24",
+    "viewport": [
+      2133,
+      1200
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "REVIEW_LOOP",
+    "index": "25",
+    "viewport": [
+      2133,
+      1200
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "CAUSE_ROWS",
+    "index": "27",
+    "viewport": [
+      2133,
+      1200
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "CLICK_TIMELINE",
+    "index": "28",
+    "viewport": [
+      2133,
+      1200
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "COVER_SCENE",
+    "index": "0",
+    "viewport": [
+      804,
+      512
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "SCENE_PAIR",
+    "index": "1",
+    "viewport": [
+      804,
+      512
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "SCENE_IMAGE",
+    "index": "2",
+    "viewport": [
+      804,
+      512
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "OPEN_TRIPTYCH",
+    "index": "3",
+    "viewport": [
+      804,
+      512
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "STATUS_TRIPTYCH",
+    "index": "4",
+    "viewport": [
+      804,
+      512
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "STRUCTURE_BRANCH",
+    "index": "5",
+    "viewport": [
+      804,
+      512
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "STRUCTURE_EXCHANGE",
+    "index": "6",
+    "viewport": [
+      804,
+      512
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "TRANSITION_COMPARE",
+    "index": "7",
+    "viewport": [
+      804,
+      512
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "CONTAINED_STRUCTURE",
+    "index": "8",
+    "viewport": [
+      804,
+      512
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "OPERATING_DEFAULT_COMPARE",
+    "index": "9",
+    "viewport": [
+      804,
+      512
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "OBJECT_DETAIL_COMPARE",
+    "index": "10",
+    "viewport": [
+      804,
+      512
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "STAGE_FOCUS",
+    "index": "11",
+    "viewport": [
+      804,
+      512
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "RECORD_ANATOMY",
+    "index": "12",
+    "viewport": [
+      804,
+      512
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "SPACE_TRANSFER",
+    "index": "13",
+    "viewport": [
+      804,
+      512
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "PROCESS_STRIP",
+    "index": "14",
+    "viewport": [
+      804,
+      512
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "HISTORY_BRANCH",
+    "index": "15",
+    "viewport": [
+      804,
+      512
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "SOURCE_TO_SPACES",
+    "index": "16",
+    "viewport": [
+      804,
+      512
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "HISTORY_SPACE_MAPPING",
+    "index": "17",
+    "viewport": [
+      804,
+      512
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "CLICK_WORKSPACE",
+    "index": "18",
+    "viewport": [
+      804,
+      512
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "SHARED_SPACE_EXCHANGE",
+    "index": "19",
+    "viewport": [
+      804,
+      512
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "SEPARATE_SPACE_EXCHANGE",
+    "index": "20",
+    "viewport": [
+      804,
+      512
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "MESSAGE_TYPES",
+    "index": "21",
+    "viewport": [
+      804,
+      512
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "GOAL_ACCEPTANCE",
+    "index": "22",
+    "viewport": [
+      804,
+      512
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "TASK_DEPENDENCY",
+    "index": "23",
+    "viewport": [
+      804,
+      512
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "ASSIGNMENT_PAIRS",
+    "index": "24",
+    "viewport": [
+      804,
+      512
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "REVIEW_LOOP",
+    "index": "25",
+    "viewport": [
+      804,
+      512
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "CAUSE_ROWS",
+    "index": "27",
+    "viewport": [
+      804,
+      512
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "CLICK_TIMELINE",
+    "index": "28",
+    "viewport": [
+      804,
+      512
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "DELEGATION_HIERARCHY",
+    "index": "26",
+    "viewport": [
+      1280,
+      800
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "DELEGATION_HIERARCHY",
+    "index": "26",
+    "viewport": [
+      2133,
+      1200
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  },
+  {
+    "pattern": "DELEGATION_HIERARCHY",
+    "index": "26",
+    "viewport": [
+      804,
+      512
+    ],
+    "overflow": [],
+    "brokenImages": 0
+  }
+]

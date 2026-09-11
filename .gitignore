@@ -23,3 +23,7 @@ storageState*.json
 
 # 스킬 품질측정 작업 폴더 — eval 산출물과 __pycache__가 쌓인다
 .claude/skills/*-workspace/
+
+# 로컬 템플릿 검수 캡처와 브라우저 점검 덤프
+artifacts/_maintenance/pattern-library-*/*.png
+artifacts/_maintenance/pattern-library-*/inspector-smoke.json
