@@ -404,9 +404,9 @@ def render_parts(rows: list[dict], due_note: dict[int, str]) -> str:
               <td class="c-title">{esc(r["제목"])}</td>
               <td class="c-len">{esc(r["길이"])}</td>
               <td class="c-count">{kind_label(r["슬라이드"])}</td>
-              <td class="c-stage"><small>{'슬라이드' if r['슬라이드'] else '실습자료'}</small>{chip(r["제작"], "자료 제작")}</td>
-              <td class="c-stage">{chip(r["대본"], "대본")}</td>
-              <td class="c-stage">{chip(r["촬영"], "촬영")}</td>
+              <td class="c-stage"><div class="stage-stack"><small>{'슬라이드' if r['슬라이드'] else '실습자료'}</small>{chip(r["제작"], "자료 제작")}</div></td>
+              <td class="c-stage"><div class="stage-stack">{chip(r["대본"], "대본")}</div></td>
+              <td class="c-stage"><div class="stage-stack">{chip(r["촬영"], "촬영")}</div></td>
               <td class="c-note">{esc(r["비고"] if r["비고"] != "실습" else "")}</td>
             </tr>""")
         out.append("          </tbody>\n        </table>\n        </div>\n      </section>")
