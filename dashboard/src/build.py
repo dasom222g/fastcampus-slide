@@ -18,10 +18,10 @@
   작업중    손대고 있다
   예정      아직 안 했지만 곧 해야 한다 — 앞 공정이 끝났거나 지금 납기의 파트다
   시작전    아직 안 했고 납기도 뒤다 — 지금 신경 쓸 일이 아니다
-  해당없음  애초에 그 공정이 없다 (실습 클립의 제작·대본)
+  해당없음  애초에 그 공정이 없다 (실습 클립의 대본)
 
 판정 규칙
-  실습 클립(슬라이드: false)은 제작·대본이 없다 → 해당없음
+  실습 클립(슬라이드: false)은 실습자료 제작 → 촬영. 대본만 해당없음
   제작  덱 없음 → 미착수 / 있고 확정 → 완료 / 있고 확정 아님 → 작업중
   대본  파일 없음 → 미착수 / 있음 → 작업중(초안) / 촬영을 마쳤으면 → 완료
         강사 검수는 촬영 때 이뤄지므로 촬영 완료를 대본 확정으로 본다.
@@ -52,7 +52,7 @@ CLS = {DONE: "done", WIP: "wip", DUE: "due", LATER: "later", NA: "na"}
 CHIP = {DONE: "완료", WIP: "작업중", DUE: "예정", LATER: "시작전", NA: "—"}
 
 STAGES = (
-    ("제작", "슬라이드 덱을 만들었는가", "슬라이드 클립"),
+    ("제작", "슬라이드 또는 실습자료를 만들었는가", "전체 클립"),
     ("대본", "강사 검수까지 끝난 대본이 있는가", "슬라이드 클립"),
     ("촬영", "영상 수록을 마쳤는가", "전체 클립"),
 )
@@ -126,6 +126,36 @@ def declared_count(value: str) -> int | None:
 # ── 납기 ────────────────────────────────────────────────────────────
 
 
+def delivery_config(manifest: dict) -> tuple[list[dict], dict[str, str], dict[int, int]]:
+    """차수와 파트 배정을 검증한다. 이전 파트별 날짜 설정도 호환한다."""
+    schedule = {str(k): v for k, v in manifest.get("납기", {}).items()
+                if v and not str(k).startswith("_")}
+    batches = manifest.get("납품차수", [])
+    assigned, seen = {}, set()
+    for batch in batches:
+        n, deadline = batch.get("차수"), batch.get("납기", "")
+        if n not in (1, 2, 3) or n in seen:
+            die("납품차수는 1·2·3차를 중복 없이 지정한다.")
+        seen.add(n)
+        for part in batch.get("파트", []):
+            if not isinstance(part, int) or part not in range(1, 11) or part in assigned:
+                die("납품차수의 파트는 1~10 중 하나이며 중복 배정할 수 없다.")
+            assigned[part] = n
+            if deadline:
+                schedule[str(part)] = deadline
+        if deadline:
+            try:
+                date.fromisoformat(deadline)
+            except (ValueError, TypeError):
+                die("납기일은 유효한 YYYY-MM-DD 날짜로 적는다.")
+    for deadline in schedule.values():
+        try:
+            date.fromisoformat(deadline)
+        except (ValueError, TypeError):
+            die("납기일은 유효한 YYYY-MM-DD 날짜로 적는다.")
+    return batches, schedule, assigned
+
+
 def due_parts(schedule: dict, rows_by_part: dict[int, list[dict]]) -> tuple[set[int], str]:
     """지금 납기에 속한 파트를 고른다.
 
@@ -141,7 +171,7 @@ def due_parts(schedule: dict, rows_by_part: dict[int, list[dict]]) -> tuple[set[
         raw = schedule.get(str(part))
         if not raw:
             continue
-        if any(r.get("_미착수") for r in rows):
+        if any(any(r.get(stage) not in (DONE, NA) for stage, _, _ in STAGES) for r in rows):
             open_dates.append(raw)
     if not open_dates:
         return set(), ""
@@ -167,14 +197,7 @@ def build_rows() -> tuple[list[dict], list[str], str]:
         if key not in curriculum:
             die(f"Part {key[0]} {key[1]} 은 커리큘럼에 없다. clips.json을 확인한다.")
 
-    schedule = {
-        str(k): v
-        for k, v in (manifest.get("납기") or {}).items()
-        if v and not str(k).startswith("_")
-    }
-    for raw in schedule.values():
-        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", raw):
-            die(f"납기일 형식이 이상하다: {raw!r} — YYYY-MM-DD 로 적는다.")
+    batches, schedule, assigned = delivery_config(manifest)
 
     confirmed = read(ROOT / "artifacts" / "CONFIRMED.md")
     rows, warnings = [], []
@@ -185,6 +208,7 @@ def build_rows() -> tuple[list[dict], list[str], str]:
         row = dict(meta)
         row["슬라이드"] = bool(e.get("슬라이드"))
         row["비고"] = e.get("비고", "")
+        row["차수"] = assigned.get(part, 0)
         row["_미착수"] = False
 
         shot = e.get("촬영", LATER)
@@ -199,7 +223,13 @@ def build_rows() -> tuple[list[dict], list[str], str]:
                 warnings.append(
                     f"Part {part} {clip} — clips.json에 없다. 실습 클립으로 처리했다."
                 )
-            row.update({"장수": "—", "제작": NA, "대본": NA, "촬영": shot})
+            material = e.get("실습자료", LATER)
+            if material not in MANUAL_STATES:
+                die(f"Part {part} {clip} 의 실습자료 상태가 올바르지 않다.")
+            if material in (DUE, LATER):
+                material = None
+                row["_미착수"] = True
+            row.update({"장수": "—", "제작": material, "대본": NA, "촬영": shot})
             row["비고"] = row["비고"] or "실습"
             rows.append(row)
             continue
@@ -277,23 +307,16 @@ def build_rows() -> tuple[list[dict], list[str], str]:
             if r[stage] is not None:
                 continue
             # 앞 공정이 끝났으면 이 공정이 바로 다음 차례다 — 납기와 무관하게 예정.
-            prev_done = i > 0 and r[names[i - 1]] == DONE
+            previous = [r[s] for s in names[:i] if r[s] != NA]
+            prev_done = bool(previous) and previous[-1] == DONE
             r[stage] = DUE if prev_done else by_due
         r.pop("_미착수", None)
-
-    if schedule:
-        missing = sorted(set(by_part) - {int(p) for p in schedule})
-        if missing:
-            warnings.append(
-                "납기가 안 적힌 파트가 있다 (항상 시작전으로 둔다): "
-                + ", ".join(f"Part {p}" for p in missing)
-            )
 
     return rows, warnings, nearest
 
 
 def stage_scope(rows: list[dict], stage: str) -> list[dict]:
-    """제작·대본은 슬라이드 클립만, 촬영은 전체 클립이 모집단이다."""
+    """대본은 이론 클립만, 자료 제작과 촬영은 전체 클립이 모집단이다."""
     return [r for r in rows if r[stage] != NA]
 
 
@@ -309,46 +332,14 @@ def chip(state: str, stage: str) -> str:
     return f'<span class="chip chip--{CLS[state]}" title="{title}">{CHIP[state]}</span>'
 
 
-def render_gates(rows: list[dict]) -> str:
-    out = []
-    for i, (stage, hint, scope) in enumerate(STAGES, start=1):
-        pool = stage_scope(rows, stage)
-        total = len(pool) or 1
-        c = Counter(r[stage] for r in pool)
-        d, w, u = c[DONE], c[WIP], c[DUE]
-        extra = []
-        if w:
-            extra.append(f'<em class="n-wip">작업중 {w}</em>')
-        if u:
-            extra.append(f'<em class="n-due">예정 {u}</em>')
-        out.append(f"""<li class="gate">
-        <div class="gate__head">
-          <span class="gate__step">{i}</span>
-          <h3 class="gate__name">{stage}</h3>
-          <span class="gate__scope">{scope} {len(pool)}개</span>
-        </div>
-        <p class="gate__hint">{hint}</p>
-        <div class="gate__bar" role="img" aria-label="{stage} 완료 {d}, 작업중 {w}, 예정 {u}, 시작전 {c[LATER]}, 전체 {len(pool)}">
-          <span class="gate__fill gate__fill--done" style="width:{d / total * 100:.4f}%"></span>
-          <span class="gate__fill gate__fill--wip" style="width:{w / total * 100:.4f}%"></span>
-          <span class="gate__fill gate__fill--due" style="width:{u / total * 100:.4f}%"></span>
-        </div>
-        <p class="gate__nums">
-          <b>{d}</b><span class="gate__of">/ {len(pool)} 완료</span>
-          {"".join(extra)}
-        </p>
-      </li>""")
-    return "\n".join(out)
-
-
 HEAD_ROW = """<thead><tr>
             <th scope="col" class="c-clip">클립</th>
             <th scope="col" class="c-title">제목</th>
             <th scope="col" class="c-len">길이</th>
-            <th scope="col" class="c-count">장수</th>
-            <th scope="col" class="c-stage"><span class="c-stage__n">1</span>제작</th>
-            <th scope="col" class="c-stage"><span class="c-stage__n">2</span>대본</th>
-            <th scope="col" class="c-stage"><span class="c-stage__n">3</span>촬영</th>
+            <th scope="col" class="c-count">유형</th>
+            <th scope="col" class="c-stage">자료 제작</th>
+            <th scope="col" class="c-stage">대본</th>
+            <th scope="col" class="c-stage">촬영</th>
             <th scope="col" class="c-note">비고</th>
           </tr></thead>"""
 
@@ -370,12 +361,12 @@ def render_parts(rows: list[dict], due_note: dict[int, str]) -> str:
             if due
             else ""
         )
-        out.append(f"""<section class="part">
+        out.append(f"""<section class="part" data-part="{no}" data-batch="{rs[0]['차수']}">
         <header class="part__head">
           <h3 class="part__name">Part {no}</h3>
           <span class="part__title">{esc(rs[0]["파트제목"])}</span>
           {due_html}
-          <span class="part__tally">{len(rs)}클립 · 슬라이드 {len(slides)}</span>
+          <span class="part__tally">{len(rs)}클립</span>
           <span class="part__meter" role="img" aria-label="공정 {done}/{total} 완료">
             <span class="part__meter-fill" style="width:{done / total * 100:.4f}%"></span>
           </span>
@@ -395,15 +386,15 @@ def render_parts(rows: list[dict], due_note: dict[int, str]) -> str:
                         f"{esc(chapter)}</th></tr>"
                     )
             cls = "" if r["슬라이드"] else ' class="row--practice"'
-            out.append(f"""<tr{cls}>
+            out.append(f"""<tr{cls} data-key="{no}-{r['클립']}" data-clip>
               <td class="c-clip"><code>{esc(r["클립"])}</code></td>
               <td class="c-title">{esc(r["제목"])}</td>
               <td class="c-len">{esc(r["길이"])}</td>
-              <td class="c-count">{esc(r["장수"])}</td>
-              <td class="c-stage">{chip(r["제작"], "제작")}</td>
+              <td class="c-count"><span class="kind kind--{'theory' if r['슬라이드'] else 'practice'}">{'이론' if r['슬라이드'] else '실습'}</span></td>
+              <td class="c-stage"><small>{'슬라이드' if r['슬라이드'] else '실습자료'}</small>{chip(r["제작"], "자료 제작")}</td>
               <td class="c-stage">{chip(r["대본"], "대본")}</td>
               <td class="c-stage">{chip(r["촬영"], "촬영")}</td>
-              <td class="c-note">{esc(r["비고"])}</td>
+              <td class="c-note">{esc(r["비고"] if r["비고"] != "실습" else "")}</td>
             </tr>""")
         out.append("          </tbody>\n        </table>\n        </div>\n      </section>")
     return "\n".join(out)
@@ -426,28 +417,13 @@ def render_html(rows: list[dict], warnings: list[str], nearest: str, schedule: d
     template = read(SRC / "template.html")
     if not template:
         die("dashboard/src/template.html 을 찾을 수 없다.")
-    slides = [r for r in rows if r["슬라이드"]]
-    note = {
-        int(p): (f"납기 {d}", d == nearest) for p, d in schedule.items()
-    }
-    due_line = (
-        f"지금 납기는 <b>{esc(nearest)}</b>다. 그 납기에 속한 파트의 미착수 작업만 "
-        "<b>예정</b>이고, 뒤 파트는 <b>시작전</b>이다."
-        if nearest
-        else "납기일이 아직 안 적혀 있어 미착수는 모두 <b>시작전</b>이다. "
-        "<code>dashboard/clips.json</code>의 <code>납기</code>에 파트별 날짜를 적으면 "
-        "그 납기의 파트가 <b>예정</b>으로 갈린다."
-    )
-    return (
-        template.replace("{{GATES}}", render_gates(rows))
-        .replace("{{PARTS}}", render_parts(rows, note))
-        .replace("{{WARNINGS}}", render_warnings(warnings))
-        .replace("{{DUE_LINE}}", due_line)
-        .replace("{{ALL_CLIPS}}", str(len(rows)))
-        .replace("{{SLIDE_CLIPS}}", str(len(slides)))
-        .replace("{{PRACTICE_CLIPS}}", str(len(rows) - len(slides)))
-        .replace("{{BUILT}}", date.today().isoformat())
-    )
+    manifest = json.loads(read(ROOT / "dashboard" / "clips.json"))
+    batches, _, _ = delivery_config(manifest)
+    payload = json.dumps({"rows": rows, "batches": batches}, ensure_ascii=False).replace("<", "\\u003c")
+    return (template.replace("{{DATA}}", payload)
+            .replace("{{PARTS}}", render_parts(rows, {}))
+            .replace("{{WARNINGS}}", render_warnings(warnings))
+            .replace("{{BUILT}}", date.today().isoformat()))
 
 
 def render_markdown(rows: list[dict], warnings: list[str], nearest: str) -> str:
@@ -461,13 +437,13 @@ def render_markdown(rows: list[dict], warnings: list[str], nearest: str) -> str:
         "",
         "# 강의 제작 현황",
         "",
-        f"커리큘럼 {len(rows)}클립 전체를 제작 → 대본 → 촬영 순으로 추적한다.",
+        f"커리큘럼 {len(rows)}클립의 자료 제작과 촬영을 추적한다. 이론은 슬라이드 → 대본 → 촬영 순이다.",
         f"슬라이드를 만드는 클립은 {len(slides)}개, 나머지 {len(rows) - len(slides)}개는 "
-        "화면 시연·실습이라 제작·대본이 **해당없음**이다.",
+        "실습자료 제작 → 촬영으로 진행하며, 대본만 **해당없음**이다.",
         "",
-        "상태는 다섯 가지다 — **완료 · 작업중 · 예정**(지금 납기의 미착수) **· "
+        "상태는 다섯 가지다 — **완료 · 작업중 · 예정**(앞 공정 완료 또는 지금 납기) **· "
         "시작전**(납기가 뒤) **· 해당없음**.",
-        f"지금 납기: {nearest or '미지정 — 미착수는 모두 시작전'}",
+        f"지금 납기: {nearest or '날짜 미지정 — 차수별 구분 가능'}",
         "",
         "| 공정 | 모집단 | 완료 | 작업중 | 예정 | 시작전 |",
         "|---|---|---:|---:|---:|---:|",
@@ -487,7 +463,7 @@ def render_markdown(rows: list[dict], warnings: list[str], nearest: str) -> str:
     for r in rows:
         parts.setdefault(r["파트번호"], []).append(r)
     for no, rs in parts.items():
-        L += [f"## Part {no}. {rs[0]['파트제목']}", ""]
+        L += [f"## Part {no}. {rs[0]['파트제목']}", "", f"납품: {str(rs[0]['차수']) + '차' if rs[0]['차수'] else '미배정'}", ""]
         chapter = None
         for r in rs:
             if r["챕터"] != chapter:
@@ -503,7 +479,7 @@ def render_markdown(rows: list[dict], warnings: list[str], nearest: str) -> str:
                 + " | ".join(
                     [
                         r["클립"], r["제목"], r["길이"], r["장수"],
-                        r["제작"], r["대본"], r["촬영"], r["비고"] or "",
+                        ("슬라이드 " if r["슬라이드"] else "실습자료 ") + r["제작"], r["대본"], r["촬영"], r["비고"] or "",
                     ]
                 )
                 + " |"
@@ -524,11 +500,7 @@ def main() -> int:
         manifest = json.loads(read(ROOT / "dashboard" / "clips.json") or "{}")
     except json.JSONDecodeError:
         manifest = {}
-    schedule = {
-        str(k): v
-        for k, v in (manifest.get("납기") or {}).items()
-        if v and not str(k).startswith("_")
-    }
+    _, schedule, _ = delivery_config(manifest)
 
     targets = {
         ROOT / "dashboard" / "index.html": render_html(rows, warnings, nearest, schedule),

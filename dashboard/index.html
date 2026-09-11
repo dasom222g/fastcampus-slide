@@ -1,675 +1,34 @@
 <!doctype html>
 <html lang="ko">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Orca 강의 제작 보드</title>
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&display=swap"
-    />
-    <style>
-      :root {
-        --ground: #faf7f8;
-        --surface: #ffffff;
-        --surface-2: #f2ecee;
-        --ink: #1b1418;
-        --ink-mid: #4f434a;
-        --ink-dim: #837580;
-        --rule: #e5dcdf;
-        --rule-soft: #efe8ea;
-        --brand: #d40f37;
-        --done: #12684a;
-        --done-bg: #d8ede4;
-        --wip: #94590a;
-        --wip-bg: #f7e8d2;
-        --due: #1f4fa8;
-        --due-bg: #dde6f7;
-        --later: #7b6e76;
-        --sans: "IBM Plex Sans KR", -apple-system, BlinkMacSystemFont,
-          "Apple SD Gothic Neo", sans-serif;
-        --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-      }
-      @media (prefers-color-scheme: dark) {
-        :root:not([data-theme="light"]) {
-          --ground: #141013;
-          --surface: #1c171a;
-          --surface-2: #251e22;
-          --ink: #f4eef1;
-          --ink-mid: #c6b9bf;
-          --ink-dim: #948792;
-          --rule: #362b31;
-          --rule-soft: #281f24;
-          --brand: #ff5074;
-          --done: #5ecb9f;
-          --done-bg: #16382b;
-          --wip: #e5ac53;
-          --wip-bg: #3b2d16;
-          --due: #7ea9f0;
-          --due-bg: #1b2a44;
-          --later: #7d7078;
-        }
-      }
-      :root[data-theme="dark"] {
-        --ground: #141013;
-        --surface: #1c171a;
-        --surface-2: #251e22;
-        --ink: #f4eef1;
-        --ink-mid: #c6b9bf;
-        --ink-dim: #948792;
-        --rule: #362b31;
-        --rule-soft: #281f24;
-        --brand: #ff5074;
-        --done: #5ecb9f;
-        --done-bg: #16382b;
-        --wip: #e5ac53;
-        --wip-bg: #3b2d16;
-        --due: #7ea9f0;
-        --due-bg: #1b2a44;
-        --later: #7d7078;
-      }
-
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-      }
-      html {
-        font-size: 17px;
-        -webkit-text-size-adjust: 100%;
-      }
-      body {
-        margin: 0;
-        background: var(--ground);
-        color: var(--ink);
-        font-family: var(--sans);
-        font-weight: 400;
-        line-height: 1.6;
-        -webkit-font-smoothing: antialiased;
-      }
-      .wrap {
-        max-width: 94rem;
-        margin: 0 auto;
-        padding: clamp(1.6rem, 3vw, 2.8rem) clamp(0.9rem, 1.8vw, 1.8rem) 5rem;
-        display: flex;
-        flex-direction: column;
-        gap: clamp(1.8rem, 3vw, 2.6rem);
-      }
-
-      /* ── 머리 ── */
-      .masthead {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-      }
-      .eyebrow {
-        margin: 0;
-        font-family: var(--mono);
-        font-size: 0.8rem;
-        font-weight: 600;
-        letter-spacing: 0.07em;
-        text-transform: uppercase;
-        color: var(--brand);
-      }
-      h1 {
-        margin: 0;
-        font-size: clamp(2.1rem, 3.6vw, 2.9rem);
-        font-weight: 700;
-        line-height: 1.15;
-        letter-spacing: -0.022em;
-        text-wrap: balance;
-      }
-      .standfirst {
-        margin: 0.15rem 0 0;
-        font-size: 1.12rem;
-        color: var(--ink-mid);
-        max-width: 62ch;
-        font-weight: 300;
-      }
-      .standfirst b {
-        font-weight: 600;
-        color: var(--ink);
-      }
-      .stamp {
-        margin: 0.7rem 0 0;
-        padding-top: 0.6rem;
-        border-top: 1px solid var(--rule);
-        font-family: var(--mono);
-        font-size: 0.84rem;
-        color: var(--ink-dim);
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.3rem 1.4rem;
-      }
-
-      /* ── 공정 3관문 ── */
-      .gates {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
-        gap: 1px;
-        background: var(--rule);
-        border: 1px solid var(--rule);
-        border-radius: 3px;
-        overflow: hidden;
-      }
-      .gate {
-        background: var(--surface);
-        padding: 1.3rem 1.4rem 1.45rem;
-        display: flex;
-        flex-direction: column;
-        gap: 0.15rem;
-      }
-      .gate__head {
-        display: flex;
-        align-items: center;
-        gap: 0.6rem;
-      }
-      .gate__step {
-        font-family: var(--mono);
-        font-size: 0.78rem;
-        font-weight: 600;
-        color: var(--ink-dim);
-        border: 1px solid var(--rule);
-        border-radius: 50%;
-        width: 1.7rem;
-        height: 1.7rem;
-        display: grid;
-        place-items: center;
-        flex: none;
-      }
-      .gate__name {
-        margin: 0;
-        font-size: 1.18rem;
-        font-weight: 600;
-        letter-spacing: -0.01em;
-      }
-      .gate__scope {
-        margin-left: auto;
-        font-family: var(--mono);
-        font-size: 0.76rem;
-        color: var(--ink-dim);
-      }
-      .gate__hint {
-        margin: 0.25rem 0 0;
-        font-size: 0.92rem;
-        color: var(--ink-dim);
-        font-weight: 300;
-      }
-      .gate__bar {
-        display: flex;
-        height: 6px;
-        background: var(--surface-2);
-        border-radius: 99px;
-        overflow: hidden;
-        margin-top: 0.8rem;
-      }
-      .gate__fill--done {
-        background: var(--done);
-      }
-      .gate__fill--wip {
-        background: var(--wip);
-      }
-      .gate__fill--due {
-        background: var(--due);
-      }
-      .gate__nums {
-        margin: 0.45rem 0 0;
-        font-family: var(--mono);
-        font-size: 0.86rem;
-        color: var(--ink-dim);
-        font-variant-numeric: tabular-nums;
-        display: flex;
-        align-items: baseline;
-        flex-wrap: wrap;
-        gap: 0.15rem 0.75rem;
-      }
-      .gate__nums b {
-        font-size: 1.7rem;
-        font-weight: 600;
-        color: var(--ink);
-        letter-spacing: -0.025em;
-      }
-      .gate__of {
-        margin-left: 0.15rem;
-      }
-      .gate__nums em {
-        font-style: normal;
-      }
-      .n-wip {
-        color: var(--wip);
-      }
-      .n-due {
-        color: var(--due);
-      }
-
-      /* ── 본문 ── */
-      h2 {
-        margin: 0 0 0.9rem;
-        padding-bottom: 0.5rem;
-        border-bottom: 1px solid var(--rule);
-        font-family: var(--mono);
-        font-size: 0.86rem;
-        font-weight: 600;
-        letter-spacing: 0.07em;
-        text-transform: uppercase;
-        color: var(--ink-dim);
-      }
-      .note {
-        margin: 0 0 0.6rem;
-        font-size: 1rem;
-        color: var(--ink-mid);
-        max-width: 74ch;
-        font-weight: 300;
-      }
-      .note:last-child {
-        margin-bottom: 0;
-      }
-      .note b {
-        font-weight: 600;
-        color: var(--ink);
-      }
-      code {
-        font-family: var(--mono);
-        font-size: 0.88em;
-        background: var(--surface-2);
-        padding: 0.12em 0.38em;
-        border-radius: 2px;
-      }
-
-      /* ── 범례 ── */
-      .legend {
-        list-style: none;
-        margin: 1rem 0 0;
-        padding: 0;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem 1.6rem;
-        font-size: 0.95rem;
-        color: var(--ink-mid);
-        font-weight: 300;
-      }
-      .legend li {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-
-      /* ── 상태 칩 ── */
-      .chip {
-        display: inline-block;
-        min-width: 4.4rem;
-        text-align: center;
-        font-family: var(--mono);
-        font-size: 0.8rem;
-        font-weight: 600;
-        line-height: 1.5;
-        padding: 0.18rem 0.4rem;
-        border-radius: 3px;
-        border: 1px solid transparent;
-        white-space: nowrap;
-      }
-      .chip--done {
-        color: var(--done);
-        background: var(--done-bg);
-      }
-      .chip--wip {
-        color: var(--wip);
-        background: var(--wip-bg);
-      }
-      .chip--due {
-        color: var(--due);
-        background: var(--due-bg);
-      }
-      .chip--later {
-        color: var(--later);
-        border-color: var(--rule);
-      }
-      .chip--na {
-        color: var(--ink-dim);
-        opacity: 0.5;
-        border-color: transparent;
-      }
-
-      /* ── 파트 ── */
-      .parts {
-        display: flex;
-        flex-direction: column;
-        gap: 2.4rem;
-      }
-      .part__head {
-        display: flex;
-        align-items: baseline;
-        gap: 0.75rem;
-        padding-bottom: 0.55rem;
-        border-bottom: 2px solid var(--ink);
-      }
-      .part__name {
-        margin: 0;
-        font-size: 1.16rem;
-        font-weight: 700;
-        letter-spacing: -0.015em;
-        flex: none;
-      }
-      .part__title {
-        font-size: 0.98rem;
-        color: var(--ink-dim);
-        font-weight: 300;
-        min-width: 0;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-      .part__due {
-        flex: none;
-        font-family: var(--mono);
-        font-size: 0.78rem;
-        color: var(--ink-dim);
-        border: 1px solid var(--rule);
-        border-radius: 3px;
-        padding: 0.05rem 0.4rem;
-      }
-      .part__due.is-due {
-        color: var(--due);
-        border-color: var(--due);
-      }
-      .part__tally {
-        flex: none;
-        margin-left: auto;
-        font-family: var(--mono);
-        font-size: 0.78rem;
-        color: var(--ink-dim);
-        font-variant-numeric: tabular-nums;
-      }
-      .part__meter {
-        flex: none;
-        width: 9rem;
-        height: 5px;
-        background: var(--surface-2);
-        border-radius: 99px;
-        overflow: hidden;
-        display: block;
-      }
-      .part__meter-fill {
-        display: block;
-        height: 100%;
-        background: var(--done);
-      }
-      .part__pct {
-        flex: none;
-        font-family: var(--mono);
-        font-size: 0.78rem;
-        color: var(--ink-dim);
-        font-variant-numeric: tabular-nums;
-        min-width: 3.2rem;
-        text-align: right;
-      }
-
-      /* ── 표 ── */
-      .tablewrap {
-        overflow-x: auto;
-      }
-      .grid {
-        width: 100%;
-        min-width: 62rem;
-        border-collapse: collapse;
-        table-layout: fixed;
-        font-size: 1rem;
-      }
-      .grid th {
-        text-align: left;
-        padding: 0.75rem 0.55rem 0.6rem;
-        border-bottom: 1px solid var(--rule);
-        font-family: var(--mono);
-        font-size: 0.78rem;
-        font-weight: 600;
-        letter-spacing: 0.05em;
-        color: var(--ink-dim);
-        white-space: nowrap;
-      }
-      .grid td {
-        padding: 0.6rem 0.55rem;
-        border-bottom: 1px solid var(--rule-soft);
-        vertical-align: middle;
-      }
-      .grid tbody tr:last-child td {
-        border-bottom: 0;
-      }
-
-      /* 고정 폭 — 상태 칩이 열마다 정확히 겹치게 한다.
-         .c-title 만 남는 폭을 흡수하므로 화면이 넓어져도 다른 열은 안 흔들린다. */
-      .c-clip {
-        width: 6.6rem;
-      }
-      .c-len {
-        width: 4.4rem;
-      }
-      .c-count {
-        width: 4.4rem;
-      }
-      .c-stage {
-        width: 6.2rem;
-      }
-      .c-note {
-        width: 19rem;
-      }
-      .grid th.c-len,
-      .grid th.c-count,
-      .grid td.c-len,
-      .grid td.c-count {
-        text-align: right;
-      }
-      .grid th.c-stage,
-      .grid td.c-stage {
-        text-align: center;
-      }
-      .c-stage__n {
-        display: inline-block;
-        margin-right: 0.35rem;
-        color: var(--ink-dim);
-        opacity: 0.65;
-        font-weight: 400;
-      }
-
-      .c-clip code {
-        background: none;
-        padding: 0;
-        color: var(--ink-mid);
-        font-weight: 500;
-        font-size: 0.88rem;
-      }
-      .c-title {
-        font-weight: 500;
-      }
-      .c-len,
-      .c-count {
-        font-family: var(--mono);
-        font-size: 0.88rem;
-        color: var(--ink-dim);
-        font-variant-numeric: tabular-nums;
-      }
-      .c-note {
-        color: var(--ink-dim);
-        font-size: 0.88rem;
-        font-weight: 300;
-      }
-
-      .chap th {
-        padding: 1.1rem 0.55rem 0.4rem;
-        border-bottom: 1px solid var(--rule-soft);
-        font-family: var(--sans);
-        font-size: 0.92rem;
-        font-weight: 600;
-        letter-spacing: 0;
-        text-transform: none;
-        color: var(--ink-mid);
-      }
-      .row--practice .c-title {
-        font-weight: 400;
-        color: var(--ink-mid);
-      }
-
-      /* ── 검사 ── */
-      .check {
-        margin: 0;
-        font-size: 1rem;
-        font-weight: 300;
-      }
-      .check b {
-        font-weight: 600;
-      }
-      .check--ok b {
-        color: var(--done);
-      }
-      .check--warn b {
-        color: var(--wip);
-      }
-      .checklist {
-        margin: 0.6rem 0 0;
-        padding-left: 1.2rem;
-        font-size: 0.95rem;
-        color: var(--ink-mid);
-        font-weight: 300;
-        line-height: 1.85;
-      }
-
-      footer {
-        border-top: 1px solid var(--rule);
-        padding-top: 1.1rem;
-        font-family: var(--mono);
-        font-size: 0.8rem;
-        color: var(--ink-dim);
-        line-height: 1.9;
-      }
-
-      @media (max-width: 46rem) {
-        html {
-          font-size: 16px;
-        }
-        .part__meter {
-          display: none;
-        }
-      }
-      @media (prefers-reduced-motion: reduce) {
-        * {
-          animation: none !important;
-          transition: none !important;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="wrap">
-      <header class="masthead">
-        <p class="eyebrow">Orca 강의 · 제작 보드</p>
-        <h1>강의 제작 현황</h1>
-        <p class="standfirst">
-          커리큘럼 <b>72클립</b> 전체를 제작 → 대본 → 촬영 세 공정으로
-          추적한다. 커밋할 때마다 저장소를 다시 읽어 이 화면을 새로 만든다.
-        </p>
-        <p class="stamp">
-          <span>생성 2026-09-11</span>
-          <span>전체 10파트 · 72클립 · 약 12시간</span>
-          <span>슬라이드 30 · 실습 42</span>
-        </p>
-      </header>
-
-      <ol class="gates">
-<li class="gate">
-        <div class="gate__head">
-          <span class="gate__step">1</span>
-          <h3 class="gate__name">제작</h3>
-          <span class="gate__scope">슬라이드 클립 30개</span>
-        </div>
-        <p class="gate__hint">슬라이드 덱을 만들었는가</p>
-        <div class="gate__bar" role="img" aria-label="제작 완료 11, 작업중 2, 예정 0, 시작전 17, 전체 30">
-          <span class="gate__fill gate__fill--done" style="width:36.6667%"></span>
-          <span class="gate__fill gate__fill--wip" style="width:6.6667%"></span>
-          <span class="gate__fill gate__fill--due" style="width:0.0000%"></span>
-        </div>
-        <p class="gate__nums">
-          <b>11</b><span class="gate__of">/ 30 완료</span>
-          <em class="n-wip">작업중 2</em>
-        </p>
-      </li>
-<li class="gate">
-        <div class="gate__head">
-          <span class="gate__step">2</span>
-          <h3 class="gate__name">대본</h3>
-          <span class="gate__scope">슬라이드 클립 30개</span>
-        </div>
-        <p class="gate__hint">강사 검수까지 끝난 대본이 있는가</p>
-        <div class="gate__bar" role="img" aria-label="대본 완료 11, 작업중 0, 예정 0, 시작전 19, 전체 30">
-          <span class="gate__fill gate__fill--done" style="width:36.6667%"></span>
-          <span class="gate__fill gate__fill--wip" style="width:0.0000%"></span>
-          <span class="gate__fill gate__fill--due" style="width:0.0000%"></span>
-        </div>
-        <p class="gate__nums">
-          <b>11</b><span class="gate__of">/ 30 완료</span>
-          
-        </p>
-      </li>
-<li class="gate">
-        <div class="gate__head">
-          <span class="gate__step">3</span>
-          <h3 class="gate__name">촬영</h3>
-          <span class="gate__scope">전체 클립 72개</span>
-        </div>
-        <p class="gate__hint">영상 수록을 마쳤는가</p>
-        <div class="gate__bar" role="img" aria-label="촬영 완료 13, 작업중 6, 예정 0, 시작전 53, 전체 72">
-          <span class="gate__fill gate__fill--done" style="width:18.0556%"></span>
-          <span class="gate__fill gate__fill--wip" style="width:8.3333%"></span>
-          <span class="gate__fill gate__fill--due" style="width:0.0000%"></span>
-        </div>
-        <p class="gate__nums">
-          <b>13</b><span class="gate__of">/ 72 완료</span>
-          <em class="n-wip">작업중 6</em>
-        </p>
-      </li>
-      </ol>
-
-      <section>
-        <h2>읽는 법</h2>
-        <p class="note">
-          공정은 <b>제작 → 대본 → 촬영</b> 순으로 흐른다. 한 줄을 왼쪽에서
-          오른쪽으로 읽으면 그 클립이 어디까지 갔는지가 보인다.
-        </p>
-        <p class="note">
-          <b>실습 클립은 슬라이드가 없다.</b> 화면 시연이 본체라 덱과 대본을 만들지
-          않으므로 제작·대본이 <b>해당없음</b>이다. 할 일이 남은 것이 아니라 애초에
-          없는 것이라서 미착수와 구별한다. 이 클립도 촬영은 해야 하니 표에는 함께 있다.
-        </p>
-        <p class="note">
-          <b>앞 공정이 끝나면 다음 공정은 자동으로 예정이 된다.</b>
-          제작을 마치면 대본이, 대본을 마치면 촬영이 곧 할 일로 올라온다.
-          이미 완료했거나 손대고 있는 칸은 그대로 둔다.
-        </p>
-        <p class="note">납기일이 아직 안 적혀 있어 미착수는 모두 <b>시작전</b>이다. <code>dashboard/clips.json</code>의 <code>납기</code>에 파트별 날짜를 적으면 그 납기의 파트가 <b>예정</b>으로 갈린다.</p>
-        <ul class="legend">
-          <li><span class="chip chip--done">완료</span> 끝났다</li>
-          <li><span class="chip chip--wip">작업중</span> 손대고 있다</li>
-          <li><span class="chip chip--due">예정</span> 곧 해야 한다 · 앞 공정이 끝났거나 지금 납기</li>
-          <li><span class="chip chip--later">시작전</span> 아직 차례가 아니다</li>
-          <li><span class="chip chip--na">—</span> 해당없음 · 실습 클립</li>
-        </ul>
-      </section>
-
-      <section>
-        <h2>맞물림 검사</h2>
-        <p class="check check--ok"><b>어긋난 곳 없음.</b> 소스의 장수, 덱의 실제 장수, 대본의 장수가 모두 맞는다.</p>
-      </section>
-
-      <section>
-        <h2>클립별 현황</h2>
-        <div class="parts">
-<section class="part">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Orca 강의 · 작업 현황</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+:root{--bg:#f3f5f8;--paper:#fff;--ink:#18263b;--muted:#66758a;--line:#dce3ec;--navy:#1e3352;--brand:#df204e;--done:#147653;--done-bg:#e3f3eb;--wip:#a85a00;--wip-bg:#fff0cc;--due:#2864ac;--due-bg:#e8f0ff;--sans:'IBM Plex Sans KR',sans-serif;--mono:'IBM Plex Mono',monospace}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 var(--sans)}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--due);outline-offset:4px}[hidden]{display:none!important}h1,h2,h3,p{margin:0}button{color:inherit}code{font:12px var(--mono)}.wrap{max-width:1480px;margin:auto;padding:40px 36px 60px}.masthead{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;gap:20px}.eyebrow{color:var(--brand);font-size:11px;font-weight:700;letter-spacing:.14em;margin-bottom:7px}h1{font-size:34px;letter-spacing:-1.6px;line-height:1.3}.standfirst{color:var(--muted);margin-top:8px}.stamp{font-size:12px;color:var(--muted);text-align:right}.stamp strong{display:block;color:var(--ink);font-size:14px}.delivery{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.batch{--accent:var(--navy);text-align:left;background:var(--paper);border:1px solid var(--line);border-top:4px solid var(--accent);border-radius:10px;padding:21px 23px;position:relative;transition:box-shadow .16s,border-color .16s}.batch[data-batch='2']{--accent:#5962a2}.batch[data-batch='3']{--accent:#267d8e}.batch[aria-pressed=true]{box-shadow:0 0 0 2px var(--accent);border-color:var(--accent)}.batch:hover{background:#f9fbff}.batch-top{display:flex;align-items:baseline;justify-content:space-between;gap:10px}.batch-title{font-size:21px;font-weight:700;color:var(--accent)}.batch-date{font-size:12px;color:var(--muted)}.batch-range{display:block;color:var(--muted);margin:4px 0 20px}.batch-progress{display:flex;align-items:baseline;gap:6px}.batch-progress b{font:600 32px/1 var(--mono);letter-spacing:-2px}.batch-progress span{font-size:12px;color:var(--muted)}.batch-progress em{font-style:normal;font-size:12px;margin-left:auto;color:var(--accent);font-weight:600}.batch-bar{display:block;height:6px;border-radius:10px;background:#e8edf3;margin:14px 0 9px;overflow:hidden}.batch-bar i{display:block;background:var(--accent);height:100%;border-radius:inherit}.batch-bottom{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}.batch .selected{font-weight:600;color:var(--accent)}.workspace{margin-top:30px}.toolbar{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:16px;flex-wrap:wrap}.scope{display:flex;gap:12px;align-items:center}.scope h2{font-size:21px;letter-spacing:-.5px}.text-button{border:0;background:none;color:var(--due);font-size:12px;padding:7px}.filters{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.filters input,.filters select{border:1px solid var(--line);background:var(--paper);border-radius:6px;padding:8px 10px;color:var(--ink);height:38px}.filters input{width:210px}.field-label{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.metrics{display:grid;grid-template-columns:repeat(4,1fr);background:var(--navy);color:#fff;border-radius:10px;padding:19px 7px;margin-bottom:16px}.metric{padding:0 22px;border-right:1px solid #ffffff28}.metric:last-child{border:0}.metric-label{font-size:12px;color:#c5d1e3;display:flex;align-items:center;gap:8px}.metric-value{display:flex;align-items:baseline;gap:6px;margin:4px 0}.metric-value b{font:600 28px var(--mono)}.metric-value span{font-size:12px;color:#c5d1e3}.metric-note{font-size:11px;color:#c5d1e3}.metric-note strong{color:#ffd887;font-weight:500}.flows{display:flex;flex-wrap:wrap;gap:12px 28px;color:var(--muted);font-size:12px;padding:0 2px 18px}.flows b{font-weight:600;color:var(--ink);margin-right:10px}.flows .arrow{color:#9aa7b7;padding:0 7px}.list-meta{display:flex;justify-content:space-between;align-items:center;margin:8px 0 10px;gap:12px;font-size:12px;color:var(--muted)}.legend{display:flex;gap:14px;flex-wrap:wrap}.legend span{display:flex;align-items:center;gap:5px}.legend i{width:6px;height:6px;border-radius:50%;background:#aeb8c7}.legend .done{background:var(--done)}.legend .wip{background:#d68a19}.legend .due{background:var(--due)}.parts{display:grid;gap:20px}.part{background:var(--paper);border:1px solid var(--line);border-radius:10px;overflow:hidden}.part__head{display:flex;align-items:center;gap:12px;padding:16px 20px;background:#f9fbfd;border-bottom:1px solid var(--line)}.part__name{font:600 13px var(--mono);color:var(--muted);white-space:nowrap}.part__title{font-weight:700;font-size:16px}.part__tally{margin-left:auto;color:var(--muted);white-space:nowrap;font-size:12px}.part__meter,.part__pct,.part__due{display:none}.tablewrap{overflow:auto}.grid{border-collapse:collapse;width:100%;table-layout:fixed;min-width:910px}.grid th{text-align:left;font-size:11px;font-weight:500;color:var(--muted);padding:9px 12px;border-bottom:1px solid var(--line)}.grid td{padding:13px 12px;border-bottom:1px solid #edf0f5;vertical-align:middle}.grid tbody tr:last-child td{border:0}.c-clip{width:103px;padding-left:20px!important}.c-title{width:auto;font-weight:600}.c-len{width:55px;font-size:12px;color:var(--muted)}.c-count{width:68px}.c-stage{width:115px;text-align:center!important}.c-note{width:140px;color:var(--muted);font-size:11px;font-weight:400;overflow-wrap:anywhere}.c-stage small{display:block;font-size:10px;color:var(--muted);margin-bottom:3px}.chap th{background:#fafbfd;font-size:11px!important;padding:7px 20px!important;letter-spacing:.01em}.kind{font-size:11px;border-radius:4px;padding:3px 7px;font-weight:500}.kind--theory{color:#4e5e86;background:#eff1f8}.kind--practice{color:#256e71;background:#e7f3f2}.chip{display:inline-flex;gap:5px;align-items:center;justify-content:center;min-width:72px;border-radius:5px;font-size:12px;padding:5px 8px;font-weight:500;white-space:nowrap}.chip--done{background:var(--done-bg);color:var(--done)}.chip--done:before{content:'✓';font-size:12px}.chip--wip{background:var(--wip-bg);color:var(--wip);font-weight:700;box-shadow:inset 0 0 0 1px #e5ab462e}.chip--wip:before{content:'';width:7px;height:7px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%}.chip--due{background:var(--due-bg);color:var(--due)}.chip--later{color:#8b97a7;background:#f4f6f9}.chip--na{font-size:10px;color:#96a1af}.row-active .c-title{color:#8a5106}.empty{text-align:center;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:48px 20px;color:var(--muted)}.empty strong{display:block;color:var(--ink);font-size:17px;margin-bottom:7px}.foot{display:flex;justify-content:space-between;margin-top:28px;gap:20px;font-size:12px;color:var(--muted);align-items:flex-start}.foot details{max-width:780px}.foot summary{cursor:pointer;color:var(--ink)}.foot details p{margin-top:8px}.checklist{padding-left:18px}.check--ok{color:var(--done)}noscript{display:block;padding:10px;background:#fff0cc;margin-bottom:12px}
+@media(min-width:1500px){.c-note{width:200px}.c-stage{width:130px}}
+@media(max-width:850px){.wrap{padding:24px 18px}.masthead{align-items:flex-start}.stamp{display:none}h1{font-size:29px}.batch{padding:15px}.batch-title{font-size:18px}.batch-range{font-size:12px;margin-bottom:14px}.batch-progress{flex-wrap:wrap}.batch-progress b{font-size:26px}.batch-progress em{width:100%;margin:2px 0 0}.metric{padding:0 14px}.filters{width:100%}.filters input{flex:1;min-width:150px}.part__title{font-size:14px}}
+@media(max-width:560px){.delivery{grid-template-columns:1fr;gap:8px}.batch{padding:12px 15px;display:grid;grid-template-columns:1fr 1fr;column-gap:18px;border-top-width:1px;border-left:4px solid var(--accent)}.batch-top{grid-column:1;grid-row:1}.batch-range{grid-column:1;grid-row:2;margin:2px 0}.batch-progress{grid-column:2;grid-row:1/3;justify-content:flex-end;align-content:center}.batch-progress em{width:auto;margin-left:4px}.batch-bar{grid-column:1/3;margin:10px 0 7px}.batch-bottom{grid-column:1/3}.metrics{grid-template-columns:repeat(2,1fr);padding:4px 0}.metric{padding:12px 16px}.metric:nth-child(2){border:0}.metric:nth-child(-n+2){border-bottom:1px solid #ffffff28}.flows{display:grid;gap:5px}.list-meta{align-items:flex-start;flex-direction:column}.part__head{gap:8px;padding:13px}.part__title{font-size:13px}.part__tally{font-size:10px}.foot{flex-direction:column}.batch-date{font-size:10px}.scope h2{font-size:19px}.filters select{flex:1}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="masthead"><div><p class="eyebrow">ORCA COURSE · PRODUCTION</p><h1>강의 작업 현황</h1><p class="standfirst">자료 준비부터 촬영까지, 납품 차수별로 확인합니다.</p></div><p class="stamp"><strong>10 Parts · 72 Clips</strong>업데이트 2026-09-11</p></header>
+<nav class="delivery" id="deliveries" aria-label="납품 차수 선택"></nav>
+<main class="workspace">
+<div class="toolbar"><div class="scope"><h2 id="scope-title">전체 납품</h2><button class="text-button" id="reset">전체 보기</button></div><div class="filters"><label class="field-label" for="kind">클립 유형</label><select id="kind"><option value="all">모든 유형</option><option value="theory">이론</option><option value="practice">실습</option></select><label class="field-label" for="status">작업 상태</label><select id="status"><option value="all">모든 상태</option><option value="active">작업중</option><option value="open">미완료</option><option value="done">전체 공정 완료</option></select><label class="field-label" for="search">클립 검색</label><input id="search" type="search" placeholder="클립 제목 · 번호 검색"></div></div>
+<section class="metrics" id="metrics" aria-label="선택한 클립의 공정 현황"></section>
+<div class="flows"><span><b>이론</b>슬라이드<span class="arrow">→</span>대본<span class="arrow">→</span>촬영</span><span><b>실습</b>실습자료<span class="arrow">→</span>촬영</span></div>
+<div class="list-meta"><p id="list-count" role="status" aria-live="polite"></p><div class="legend" aria-label="상태 범례"><span><i class="done"></i>완료</span><span><i class="wip"></i>작업중</span><span><i class="due"></i>예정</span><span><i></i>시작전</span></div></div>
+<noscript>필터를 사용하려면 JavaScript를 켜주세요. 전체 클립 현황은 아래에서 확인할 수 있습니다.</noscript>
+<div class="parts"><section class="part" data-part="1" data-batch="1">
         <header class="part__head">
           <h3 class="part__name">Part 1</h3>
           <span class="part__title">왜 팀이 필요한가 (강의 개요)</span>
           
-          <span class="part__tally">3클립 · 슬라이드 3</span>
+          <span class="part__tally">3클립</span>
           <span class="part__meter" role="img" aria-label="공정 9/9 완료">
             <span class="part__meter-fill" style="width:100.0000%"></span>
           </span>
@@ -681,41 +40,41 @@
             <th scope="col" class="c-clip">클립</th>
             <th scope="col" class="c-title">제목</th>
             <th scope="col" class="c-len">길이</th>
-            <th scope="col" class="c-count">장수</th>
-            <th scope="col" class="c-stage"><span class="c-stage__n">1</span>제작</th>
-            <th scope="col" class="c-stage"><span class="c-stage__n">2</span>대본</th>
-            <th scope="col" class="c-stage"><span class="c-stage__n">3</span>촬영</th>
+            <th scope="col" class="c-count">유형</th>
+            <th scope="col" class="c-stage">자료 제작</th>
+            <th scope="col" class="c-stage">대본</th>
+            <th scope="col" class="c-stage">촬영</th>
             <th scope="col" class="c-note">비고</th>
           </tr></thead>
           <tbody>
 <tr class="chap"><th colspan="8" scope="colgroup">Chapter 1. 오리엔테이션</th></tr>
-<tr>
+<tr data-key="1-Ch01-01" data-clip>
               <td class="c-clip"><code>Ch01-01</code></td>
               <td class="c-title">강의 소개와 최종 결과물</td>
               <td class="c-len">11분</td>
-              <td class="c-count">8장</td>
-              <td class="c-stage"><span class="chip chip--done" title="제작 완료">완료</span></td>
+              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-stage"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="대본 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="촬영 완료">완료</span></td>
               <td class="c-note">Google Slides로 제작·확정</td>
             </tr>
-<tr>
+<tr data-key="1-Ch01-02" data-clip>
               <td class="c-clip"><code>Ch01-02</code></td>
               <td class="c-title">강의 로드맵과 선수 지식</td>
               <td class="c-len">9분</td>
-              <td class="c-count">7장</td>
-              <td class="c-stage"><span class="chip chip--done" title="제작 완료">완료</span></td>
+              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-stage"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="대본 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="촬영 완료">완료</span></td>
               <td class="c-note">Google Slides로 제작·확정</td>
             </tr>
 <tr class="chap"><th colspan="8" scope="colgroup">Chapter 2. 단일 에이전트의 한계</th></tr>
-<tr>
+<tr data-key="1-Ch02-01" data-clip>
               <td class="c-clip"><code>Ch02-01</code></td>
               <td class="c-title">에이전트 하나로 되는 일과 안 되는 일</td>
               <td class="c-len">14분</td>
-              <td class="c-count">5장</td>
-              <td class="c-stage"><span class="chip chip--done" title="제작 완료">완료</span></td>
+              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-stage"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="대본 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="촬영 완료">완료</span></td>
               <td class="c-note"></td>
@@ -724,16 +83,16 @@
         </table>
         </div>
       </section>
-<section class="part">
+<section class="part" data-part="2" data-batch="1">
         <header class="part__head">
           <h3 class="part__name">Part 2</h3>
           <span class="part__title">Orca 설치 및 기본 사용</span>
           
-          <span class="part__tally">5클립 · 슬라이드 3</span>
-          <span class="part__meter" role="img" aria-label="공정 11/11 완료">
-            <span class="part__meter-fill" style="width:100.0000%"></span>
+          <span class="part__tally">5클립</span>
+          <span class="part__meter" role="img" aria-label="공정 11/13 완료">
+            <span class="part__meter-fill" style="width:84.6154%"></span>
           </span>
-          <span class="part__pct">11/11</span>
+          <span class="part__pct">11/13</span>
         </header>
         <div class="tablewrap">
         <table class="grid">
@@ -741,79 +100,79 @@
             <th scope="col" class="c-clip">클립</th>
             <th scope="col" class="c-title">제목</th>
             <th scope="col" class="c-len">길이</th>
-            <th scope="col" class="c-count">장수</th>
-            <th scope="col" class="c-stage"><span class="c-stage__n">1</span>제작</th>
-            <th scope="col" class="c-stage"><span class="c-stage__n">2</span>대본</th>
-            <th scope="col" class="c-stage"><span class="c-stage__n">3</span>촬영</th>
+            <th scope="col" class="c-count">유형</th>
+            <th scope="col" class="c-stage">자료 제작</th>
+            <th scope="col" class="c-stage">대본</th>
+            <th scope="col" class="c-stage">촬영</th>
             <th scope="col" class="c-note">비고</th>
           </tr></thead>
           <tbody>
 <tr class="chap"><th colspan="8" scope="colgroup">Chapter 1. Orca는 왜 나왔는가</th></tr>
-<tr>
+<tr data-key="2-Ch01-01" data-clip>
               <td class="c-clip"><code>Ch01-01</code></td>
               <td class="c-title">터미널 여러 개의 문제</td>
               <td class="c-len">6분</td>
-              <td class="c-count">5장</td>
-              <td class="c-stage"><span class="chip chip--done" title="제작 완료">완료</span></td>
+              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-stage"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="대본 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="촬영 완료">완료</span></td>
               <td class="c-note"></td>
             </tr>
-<tr>
+<tr data-key="2-Ch01-02" data-clip>
               <td class="c-clip"><code>Ch01-02</code></td>
               <td class="c-title">Orca는 어떤 도구인가</td>
               <td class="c-len">7분</td>
-              <td class="c-count">6장</td>
-              <td class="c-stage"><span class="chip chip--done" title="제작 완료">완료</span></td>
+              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-stage"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="대본 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="촬영 완료">완료</span></td>
               <td class="c-note"></td>
             </tr>
 <tr class="chap"><th colspan="8" scope="colgroup">Chapter 2. Orca 설치와 첫 실행</th></tr>
-<tr>
+<tr data-key="2-Ch02-01" data-clip>
               <td class="c-clip"><code>Ch02-01</code></td>
               <td class="c-title">설치 전 준비물과 환경 체크</td>
               <td class="c-len">5분</td>
-              <td class="c-count">3장</td>
-              <td class="c-stage"><span class="chip chip--done" title="제작 완료">완료</span></td>
+              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-stage"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="대본 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="촬영 완료">완료</span></td>
               <td class="c-note"></td>
             </tr>
-<tr class="row--practice">
+<tr class="row--practice" data-key="2-Ch02-02" data-clip>
               <td class="c-clip"><code>Ch02-02</code></td>
               <td class="c-title">설치와 에이전트 연결하기</td>
               <td class="c-len">10분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--done" title="촬영 완료">완료</span></td>
-              <td class="c-note">실습</td>
+              <td class="c-note"></td>
             </tr>
-<tr class="row--practice">
+<tr class="row--practice" data-key="2-Ch02-03" data-clip>
               <td class="c-clip"><code>Ch02-03</code></td>
               <td class="c-title">화면 구조와 보드 읽는 법</td>
               <td class="c-len">8분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--done" title="촬영 완료">완료</span></td>
-              <td class="c-note">실습</td>
+              <td class="c-note"></td>
             </tr>
           </tbody>
         </table>
         </div>
       </section>
-<section class="part">
+<section class="part" data-part="3" data-batch="1">
         <header class="part__head">
           <h3 class="part__name">Part 3</h3>
           <span class="part__title">Git과 워크트리</span>
           
-          <span class="part__tally">5클립 · 슬라이드 3</span>
-          <span class="part__meter" role="img" aria-label="공정 9/11 완료">
-            <span class="part__meter-fill" style="width:81.8182%"></span>
+          <span class="part__tally">5클립</span>
+          <span class="part__meter" role="img" aria-label="공정 9/13 완료">
+            <span class="part__meter-fill" style="width:69.2308%"></span>
           </span>
-          <span class="part__pct">9/11</span>
+          <span class="part__pct">9/13</span>
         </header>
         <div class="tablewrap">
         <table class="grid">
@@ -821,79 +180,79 @@
             <th scope="col" class="c-clip">클립</th>
             <th scope="col" class="c-title">제목</th>
             <th scope="col" class="c-len">길이</th>
-            <th scope="col" class="c-count">장수</th>
-            <th scope="col" class="c-stage"><span class="c-stage__n">1</span>제작</th>
-            <th scope="col" class="c-stage"><span class="c-stage__n">2</span>대본</th>
-            <th scope="col" class="c-stage"><span class="c-stage__n">3</span>촬영</th>
+            <th scope="col" class="c-count">유형</th>
+            <th scope="col" class="c-stage">자료 제작</th>
+            <th scope="col" class="c-stage">대본</th>
+            <th scope="col" class="c-stage">촬영</th>
             <th scope="col" class="c-note">비고</th>
           </tr></thead>
           <tbody>
 <tr class="chap"><th colspan="8" scope="colgroup">Chapter 1. 비개발자를 위한 Git 개념</th></tr>
-<tr>
+<tr data-key="3-Ch01-01" data-clip>
               <td class="c-clip"><code>Ch01-01</code></td>
               <td class="c-title">Git이란 - 버전 관리가 없다면</td>
               <td class="c-len">8분</td>
-              <td class="c-count">5장</td>
-              <td class="c-stage"><span class="chip chip--done" title="제작 완료">완료</span></td>
+              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-stage"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="대본 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="촬영 완료">완료</span></td>
               <td class="c-note"></td>
             </tr>
-<tr>
+<tr data-key="3-Ch01-02" data-clip>
               <td class="c-clip"><code>Ch01-02</code></td>
               <td class="c-title">저장소와 작업흐름</td>
               <td class="c-len">10분</td>
-              <td class="c-count">8장</td>
-              <td class="c-stage"><span class="chip chip--done" title="제작 완료">완료</span></td>
+              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-stage"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="대본 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="촬영 완료">완료</span></td>
               <td class="c-note"></td>
             </tr>
-<tr>
+<tr data-key="3-Ch01-03" data-clip>
               <td class="c-clip"><code>Ch01-03</code></td>
               <td class="c-title">브랜치와 워크트리</td>
               <td class="c-len">10분</td>
-              <td class="c-count">8장</td>
-              <td class="c-stage"><span class="chip chip--done" title="제작 완료">완료</span></td>
+              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-stage"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="대본 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="촬영 완료">완료</span></td>
               <td class="c-note"></td>
             </tr>
 <tr class="chap"><th colspan="8" scope="colgroup">Chapter 2. Git 설치와 저장소 만들기</th></tr>
-<tr class="row--practice">
+<tr class="row--practice" data-key="3-Ch02-01" data-clip>
               <td class="c-clip"><code>Ch02-01</code></td>
               <td class="c-title">Git 설치와 초기 설정</td>
               <td class="c-len">7분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--wip" title="촬영 작업중">작업중</span></td>
-              <td class="c-note">실습</td>
+              <td class="c-note"></td>
             </tr>
-<tr class="row--practice">
+<tr class="row--practice" data-key="3-Ch02-02" data-clip>
               <td class="c-clip"><code>Ch02-02</code></td>
               <td class="c-title">GitHub 가입 및 Orca에 연결하기</td>
               <td class="c-len">13분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--wip" title="촬영 작업중">작업중</span></td>
-              <td class="c-note">실습</td>
+              <td class="c-note"></td>
             </tr>
           </tbody>
         </table>
         </div>
       </section>
-<section class="part">
+<section class="part" data-part="4" data-batch="1">
         <header class="part__head">
           <h3 class="part__name">Part 4</h3>
           <span class="part__title">오케스트레이션과 스킬</span>
           
-          <span class="part__tally">8클립 · 슬라이드 4</span>
-          <span class="part__meter" role="img" aria-label="공정 6/16 완료">
-            <span class="part__meter-fill" style="width:37.5000%"></span>
+          <span class="part__tally">8클립</span>
+          <span class="part__meter" role="img" aria-label="공정 6/20 완료">
+            <span class="part__meter-fill" style="width:30.0000%"></span>
           </span>
-          <span class="part__pct">6/16</span>
+          <span class="part__pct">6/20</span>
         </header>
         <div class="tablewrap">
         <table class="grid">
@@ -901,107 +260,545 @@
             <th scope="col" class="c-clip">클립</th>
             <th scope="col" class="c-title">제목</th>
             <th scope="col" class="c-len">길이</th>
-            <th scope="col" class="c-count">장수</th>
-            <th scope="col" class="c-stage"><span class="c-stage__n">1</span>제작</th>
-            <th scope="col" class="c-stage"><span class="c-stage__n">2</span>대본</th>
-            <th scope="col" class="c-stage"><span class="c-stage__n">3</span>촬영</th>
+            <th scope="col" class="c-count">유형</th>
+            <th scope="col" class="c-stage">자료 제작</th>
+            <th scope="col" class="c-stage">대본</th>
+            <th scope="col" class="c-stage">촬영</th>
             <th scope="col" class="c-note">비고</th>
           </tr></thead>
           <tbody>
 <tr class="chap"><th colspan="8" scope="colgroup">Chapter 1. 오케스트레이션이란</th></tr>
-<tr>
+<tr data-key="4-Ch01-01" data-clip>
               <td class="c-clip"><code>Ch01-01</code></td>
               <td class="c-title">오케스트레이션 구조 살펴보기</td>
               <td class="c-len">7분</td>
-              <td class="c-count">8장</td>
-              <td class="c-stage"><span class="chip chip--done" title="제작 완료">완료</span></td>
+              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-stage"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="대본 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="촬영 완료">완료</span></td>
               <td class="c-note"></td>
             </tr>
-<tr>
+<tr data-key="4-Ch01-02" data-clip>
               <td class="c-clip"><code>Ch01-02</code></td>
               <td class="c-title">목표와 작업, 실행의 흐름</td>
               <td class="c-len">8분</td>
-              <td class="c-count">9장</td>
-              <td class="c-stage"><span class="chip chip--done" title="제작 완료">완료</span></td>
+              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-stage"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="대본 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="촬영 완료">완료</span></td>
               <td class="c-note"></td>
             </tr>
 <tr class="chap"><th colspan="8" scope="colgroup">Chapter 2. 첫 오케스트레이션 돌려보기</th></tr>
-<tr class="row--practice">
+<tr class="row--practice" data-key="4-Ch02-01" data-clip>
               <td class="c-clip"><code>Ch02-01</code></td>
               <td class="c-title">오케스트레이션 스킬 설치하기</td>
               <td class="c-len">10분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--wip" title="촬영 작업중">작업중</span></td>
-              <td class="c-note">실습</td>
+              <td class="c-note"></td>
             </tr>
-<tr class="row--practice">
+<tr class="row--practice" data-key="4-Ch02-02" data-clip>
               <td class="c-clip"><code>Ch02-02</code></td>
               <td class="c-title">목표 하나로 요청하기</td>
               <td class="c-len">11분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--wip" title="촬영 작업중">작업중</span></td>
-              <td class="c-note">실습</td>
+              <td class="c-note"></td>
             </tr>
 <tr class="chap"><th colspan="8" scope="colgroup">Chapter 3. 스킬 알아보기</th></tr>
-<tr>
+<tr data-key="4-Ch03-01" data-clip>
               <td class="c-clip"><code>Ch03-01</code></td>
               <td class="c-title">스킬과 플러그인이란</td>
               <td class="c-len">10분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--wip" title="제작 작업중">작업중</span></td>
+              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-stage"><small>슬라이드</small><span class="chip chip--wip" title="자료 제작 작업중">작업중</span></td>
               <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
               <td class="c-note">강사 지정: Part 4까지 미완료 이론 클립 제작 진행</td>
             </tr>
-<tr>
+<tr data-key="4-Ch03-02" data-clip>
               <td class="c-clip"><code>Ch03-02</code></td>
               <td class="c-title">1인 회사 운영에 유용한 스킬 모음</td>
               <td class="c-len">10분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--wip" title="제작 작업중">작업중</span></td>
+              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-stage"><small>슬라이드</small><span class="chip chip--wip" title="자료 제작 작업중">작업중</span></td>
               <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
               <td class="c-note">강사 지정: Part 4까지 미완료 이론 클립 제작 진행</td>
             </tr>
 <tr class="chap"><th colspan="8" scope="colgroup">Chapter 4. 회사 문서 만들기</th></tr>
-<tr class="row--practice">
+<tr class="row--practice" data-key="4-Ch04-01" data-clip>
               <td class="c-clip"><code>Ch04-01</code></td>
               <td class="c-title">스킬로 회사 소개서와 말투 규칙 만들기</td>
               <td class="c-len">14분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--wip" title="촬영 작업중">작업중</span></td>
-              <td class="c-note">실습</td>
+              <td class="c-note"></td>
             </tr>
-<tr class="row--practice">
+<tr class="row--practice" data-key="4-Ch04-02" data-clip>
               <td class="c-clip"><code>Ch04-02</code></td>
               <td class="c-title">회사 사규 작성하기</td>
               <td class="c-len">14분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--wip" title="촬영 작업중">작업중</span></td>
-              <td class="c-note">실습</td>
+              <td class="c-note"></td>
             </tr>
           </tbody>
         </table>
         </div>
       </section>
-<section class="part">
+<section class="part" data-part="5" data-batch="2">
         <header class="part__head">
           <h3 class="part__name">Part 5</h3>
           <span class="part__title">기획팀: 리서치부터 기획서까지 (순차 파이프라인)</span>
           
-          <span class="part__tally">15클립 · 슬라이드 5</span>
+          <span class="part__tally">15클립</span>
+          <span class="part__meter" role="img" aria-label="공정 0/35 완료">
+            <span class="part__meter-fill" style="width:0.0000%"></span>
+          </span>
+          <span class="part__pct">0/35</span>
+        </header>
+        <div class="tablewrap">
+        <table class="grid">
+          <thead><tr>
+            <th scope="col" class="c-clip">클립</th>
+            <th scope="col" class="c-title">제목</th>
+            <th scope="col" class="c-len">길이</th>
+            <th scope="col" class="c-count">유형</th>
+            <th scope="col" class="c-stage">자료 제작</th>
+            <th scope="col" class="c-stage">대본</th>
+            <th scope="col" class="c-stage">촬영</th>
+            <th scope="col" class="c-note">비고</th>
+          </tr></thead>
+          <tbody>
+<tr class="chap"><th colspan="8" scope="colgroup">Chapter 1. 앞으로 만들 4가지 프로젝트</th></tr>
+<tr data-key="5-Ch01-01" data-clip>
+              <td class="c-clip"><code>Ch01-01</code></td>
+              <td class="c-title">4가지 협업 패턴과 프로젝트 미리보기</td>
+              <td class="c-len">10분</td>
+              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note">패턴 4가지 이름·정의 노출</td>
+            </tr>
+<tr data-key="5-Ch01-02" data-clip>
+              <td class="c-clip"><code>Ch01-02</code></td>
+              <td class="c-title">멀티 에이전트가 오히려 나빠지는 3가지 이유</td>
+              <td class="c-len">10분</td>
+              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note">맥락 붕괴 · 유령 위임 · 검증 오류</td>
+            </tr>
+<tr class="chap"><th colspan="8" scope="colgroup">Chapter 2. 기획팀 설계와 스킬 설치</th></tr>
+<tr data-key="5-Ch02-01" data-clip>
+              <td class="c-clip"><code>Ch02-01</code></td>
+              <td class="c-title">기획팀 구조와 업무 흐름</td>
+              <td class="c-len">11분</td>
+              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note"></td>
+            </tr>
+<tr data-key="5-Ch02-02" data-clip>
+              <td class="c-clip"><code>Ch02-02</code></td>
+              <td class="c-title">순차 파이프라인이란</td>
+              <td class="c-len">11분</td>
+              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note">패턴 01 순차 파이프라인</td>
+            </tr>
+<tr class="row--practice" data-key="5-Ch02-03" data-clip>
+              <td class="c-clip"><code>Ch02-03</code></td>
+              <td class="c-title">기획 전 필수 스킬 써보기</td>
+              <td class="c-len">11분</td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note"></td>
+            </tr>
+<tr class="chap"><th colspan="8" scope="colgroup">Chapter 3. 산출물 표준화하기</th></tr>
+<tr class="row--practice" data-key="5-Ch03-01" data-clip>
+              <td class="c-clip"><code>Ch03-01</code></td>
+              <td class="c-title">시장 조사 노트 표준화</td>
+              <td class="c-len">10분</td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note"></td>
+            </tr>
+<tr class="row--practice" data-key="5-Ch03-02" data-clip>
+              <td class="c-clip"><code>Ch03-02</code></td>
+              <td class="c-title">아이템 후보 표준화</td>
+              <td class="c-len">11분</td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note"></td>
+            </tr>
+<tr class="row--practice" data-key="5-Ch03-03" data-clip>
+              <td class="c-clip"><code>Ch03-03</code></td>
+              <td class="c-title">판매 아이템 기획서 양식 표준화</td>
+              <td class="c-len">11분</td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note"></td>
+            </tr>
+<tr class="chap"><th colspan="8" scope="colgroup">Chapter 4. 단계별로 나눠서 실행하기</th></tr>
+<tr class="row--practice" data-key="5-Ch04-01" data-clip>
+              <td class="c-clip"><code>Ch04-01</code></td>
+              <td class="c-title">시장 조사 단계 실행하기</td>
+              <td class="c-len">11분</td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note"></td>
+            </tr>
+<tr class="row--practice" data-key="5-Ch04-02" data-clip>
+              <td class="c-clip"><code>Ch04-02</code></td>
+              <td class="c-title">아이템 후보 도출 단계 실행하기</td>
+              <td class="c-len">11분</td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note"></td>
+            </tr>
+<tr class="row--practice" data-key="5-Ch04-03" data-clip>
+              <td class="c-clip"><code>Ch04-03</code></td>
+              <td class="c-title">기획서 작성 단계 실행하기</td>
+              <td class="c-len">10분</td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note"></td>
+            </tr>
+<tr data-key="5-Ch04-04" data-clip>
+              <td class="c-clip"><code>Ch04-04</code></td>
+              <td class="c-title">품질 게이트로 통과 기준 세우기</td>
+              <td class="c-len">10분</td>
+              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note">유령 위임 대응 개념</td>
+            </tr>
+<tr class="chap"><th colspan="8" scope="colgroup">Chapter 5. 파이프라인으로 한 번에 돌리기</th></tr>
+<tr class="row--practice" data-key="5-Ch05-01" data-clip>
+              <td class="c-clip"><code>Ch05-01</code></td>
+              <td class="c-title">단계와 품질 게이트를 담은 파이프라인 프롬프트 작성하기</td>
+              <td class="c-len">14분</td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note"></td>
+            </tr>
+<tr class="row--practice" data-key="5-Ch05-02" data-clip>
+              <td class="c-clip"><code>Ch05-02</code></td>
+              <td class="c-title">목표 하나로 처음부터 끝까지 실행하기</td>
+              <td class="c-len">15분</td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note"></td>
+            </tr>
+<tr class="row--practice" data-key="5-Ch05-03" data-clip>
+              <td class="c-clip"><code>Ch05-03</code></td>
+              <td class="c-title">결과물 점검하고 프롬프트 다듬기</td>
+              <td class="c-len">14분</td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note"></td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+<section class="part" data-part="6" data-batch="2">
+        <header class="part__head">
+          <h3 class="part__name">Part 6</h3>
+          <span class="part__title">영업팀: 제안서·견적서 검증하기 (교차 검증)</span>
+          
+          <span class="part__tally">9클립</span>
+          <span class="part__meter" role="img" aria-label="공정 0/20 완료">
+            <span class="part__meter-fill" style="width:0.0000%"></span>
+          </span>
+          <span class="part__pct">0/20</span>
+        </header>
+        <div class="tablewrap">
+        <table class="grid">
+          <thead><tr>
+            <th scope="col" class="c-clip">클립</th>
+            <th scope="col" class="c-title">제목</th>
+            <th scope="col" class="c-len">길이</th>
+            <th scope="col" class="c-count">유형</th>
+            <th scope="col" class="c-stage">자료 제작</th>
+            <th scope="col" class="c-stage">대본</th>
+            <th scope="col" class="c-stage">촬영</th>
+            <th scope="col" class="c-note">비고</th>
+          </tr></thead>
+          <tbody>
+<tr class="chap"><th colspan="8" scope="colgroup">Chapter 1. 교차 검증이란</th></tr>
+<tr data-key="6-Ch01-01" data-clip>
+              <td class="c-clip"><code>Ch01-01</code></td>
+              <td class="c-title">Generator–Evaluator 패턴이란</td>
+              <td class="c-len">10분</td>
+              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note">패턴 02 교차 검증</td>
+            </tr>
+<tr data-key="6-Ch01-02" data-clip>
+              <td class="c-clip"><code>Ch01-02</code></td>
+              <td class="c-title">평가에 다른 모델을 쓰는 이유</td>
+              <td class="c-len">10분</td>
+              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note">검증 오류 대응 개념</td>
+            </tr>
+<tr class="chap"><th colspan="8" scope="colgroup">Chapter 2. 제안서·견적서 설계</th></tr>
+<tr class="row--practice" data-key="6-Ch02-01" data-clip>
+              <td class="c-clip"><code>Ch02-01</code></td>
+              <td class="c-title">클라이언트 브리프에서 요구사항 뽑기</td>
+              <td class="c-len">11분</td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note"></td>
+            </tr>
+<tr class="row--practice" data-key="6-Ch02-02" data-clip>
+              <td class="c-clip"><code>Ch02-02</code></td>
+              <td class="c-title">통과 기준 체크리스트 만들기</td>
+              <td class="c-len">10분</td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note"></td>
+            </tr>
+<tr class="chap"><th colspan="8" scope="colgroup">Chapter 3. 생성과 검증 붙이기</th></tr>
+<tr class="row--practice" data-key="6-Ch03-01" data-clip>
+              <td class="c-clip"><code>Ch03-01</code></td>
+              <td class="c-title">브리프 하나로 제안서 초안 만들기</td>
+              <td class="c-len">11분</td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note"></td>
+            </tr>
+<tr class="row--practice" data-key="6-Ch03-02" data-clip>
+              <td class="c-clip"><code>Ch03-02</code></td>
+              <td class="c-title">다른 모델로 검증하고 반려 사유 받기</td>
+              <td class="c-len">11분</td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note"></td>
+            </tr>
+<tr class="row--practice" data-key="6-Ch03-03" data-clip>
+              <td class="c-clip"><code>Ch03-03</code></td>
+              <td class="c-title">견적 항목과 가격 근거 검증하기</td>
+              <td class="c-len">10분</td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note"></td>
+            </tr>
+<tr class="chap"><th colspan="8" scope="colgroup">Chapter 4. 교차 검증 루프 돌리기</th></tr>
+<tr class="row--practice" data-key="6-Ch04-01" data-clip>
+              <td class="c-clip"><code>Ch04-01</code></td>
+              <td class="c-title">반려 사유 반영해서 다시 만들기</td>
+              <td class="c-len">9분</td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note"></td>
+            </tr>
+<tr class="row--practice" data-key="6-Ch04-02" data-clip>
+              <td class="c-clip"><code>Ch04-02</code></td>
+              <td class="c-title">통과할 때까지 도는 루프 완성하기</td>
+              <td class="c-len">8분</td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note"></td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+<section class="part" data-part="7" data-batch="2">
+        <header class="part__head">
+          <h3 class="part__name">Part 7</h3>
+          <span class="part__title">디자인팀: Best 시안 머지하기 (병렬)</span>
+          
+          <span class="part__tally">10클립</span>
+          <span class="part__meter" role="img" aria-label="공정 0/22 완료">
+            <span class="part__meter-fill" style="width:0.0000%"></span>
+          </span>
+          <span class="part__pct">0/22</span>
+        </header>
+        <div class="tablewrap">
+        <table class="grid">
+          <thead><tr>
+            <th scope="col" class="c-clip">클립</th>
+            <th scope="col" class="c-title">제목</th>
+            <th scope="col" class="c-len">길이</th>
+            <th scope="col" class="c-count">유형</th>
+            <th scope="col" class="c-stage">자료 제작</th>
+            <th scope="col" class="c-stage">대본</th>
+            <th scope="col" class="c-stage">촬영</th>
+            <th scope="col" class="c-note">비고</th>
+          </tr></thead>
+          <tbody>
+<tr class="chap"><th colspan="8" scope="colgroup">Chapter 1. 내 책상을 복제한다는 것</th></tr>
+<tr data-key="7-Ch01-01" data-clip>
+              <td class="c-clip"><code>Ch01-01</code></td>
+              <td class="c-title">워크트리로 작업 공간 분리하기</td>
+              <td class="c-len">10분</td>
+              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note">Part 3 워크트리 회수</td>
+            </tr>
+<tr class="row--practice" data-key="7-Ch01-02" data-clip>
+              <td class="c-clip"><code>Ch01-02</code></td>
+              <td class="c-title">Orca에서 워크트리 만들기</td>
+              <td class="c-len">7분</td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note"></td>
+            </tr>
+<tr class="chap"><th colspan="8" scope="colgroup">Chapter 2. 워크트리 병렬 실행 — 다른 에이전트 + 동일 작업</th></tr>
+<tr data-key="7-Ch02-01" data-clip>
+              <td class="c-clip"><code>Ch02-01</code></td>
+              <td class="c-title">같은 작업도 에이전트에 따라 결과가 갈린다</td>
+              <td class="c-len">7분</td>
+              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note">패턴 03 병렬 실행의 근거</td>
+            </tr>
+<tr class="row--practice" data-key="7-Ch02-02" data-clip>
+              <td class="c-clip"><code>Ch02-02</code></td>
+              <td class="c-title">두 에이전트에 같은 작업 동시에 시키기</td>
+              <td class="c-len">9분</td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note"></td>
+            </tr>
+<tr class="chap"><th colspan="8" scope="colgroup">Chapter 3. Best 시안 선택과 머지</th></tr>
+<tr class="row--practice" data-key="7-Ch03-01" data-clip>
+              <td class="c-clip"><code>Ch03-01</code></td>
+              <td class="c-title">두 결과물 눈으로 비교하고 고르기</td>
+              <td class="c-len">9분</td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note"></td>
+            </tr>
+<tr class="row--practice" data-key="7-Ch03-02" data-clip>
+              <td class="c-clip"><code>Ch03-02</code></td>
+              <td class="c-title">Best 시안 머지하기</td>
+              <td class="c-len">10분</td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note"></td>
+            </tr>
+<tr class="chap"><th colspan="8" scope="colgroup">Chapter 4. 브라우저에서 직접 고치기 (디자인 모드)</th></tr>
+<tr class="row--practice" data-key="7-Ch04-01" data-clip>
+              <td class="c-clip"><code>Ch04-01</code></td>
+              <td class="c-title">요소 클릭과 주석으로 수정 요청하기</td>
+              <td class="c-len">10분</td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note"></td>
+            </tr>
+<tr class="row--practice" data-key="7-Ch04-02" data-clip>
+              <td class="c-clip"><code>Ch04-02</code></td>
+              <td class="c-title">diff로 반영 확인하기</td>
+              <td class="c-len">10분</td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note"></td>
+            </tr>
+<tr class="chap"><th colspan="8" scope="colgroup">Chapter 5. 개발자도구로 스타일 바꾸기</th></tr>
+<tr class="row--practice" data-key="7-Ch05-01" data-clip>
+              <td class="c-clip"><code>Ch05-01</code></td>
+              <td class="c-title">개발자도구 켜고 요소 클릭해보기</td>
+              <td class="c-len">9분</td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note"></td>
+            </tr>
+<tr class="row--practice" data-key="7-Ch05-02" data-clip>
+              <td class="c-clip"><code>Ch05-02</code></td>
+              <td class="c-title">AI가 헷갈리지 않게 요소 이름으로 요청하기</td>
+              <td class="c-len">9분</td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
+              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
+              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
+              <td class="c-note"></td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+<section class="part" data-part="8" data-batch="3">
+        <header class="part__head">
+          <h3 class="part__name">Part 8</h3>
+          <span class="part__title">콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&amp;R 분배)</span>
+          
+          <span class="part__tally">11클립</span>
           <span class="part__meter" role="img" aria-label="공정 0/25 완료">
             <span class="part__meter-fill" style="width:0.0000%"></span>
           </span>
@@ -1013,580 +810,142 @@
             <th scope="col" class="c-clip">클립</th>
             <th scope="col" class="c-title">제목</th>
             <th scope="col" class="c-len">길이</th>
-            <th scope="col" class="c-count">장수</th>
-            <th scope="col" class="c-stage"><span class="c-stage__n">1</span>제작</th>
-            <th scope="col" class="c-stage"><span class="c-stage__n">2</span>대본</th>
-            <th scope="col" class="c-stage"><span class="c-stage__n">3</span>촬영</th>
-            <th scope="col" class="c-note">비고</th>
-          </tr></thead>
-          <tbody>
-<tr class="chap"><th colspan="8" scope="colgroup">Chapter 1. 앞으로 만들 4가지 프로젝트</th></tr>
-<tr>
-              <td class="c-clip"><code>Ch01-01</code></td>
-              <td class="c-title">4가지 협업 패턴과 프로젝트 미리보기</td>
-              <td class="c-len">10분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--later" title="제작 시작전">시작전</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">패턴 4가지 이름·정의 노출</td>
-            </tr>
-<tr>
-              <td class="c-clip"><code>Ch01-02</code></td>
-              <td class="c-title">멀티 에이전트가 오히려 나빠지는 3가지 이유</td>
-              <td class="c-len">10분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--later" title="제작 시작전">시작전</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">맥락 붕괴 · 유령 위임 · 검증 오류</td>
-            </tr>
-<tr class="chap"><th colspan="8" scope="colgroup">Chapter 2. 기획팀 설계와 스킬 설치</th></tr>
-<tr>
-              <td class="c-clip"><code>Ch02-01</code></td>
-              <td class="c-title">기획팀 구조와 업무 흐름</td>
-              <td class="c-len">11분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--later" title="제작 시작전">시작전</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note"></td>
-            </tr>
-<tr>
-              <td class="c-clip"><code>Ch02-02</code></td>
-              <td class="c-title">순차 파이프라인이란</td>
-              <td class="c-len">11분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--later" title="제작 시작전">시작전</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">패턴 01 순차 파이프라인</td>
-            </tr>
-<tr class="row--practice">
-              <td class="c-clip"><code>Ch02-03</code></td>
-              <td class="c-title">기획 전 필수 스킬 써보기</td>
-              <td class="c-len">11분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
-            </tr>
-<tr class="chap"><th colspan="8" scope="colgroup">Chapter 3. 산출물 표준화하기</th></tr>
-<tr class="row--practice">
-              <td class="c-clip"><code>Ch03-01</code></td>
-              <td class="c-title">시장 조사 노트 표준화</td>
-              <td class="c-len">10분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
-            </tr>
-<tr class="row--practice">
-              <td class="c-clip"><code>Ch03-02</code></td>
-              <td class="c-title">아이템 후보 표준화</td>
-              <td class="c-len">11분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
-            </tr>
-<tr class="row--practice">
-              <td class="c-clip"><code>Ch03-03</code></td>
-              <td class="c-title">판매 아이템 기획서 양식 표준화</td>
-              <td class="c-len">11분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
-            </tr>
-<tr class="chap"><th colspan="8" scope="colgroup">Chapter 4. 단계별로 나눠서 실행하기</th></tr>
-<tr class="row--practice">
-              <td class="c-clip"><code>Ch04-01</code></td>
-              <td class="c-title">시장 조사 단계 실행하기</td>
-              <td class="c-len">11분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
-            </tr>
-<tr class="row--practice">
-              <td class="c-clip"><code>Ch04-02</code></td>
-              <td class="c-title">아이템 후보 도출 단계 실행하기</td>
-              <td class="c-len">11분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
-            </tr>
-<tr class="row--practice">
-              <td class="c-clip"><code>Ch04-03</code></td>
-              <td class="c-title">기획서 작성 단계 실행하기</td>
-              <td class="c-len">10분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
-            </tr>
-<tr>
-              <td class="c-clip"><code>Ch04-04</code></td>
-              <td class="c-title">품질 게이트로 통과 기준 세우기</td>
-              <td class="c-len">10분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--later" title="제작 시작전">시작전</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">유령 위임 대응 개념</td>
-            </tr>
-<tr class="chap"><th colspan="8" scope="colgroup">Chapter 5. 파이프라인으로 한 번에 돌리기</th></tr>
-<tr class="row--practice">
-              <td class="c-clip"><code>Ch05-01</code></td>
-              <td class="c-title">단계와 품질 게이트를 담은 파이프라인 프롬프트 작성하기</td>
-              <td class="c-len">14분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
-            </tr>
-<tr class="row--practice">
-              <td class="c-clip"><code>Ch05-02</code></td>
-              <td class="c-title">목표 하나로 처음부터 끝까지 실행하기</td>
-              <td class="c-len">15분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
-            </tr>
-<tr class="row--practice">
-              <td class="c-clip"><code>Ch05-03</code></td>
-              <td class="c-title">결과물 점검하고 프롬프트 다듬기</td>
-              <td class="c-len">14분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
-            </tr>
-          </tbody>
-        </table>
-        </div>
-      </section>
-<section class="part">
-        <header class="part__head">
-          <h3 class="part__name">Part 6</h3>
-          <span class="part__title">영업팀: 제안서·견적서 검증하기 (교차 검증)</span>
-          
-          <span class="part__tally">9클립 · 슬라이드 2</span>
-          <span class="part__meter" role="img" aria-label="공정 0/13 완료">
-            <span class="part__meter-fill" style="width:0.0000%"></span>
-          </span>
-          <span class="part__pct">0/13</span>
-        </header>
-        <div class="tablewrap">
-        <table class="grid">
-          <thead><tr>
-            <th scope="col" class="c-clip">클립</th>
-            <th scope="col" class="c-title">제목</th>
-            <th scope="col" class="c-len">길이</th>
-            <th scope="col" class="c-count">장수</th>
-            <th scope="col" class="c-stage"><span class="c-stage__n">1</span>제작</th>
-            <th scope="col" class="c-stage"><span class="c-stage__n">2</span>대본</th>
-            <th scope="col" class="c-stage"><span class="c-stage__n">3</span>촬영</th>
-            <th scope="col" class="c-note">비고</th>
-          </tr></thead>
-          <tbody>
-<tr class="chap"><th colspan="8" scope="colgroup">Chapter 1. 교차 검증이란</th></tr>
-<tr>
-              <td class="c-clip"><code>Ch01-01</code></td>
-              <td class="c-title">Generator–Evaluator 패턴이란</td>
-              <td class="c-len">10분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--later" title="제작 시작전">시작전</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">패턴 02 교차 검증</td>
-            </tr>
-<tr>
-              <td class="c-clip"><code>Ch01-02</code></td>
-              <td class="c-title">평가에 다른 모델을 쓰는 이유</td>
-              <td class="c-len">10분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--later" title="제작 시작전">시작전</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">검증 오류 대응 개념</td>
-            </tr>
-<tr class="chap"><th colspan="8" scope="colgroup">Chapter 2. 제안서·견적서 설계</th></tr>
-<tr class="row--practice">
-              <td class="c-clip"><code>Ch02-01</code></td>
-              <td class="c-title">클라이언트 브리프에서 요구사항 뽑기</td>
-              <td class="c-len">11분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
-            </tr>
-<tr class="row--practice">
-              <td class="c-clip"><code>Ch02-02</code></td>
-              <td class="c-title">통과 기준 체크리스트 만들기</td>
-              <td class="c-len">10분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
-            </tr>
-<tr class="chap"><th colspan="8" scope="colgroup">Chapter 3. 생성과 검증 붙이기</th></tr>
-<tr class="row--practice">
-              <td class="c-clip"><code>Ch03-01</code></td>
-              <td class="c-title">브리프 하나로 제안서 초안 만들기</td>
-              <td class="c-len">11분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
-            </tr>
-<tr class="row--practice">
-              <td class="c-clip"><code>Ch03-02</code></td>
-              <td class="c-title">다른 모델로 검증하고 반려 사유 받기</td>
-              <td class="c-len">11분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
-            </tr>
-<tr class="row--practice">
-              <td class="c-clip"><code>Ch03-03</code></td>
-              <td class="c-title">견적 항목과 가격 근거 검증하기</td>
-              <td class="c-len">10분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
-            </tr>
-<tr class="chap"><th colspan="8" scope="colgroup">Chapter 4. 교차 검증 루프 돌리기</th></tr>
-<tr class="row--practice">
-              <td class="c-clip"><code>Ch04-01</code></td>
-              <td class="c-title">반려 사유 반영해서 다시 만들기</td>
-              <td class="c-len">9분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
-            </tr>
-<tr class="row--practice">
-              <td class="c-clip"><code>Ch04-02</code></td>
-              <td class="c-title">통과할 때까지 도는 루프 완성하기</td>
-              <td class="c-len">8분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
-            </tr>
-          </tbody>
-        </table>
-        </div>
-      </section>
-<section class="part">
-        <header class="part__head">
-          <h3 class="part__name">Part 7</h3>
-          <span class="part__title">디자인팀: Best 시안 머지하기 (병렬)</span>
-          
-          <span class="part__tally">10클립 · 슬라이드 2</span>
-          <span class="part__meter" role="img" aria-label="공정 0/14 완료">
-            <span class="part__meter-fill" style="width:0.0000%"></span>
-          </span>
-          <span class="part__pct">0/14</span>
-        </header>
-        <div class="tablewrap">
-        <table class="grid">
-          <thead><tr>
-            <th scope="col" class="c-clip">클립</th>
-            <th scope="col" class="c-title">제목</th>
-            <th scope="col" class="c-len">길이</th>
-            <th scope="col" class="c-count">장수</th>
-            <th scope="col" class="c-stage"><span class="c-stage__n">1</span>제작</th>
-            <th scope="col" class="c-stage"><span class="c-stage__n">2</span>대본</th>
-            <th scope="col" class="c-stage"><span class="c-stage__n">3</span>촬영</th>
-            <th scope="col" class="c-note">비고</th>
-          </tr></thead>
-          <tbody>
-<tr class="chap"><th colspan="8" scope="colgroup">Chapter 1. 내 책상을 복제한다는 것</th></tr>
-<tr>
-              <td class="c-clip"><code>Ch01-01</code></td>
-              <td class="c-title">워크트리로 작업 공간 분리하기</td>
-              <td class="c-len">10분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--later" title="제작 시작전">시작전</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">Part 3 워크트리 회수</td>
-            </tr>
-<tr class="row--practice">
-              <td class="c-clip"><code>Ch01-02</code></td>
-              <td class="c-title">Orca에서 워크트리 만들기</td>
-              <td class="c-len">7분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
-            </tr>
-<tr class="chap"><th colspan="8" scope="colgroup">Chapter 2. 워크트리 병렬 실행 — 다른 에이전트 + 동일 작업</th></tr>
-<tr>
-              <td class="c-clip"><code>Ch02-01</code></td>
-              <td class="c-title">같은 작업도 에이전트에 따라 결과가 갈린다</td>
-              <td class="c-len">7분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--later" title="제작 시작전">시작전</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">패턴 03 병렬 실행의 근거</td>
-            </tr>
-<tr class="row--practice">
-              <td class="c-clip"><code>Ch02-02</code></td>
-              <td class="c-title">두 에이전트에 같은 작업 동시에 시키기</td>
-              <td class="c-len">9분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
-            </tr>
-<tr class="chap"><th colspan="8" scope="colgroup">Chapter 3. Best 시안 선택과 머지</th></tr>
-<tr class="row--practice">
-              <td class="c-clip"><code>Ch03-01</code></td>
-              <td class="c-title">두 결과물 눈으로 비교하고 고르기</td>
-              <td class="c-len">9분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
-            </tr>
-<tr class="row--practice">
-              <td class="c-clip"><code>Ch03-02</code></td>
-              <td class="c-title">Best 시안 머지하기</td>
-              <td class="c-len">10분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
-            </tr>
-<tr class="chap"><th colspan="8" scope="colgroup">Chapter 4. 브라우저에서 직접 고치기 (디자인 모드)</th></tr>
-<tr class="row--practice">
-              <td class="c-clip"><code>Ch04-01</code></td>
-              <td class="c-title">요소 클릭과 주석으로 수정 요청하기</td>
-              <td class="c-len">10분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
-            </tr>
-<tr class="row--practice">
-              <td class="c-clip"><code>Ch04-02</code></td>
-              <td class="c-title">diff로 반영 확인하기</td>
-              <td class="c-len">10분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
-            </tr>
-<tr class="chap"><th colspan="8" scope="colgroup">Chapter 5. 개발자도구로 스타일 바꾸기</th></tr>
-<tr class="row--practice">
-              <td class="c-clip"><code>Ch05-01</code></td>
-              <td class="c-title">개발자도구 켜고 요소 클릭해보기</td>
-              <td class="c-len">9분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
-            </tr>
-<tr class="row--practice">
-              <td class="c-clip"><code>Ch05-02</code></td>
-              <td class="c-title">AI가 헷갈리지 않게 요소 이름으로 요청하기</td>
-              <td class="c-len">9분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
-              <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
-            </tr>
-          </tbody>
-        </table>
-        </div>
-      </section>
-<section class="part">
-        <header class="part__head">
-          <h3 class="part__name">Part 8</h3>
-          <span class="part__title">콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&amp;R 분배)</span>
-          
-          <span class="part__tally">11클립 · 슬라이드 3</span>
-          <span class="part__meter" role="img" aria-label="공정 0/17 완료">
-            <span class="part__meter-fill" style="width:0.0000%"></span>
-          </span>
-          <span class="part__pct">0/17</span>
-        </header>
-        <div class="tablewrap">
-        <table class="grid">
-          <thead><tr>
-            <th scope="col" class="c-clip">클립</th>
-            <th scope="col" class="c-title">제목</th>
-            <th scope="col" class="c-len">길이</th>
-            <th scope="col" class="c-count">장수</th>
-            <th scope="col" class="c-stage"><span class="c-stage__n">1</span>제작</th>
-            <th scope="col" class="c-stage"><span class="c-stage__n">2</span>대본</th>
-            <th scope="col" class="c-stage"><span class="c-stage__n">3</span>촬영</th>
+            <th scope="col" class="c-count">유형</th>
+            <th scope="col" class="c-stage">자료 제작</th>
+            <th scope="col" class="c-stage">대본</th>
+            <th scope="col" class="c-stage">촬영</th>
             <th scope="col" class="c-note">비고</th>
           </tr></thead>
           <tbody>
 <tr class="chap"><th colspan="8" scope="colgroup">Chapter 1. 콘텐츠팀 설계와 스킬 설치</th></tr>
-<tr>
+<tr data-key="8-Ch01-01" data-clip>
               <td class="c-clip"><code>Ch01-01</code></td>
               <td class="c-title">콘텐츠팀 구조와 업무 흐름</td>
               <td class="c-len">9분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--later" title="제작 시작전">시작전</span></td>
+              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
               <td class="c-note">패턴 04 R&amp;R 분배</td>
             </tr>
-<tr class="row--practice">
+<tr class="row--practice" data-key="8-Ch01-02" data-clip>
               <td class="c-clip"><code>Ch01-02</code></td>
               <td class="c-title">팔리는 글 쓰는 스킬 팩 설치하기</td>
               <td class="c-len">11분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
+              <td class="c-note"></td>
             </tr>
 <tr class="chap"><th colspan="8" scope="colgroup">Chapter 2. 소재 선정과 산출물 표준화</th></tr>
-<tr>
+<tr data-key="8-Ch02-01" data-clip>
               <td class="c-clip"><code>Ch02-01</code></td>
               <td class="c-title">회차 소재 선정 기준</td>
               <td class="c-len">9분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--later" title="제작 시작전">시작전</span></td>
+              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
               <td class="c-note"></td>
             </tr>
-<tr class="row--practice">
+<tr class="row--practice" data-key="8-Ch02-02" data-clip>
               <td class="c-clip"><code>Ch02-02</code></td>
               <td class="c-title">세 플랫폼 산출물 표준화</td>
               <td class="c-len">10분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
+              <td class="c-note"></td>
             </tr>
 <tr class="chap"><th colspan="8" scope="colgroup">Chapter 3. 플랫폼별 조건 정하기</th></tr>
-<tr>
+<tr data-key="8-Ch03-01" data-clip>
               <td class="c-clip"><code>Ch03-01</code></td>
               <td class="c-title">한 명이 세 플랫폼을 다 쓰면 생기는 일</td>
               <td class="c-len">10분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--later" title="제작 시작전">시작전</span></td>
+              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
               <td class="c-note">R&amp;R 분배가 필요한 이유</td>
             </tr>
-<tr class="row--practice">
+<tr class="row--practice" data-key="8-Ch03-02" data-clip>
               <td class="c-clip"><code>Ch03-02</code></td>
               <td class="c-title">블로그 조건 정하기</td>
               <td class="c-len">9분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
+              <td class="c-note"></td>
             </tr>
-<tr class="row--practice">
+<tr class="row--practice" data-key="8-Ch03-03" data-clip>
               <td class="c-clip"><code>Ch03-03</code></td>
               <td class="c-title">카드뉴스 조건 정하기</td>
               <td class="c-len">9분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
+              <td class="c-note"></td>
             </tr>
-<tr class="row--practice">
+<tr class="row--practice" data-key="8-Ch03-04" data-clip>
               <td class="c-clip"><code>Ch03-04</code></td>
               <td class="c-title">소셜 조건 정하기</td>
               <td class="c-len">8분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
+              <td class="c-note"></td>
             </tr>
 <tr class="chap"><th colspan="8" scope="colgroup">Chapter 4. 세 플랫폼 병렬 실행</th></tr>
-<tr class="row--practice">
+<tr class="row--practice" data-key="8-Ch04-01" data-clip>
               <td class="c-clip"><code>Ch04-01</code></td>
               <td class="c-title">소재 하나를 세 플랫폼에 뿌리기</td>
               <td class="c-len">11분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
+              <td class="c-note"></td>
             </tr>
-<tr class="row--practice">
+<tr class="row--practice" data-key="8-Ch04-02" data-clip>
               <td class="c-clip"><code>Ch04-02</code></td>
               <td class="c-title">세 결과물 한 번에 받아보기</td>
               <td class="c-len">11분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
+              <td class="c-note"></td>
             </tr>
 <tr class="chap"><th colspan="8" scope="colgroup">Chapter 5. 매일 돌리는 공장 만들기</th></tr>
-<tr class="row--practice">
+<tr class="row--practice" data-key="8-Ch05-01" data-clip>
               <td class="c-clip"><code>Ch05-01</code></td>
               <td class="c-title">예약 자동화로 반복 실행 걸기</td>
               <td class="c-len">11분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
+              <td class="c-note"></td>
             </tr>
           </tbody>
         </table>
         </div>
       </section>
-<section class="part">
+<section class="part" data-part="9" data-batch="3">
         <header class="part__head">
           <h3 class="part__name">Part 9</h3>
           <span class="part__title">모바일로 진행 상황 확인하기</span>
           
-          <span class="part__tally">2클립 · 슬라이드 1</span>
-          <span class="part__meter" role="img" aria-label="공정 0/4 완료">
+          <span class="part__tally">2클립</span>
+          <span class="part__meter" role="img" aria-label="공정 0/5 완료">
             <span class="part__meter-fill" style="width:0.0000%"></span>
           </span>
-          <span class="part__pct">0/4</span>
+          <span class="part__pct">0/5</span>
         </header>
         <div class="tablewrap">
         <table class="grid">
@@ -1594,44 +953,44 @@
             <th scope="col" class="c-clip">클립</th>
             <th scope="col" class="c-title">제목</th>
             <th scope="col" class="c-len">길이</th>
-            <th scope="col" class="c-count">장수</th>
-            <th scope="col" class="c-stage"><span class="c-stage__n">1</span>제작</th>
-            <th scope="col" class="c-stage"><span class="c-stage__n">2</span>대본</th>
-            <th scope="col" class="c-stage"><span class="c-stage__n">3</span>촬영</th>
+            <th scope="col" class="c-count">유형</th>
+            <th scope="col" class="c-stage">자료 제작</th>
+            <th scope="col" class="c-stage">대본</th>
+            <th scope="col" class="c-stage">촬영</th>
             <th scope="col" class="c-note">비고</th>
           </tr></thead>
           <tbody>
 <tr class="chap"><th colspan="8" scope="colgroup">Chapter 1. 모바일 연결과 원격 확인</th></tr>
-<tr>
+<tr data-key="9-Ch01-01" data-clip>
               <td class="c-clip"><code>Ch01-01</code></td>
               <td class="c-title">모바일의 역할</td>
               <td class="c-len">9분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--later" title="제작 시작전">시작전</span></td>
+              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
               <td class="c-note"></td>
             </tr>
-<tr class="row--practice">
+<tr class="row--practice" data-key="9-Ch01-02" data-clip>
               <td class="c-clip"><code>Ch01-02</code></td>
               <td class="c-title">작업 상태 확인하고 승인 응답하기</td>
               <td class="c-len">11분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--na" title="제작 해당없음 — 실습 클립">—</span></td>
+              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
-              <td class="c-note">실습</td>
+              <td class="c-note"></td>
             </tr>
           </tbody>
         </table>
         </div>
       </section>
-<section class="part">
+<section class="part" data-part="10" data-batch="3">
         <header class="part__head">
           <h3 class="part__name">Part 10</h3>
           <span class="part__title">토큰 아끼는 법</span>
           
-          <span class="part__tally">4클립 · 슬라이드 4</span>
+          <span class="part__tally">4클립</span>
           <span class="part__meter" role="img" aria-label="공정 0/12 완료">
             <span class="part__meter-fill" style="width:0.0000%"></span>
           </span>
@@ -1643,52 +1002,52 @@
             <th scope="col" class="c-clip">클립</th>
             <th scope="col" class="c-title">제목</th>
             <th scope="col" class="c-len">길이</th>
-            <th scope="col" class="c-count">장수</th>
-            <th scope="col" class="c-stage"><span class="c-stage__n">1</span>제작</th>
-            <th scope="col" class="c-stage"><span class="c-stage__n">2</span>대본</th>
-            <th scope="col" class="c-stage"><span class="c-stage__n">3</span>촬영</th>
+            <th scope="col" class="c-count">유형</th>
+            <th scope="col" class="c-stage">자료 제작</th>
+            <th scope="col" class="c-stage">대본</th>
+            <th scope="col" class="c-stage">촬영</th>
             <th scope="col" class="c-note">비고</th>
           </tr></thead>
           <tbody>
 <tr class="chap"><th colspan="8" scope="colgroup">Chapter 1. 멀티 에이전트는 왜 비싼가</th></tr>
-<tr>
+<tr data-key="10-Ch01-01" data-clip>
               <td class="c-clip"><code>Ch01-01</code></td>
               <td class="c-title">팀을 굴리면 토큰이 몇 배로 드는가</td>
               <td class="c-len">10분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--later" title="제작 시작전">시작전</span></td>
+              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
               <td class="c-note"></td>
             </tr>
 <tr class="chap"><th colspan="8" scope="colgroup">Chapter 2. 토큰 아끼기 - 실전</th></tr>
-<tr>
+<tr data-key="10-Ch02-01" data-clip>
               <td class="c-clip"><code>Ch02-01</code></td>
               <td class="c-title">모델 분리 설계 전략</td>
               <td class="c-len">10분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--later" title="제작 시작전">시작전</span></td>
+              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
               <td class="c-note"></td>
             </tr>
-<tr>
+<tr data-key="10-Ch02-02" data-clip>
               <td class="c-clip"><code>Ch02-02</code></td>
               <td class="c-title">극강의 미니멀리즘 스킬 - Ponytail 사용하기</td>
               <td class="c-len">10분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--later" title="제작 시작전">시작전</span></td>
+              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
               <td class="c-note">쓰면 안 되는 이유가 개념부</td>
             </tr>
 <tr class="chap"><th colspan="8" scope="colgroup">Chapter 3. 강의 마무리</th></tr>
-<tr>
+<tr data-key="10-Ch03-01" data-clip>
               <td class="c-clip"><code>Ch03-01</code></td>
               <td class="c-title">강의 정리</td>
               <td class="c-len">10분</td>
-              <td class="c-count">—</td>
-              <td class="c-stage"><span class="chip chip--later" title="제작 시작전">시작전</span></td>
+              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
               <td class="c-note">마무리 덱</td>
@@ -1696,17 +1055,63 @@
           </tbody>
         </table>
         </div>
-      </section>
-        </div>
-      </section>
-
-      <footer>
-        <code>dashboard/src/build.py</code>가 만든다. 이 파일을 직접 고치지 않는다 —
-        다음 커밋에서 덮어쓴다.<br />
-        번호·제목·길이 <code>docs/curriculum.md</code> · 장수 <code>_source</code>와 덱
-        HTML · 대본 <code>_script</code> · 확정 <code>artifacts/CONFIRMED.md</code> ·
-        슬라이드 여부·촬영·납기 <code>dashboard/clips.json</code>
-      </footer>
-    </div>
-  </body>
-</html>
+      </section></div><div class="empty" id="empty" hidden><strong>조건에 맞는 클립이 없습니다.</strong>납품 차수나 필터를 바꿔보세요.</div>
+</main>
+<footer class="foot"><details><summary>상태 기준과 자료 점검</summary><p>제작은 이론의 슬라이드, 실습의 실습자료를 뜻합니다. 실습은 대본 없이 촬영으로 이어집니다. 촬영 완료와 자료 제작 완료는 별도로 관리합니다.</p><p>앞 공정이 완료되면 다음 공정은 예정입니다. 납기일을 등록하면 해당 납기의 미착수 작업도 예정으로 표시됩니다. 차수별 ‘전체 공정 완료’는 필요한 공정을 모두 마친 클립 수입니다.</p><p class="check check--ok"><b>어긋난 곳 없음.</b> 소스의 장수, 덱의 실제 장수, 대본의 장수가 모두 맞는다.</p></details><span>이론 · 실습 통합 작업 보드</span></footer>
+</div>
+<script id="dashboard-data" type="application/json">{"rows": [{"파트번호": 1, "파트제목": "왜 팀이 필요한가 (강의 개요)", "챕터": "Chapter 1. 오리엔테이션", "클립": "Ch01-01", "제목": "강의 소개와 최종 결과물", "길이": "11분", "슬라이드": true, "비고": "Google Slides로 제작·확정", "차수": 1, "장수": "8장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 1, "파트제목": "왜 팀이 필요한가 (강의 개요)", "챕터": "Chapter 1. 오리엔테이션", "클립": "Ch01-02", "제목": "강의 로드맵과 선수 지식", "길이": "9분", "슬라이드": true, "비고": "Google Slides로 제작·확정", "차수": 1, "장수": "7장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 1, "파트제목": "왜 팀이 필요한가 (강의 개요)", "챕터": "Chapter 2. 단일 에이전트의 한계", "클립": "Ch02-01", "제목": "에이전트 하나로 되는 일과 안 되는 일", "길이": "14분", "슬라이드": true, "비고": "", "차수": 1, "장수": "5장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 2, "파트제목": "Orca 설치 및 기본 사용", "챕터": "Chapter 1. Orca는 왜 나왔는가", "클립": "Ch01-01", "제목": "터미널 여러 개의 문제", "길이": "6분", "슬라이드": true, "비고": "", "차수": 1, "장수": "5장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 2, "파트제목": "Orca 설치 및 기본 사용", "챕터": "Chapter 1. Orca는 왜 나왔는가", "클립": "Ch01-02", "제목": "Orca는 어떤 도구인가", "길이": "7분", "슬라이드": true, "비고": "", "차수": 1, "장수": "6장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 2, "파트제목": "Orca 설치 및 기본 사용", "챕터": "Chapter 2. Orca 설치와 첫 실행", "클립": "Ch02-01", "제목": "설치 전 준비물과 환경 체크", "길이": "5분", "슬라이드": true, "비고": "", "차수": 1, "장수": "3장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 2, "파트제목": "Orca 설치 및 기본 사용", "챕터": "Chapter 2. Orca 설치와 첫 실행", "클립": "Ch02-02", "제목": "설치와 에이전트 연결하기", "길이": "10분", "슬라이드": false, "비고": "실습", "차수": 1, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 2, "파트제목": "Orca 설치 및 기본 사용", "챕터": "Chapter 2. Orca 설치와 첫 실행", "클립": "Ch02-03", "제목": "화면 구조와 보드 읽는 법", "길이": "8분", "슬라이드": false, "비고": "실습", "차수": 1, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 3, "파트제목": "Git과 워크트리", "챕터": "Chapter 1. 비개발자를 위한 Git 개념", "클립": "Ch01-01", "제목": "Git이란 - 버전 관리가 없다면", "길이": "8분", "슬라이드": true, "비고": "", "차수": 1, "장수": "5장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 3, "파트제목": "Git과 워크트리", "챕터": "Chapter 1. 비개발자를 위한 Git 개념", "클립": "Ch01-02", "제목": "저장소와 작업흐름", "길이": "10분", "슬라이드": true, "비고": "", "차수": 1, "장수": "8장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 3, "파트제목": "Git과 워크트리", "챕터": "Chapter 1. 비개발자를 위한 Git 개념", "클립": "Ch01-03", "제목": "브랜치와 워크트리", "길이": "10분", "슬라이드": true, "비고": "", "차수": 1, "장수": "8장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 3, "파트제목": "Git과 워크트리", "챕터": "Chapter 2. Git 설치와 저장소 만들기", "클립": "Ch02-01", "제목": "Git 설치와 초기 설정", "길이": "7분", "슬라이드": false, "비고": "실습", "차수": 1, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "작업중"}, {"파트번호": 3, "파트제목": "Git과 워크트리", "챕터": "Chapter 2. Git 설치와 저장소 만들기", "클립": "Ch02-02", "제목": "GitHub 가입 및 Orca에 연결하기", "길이": "13분", "슬라이드": false, "비고": "실습", "차수": 1, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "작업중"}, {"파트번호": 4, "파트제목": "오케스트레이션과 스킬", "챕터": "Chapter 1. 오케스트레이션이란", "클립": "Ch01-01", "제목": "오케스트레이션 구조 살펴보기", "길이": "7분", "슬라이드": true, "비고": "", "차수": 1, "장수": "8장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 4, "파트제목": "오케스트레이션과 스킬", "챕터": "Chapter 1. 오케스트레이션이란", "클립": "Ch01-02", "제목": "목표와 작업, 실행의 흐름", "길이": "8분", "슬라이드": true, "비고": "", "차수": 1, "장수": "9장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 4, "파트제목": "오케스트레이션과 스킬", "챕터": "Chapter 2. 첫 오케스트레이션 돌려보기", "클립": "Ch02-01", "제목": "오케스트레이션 스킬 설치하기", "길이": "10분", "슬라이드": false, "비고": "실습", "차수": 1, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "작업중"}, {"파트번호": 4, "파트제목": "오케스트레이션과 스킬", "챕터": "Chapter 2. 첫 오케스트레이션 돌려보기", "클립": "Ch02-02", "제목": "목표 하나로 요청하기", "길이": "11분", "슬라이드": false, "비고": "실습", "차수": 1, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "작업중"}, {"파트번호": 4, "파트제목": "오케스트레이션과 스킬", "챕터": "Chapter 3. 스킬 알아보기", "클립": "Ch03-01", "제목": "스킬과 플러그인이란", "길이": "10분", "슬라이드": true, "비고": "강사 지정: Part 4까지 미완료 이론 클립 제작 진행", "차수": 1, "장수": "—", "제작": "작업중", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 4, "파트제목": "오케스트레이션과 스킬", "챕터": "Chapter 3. 스킬 알아보기", "클립": "Ch03-02", "제목": "1인 회사 운영에 유용한 스킬 모음", "길이": "10분", "슬라이드": true, "비고": "강사 지정: Part 4까지 미완료 이론 클립 제작 진행", "차수": 1, "장수": "—", "제작": "작업중", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 4, "파트제목": "오케스트레이션과 스킬", "챕터": "Chapter 4. 회사 문서 만들기", "클립": "Ch04-01", "제목": "스킬로 회사 소개서와 말투 규칙 만들기", "길이": "14분", "슬라이드": false, "비고": "실습", "차수": 1, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "작업중"}, {"파트번호": 4, "파트제목": "오케스트레이션과 스킬", "챕터": "Chapter 4. 회사 문서 만들기", "클립": "Ch04-02", "제목": "회사 사규 작성하기", "길이": "14분", "슬라이드": false, "비고": "실습", "차수": 1, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "작업중"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 1. 앞으로 만들 4가지 프로젝트", "클립": "Ch01-01", "제목": "4가지 협업 패턴과 프로젝트 미리보기", "길이": "10분", "슬라이드": true, "비고": "패턴 4가지 이름·정의 노출", "차수": 2, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 1. 앞으로 만들 4가지 프로젝트", "클립": "Ch01-02", "제목": "멀티 에이전트가 오히려 나빠지는 3가지 이유", "길이": "10분", "슬라이드": true, "비고": "맥락 붕괴 · 유령 위임 · 검증 오류", "차수": 2, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 2. 기획팀 설계와 스킬 설치", "클립": "Ch02-01", "제목": "기획팀 구조와 업무 흐름", "길이": "11분", "슬라이드": true, "비고": "", "차수": 2, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 2. 기획팀 설계와 스킬 설치", "클립": "Ch02-02", "제목": "순차 파이프라인이란", "길이": "11분", "슬라이드": true, "비고": "패턴 01 순차 파이프라인", "차수": 2, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 2. 기획팀 설계와 스킬 설치", "클립": "Ch02-03", "제목": "기획 전 필수 스킬 써보기", "길이": "11분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 3. 산출물 표준화하기", "클립": "Ch03-01", "제목": "시장 조사 노트 표준화", "길이": "10분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 3. 산출물 표준화하기", "클립": "Ch03-02", "제목": "아이템 후보 표준화", "길이": "11분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 3. 산출물 표준화하기", "클립": "Ch03-03", "제목": "판매 아이템 기획서 양식 표준화", "길이": "11분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 4. 단계별로 나눠서 실행하기", "클립": "Ch04-01", "제목": "시장 조사 단계 실행하기", "길이": "11분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 4. 단계별로 나눠서 실행하기", "클립": "Ch04-02", "제목": "아이템 후보 도출 단계 실행하기", "길이": "11분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 4. 단계별로 나눠서 실행하기", "클립": "Ch04-03", "제목": "기획서 작성 단계 실행하기", "길이": "10분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 4. 단계별로 나눠서 실행하기", "클립": "Ch04-04", "제목": "품질 게이트로 통과 기준 세우기", "길이": "10분", "슬라이드": true, "비고": "유령 위임 대응 개념", "차수": 2, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 5. 파이프라인으로 한 번에 돌리기", "클립": "Ch05-01", "제목": "단계와 품질 게이트를 담은 파이프라인 프롬프트 작성하기", "길이": "14분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 5. 파이프라인으로 한 번에 돌리기", "클립": "Ch05-02", "제목": "목표 하나로 처음부터 끝까지 실행하기", "길이": "15분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 5. 파이프라인으로 한 번에 돌리기", "클립": "Ch05-03", "제목": "결과물 점검하고 프롬프트 다듬기", "길이": "14분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 6, "파트제목": "영업팀: 제안서·견적서 검증하기 (교차 검증)", "챕터": "Chapter 1. 교차 검증이란", "클립": "Ch01-01", "제목": "Generator–Evaluator 패턴이란", "길이": "10분", "슬라이드": true, "비고": "패턴 02 교차 검증", "차수": 2, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 6, "파트제목": "영업팀: 제안서·견적서 검증하기 (교차 검증)", "챕터": "Chapter 1. 교차 검증이란", "클립": "Ch01-02", "제목": "평가에 다른 모델을 쓰는 이유", "길이": "10분", "슬라이드": true, "비고": "검증 오류 대응 개념", "차수": 2, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 6, "파트제목": "영업팀: 제안서·견적서 검증하기 (교차 검증)", "챕터": "Chapter 2. 제안서·견적서 설계", "클립": "Ch02-01", "제목": "클라이언트 브리프에서 요구사항 뽑기", "길이": "11분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 6, "파트제목": "영업팀: 제안서·견적서 검증하기 (교차 검증)", "챕터": "Chapter 2. 제안서·견적서 설계", "클립": "Ch02-02", "제목": "통과 기준 체크리스트 만들기", "길이": "10분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 6, "파트제목": "영업팀: 제안서·견적서 검증하기 (교차 검증)", "챕터": "Chapter 3. 생성과 검증 붙이기", "클립": "Ch03-01", "제목": "브리프 하나로 제안서 초안 만들기", "길이": "11분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 6, "파트제목": "영업팀: 제안서·견적서 검증하기 (교차 검증)", "챕터": "Chapter 3. 생성과 검증 붙이기", "클립": "Ch03-02", "제목": "다른 모델로 검증하고 반려 사유 받기", "길이": "11분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 6, "파트제목": "영업팀: 제안서·견적서 검증하기 (교차 검증)", "챕터": "Chapter 3. 생성과 검증 붙이기", "클립": "Ch03-03", "제목": "견적 항목과 가격 근거 검증하기", "길이": "10분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 6, "파트제목": "영업팀: 제안서·견적서 검증하기 (교차 검증)", "챕터": "Chapter 4. 교차 검증 루프 돌리기", "클립": "Ch04-01", "제목": "반려 사유 반영해서 다시 만들기", "길이": "9분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 6, "파트제목": "영업팀: 제안서·견적서 검증하기 (교차 검증)", "챕터": "Chapter 4. 교차 검증 루프 돌리기", "클립": "Ch04-02", "제목": "통과할 때까지 도는 루프 완성하기", "길이": "8분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 7, "파트제목": "디자인팀: Best 시안 머지하기 (병렬)", "챕터": "Chapter 1. 내 책상을 복제한다는 것", "클립": "Ch01-01", "제목": "워크트리로 작업 공간 분리하기", "길이": "10분", "슬라이드": true, "비고": "Part 3 워크트리 회수", "차수": 2, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 7, "파트제목": "디자인팀: Best 시안 머지하기 (병렬)", "챕터": "Chapter 1. 내 책상을 복제한다는 것", "클립": "Ch01-02", "제목": "Orca에서 워크트리 만들기", "길이": "7분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 7, "파트제목": "디자인팀: Best 시안 머지하기 (병렬)", "챕터": "Chapter 2. 워크트리 병렬 실행 — 다른 에이전트 + 동일 작업", "클립": "Ch02-01", "제목": "같은 작업도 에이전트에 따라 결과가 갈린다", "길이": "7분", "슬라이드": true, "비고": "패턴 03 병렬 실행의 근거", "차수": 2, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 7, "파트제목": "디자인팀: Best 시안 머지하기 (병렬)", "챕터": "Chapter 2. 워크트리 병렬 실행 — 다른 에이전트 + 동일 작업", "클립": "Ch02-02", "제목": "두 에이전트에 같은 작업 동시에 시키기", "길이": "9분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 7, "파트제목": "디자인팀: Best 시안 머지하기 (병렬)", "챕터": "Chapter 3. Best 시안 선택과 머지", "클립": "Ch03-01", "제목": "두 결과물 눈으로 비교하고 고르기", "길이": "9분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 7, "파트제목": "디자인팀: Best 시안 머지하기 (병렬)", "챕터": "Chapter 3. Best 시안 선택과 머지", "클립": "Ch03-02", "제목": "Best 시안 머지하기", "길이": "10분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 7, "파트제목": "디자인팀: Best 시안 머지하기 (병렬)", "챕터": "Chapter 4. 브라우저에서 직접 고치기 (디자인 모드)", "클립": "Ch04-01", "제목": "요소 클릭과 주석으로 수정 요청하기", "길이": "10분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 7, "파트제목": "디자인팀: Best 시안 머지하기 (병렬)", "챕터": "Chapter 4. 브라우저에서 직접 고치기 (디자인 모드)", "클립": "Ch04-02", "제목": "diff로 반영 확인하기", "길이": "10분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 7, "파트제목": "디자인팀: Best 시안 머지하기 (병렬)", "챕터": "Chapter 5. 개발자도구로 스타일 바꾸기", "클립": "Ch05-01", "제목": "개발자도구 켜고 요소 클릭해보기", "길이": "9분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 7, "파트제목": "디자인팀: Best 시안 머지하기 (병렬)", "챕터": "Chapter 5. 개발자도구로 스타일 바꾸기", "클립": "Ch05-02", "제목": "AI가 헷갈리지 않게 요소 이름으로 요청하기", "길이": "9분", "슬라이드": false, "비고": "실습", "차수": 2, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 8, "파트제목": "콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&R 분배)", "챕터": "Chapter 1. 콘텐츠팀 설계와 스킬 설치", "클립": "Ch01-01", "제목": "콘텐츠팀 구조와 업무 흐름", "길이": "9분", "슬라이드": true, "비고": "패턴 04 R&R 분배", "차수": 3, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 8, "파트제목": "콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&R 분배)", "챕터": "Chapter 1. 콘텐츠팀 설계와 스킬 설치", "클립": "Ch01-02", "제목": "팔리는 글 쓰는 스킬 팩 설치하기", "길이": "11분", "슬라이드": false, "비고": "실습", "차수": 3, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 8, "파트제목": "콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&R 분배)", "챕터": "Chapter 2. 소재 선정과 산출물 표준화", "클립": "Ch02-01", "제목": "회차 소재 선정 기준", "길이": "9분", "슬라이드": true, "비고": "", "차수": 3, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 8, "파트제목": "콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&R 분배)", "챕터": "Chapter 2. 소재 선정과 산출물 표준화", "클립": "Ch02-02", "제목": "세 플랫폼 산출물 표준화", "길이": "10분", "슬라이드": false, "비고": "실습", "차수": 3, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 8, "파트제목": "콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&R 분배)", "챕터": "Chapter 3. 플랫폼별 조건 정하기", "클립": "Ch03-01", "제목": "한 명이 세 플랫폼을 다 쓰면 생기는 일", "길이": "10분", "슬라이드": true, "비고": "R&R 분배가 필요한 이유", "차수": 3, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 8, "파트제목": "콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&R 분배)", "챕터": "Chapter 3. 플랫폼별 조건 정하기", "클립": "Ch03-02", "제목": "블로그 조건 정하기", "길이": "9분", "슬라이드": false, "비고": "실습", "차수": 3, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 8, "파트제목": "콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&R 분배)", "챕터": "Chapter 3. 플랫폼별 조건 정하기", "클립": "Ch03-03", "제목": "카드뉴스 조건 정하기", "길이": "9분", "슬라이드": false, "비고": "실습", "차수": 3, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 8, "파트제목": "콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&R 분배)", "챕터": "Chapter 3. 플랫폼별 조건 정하기", "클립": "Ch03-04", "제목": "소셜 조건 정하기", "길이": "8분", "슬라이드": false, "비고": "실습", "차수": 3, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 8, "파트제목": "콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&R 분배)", "챕터": "Chapter 4. 세 플랫폼 병렬 실행", "클립": "Ch04-01", "제목": "소재 하나를 세 플랫폼에 뿌리기", "길이": "11분", "슬라이드": false, "비고": "실습", "차수": 3, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 8, "파트제목": "콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&R 분배)", "챕터": "Chapter 4. 세 플랫폼 병렬 실행", "클립": "Ch04-02", "제목": "세 결과물 한 번에 받아보기", "길이": "11분", "슬라이드": false, "비고": "실습", "차수": 3, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 8, "파트제목": "콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&R 분배)", "챕터": "Chapter 5. 매일 돌리는 공장 만들기", "클립": "Ch05-01", "제목": "예약 자동화로 반복 실행 걸기", "길이": "11분", "슬라이드": false, "비고": "실습", "차수": 3, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 9, "파트제목": "모바일로 진행 상황 확인하기", "챕터": "Chapter 1. 모바일 연결과 원격 확인", "클립": "Ch01-01", "제목": "모바일의 역할", "길이": "9분", "슬라이드": true, "비고": "", "차수": 3, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 9, "파트제목": "모바일로 진행 상황 확인하기", "챕터": "Chapter 1. 모바일 연결과 원격 확인", "클립": "Ch01-02", "제목": "작업 상태 확인하고 승인 응답하기", "길이": "11분", "슬라이드": false, "비고": "실습", "차수": 3, "장수": "—", "제작": "시작전", "대본": "해당없음", "촬영": "시작전"}, {"파트번호": 10, "파트제목": "토큰 아끼는 법", "챕터": "Chapter 1. 멀티 에이전트는 왜 비싼가", "클립": "Ch01-01", "제목": "팀을 굴리면 토큰이 몇 배로 드는가", "길이": "10분", "슬라이드": true, "비고": "", "차수": 3, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 10, "파트제목": "토큰 아끼는 법", "챕터": "Chapter 2. 토큰 아끼기 - 실전", "클립": "Ch02-01", "제목": "모델 분리 설계 전략", "길이": "10분", "슬라이드": true, "비고": "", "차수": 3, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 10, "파트제목": "토큰 아끼는 법", "챕터": "Chapter 2. 토큰 아끼기 - 실전", "클립": "Ch02-02", "제목": "극강의 미니멀리즘 스킬 - Ponytail 사용하기", "길이": "10분", "슬라이드": true, "비고": "쓰면 안 되는 이유가 개념부", "차수": 3, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}, {"파트번호": 10, "파트제목": "토큰 아끼는 법", "챕터": "Chapter 3. 강의 마무리", "클립": "Ch03-01", "제목": "강의 정리", "길이": "10분", "슬라이드": true, "비고": "마무리 덱", "차수": 3, "장수": "—", "제작": "시작전", "대본": "시작전", "촬영": "시작전"}], "batches": [{"차수": 1, "납기": "", "파트": [1, 2, 3, 4]}, {"차수": 2, "납기": "", "파트": [5, 6, 7]}, {"차수": 3, "납기": "", "파트": [8, 9, 10]}]}</script>
+<script>
+(() => {
+const {rows,batches}=JSON.parse(document.getElementById('dashboard-data').textContent);
+const stages=['제작','대본','촬영'];
+const completed=r=>stages.every(s=>r[s]==='완료'||r[s]==='해당없음');
+const active=r=>stages.some(s=>r[s]==='작업중');
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const el=id=>document.getElementById(id);
+let batch='all';
+const params=new URLSearchParams(location.search);
+if(['1','2','3','0'].includes(params.get('batch')))batch=params.get('batch');
+for(const id of ['kind','status'])if([...el(id).options].some(o=>o.value===params.get(id)))el(id).value=params.get(id);
+el('search').value=params.get('q')||'';
+function drawBatches(){
+ const configured=[1,2,3].map(n=>batches.find(b=>b['차수']===n)||{'차수':n,'파트':[],'납기':''});
+ if(rows.some(r=>!r['차수']))configured.push({'차수':0,'파트':[],'납기':''});
+ el('deliveries').innerHTML=configured.map(b=>{
+  const n=b['차수'],pool=rows.filter(r=>r['차수']===n),done=pool.filter(completed).length,wip=pool.filter(active).length;
+  const parts=[...new Set(pool.map(r=>r['파트번호']))];
+  const range=parts.length?'Part '+parts.join(' · '):'파트 배정 전';
+  return `<button class="batch" type="button" data-batch="${n}" aria-pressed="${batch===String(n)}"><span class="batch-top"><span class="batch-title">${n?n+'차 납품':'미배정'}</span><span class="batch-date">${esc(b['납기']||'')}</span></span><span class="batch-range">${range}</span><span class="batch-progress"><b>${done}</b><span>/ ${pool.length}클립</span><em>전체 공정 완료</em></span><span class="batch-bar"><i style="width:${pool.length?done/pool.length*100:0}%"></i></span><span class="batch-bottom"><span>작업중 ${wip} · 남은 클립 ${pool.length-done}</span><span class="selected">${batch===String(n)?'선택됨':'클립 보기 →'}</span></span></button>`;
+ }).join('');
+}
+function render(){
+ const kind=el('kind').value,status=el('status').value,q=el('search').value.trim().toLowerCase();
+ const filtered=rows.filter(r=>(batch==='all'||String(r['차수'])===batch)&&(kind==='all'||r['슬라이드']===(kind==='theory'))&&(status==='all'||status==='active'&&active(r)||status==='open'&&!completed(r)||status==='done'&&completed(r))&&(!q||`${r['제목']} ${r['클립']} Part ${r['파트번호']} ${r['챕터']}`.toLowerCase().includes(q)));
+ const visible=new Set(filtered.map(r=>`${r['파트번호']}-${r['클립']}`));
+ const byKey=new Map(rows.map(r=>[`${r['파트번호']}-${r['클립']}`,r]));
+ document.querySelectorAll('[data-clip]').forEach(tr=>{tr.hidden=!visible.has(tr.dataset.key);tr.classList.toggle('row-active',active(byKey.get(tr.dataset.key)));});
+ document.querySelectorAll('.chip--na').forEach(c=>{c.textContent='해당 없음';});
+ document.querySelectorAll('.part').forEach(section=>{
+  const clips=[...section.querySelectorAll('[data-clip]')].filter(tr=>!tr.hidden);section.hidden=!clips.length;
+  section.querySelector('.part__tally').textContent=`${clips.length}클립`;
+  section.querySelectorAll('.chap').forEach(ch=>{let next=ch.nextElementSibling,show=false;while(next&&!next.classList.contains('chap')){if(!next.hidden)show=true;next=next.nextElementSibling;}ch.hidden=!show;});
+ });
+ const metrics=[['슬라이드','제작',filtered.filter(r=>r['슬라이드']),'이론'],['실습자료','제작',filtered.filter(r=>!r['슬라이드']),'실습'],['대본','대본',filtered.filter(r=>r['대본']!=='해당없음'),'이론'],['촬영','촬영',filtered,'전체']];
+ el('metrics').innerHTML=metrics.map(([label,stage,pool,type])=>{
+  const done=pool.filter(r=>r[stage]==='완료').length,wip=pool.filter(r=>r[stage]==='작업중').length,due=pool.filter(r=>r[stage]==='예정').length;
+  return `<div class="metric"><p class="metric-label">${label}<span>· ${type}</span></p><p class="metric-value"><b>${done}</b><span>/ ${pool.length} 완료</span></p><p class="metric-note"><strong>작업중 ${wip}</strong> · 예정 ${due}</p></div>`;
+ }).join('');
+ el('scope-title').textContent=batch==='all'?'전체 납품':batch==='0'?'납품 차수 미배정':`${batch}차 납품`;
+ el('list-count').textContent=`${filtered.length}클립 · 이론 ${filtered.filter(r=>r['슬라이드']).length} · 실습 ${filtered.filter(r=>!r['슬라이드']).length}`;
+ el('empty').hidden=!!filtered.length;
+ drawBatches();
+ const p=new URLSearchParams();if(batch!=='all')p.set('batch',batch);if(kind!=='all')p.set('kind',kind);if(status!=='all')p.set('status',status);if(q)p.set('q',el('search').value);
+ try{history.replaceState(null,'',location.pathname+(p.size?'?'+p:'')+location.hash);}catch{}
+}
+el('deliveries').addEventListener('click',e=>{const b=e.target.closest('button[data-batch]');if(b){batch=batch===b.dataset.batch?'all':b.dataset.batch;render();el('deliveries').querySelector(`[data-batch="${b.dataset.batch}"]`)?.focus({preventScroll:true});}});
+for(const id of ['kind','status'])el(id).addEventListener('change',render);
+el('search').addEventListener('input',render);
+el('reset').addEventListener('click',()=>{batch='all';el('kind').value='all';el('status').value='all';el('search').value='';render();});
+render();
+})();
+</script>
+</body></html>
