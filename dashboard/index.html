@@ -10,8 +10,8 @@
   --bg:#292d3e;
   --paper:#303447;
   --raised:#34394e;
-  --ink:#bfc5df;
-  --muted:#a0a7c1;
+  --ink:#d2d7eb;
+  --muted:#b0b7cf;
   --line:#41465c;
   --line-soft:#393e53;
   --brand:#c792ea;
@@ -24,16 +24,21 @@
   --wip-bg:#494235;
   --due:#a5bbec;
   --due-bg:#394561;
+  --theory:#d5b0f5;
+  --practice:#f0afc8;
   --sans:'IBM Plex Sans KR',sans-serif;
   --mono:'IBM Plex Mono',monospace;
 }
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 var(--sans)}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--due);outline-offset:4px}[hidden]{display:none!important}h1,h2,h3,p{margin:0}button{color:inherit}code{font:12px var(--mono)}.wrap{max-width:1480px;margin:auto;padding:40px 36px 60px}.masthead{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;gap:20px}.eyebrow{color:var(--brand);font-size:11px;font-weight:600;letter-spacing:.14em;margin-bottom:7px}h1{font-size:30px;font-weight:500;letter-spacing:-.8px;line-height:1.3}.standfirst{color:var(--muted);margin-top:8px}.stamp{font-size:12px;color:var(--muted);text-align:right}.stamp strong{display:block;color:var(--ink);font-size:14px}.delivery{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.batch{--accent:var(--accent-1);text-align:left;background:var(--paper);border:1px solid var(--line);border-top:2px solid var(--accent);border-radius:10px;padding:21px 23px;position:relative;transition:box-shadow .16s,border-color .16s}.batch[data-batch='2']{--accent:var(--accent-2)}.batch[data-batch='3']{--accent:var(--accent-3)}.batch[aria-pressed=true]{box-shadow:0 0 0 1px var(--accent);border-color:var(--accent)}.batch:hover{background:var(--raised)}.batch-top{display:flex;align-items:baseline;justify-content:space-between;gap:10px}.batch-title{font-size:19px;font-weight:600;color:var(--accent)}.batch-date{font-size:12px;color:var(--muted)}.batch-range{display:block;color:var(--muted);margin:4px 0 20px}.batch-progress{display:flex;align-items:baseline;gap:6px}.batch-progress b{font:500 30px/1 var(--mono);letter-spacing:-2px}.batch-progress span{font-size:12px;color:var(--muted)}.batch-progress em{font-style:normal;font-size:12px;margin-left:auto;color:var(--accent);font-weight:600}.batch-bar{display:block;height:6px;border-radius:10px;background:var(--line);margin:14px 0 9px;overflow:hidden}.batch-bar i{display:block;background:var(--accent);height:100%;border-radius:inherit}.batch-bottom{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}.batch .selected{font-weight:600;color:var(--accent)}.workspace{margin-top:30px}.toolbar{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:16px;flex-wrap:wrap}.scope{display:flex;gap:12px;align-items:center}.scope h2{font-size:21px;letter-spacing:-.5px}.text-button{border:0;background:none;color:var(--due);font-size:12px;padding:7px}.filters{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.filters input,.filters select{border:1px solid var(--line);background:var(--paper);border-radius:6px;padding:8px 10px;color:var(--ink);height:38px}.filters input{width:210px}.field-label{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.metrics{display:grid;grid-template-columns:repeat(4,1fr);background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:19px 7px;margin-bottom:16px}.metric{padding:0 22px;border-right:1px solid var(--line)}.metric:last-child{border:0}.metric-label{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px}.metric-value{display:flex;align-items:baseline;gap:6px;margin:4px 0}.metric-value b{font:500 26px var(--mono)}.metric-value span{font-size:12px;color:var(--muted)}.metric-note{font-size:11px;color:var(--muted)}.metric-note strong{color:var(--wip);font-weight:500}.flows{display:flex;flex-wrap:wrap;gap:12px 28px;color:var(--muted);font-size:12px;padding:0 2px 18px}.flows b{font-weight:600;color:var(--ink);margin-right:10px}.flows .arrow{color:var(--muted);padding:0 7px}.list-meta{display:flex;justify-content:space-between;align-items:center;margin:8px 0 10px;gap:12px;font-size:12px;color:var(--muted)}.legend{display:flex;gap:14px;flex-wrap:wrap}.legend span{display:flex;align-items:center;gap:5px}.legend i{width:6px;height:6px;border-radius:50%;background:var(--muted)}.legend .done{background:var(--done)}.legend .wip{background:var(--wip)}.legend .due{background:var(--due)}.parts{display:grid;gap:20px}.part{background:var(--paper);border:1px solid var(--line);border-radius:10px;overflow:hidden}.part__head{display:flex;align-items:center;gap:12px;padding:16px 20px;background:var(--raised);border-bottom:1px solid var(--line)}.part__name{font:600 13px var(--mono);color:var(--muted);white-space:nowrap}.part__title{font-weight:500;font-size:16px}.part__tally{margin-left:auto;color:var(--muted);white-space:nowrap;font-size:12px}.part__meter,.part__pct,.part__due{display:none}.tablewrap{overflow:auto}.grid{border-collapse:collapse;width:100%;table-layout:fixed;min-width:910px}.grid th{text-align:left;font-size:11px;font-weight:500;color:var(--muted);padding:9px 12px;border-bottom:1px solid var(--line)}.grid td{padding:13px 12px;border-bottom:1px solid var(--line-soft);vertical-align:middle}.grid tbody tr:last-child td{border:0}.c-clip{width:103px;padding-left:20px!important}.c-title{width:auto;font-weight:400}.c-len{width:55px;font-size:12px;color:var(--muted)}.c-count{width:68px}.c-stage{width:115px;text-align:center!important}.c-note{width:140px;color:var(--muted);font-size:11px;font-weight:400;overflow-wrap:anywhere}.c-stage small{display:block;font-size:10px;color:var(--muted);margin-bottom:3px}.chap th{background:#2d3143;font-size:11px!important;padding:7px 20px!important;letter-spacing:.01em}.kind{font-size:11px;border-radius:4px;padding:3px 7px;font-weight:500}.kind--theory{color:#b6b9d9;background:#3c4057}.kind--practice{color:#a5ced0;background:#34474d}.chip{display:inline-flex;gap:5px;align-items:center;justify-content:center;min-width:72px;border-radius:5px;font-size:12px;padding:5px 8px;font-weight:500;white-space:nowrap}.chip--done{background:var(--done-bg);color:var(--done)}.chip--done:before{content:'✓';font-size:12px}.chip--wip{background:var(--wip-bg);color:var(--wip);font-weight:600;box-shadow:inset 0 0 0 1px #e5ab462e}.chip--wip:before{content:'';width:7px;height:7px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%}.chip--due{background:var(--due-bg);color:var(--due)}.chip--later{color:var(--muted);background:#363b50}.chip--na{font-size:10px;color:var(--muted)}.row-active .c-title{color:var(--ink)}.empty{text-align:center;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:48px 20px;color:var(--muted)}.empty strong{display:block;color:var(--ink);font-size:17px;margin-bottom:7px}.foot{display:flex;justify-content:space-between;margin-top:28px;gap:20px;font-size:12px;color:var(--muted);align-items:flex-start}.foot details{max-width:780px}.foot summary{cursor:pointer;color:var(--ink)}.foot details p{margin-top:8px}.checklist{padding-left:18px}.check--ok{color:var(--done)}noscript{display:block;padding:10px;background:var(--wip-bg);margin-bottom:12px}
-@media(min-width:1500px){.c-note{width:200px}.c-stage{width:130px}}
-@media(max-width:850px){.wrap{padding:24px 18px}.masthead{align-items:flex-start}.stamp{display:none}h1{font-size:29px}.batch{padding:15px}.batch-title{font-size:18px}.batch-range{font-size:12px;margin-bottom:14px}.batch-progress{flex-wrap:wrap}.batch-progress b{font-size:26px}.batch-progress em{width:100%;margin:2px 0 0}.metric{padding:0 14px}.filters{width:100%}.filters input{flex:1;min-width:150px}.part__title{font-size:14px}}
-@media(max-width:560px){.delivery{grid-template-columns:1fr;gap:8px}.batch{padding:12px 15px;display:grid;grid-template-columns:1fr 1fr;column-gap:18px;border-top-width:1px;border-left:4px solid var(--accent)}.batch-top{grid-column:1;grid-row:1}.batch-range{grid-column:1;grid-row:2;margin:2px 0}.batch-progress{grid-column:2;grid-row:1/3;justify-content:flex-end;align-content:center}.batch-progress em{width:auto;margin-left:4px}.batch-bar{grid-column:1/3;margin:10px 0 7px}.batch-bottom{grid-column:1/3}.metrics{grid-template-columns:repeat(2,1fr);padding:4px 0}.metric{padding:12px 16px}.metric:nth-child(2){border:0}.metric:nth-child(-n+2){border-bottom:1px solid var(--line)}.flows{display:grid;gap:5px}.list-meta{align-items:flex-start;flex-direction:column}.part__head{gap:8px;padding:13px}.part__title{font-size:13px}.part__tally{font-size:10px}.foot{flex-direction:column}.batch-date{font-size:10px}.scope h2{font-size:19px}.filters select{flex:1}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 var(--sans)}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--due);outline-offset:4px}[hidden]{display:none!important}h1,h2,h3,p{margin:0}button{color:inherit}code{font:14px var(--mono)}.wrap{max-width:1480px;margin:auto;padding:40px 36px 60px}.masthead{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;gap:20px}.eyebrow{color:var(--brand);font-size:14px;font-weight:600;letter-spacing:.1em;margin-bottom:7px}h1{font-size:30px;font-weight:500;letter-spacing:-.8px;line-height:1.3}.standfirst{color:var(--muted);margin-top:8px}.stamp{font-size:14px;color:var(--muted);text-align:right}.stamp strong{display:block;color:var(--ink);font-size:16px}.delivery{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.batch{--accent:var(--accent-1);text-align:left;background:var(--paper);border:1px solid var(--line);border-top:2px solid var(--accent);border-radius:10px;padding:21px 23px;position:relative;transition:box-shadow .16s,border-color .16s}.batch[data-batch='2']{--accent:var(--accent-2)}.batch[data-batch='3']{--accent:var(--accent-3)}.batch[aria-pressed=true]{box-shadow:0 0 0 1px var(--accent);border-color:var(--accent)}.batch:hover{background:var(--raised)}.batch-top{display:flex;align-items:baseline;justify-content:space-between;gap:10px}.batch-title{font-size:21px;font-weight:600;color:var(--accent)}.batch-date{font-size:14px;color:var(--muted)}.batch-range{display:block;color:var(--muted);margin:4px 0 20px}.batch-progress{display:flex;align-items:baseline;gap:6px}.batch-progress b{font:500 30px/1 var(--mono);letter-spacing:-2px}.batch-progress span{font-size:14px;color:var(--muted)}.batch-progress em{font-style:normal;font-size:14px;margin-left:auto;color:var(--accent);font-weight:600}.batch-bar{display:block;height:6px;border-radius:10px;background:var(--line);margin:14px 0 9px;overflow:hidden}.batch-bar i{display:block;background:var(--accent);height:100%;border-radius:inherit}.batch-bottom{display:flex;justify-content:space-between;color:var(--muted);font-size:14px}.batch .selected{font-weight:600;color:var(--accent)}.workspace{margin-top:30px}.toolbar{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:16px;flex-wrap:wrap}.scope{display:flex;gap:12px;align-items:center}.scope h2{font-size:23px;letter-spacing:-.5px}.text-button{border:0;background:none;color:var(--due);font-size:14px;padding:7px}.filters{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.filters input,.filters select{border:1px solid var(--line);background:var(--paper);border-radius:6px;padding:8px 10px;color:var(--ink);height:44px}.filters input{width:240px}.field-label{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.metrics{display:grid;grid-template-columns:repeat(4,1fr);background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:19px 7px;margin-bottom:16px}.metric{padding:0 22px;border-right:1px solid var(--line)}.metric:last-child{border:0}.metric-label{font-size:14px;color:var(--muted);display:flex;align-items:center;gap:8px}.metric-value{display:flex;align-items:baseline;gap:6px;margin:4px 0}.metric-value b{font:500 26px var(--mono)}.metric-value span{font-size:14px;color:var(--muted)}.metric-note{font-size:14px;color:var(--muted)}.metric-note strong{color:var(--wip);font-weight:500}.flows{display:flex;flex-wrap:wrap;gap:12px 28px;color:var(--muted);font-size:14px;padding:0 2px 18px}.flows b{font-weight:600;color:var(--ink);margin-right:10px}.flows .arrow{color:var(--muted);padding:0 7px}.list-meta{display:flex;justify-content:space-between;align-items:center;margin:8px 0 10px;gap:12px;font-size:14px;color:var(--muted)}.legend{display:flex;gap:14px;flex-wrap:wrap}.legend span{display:flex;align-items:center;gap:5px}.legend i{width:6px;height:6px;border-radius:50%;background:var(--muted)}.legend .done{background:var(--done)}.legend .wip{background:var(--wip)}.legend .due{background:var(--due)}.parts{display:grid;gap:20px}.part{background:var(--paper);border:1px solid var(--line);border-radius:10px;overflow:hidden}.part__head{display:flex;align-items:center;gap:12px;padding:16px 20px;background:var(--raised);border-bottom:1px solid var(--line)}.part__name{font:500 15px var(--mono);color:var(--muted);white-space:nowrap}.part__title{font-weight:500;font-size:18px}.part__tally{margin-left:auto;color:var(--muted);white-space:nowrap;font-size:14px}.part__meter,.part__pct,.part__due{display:none}.tablewrap{overflow:auto}.grid{border-collapse:collapse;width:100%;table-layout:fixed;min-width:1120px}.grid th{text-align:left;font-size:14px;font-weight:500;color:var(--muted);padding:9px 12px;border-bottom:1px solid var(--line)}.grid td{padding:18px 14px;border-bottom:1px solid var(--line-soft);vertical-align:middle}.grid tbody tr:last-child td{border:0}.c-clip{width:124px;padding-left:20px!important}.c-title{width:auto;font-size:17px;font-weight:400;line-height:1.65}.c-len{width:64px;font-size:14px;color:var(--muted)}.c-count{width:104px}.c-stage{width:138px;text-align:center!important}.c-note{width:140px;color:var(--muted);font-size:14px;font-weight:400;overflow-wrap:anywhere}.c-stage small{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}.chap th{background:#2d3143;font-size:14px!important;padding:7px 20px!important;letter-spacing:.01em}.kind{display:inline-flex;align-items:center;gap:8px;font-size:16px;font-weight:600;white-space:nowrap;line-height:1.4}.kind svg{width:22px;height:22px;flex:none}.kind--theory{color:var(--theory)}.kind--practice{color:var(--practice)}.chip{display:inline-flex;gap:5px;align-items:center;justify-content:center;min-width:86px;border-radius:5px;font-size:14px;padding:6px 10px;font-weight:500;white-space:nowrap}.chip--done{background:var(--done-bg);color:var(--done)}.chip--done:before{content:'✓';font-size:14px}.chip--wip{background:var(--wip-bg);color:var(--wip);font-weight:600;box-shadow:inset 0 0 0 1px #e5ab462e}.chip--wip:before{content:'';width:7px;height:7px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%}.chip--due{background:var(--due-bg);color:var(--due)}.chip--later{color:var(--muted);background:#363b50}.chip--na{font-size:13px;color:var(--muted)}.row-active .c-title{color:var(--ink)}.empty{text-align:center;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:48px 20px;color:var(--muted)}.empty strong{display:block;color:var(--ink);font-size:17px;margin-bottom:7px}.foot{display:flex;justify-content:space-between;margin-top:28px;gap:20px;font-size:14px;color:var(--muted);align-items:flex-start}.foot details{max-width:780px}.foot summary{cursor:pointer;color:var(--ink)}.foot details p{margin-top:8px}.checklist{padding-left:18px}.check--ok{color:var(--done)}noscript{display:block;padding:10px;background:var(--wip-bg);margin-bottom:12px}
+@media(min-width:1500px){.c-note{width:200px}.c-stage{width:144px}}
+@media(max-width:850px){.wrap{padding:24px 18px}.masthead{align-items:flex-start}.stamp{display:none}h1{font-size:29px}.batch{padding:15px}.batch-title{font-size:18px}.batch-range{font-size:14px;margin-bottom:14px}.batch-progress{flex-wrap:wrap}.batch-progress b{font-size:26px}.batch-progress em{width:100%;margin:2px 0 0}.metric{padding:0 14px}.filters{width:100%}.filters input{flex:1;min-width:150px}.part__title{font-size:16px}}
+@media(max-width:560px){.delivery{grid-template-columns:1fr;gap:8px}.batch{padding:12px 15px;display:grid;grid-template-columns:1fr 1fr;column-gap:18px;border-top-width:1px;border-left:4px solid var(--accent)}.batch-top{grid-column:1;grid-row:1}.batch-range{grid-column:1;grid-row:2;margin:2px 0}.batch-progress{grid-column:2;grid-row:1/3;justify-content:flex-end;align-content:center}.batch-progress em{width:auto;margin-left:4px}.batch-bar{grid-column:1/3;margin:10px 0 7px}.batch-bottom{grid-column:1/3}.metrics{grid-template-columns:repeat(2,1fr);padding:4px 0}.metric{padding:12px 16px}.metric:nth-child(2){border:0}.metric:nth-child(-n+2){border-bottom:1px solid var(--line)}.flows{display:grid;gap:5px}.list-meta{align-items:flex-start;flex-direction:column}.part__head{gap:8px;padding:13px}.part__title{font-size:15px}.part__tally{font-size:13px}.foot{flex-direction:column}.batch-date{font-size:13px}.scope h2{font-size:21px}.filters select{flex:1}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 input::placeholder{color:var(--muted);opacity:1}
 ::selection{background:#525978;color:#e0e4f4}
+.flows .flow-kind--theory{color:var(--theory)}
+.flows .flow-kind--practice{color:var(--practice)}
+@media(max-width:560px){.batch-progress em{width:100%;text-align:right}.batch-bottom{font-size:13px}.batch-range{font-size:14px}.batch{column-gap:10px}.metric-label{gap:4px}.metric{padding:15px 13px}.metric-note{font-size:13px}.part__head{flex-wrap:wrap}.part__title{flex:1;min-width:180px}}
 </style>
 </head>
 <body>
@@ -43,7 +48,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <main class="workspace">
 <div class="toolbar"><div class="scope"><h2 id="scope-title">전체 납품</h2><button class="text-button" id="reset">전체 보기</button></div><div class="filters"><label class="field-label" for="kind">클립 유형</label><select id="kind"><option value="all">모든 유형</option><option value="theory">이론</option><option value="practice">실습</option></select><label class="field-label" for="status">작업 상태</label><select id="status"><option value="all">모든 상태</option><option value="active">작업중</option><option value="open">미완료</option><option value="done">전 공정 완료</option></select><label class="field-label" for="search">클립 검색</label><input id="search" type="search" placeholder="제목 · 번호 검색"></div></div>
 <section class="metrics" id="metrics" aria-label="선택한 클립의 공정 현황"></section>
-<div class="flows"><span><b>이론</b>슬라이드<span class="arrow">→</span>대본<span class="arrow">→</span>촬영</span><span><b>실습</b>실습자료<span class="arrow">→</span>촬영</span></div>
+<div class="flows"><span><b class="flow-kind flow-kind--theory">이론</b>슬라이드<span class="arrow">→</span>대본<span class="arrow">→</span>촬영</span><span><b class="flow-kind flow-kind--practice">실습</b>실습자료<span class="arrow">→</span>촬영</span></div>
 <div class="list-meta"><p id="list-count" role="status" aria-live="polite"></p><div class="legend" aria-label="상태 범례"><span><i class="done"></i>완료</span><span><i class="wip"></i>작업중</span><span><i class="due"></i>예정</span><span><i></i>시작전</span></div></div>
 <noscript>필터를 사용하려면 JavaScript를 켜주세요. 전체 클립 현황은 아래에서 확인할 수 있습니다.</noscript>
 <div class="parts"><section class="part" data-part="1" data-batch="1">
@@ -75,7 +80,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch01-01</code></td>
               <td class="c-title">강의 소개와 최종 결과물</td>
               <td class="c-len">11분</td>
-              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="대본 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="촬영 완료">완료</span></td>
@@ -85,7 +90,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch01-02</code></td>
               <td class="c-title">강의 로드맵과 선수 지식</td>
               <td class="c-len">9분</td>
-              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="대본 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="촬영 완료">완료</span></td>
@@ -96,7 +101,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch02-01</code></td>
               <td class="c-title">에이전트 하나로 되는 일과 안 되는 일</td>
               <td class="c-len">14분</td>
-              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="대본 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="촬영 완료">완료</span></td>
@@ -135,7 +140,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch01-01</code></td>
               <td class="c-title">터미널 여러 개의 문제</td>
               <td class="c-len">6분</td>
-              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="대본 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="촬영 완료">완료</span></td>
@@ -145,7 +150,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch01-02</code></td>
               <td class="c-title">Orca는 어떤 도구인가</td>
               <td class="c-len">7분</td>
-              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="대본 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="촬영 완료">완료</span></td>
@@ -156,7 +161,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch02-01</code></td>
               <td class="c-title">설치 전 준비물과 환경 체크</td>
               <td class="c-len">5분</td>
-              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="대본 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="촬영 완료">완료</span></td>
@@ -166,7 +171,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch02-02</code></td>
               <td class="c-title">설치와 에이전트 연결하기</td>
               <td class="c-len">10분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--done" title="촬영 완료">완료</span></td>
@@ -176,7 +181,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch02-03</code></td>
               <td class="c-title">화면 구조와 보드 읽는 법</td>
               <td class="c-len">8분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--done" title="촬영 완료">완료</span></td>
@@ -215,7 +220,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch01-01</code></td>
               <td class="c-title">Git이란 - 버전 관리가 없다면</td>
               <td class="c-len">8분</td>
-              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="대본 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="촬영 완료">완료</span></td>
@@ -225,7 +230,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch01-02</code></td>
               <td class="c-title">저장소와 작업흐름</td>
               <td class="c-len">10분</td>
-              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="대본 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="촬영 완료">완료</span></td>
@@ -235,7 +240,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch01-03</code></td>
               <td class="c-title">브랜치와 워크트리</td>
               <td class="c-len">10분</td>
-              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="대본 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="촬영 완료">완료</span></td>
@@ -246,7 +251,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch02-01</code></td>
               <td class="c-title">Git 설치와 초기 설정</td>
               <td class="c-len">7분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--wip" title="촬영 작업중">작업중</span></td>
@@ -256,7 +261,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch02-02</code></td>
               <td class="c-title">GitHub 가입 및 Orca에 연결하기</td>
               <td class="c-len">13분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--wip" title="촬영 작업중">작업중</span></td>
@@ -295,7 +300,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch01-01</code></td>
               <td class="c-title">오케스트레이션 구조 살펴보기</td>
               <td class="c-len">7분</td>
-              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="대본 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="촬영 완료">완료</span></td>
@@ -305,7 +310,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch01-02</code></td>
               <td class="c-title">목표와 작업, 실행의 흐름</td>
               <td class="c-len">8분</td>
-              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="대본 완료">완료</span></td>
               <td class="c-stage"><span class="chip chip--done" title="촬영 완료">완료</span></td>
@@ -316,7 +321,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch02-01</code></td>
               <td class="c-title">오케스트레이션 스킬 설치하기</td>
               <td class="c-len">10분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--wip" title="촬영 작업중">작업중</span></td>
@@ -326,7 +331,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch02-02</code></td>
               <td class="c-title">목표 하나로 요청하기</td>
               <td class="c-len">11분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--wip" title="촬영 작업중">작업중</span></td>
@@ -337,7 +342,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch03-01</code></td>
               <td class="c-title">스킬과 플러그인이란</td>
               <td class="c-len">10분</td>
-              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><small>슬라이드</small><span class="chip chip--wip" title="자료 제작 작업중">작업중</span></td>
               <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -347,7 +352,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch03-02</code></td>
               <td class="c-title">1인 회사 운영에 유용한 스킬 모음</td>
               <td class="c-len">10분</td>
-              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><small>슬라이드</small><span class="chip chip--wip" title="자료 제작 작업중">작업중</span></td>
               <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -358,7 +363,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch04-01</code></td>
               <td class="c-title">스킬로 회사 소개서와 말투 규칙 만들기</td>
               <td class="c-len">14분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--wip" title="촬영 작업중">작업중</span></td>
@@ -368,7 +373,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch04-02</code></td>
               <td class="c-title">회사 사규 작성하기</td>
               <td class="c-len">14분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--wip" title="촬영 작업중">작업중</span></td>
@@ -407,7 +412,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch01-01</code></td>
               <td class="c-title">4가지 협업 패턴과 프로젝트 미리보기</td>
               <td class="c-len">10분</td>
-              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -417,7 +422,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch01-02</code></td>
               <td class="c-title">멀티 에이전트가 오히려 나빠지는 3가지 이유</td>
               <td class="c-len">10분</td>
-              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -428,7 +433,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch02-01</code></td>
               <td class="c-title">기획팀 구조와 업무 흐름</td>
               <td class="c-len">11분</td>
-              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -438,7 +443,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch02-02</code></td>
               <td class="c-title">순차 파이프라인이란</td>
               <td class="c-len">11분</td>
-              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -448,7 +453,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch02-03</code></td>
               <td class="c-title">기획 전 필수 스킬 써보기</td>
               <td class="c-len">11분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -459,7 +464,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch03-01</code></td>
               <td class="c-title">시장 조사 노트 표준화</td>
               <td class="c-len">10분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -469,7 +474,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch03-02</code></td>
               <td class="c-title">아이템 후보 표준화</td>
               <td class="c-len">11분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -479,7 +484,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch03-03</code></td>
               <td class="c-title">판매 아이템 기획서 양식 표준화</td>
               <td class="c-len">11분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -490,7 +495,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch04-01</code></td>
               <td class="c-title">시장 조사 단계 실행하기</td>
               <td class="c-len">11분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -500,7 +505,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch04-02</code></td>
               <td class="c-title">아이템 후보 도출 단계 실행하기</td>
               <td class="c-len">11분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -510,7 +515,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch04-03</code></td>
               <td class="c-title">기획서 작성 단계 실행하기</td>
               <td class="c-len">10분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -520,7 +525,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch04-04</code></td>
               <td class="c-title">품질 게이트로 통과 기준 세우기</td>
               <td class="c-len">10분</td>
-              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -531,7 +536,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch05-01</code></td>
               <td class="c-title">단계와 품질 게이트를 담은 파이프라인 프롬프트 작성하기</td>
               <td class="c-len">14분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -541,7 +546,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch05-02</code></td>
               <td class="c-title">목표 하나로 처음부터 끝까지 실행하기</td>
               <td class="c-len">15분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -551,7 +556,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch05-03</code></td>
               <td class="c-title">결과물 점검하고 프롬프트 다듬기</td>
               <td class="c-len">14분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -590,7 +595,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch01-01</code></td>
               <td class="c-title">Generator–Evaluator 패턴이란</td>
               <td class="c-len">10분</td>
-              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -600,7 +605,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch01-02</code></td>
               <td class="c-title">평가에 다른 모델을 쓰는 이유</td>
               <td class="c-len">10분</td>
-              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -611,7 +616,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch02-01</code></td>
               <td class="c-title">클라이언트 브리프에서 요구사항 뽑기</td>
               <td class="c-len">11분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -621,7 +626,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch02-02</code></td>
               <td class="c-title">통과 기준 체크리스트 만들기</td>
               <td class="c-len">10분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -632,7 +637,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch03-01</code></td>
               <td class="c-title">브리프 하나로 제안서 초안 만들기</td>
               <td class="c-len">11분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -642,7 +647,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch03-02</code></td>
               <td class="c-title">다른 모델로 검증하고 반려 사유 받기</td>
               <td class="c-len">11분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -652,7 +657,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch03-03</code></td>
               <td class="c-title">견적 항목과 가격 근거 검증하기</td>
               <td class="c-len">10분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -663,7 +668,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch04-01</code></td>
               <td class="c-title">반려 사유 반영해서 다시 만들기</td>
               <td class="c-len">9분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -673,7 +678,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch04-02</code></td>
               <td class="c-title">통과할 때까지 도는 루프 완성하기</td>
               <td class="c-len">8분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -712,7 +717,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch01-01</code></td>
               <td class="c-title">워크트리로 작업 공간 분리하기</td>
               <td class="c-len">10분</td>
-              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -722,7 +727,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch01-02</code></td>
               <td class="c-title">Orca에서 워크트리 만들기</td>
               <td class="c-len">7분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -733,7 +738,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch02-01</code></td>
               <td class="c-title">같은 작업도 에이전트에 따라 결과가 갈린다</td>
               <td class="c-len">7분</td>
-              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -743,7 +748,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch02-02</code></td>
               <td class="c-title">두 에이전트에 같은 작업 동시에 시키기</td>
               <td class="c-len">9분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -754,7 +759,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch03-01</code></td>
               <td class="c-title">두 결과물 눈으로 비교하고 고르기</td>
               <td class="c-len">9분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -764,7 +769,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch03-02</code></td>
               <td class="c-title">Best 시안 머지하기</td>
               <td class="c-len">10분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -775,7 +780,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch04-01</code></td>
               <td class="c-title">요소 클릭과 주석으로 수정 요청하기</td>
               <td class="c-len">10분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -785,7 +790,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch04-02</code></td>
               <td class="c-title">diff로 반영 확인하기</td>
               <td class="c-len">10분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -796,7 +801,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch05-01</code></td>
               <td class="c-title">개발자도구 켜고 요소 클릭해보기</td>
               <td class="c-len">9분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -806,7 +811,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch05-02</code></td>
               <td class="c-title">AI가 헷갈리지 않게 요소 이름으로 요청하기</td>
               <td class="c-len">9분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -845,7 +850,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch01-01</code></td>
               <td class="c-title">콘텐츠팀 구조와 업무 흐름</td>
               <td class="c-len">9분</td>
-              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -855,7 +860,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch01-02</code></td>
               <td class="c-title">팔리는 글 쓰는 스킬 팩 설치하기</td>
               <td class="c-len">11분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -866,7 +871,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch02-01</code></td>
               <td class="c-title">회차 소재 선정 기준</td>
               <td class="c-len">9분</td>
-              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -876,7 +881,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch02-02</code></td>
               <td class="c-title">세 플랫폼 산출물 표준화</td>
               <td class="c-len">10분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -887,7 +892,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch03-01</code></td>
               <td class="c-title">한 명이 세 플랫폼을 다 쓰면 생기는 일</td>
               <td class="c-len">10분</td>
-              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -897,7 +902,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch03-02</code></td>
               <td class="c-title">블로그 조건 정하기</td>
               <td class="c-len">9분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -907,7 +912,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch03-03</code></td>
               <td class="c-title">카드뉴스 조건 정하기</td>
               <td class="c-len">9분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -917,7 +922,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch03-04</code></td>
               <td class="c-title">소셜 조건 정하기</td>
               <td class="c-len">8분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -928,7 +933,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch04-01</code></td>
               <td class="c-title">소재 하나를 세 플랫폼에 뿌리기</td>
               <td class="c-len">11분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -938,7 +943,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch04-02</code></td>
               <td class="c-title">세 결과물 한 번에 받아보기</td>
               <td class="c-len">11분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -949,7 +954,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch05-01</code></td>
               <td class="c-title">예약 자동화로 반복 실행 걸기</td>
               <td class="c-len">11분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -988,7 +993,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch01-01</code></td>
               <td class="c-title">모바일의 역할</td>
               <td class="c-len">9분</td>
-              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -998,7 +1003,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch01-02</code></td>
               <td class="c-title">작업 상태 확인하고 승인 응답하기</td>
               <td class="c-len">11분</td>
-              <td class="c-count"><span class="kind kind--practice">실습</span></td>
+              <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><small>실습자료</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--na" title="대본 해당없음 — 실습 클립">—</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -1037,7 +1042,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch01-01</code></td>
               <td class="c-title">팀을 굴리면 토큰이 몇 배로 드는가</td>
               <td class="c-len">10분</td>
-              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -1048,7 +1053,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch02-01</code></td>
               <td class="c-title">모델 분리 설계 전략</td>
               <td class="c-len">10분</td>
-              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -1058,7 +1063,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch02-02</code></td>
               <td class="c-title">극강의 미니멀리즘 스킬 - Ponytail 사용하기</td>
               <td class="c-len">10분</td>
-              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>
@@ -1069,7 +1074,7 @@ input::placeholder{color:var(--muted);opacity:1}
               <td class="c-clip"><code>Ch03-01</code></td>
               <td class="c-title">강의 정리</td>
               <td class="c-len">10분</td>
-              <td class="c-count"><span class="kind kind--theory">이론</span></td>
+              <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><small>슬라이드</small><span class="chip chip--later" title="자료 제작 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="대본 시작전">시작전</span></td>
               <td class="c-stage"><span class="chip chip--later" title="촬영 시작전">시작전</span></td>

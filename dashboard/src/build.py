@@ -332,6 +332,20 @@ def chip(state: str, stage: str) -> str:
     return f'<span class="chip chip--{CLS[state]}" title="{title}">{CHIP[state]}</span>'
 
 
+def kind_label(theory: bool) -> str:
+    # Type uses an open icon + label; colored status pills are reserved for progress.
+    drawing = (
+        '<path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/>'
+        '<path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/>'
+        if theory else
+        '<path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/>'
+    )
+    kind, label = ("theory", "이론") if theory else ("practice", "실습")
+    return (f'<span class="kind kind--{kind}"><svg viewBox="0 0 24 24" '
+            f'fill="none" stroke="currentColor" stroke-width="1.7" '
+            f'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{drawing}</svg>{label}</span>')
+
+
 HEAD_ROW = """<thead><tr>
             <th scope="col" class="c-clip">클립</th>
             <th scope="col" class="c-title">제목</th>
@@ -390,7 +404,7 @@ def render_parts(rows: list[dict], due_note: dict[int, str]) -> str:
               <td class="c-clip"><code>{esc(r["클립"])}</code></td>
               <td class="c-title">{esc(r["제목"])}</td>
               <td class="c-len">{esc(r["길이"])}</td>
-              <td class="c-count"><span class="kind kind--{'theory' if r['슬라이드'] else 'practice'}">{'이론' if r['슬라이드'] else '실습'}</span></td>
+              <td class="c-count">{kind_label(r["슬라이드"])}</td>
               <td class="c-stage"><small>{'슬라이드' if r['슬라이드'] else '실습자료'}</small>{chip(r["제작"], "자료 제작")}</td>
               <td class="c-stage">{chip(r["대본"], "대본")}</td>
               <td class="c-stage">{chip(r["촬영"], "촬영")}</td>
