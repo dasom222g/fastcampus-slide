@@ -1256,6 +1256,10 @@
 .terminal-cover-scene__image,.three-scene>img{border:0;border-radius:0;box-shadow:none;mix-blend-mode:lighten}
 
 .open-concept .status-one-line{max-width:none;white-space:nowrap}
+/* Reveal the scene itself before its statement; keep its final position fixed. */
+.three-scene-image.do-fadeinup{animation-name:three-scene-reveal}
+@keyframes three-scene-reveal{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){[data-layout="three-terminals"] .anim-item{opacity:1;animation:none!important;transform:none}}
 </style>
   </head>
   <body>
@@ -1287,7 +1291,7 @@
 이렇게 창을 늘리는 것 자체는 어렵지 않습니다. 각 창에 할 일을 주면 각자의 작업을 시작합니다. 여기까지는 그냥 창이 늘어난 것뿐이에요.
 
 문제는 일을 맡긴 다음입니다. 에이전트가 일하는 동안, 내가 이 세 창을 어떻게 보고 관리할지가 남아 있거든요. -->
-<article class="slide  " data-index="2" data-layout="three-terminals"><header class="slide__header"><span class="slide__label">Section 2 · Multiple Agents</span><h1 class="slide__title"><span class="hl">멀티 에이전트</span>를 쓰려면</h1><p class="slide__sub">에이전트를 세 개 쓰려면 터미널도 세 개 열어야 합니다.</p></header><main class="slide__body"><div class="chapter-scene three-scene"><img src="/artifacts/part2/_images/ch01-01-terminal-problem--three-agents.png" alt="사람 한 명이 세 터미널 안의 세 에이전트를 바라보는 장면"><div class="scene-copy"><p class="scene-statement anim-item">터미널 3개<strong>에이전트 3개</strong></p><p class="scene-caption anim-item">여기까지는 창이 늘어난 것뿐입니다.</p></div></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<article class="slide  " data-index="2" data-layout="three-terminals"><header class="slide__header"><span class="slide__label">Section 2 · Multiple Agents</span><h1 class="slide__title"><span class="hl">멀티 에이전트</span>를 쓰려면</h1><p class="slide__sub">에이전트를 세 개 쓰려면 터미널도 세 개 열어야 합니다.</p></header><main class="slide__body"><div class="chapter-scene three-scene"><img class="anim-item three-scene-image" src="/artifacts/part2/_images/ch01-01-terminal-problem--three-agents.png" alt="사람 한 명이 세 터미널 안의 세 에이전트를 바라보는 장면"><div class="scene-copy"><p class="scene-statement anim-item">터미널 3개<strong>에이전트 3개</strong></p><p class="scene-caption anim-item">여기까지는 창이 늘어난 것뿐입니다.</p></div></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
 <!-- 발표 노트 4 / 5: 첫 번째는 어디까지 됐는지 모른다는 겁니다. 첫 번째 창을 보고 돌아왔더니 두 번째 창이 뭘 하고 있었는지 놓칩니다. 이미 끝난 건지, 중간에 멈춘 건지, 나에게 뭔가 물어보는 중인지 알려면 창을 하나씩 열어봐야 해요.
 
 두 번째는 서로 덮어쓴다는 겁니다. 세 에이전트가 같은 폴더에서 일하면 같은 파일을 동시에 건드릴 수 있거든요. 한 에이전트가 고친 부분을 다른 에이전트가 다시 수정하면서 지워버리는 상황이 생깁니다. 창이 나뉘었다고 파일까지 나뉜 건 아닌 거죠.
