@@ -1,0 +1,960 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Part 5 · 멀티 에이전트가 오히려 나빠지는 3가지 이유</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css"
+    />
+    <style>
+      :root {
+        --bg: #0d1117;
+        --bg-card: #161b22;
+        --text: #e6edf3;
+        --text-dim: #8b949e;
+        --text-muted: #59636e;
+        --brand: #fc1c49;
+        --purple: #9188ff;
+        --orange: #ff6d3b;
+        --yellow: #f0b429;
+        --green: #4ade80;
+        --gray: #8b949e;
+        --border: rgba(255, 255, 255, 0.08);
+        --dot: rgba(255, 255, 255, 0.055);
+        --title: clamp(2rem, 5.2vw, 3.8rem);
+        --statement: clamp(2rem, 3.8vw, 3.7rem);
+        --heading: clamp(1.5rem, 2.2vw, 2.25rem);
+        --body: clamp(1.1rem, 1.6vw, 1.42rem);
+        --gap: clamp(1.5rem, 3vw, 3rem);
+        --content-width: 86rem;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        font-family:
+          Pretendard,
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        font-size: clamp(13px, 1.35vw, 16px);
+        background: var(--bg);
+        color: var(--text);
+        word-break: keep-all;
+      }
+      body {
+        overflow: hidden;
+      }
+      button {
+        font: inherit;
+      }
+      .slide-deck {
+        position: fixed;
+        inset: 0;
+      }
+      .slide {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr) auto;
+        gap: clamp(1.5rem, 3.75vh, 3rem);
+        padding: clamp(2.6rem, 5.5vh, 4.2rem) clamp(4rem, 7.5vw, 7rem);
+        background:
+          radial-gradient(circle, var(--dot) 1px, transparent 1px) 0 0/26px 26px,
+          var(--bg);
+        overflow: hidden;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.36s ease;
+      }
+      .slide[data-motion="none"]{transition:none}
+      .slide.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .slide__header {
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+        padding-bottom: clamp(0.9rem, 2.2vh, 1.6rem);
+        border-bottom: 1px solid var(--border);
+      }
+      .slide__label {
+        font-size: clamp(0.58rem, 0.85vw, 0.72rem);
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--brand);
+      }
+      .slide__title {
+        font-size: var(--title);
+        font-weight: 800;
+        line-height: 1.08;
+        letter-spacing: -0.015em;
+      }
+      .slide__sub {
+        font-size: clamp(1.05rem, 1.6vw, 1.28rem);
+        line-height: 1.5;
+        color: var(--text-dim);
+      }
+      .slide__body {
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: var(--gap);
+        overflow: hidden;
+        container-type: size;
+      }
+      .slide__footer {
+        border-top: 1px solid var(--border);
+        padding-top: clamp(0.5rem, 1.3vh, 0.9rem);
+      }
+      .fastcampus-logo {
+        display: block;
+        width: clamp(7.2rem, 9vw, 8.5rem);
+        height: auto;
+      }
+      .hl,
+      .tone-brand {
+        color: var(--brand);
+      }
+      .tone-purple {
+        color: var(--purple);
+      }
+      .tone-gray {
+        color: var(--gray);
+      }
+      .tone-yellow {
+        color: var(--yellow);
+      }
+      .tone-orange {
+        color: var(--orange);
+      }
+      .tone-green {
+        color: var(--green);
+      }
+      /* Shared roles: cover and split layouts inherit exactly the same type. */
+      .statement {
+        font-family: inherit;
+        font-size: var(--statement);
+        font-weight: 850;
+        line-height: 1.35;
+        letter-spacing: -0.035em;
+      }
+      .statement strong {
+        display: block;
+        color: var(--brand);
+        font-weight: 900;
+      }
+      .heading {
+        font-size: var(--heading);
+        font-weight: 800;
+        line-height: 1.35;
+        letter-spacing: -0.025em;
+      }
+      .copy {
+        font-size: var(--body);
+        line-height: 1.6;
+        color: var(--text-dim);
+      }
+      .eyebrow {
+        font-size: clamp(1rem, 1.5vw, 1.3rem);
+        line-height: 1.5;
+        color: var(--text-dim);
+      }
+      .diagram {
+        display: block;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+        color: var(--gray);
+      }
+      .symbols {
+        position: absolute;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+        pointer-events: none;
+      }
+      .content {
+        width: min(100%, var(--content-width));
+        margin-inline: auto;
+      }
+      /* Image slots are borderless. Replace the SVG slot with the clip's image. */
+      .scene {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.65fr);
+        gap: var(--gap);
+        align-items: center;
+        width: min(100%, 92rem);
+      }
+      .scene--visual-first {
+        grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+      }
+      .scene__copy {
+        display: flex;
+        flex-direction: column;
+        gap: clamp(1.3rem, 3vh, 2.5rem);
+      }
+      .scene__visual {
+        width: 100%;
+        height: min(52cqh, 28rem);
+        min-height: 15rem;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+      }
+      .scene--cover .scene__visual,
+      .scene--image .scene__visual {
+        height: min(78cqh, 34rem);
+      }
+      .scene__visual > img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border: 0;
+        box-shadow: none;
+      }
+      .scene__visual > .diagram {
+        min-height: 0;
+        flex: 1;
+      }
+      .scene__visual figcaption {
+        font-size: var(--body);
+        color: var(--text-dim);
+        text-align: center;
+      }
+      /* Open parallel concepts: diagram, heading, caption; no card shells. */
+      .triptych {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--gap);
+        align-items: start;
+      }
+      .concept {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: clamp(1rem, 2.6vh, 2rem);
+        min-width: 0;
+      }
+      .concept > .diagram {
+        height: clamp(11rem, 25vh, 19rem);
+      }
+      .concept .copy {
+        max-width: 17em;
+      }
+      /* Optional transition copy, never wrapped in a banner or bordered box. */
+      .handoff {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1.25rem;
+        color: var(--text-dim);
+        font-size: var(--body);
+        line-height: 1.5;
+      }
+      .handoff strong {
+        color: var(--text);
+        font-weight: 800;
+      }
+      .progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        z-index: 200;
+        background: var(--border);
+      }
+      .progress-fill {
+        height: 100%;
+        background: var(--brand);
+        transition: width 0.3s ease;
+      }
+      .nav-btn {
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 150;
+        width: clamp(1.9rem, 2.8vw, 2.5rem);
+        height: clamp(1.9rem, 2.8vw, 2.5rem);
+        display: grid;
+        place-items: center;
+        border: 1px solid var(--border);
+        border-radius: 3px;
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--text-dim);
+        cursor: pointer;
+      }
+      .nav-btn:hover:not(:disabled) {
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .nav-btn:disabled {
+        opacity: 0.1;
+        cursor: default;
+      }
+      #btn-prev {
+        left: clamp(0.4rem, 1.2vw, 1.1rem);
+      }
+      #btn-next {
+        right: clamp(0.4rem, 1.2vw, 1.1rem);
+      }
+      .dot-nav {
+        position: fixed;
+        bottom: 1.3rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        z-index: 150;
+      }
+      .dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.18);
+        border: 0;
+        cursor: pointer;
+        transition: all 0.22s ease;
+      }
+      .dot.active {
+        width: 22px;
+        border-radius: 3px;
+        background: var(--brand);
+      }
+      .slide-counter {
+        position: fixed;
+        bottom: 1.2rem;
+        right: 1.8rem;
+        font:
+          0.62rem Monaco,
+          monospace;
+        color: var(--text-muted);
+        z-index: 150;
+      }
+      @keyframes s-fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .anim-item {
+        opacity: 0;
+      }
+      .anim-item.do-fadeinup {
+        animation: s-fadeInUp 0.48s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .slide,
+        .progress-fill {
+          transition: none;
+        }
+        .anim-item.do-fadeinup {
+          animation-duration: 0.001s;
+        }
+      }
+
+      .status-one-line {
+        white-space: nowrap;
+        max-width: none;
+      }
+
+      /* STRUCTURE_BRANCH: root and children are content, connecting lines encode membership. */
+      .structure-tree {
+        width: min(100%, 72rem);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .structure-node {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        text-align: center;
+        min-width: 0;
+      }
+      .structure-node > .diagram {
+        width: 6rem;
+        height: 6rem;
+      }
+      .structure-tree__root {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+      .structure-tree__root > .diagram {
+        width: 5rem;
+        height: 5rem;
+      }
+      .structure-tree__stem {
+        height: 3rem;
+        border-left: 2px solid var(--gray);
+      }
+      .structure-tree__children {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+        position: relative;
+      }
+      .structure-tree__children::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 25%;
+        right: 25%;
+        border-top: 2px solid var(--gray);
+      }
+      .structure-tree__children > .structure-node {
+        position: relative;
+        padding: 3rem 1.5rem 0;
+      }
+      .structure-tree__children > .structure-node::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 0;
+        height: 2rem;
+        border-left: 2px solid var(--gray);
+      }
+      .structure-tree__root .copy {
+        margin-top: 0.45rem;
+      }
+      /* STRUCTURE_EXCHANGE: only the common scope gets a boundary, not every text node. */
+      .exchange {
+        position: relative;
+        aspect-ratio: 600/430;
+        width: 100%;
+        border: 1px solid var(--gray);
+        border-radius: 0.5rem;
+      }
+      .exchange__scope {
+        position: absolute;
+        top: 1rem;
+        left: 1.25rem;
+      }
+      .exchange > .diagram {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .exchange__node {
+        position: absolute;
+        width: 43%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+      .exchange__node--root {
+        top: 14%;
+        left: 28.5%;
+      }
+      .exchange__node--a {
+        bottom: 9%;
+        left: 3.5%;
+      }
+      .exchange__node--b {
+        bottom: 9%;
+        right: 3.5%;
+      }
+      .exchange__legend {
+        position: absolute;
+        top: 46%;
+        left: 37%;
+        width: 26%;
+        display: grid;
+        gap: 0.7rem;
+        text-align: center;
+      }
+      .exchange__legend .copy {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+      .line-key {
+        width: 1.5rem;
+        border-top: 2px solid var(--yellow);
+      }
+      .line-key--return {
+        border-top-style: dashed;
+      }
+      /* TRANSITION_COMPARE: mirror all four rows; the center is a transition arrow only. */
+      .transition-compare {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 4rem minmax(0, 1fr);
+        align-items: center;
+        gap: 2.5rem;
+        width: min(100%, var(--content-width));
+      }
+      .transition-side {
+        display: grid;
+        grid-template-rows: 2rem 5.5rem 12rem minmax(3.2rem, auto);
+        align-items: center;
+        justify-items: center;
+        text-align: center;
+        gap: 1rem;
+        min-width: 0;
+      }
+      .transition-side > .diagram {
+        height: 12rem;
+        width: 100%;
+      }
+      .transition-side > .copy {
+        max-width: 20em;
+      }
+      .transition-compare__arrow {
+        height: 4rem;
+      }
+
+/* Animate the semantic boundary separately; never hide or move its children as a group. */
+.motion-scope{position:relative;border-color:transparent!important}
+.motion-scope>.scope-frame{position:absolute;inset:-1.5px;display:block;border:1.5px solid var(--gray);border-radius:inherit;pointer-events:none}
+.motion-scope>.scope-frame.anim-item.do-fadeinup,.scope-caption.anim-item.do-fadeinup{animation-name:scope-fade;animation-duration:.48s;animation-timing-function:cubic-bezier(.23,1,.32,1);animation-fill-mode:both;transform:none}
+@keyframes scope-fade{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.motion-scope>.scope-frame.anim-item,.scope-caption.anim-item{opacity:1;animation:none!important;transform:none}}
+
+      /* CONTAINED_STRUCTURE: a semantic scope, followed by independently revealed contents. */
+      .scope-panel{width:min(100%,78rem);border:1.5px solid var(--gray);border-radius:.7rem;padding:2rem 2.4rem}
+      .scope-panel__header{display:flex;align-items:baseline;gap:1.6rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
+      .scope-panel__content{display:grid;grid-template-columns:minmax(0,2.2fr) minmax(0,1fr);gap:2rem;padding-top:1.6rem}
+      .scope-panel__items{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.5rem;margin-top:1.5rem}
+      .scope-panel__item,.scope-panel__shared{display:flex;flex-direction:column;align-items:center;gap:.8rem;text-align:center}
+      .scope-panel__item .diagram{width:6rem;height:7rem}
+      .scope-panel__shared{border-left:1px solid var(--border);padding-left:1.5rem}
+      .scope-panel__shared .diagram{width:7rem;height:8rem}
+      .scope-panel .anim-item.do-fadeinup{animation-name:scope-fade}
+      [data-motion="none"] .anim-item{opacity:1;animation:none!important}
+      @media(max-height:650px){.scope-panel{padding:1.2rem}.scope-panel__header{padding-bottom:1rem}.scope-panel__content{gap:1.2rem;padding-top:1rem}.scope-panel__items{gap:1rem;margin-top:1rem}.scope-panel__item .diagram{width:4rem;height:5rem}.scope-panel__shared .diagram{width:5rem;height:6rem}}
+/* Approved pattern families 10–29. Geometry is shared by role; slots contain no lecture copy. */
+.tx-body{--art:clamp(4rem,18cqh,10rem);--tx-space:clamp(.6rem,2.2cqh,1.5rem)}
+.tx-body .anim-item.do-fadeinup{animation-name:scope-fade}
+.tx-art{display:block;width:var(--art);height:var(--art);flex-shrink:0}
+.tx-item{display:flex;flex-direction:column;gap:.7rem;align-items:center;text-align:center;min-width:0}
+.tx-item .heading{color:inherit}.tx-item .copy{color:var(--gray)}
+.tx-compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3.5rem;width:min(100%,80rem)}
+.tx-compare-side{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.5rem;min-width:0}
+.tx-window{width:100%;padding:2.8rem 1.5rem 1.5rem;border:1.5px solid transparent;border-radius:.4rem;position:relative}
+.tx-window-bar{position:absolute;top:.25rem;left:1rem;color:var(--gray);letter-spacing:.2rem}
+.tx-agents{display:flex;justify-content:center;gap:1.5rem}.tx-agents .tx-art{width:min(6rem,10vw);height:min(6rem,10vw)}.tx-agents .heading{font-size:var(--body)}
+.tx-folder-art{width:min(100%,23rem);height:min(42cqh,18rem);position:relative}
+.tx-folder-art>.tx-art{width:100%;height:100%}.tx-files{position:absolute;inset:41% 30% 23%;display:flex;justify-content:center}.tx-files .tx-art{width:33%;height:100%}
+.tx-hidden-detail{position:absolute;right:19%;bottom:23%;font-size:.75rem;opacity:.35;border:1px dashed currentColor;padding:.05rem .5rem}
+.tx-arrow{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.3rem;width:100%;min-width:0}
+.tx-arrow>svg{width:100%;height:1.6rem;overflow:visible}.tx-arrow--back>svg{transform:scaleX(-1)}.tx-arrow>.copy{color:inherit;font-size:var(--body);white-space:nowrap}
+.tx-transfer{width:min(100%,78rem);display:grid;grid-template-columns:1fr .65fr 1fr;align-items:center;gap:2rem}
+.tx-transfer .tx-art{width:min(20rem,36cqh);height:min(20rem,36cqh)}
+.tx-process,.tx-stage-row{display:grid;grid-template-columns:1fr .32fr 1fr .32fr 1fr .32fr 1fr;align-items:center;gap:1rem;width:min(100%,86rem)}
+.tx-process .heading{font-size:var(--body)}.tx-process .tx-arrow>.copy{font-size:1rem}
+.tx-stage-focus{width:min(100%,80rem);display:flex;flex-direction:column;align-items:center;gap:2rem}.tx-stage-row{grid-template-columns:1fr .3fr 1fr .3fr 1fr}
+.tx-stage{display:flex;flex-direction:column;align-items:center;gap:.7rem;opacity:.34}.tx-stage .heading{color:inherit}.tx-stage-note{text-align:center}
+.tx-stage-focus[data-focus="1"] [data-stage="1"],.tx-stage-focus[data-focus="2"] [data-stage="2"],.tx-stage-focus[data-focus="3"] [data-stage="3"]{opacity:1}
+.tx-record{display:grid;grid-template-columns:1fr 1.5fr;align-items:center;gap:5rem;width:min(100%,72rem)}.tx-record>.tx-item .tx-art{width:min(23rem,38cqh);height:min(23rem,38cqh)}
+.tx-fields{display:flex;flex-direction:column;gap:1.5rem}.tx-fields>div{display:grid;grid-template-columns:7rem minmax(0,1fr);gap:1.5rem;align-items:baseline}.tx-fields dt{font-size:var(--body);color:var(--gray)}.tx-fields dd{margin:0}
+.tx-graph{position:relative;width:min(100%,76rem);height:min(100cqh,36rem);min-height:0;flex-shrink:0}
+.tx-wires{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.tx-node{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,calc(var(--node-art)/-2));display:flex;flex-direction:column;align-items:center;gap:.6rem;text-align:center;max-width:29%;--node-art:clamp(3.3rem,15cqh,8rem)}
+.tx-node .tx-art{width:var(--node-art);height:var(--node-art)}.tx-node .heading{white-space:nowrap;font-size:var(--heading)}.tx-node .copy{white-space:nowrap;font-size:var(--body)}
+.tx-history .tx-node{--node-art:3rem}.tx-history .tx-node .copy{font-size:var(--body)}
+.tx-origin [data-node="origin"]{--node-art:min(8rem,17cqh)}.tx-origin [data-node="origin"] .heading{position:absolute;left:calc(100% + .8rem);top:40%}.tx-origin [data-node="origin"] .heading{font-size:var(--body)}
+.tx-origin [data-node="a"],.tx-origin [data-node="b"]{--node-art:min(20rem,33cqh)}
+.tx-history-spaces .tx-node{--node-art:min(17rem,28cqh)}.tx-history-spaces [data-node="seed"]{--node-art:2.5rem}.tx-history-spaces .tx-node .heading{font-size:var(--body)}
+.tx-label{position:absolute;left:34%;color:var(--brand)}.tx-label--a{top:14%}.tx-label--b{top:62%;color:var(--purple)}
+.tx-draw.do-fadeinup{animation:none!important;opacity:1}.tx-draw.do-fadeinup path{stroke-dasharray:1;stroke-dashoffset:1;animation:tx-grow .85s linear both;animation-delay:var(--draw-delay,0s)}
+@keyframes tx-grow{to{stroke-dashoffset:0}}
+.tx-switch{width:min(100%,70rem);height:min(100cqh,31rem);border:1.5px solid transparent;border-radius:.45rem;display:grid;grid-template-columns:13rem 1fr;padding:1.3rem;gap:2rem}
+.tx-switch-tabs{display:flex;flex-direction:column;gap:.75rem;padding-right:1.3rem;border-right:1px solid var(--border)}
+.tx-switch-tabs button{appearance:none;border:0;background:transparent;color:var(--gray);padding:1rem;text-align:left;cursor:pointer;border-radius:.25rem;font-size:var(--body)}
+.tx-switch-tabs button[aria-selected="true"]{background:var(--bg-card);color:var(--brand)}.tx-switch-tabs button[data-panel="b"][aria-selected="true"]{color:var(--purple)}
+.tx-switch-tabs button:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.tx-switch-content{position:relative;min-height:0}.tx-panel{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s ease,visibility .3s}
+.tx-panel.active{opacity:1;visibility:visible;pointer-events:auto}.tx-panel .anim-item{opacity:1;animation:none!important}
+.tx-shared{position:relative;width:min(100%,56rem);height:min(100cqh,34rem);border:1.5px solid transparent;border-radius:.4rem;padding:2.8rem 1.5rem 2.2rem}
+.tx-space-label{position:absolute;top:.65rem;left:1.3rem}.tx-shared .tx-graph{width:100%;height:100%}.tx-shared-note{position:absolute;left:43%;top:18%;font-size:var(--body)}
+.tx-shared .tx-node{--node-art:min(7rem,15cqh)}.tx-shared .tx-node .heading{font-size:var(--body)}
+.tx-messages{width:min(100%,78rem);height:min(100cqh,32rem);display:grid;grid-template-columns:max-content minmax(0,1fr) max-content;grid-template-rows:repeat(3,minmax(0,1fr));gap:.65rem 2rem;align-items:center}
+.tx-message-left{grid-column:1;grid-row:1/-1}.tx-message-right{grid-column:3;grid-row:1/-1}.tx-messages>.tx-item .tx-art{width:6rem;height:6rem}.tx-messages>.tx-item .heading{font-size:var(--body)}
+.tx-message{grid-column:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.2rem}.tx-message-name{display:flex;align-items:center;gap:.6rem}.tx-message-name .tx-art{width:2rem;height:2rem}.tx-message-name .heading{font-size:var(--body)}.tx-message>.copy{font-size:var(--body)}
+.tx-brief{width:min(100%,80rem);display:grid;grid-template-columns:7rem 1fr;gap:2.5rem}.tx-brief>.tx-art{width:6rem;height:7rem}.tx-brief .statement{font-size:var(--heading)}.tx-brief>div>.copy{margin-top:.8rem;color:var(--text)}.tx-brief .tx-fields{margin-top:1.6rem;gap:.9rem}.tx-brief dd{font-size:var(--body)}
+.tx-bottom-note{position:absolute;bottom:0;width:100%;text-align:center}
+.tx-dispatch{width:min(100%,72rem);display:flex;flex-direction:column;gap:clamp(2rem,8cqh,5.12rem)}.tx-dispatch-row{display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;gap:3rem}.tx-dispatch .tx-art{width:clamp(3rem,16cqh,8rem);height:clamp(3rem,16cqh,8rem)}
+.tx-dispatch .heading{font-size:var(--heading)}.tx-dispatch .tx-arrow{transform:translateY(-1rem)}
+.tx-pass-label{position:absolute;top:25%;left:66%;color:var(--purple)}.tx-return-label{position:absolute;top:77%;left:29%;color:var(--orange)}
+.tx-delegation .tx-node{gap:.6rem}.tx-delegation .tx-node{--node-art:min(7rem,15cqh)}.tx-delegation .tx-node .heading{font-size:var(--body)}.tx-delegation .tx-node .copy{font-size:1.05rem}
+.tx-cause-list{width:min(100%,75rem);display:flex;flex-direction:column;gap:clamp(1rem,5cqh,3rem)}.tx-cause{display:grid;grid-template-columns:4rem 1fr;gap:2rem;align-items:baseline}.tx-cause .copy{margin-top:.6rem}.tx-number{font-size:var(--heading);font-weight:800}
+.tx-time{position:relative;width:min(100%,80rem,calc(94cqh * 2.5));aspect-ratio:5/2}.tx-time>svg{width:100%;height:100%;overflow:visible}.tx-time-label{position:absolute;transform:translateX(-50%);white-space:nowrap}.tx-time-car{transform:translate(820px,125px);cursor:pointer}.tx-time-car:focus{outline:none}.tx-time-car:focus-visible>circle{fill:var(--yellow)}.tx-time-branch{clip-path:inset(0 100% 0 0)}.tx-time-new{opacity:0}
+.tx-time.is-running .tx-time-car{animation:tx-time-travel 4s linear both}.tx-time.is-running .tx-time-branch{animation:tx-time-reveal 1.6s linear 2.2s both}.tx-time.is-running .tx-time-new{animation:scope-fade .3s ease 3.8s both}
+@keyframes tx-time-travel{0%{transform:translate(820px,125px);animation-timing-function:cubic-bezier(.23,1,.32,1)}40%,55%{transform:translate(220px,125px)}65%{transform:translate(299px,152px)}75%{transform:translate(355px,212px)}85%{transform:translate(422px,272px)}95%,100%{transform:translate(530px,300px)}}
+@keyframes tx-time-reveal{from{clip-path:inset(0 78% 0 0)}to{clip-path:inset(0 27% 0 0)}}
+@media(max-height:650px){.tx-compare-side{gap:.8rem}.tx-fields{gap:.8rem}.tx-graph{height:100cqh}.tx-node{gap:.3rem}.tx-node .heading{font-size:var(--body)}.tx-node .copy{font-size:1rem}.tx-messages>.tx-item .tx-art{width:4.5rem;height:4.5rem}.tx-shared{padding-top:2rem;padding-bottom:1rem}.tx-brief .tx-fields{margin-top:.8rem;gap:.45rem}.tx-brief .statement{font-size:var(--heading)}.tx-stage-focus{gap:1rem}.tx-switch{grid-template-columns:10rem 1fr}.tx-record{gap:2rem}.tx-delegation .tx-node .copy{font-size:.95rem}}
+@media(prefers-reduced-motion:reduce){.tx-draw.do-fadeinup path{animation:none;stroke-dashoffset:0}.tx-panel{transition:none}.tx-time.is-running .tx-time-car{animation:none;transform:translate(530px,300px)}.tx-time.is-running .tx-time-branch{animation:none;clip-path:none}.tx-time.is-running .tx-time-new{animation:none;opacity:1}}
+
+    @media(max-height:650px){.structure-tree{gap:0}.structure-tree__stem{height:1.5rem}.structure-tree__children{padding-top:0}.structure-tree__children>.structure-node{padding-top:1.8rem;gap:.65rem}.structure-tree__children>.structure-node::before{height:1.2rem}.structure-node>.diagram{height:min(22cqh,7rem)}.exchange{height:min(100cqh,23rem);min-height:0}.transition-side{gap:.5rem;grid-template-rows:auto auto minmax(0,1fr) auto}.transition-side>.diagram{height:min(30cqh,8rem)}.transition-compare{height:100cqh}.tx-delegation [data-node="person"],.tx-delegation [data-node="center"]{top:19%}}
+.tx-origin [data-node="a"],.tx-origin [data-node="b"]{top:60%}.tx-history-spaces [data-node="b"]{top:65%}.tx-history [data-node="branch"]{top:69%}.tx-history-spaces .tx-label--b{top:55%}
+.tx-folder-scope{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.tx-agent-badge{position:absolute;right:-1.5rem;top:0;width:2.6rem;height:2.6rem}.tx-delegation [data-node="a"],.tx-delegation [data-node="b"],.tx-delegation [data-node="c"]{top:65%}
+.tx-delegation [data-node="center"] .heading{position:absolute;left:calc(100% + 1rem);top:.4rem}.tx-delegation [data-node="center"] .copy{position:absolute;left:calc(100% + 1rem);top:2.5rem}@media(max-height:650px){.tx-delegation [data-node="a"],.tx-delegation [data-node="b"],.tx-delegation [data-node="c"]{top:60%}.tx-delegation [data-node="center"] .copy{top:2rem}}
+
+/* ── 이번 덱 전용 변형: 프로젝트 문서·입력/출력·순차 배정 ── */
+.slide__body .anim-item.do-fadeinup{animation-name:scope-fade}
+.p5-note{font-size:var(--body);color:var(--text-dim);text-align:center;line-height:1.5;max-width:65rem}
+.p5-flow{display:flex;align-items:center;justify-content:center;gap:2rem;max-width:100%;width:fit-content}
+.p5-item{display:flex;flex-direction:column;align-items:center;gap:1rem;text-align:center;width:21rem;max-width:26vw}
+.p5-icon{width:9rem;height:9rem;display:block;flex-shrink:0}
+.p5-arrow{width:5rem;flex-shrink:0;color:var(--gray)}.p5-arrow svg{width:100%;height:2rem;overflow:visible}
+.p5-flow .heading{font-size:var(--heading)}.p5-flow .copy{max-width:19em}
+.p5-image{mix-blend-mode:lighten;object-fit:contain;max-width:100%;max-height:100%}
+.p5-project{width:min(100%,86rem);display:grid;grid-template-columns:1.1fr 1fr;gap:3rem;align-items:center}
+.p5-project figure{height:min(75cqh,35rem);display:flex;align-items:center;justify-content:center}
+.p5-project .statement{margin:.8rem 0 1.4rem}.p5-project .copy{margin-top:.5rem}
+.p5-link{display:inline-block;color:var(--text);font-size:var(--body);margin-top:1.7rem;text-underline-offset:.35em}
+.p5-kicker{font-size:var(--heading);font-weight:700;color:var(--accent,var(--brand))}
+.p5-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4rem;width:min(100%,82rem)}
+.p5-side{display:flex;flex-direction:column;align-items:center;gap:1.4rem;text-align:center;min-width:0}.p5-side>.heading{color:var(--accent)}
+.p5-root{display:flex;align-items:center;gap:.7rem;font-size:var(--body)}.p5-root .p5-icon{width:4rem;height:4rem}
+.p5-leaves{display:flex;justify-content:center;gap:1.5rem;width:100%;position:relative;padding-top:2rem}
+.p5-leaves:before{content:'';position:absolute;top:0;left:25%;right:25%;height:1.5rem;border-top:2px solid var(--accent);border-left:2px solid var(--accent);border-right:2px solid var(--accent)}
+.p5-leaf{flex:1;display:flex;align-items:center;flex-direction:column;gap:.7rem;font-size:var(--body)}.p5-leaf .p5-icon{width:5rem;height:5rem;color:var(--accent)}
+.p5-result{font-size:var(--heading);font-weight:800;color:var(--accent);margin-top:.4rem}
+.p5-rows{display:flex;flex-direction:column;gap:2.1rem;width:min(100%,82rem)}
+.p5-row{display:grid;grid-template-columns:minmax(0,1fr) 4rem minmax(0,1fr);gap:2rem;align-items:center}.p5-row .heading{font-size:var(--heading)}.p5-row .p5-arrow{width:4rem;color:var(--accent)}.p5-row .p5-answer{color:var(--accent);font-size:var(--heading);font-weight:700}
+.p5-badgood{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4rem;width:min(100%,82rem)}
+.p5-badgood .p5-side{align-items:stretch;text-align:left;gap:1.5rem}.p5-evidence{display:flex;align-items:center;gap:1.3rem;min-height:4.5rem;font-size:var(--body);line-height:1.5}.p5-evidence .p5-icon{width:4rem;height:4rem;color:var(--accent)}
+.p5-doc-layout{width:min(100%,82rem);display:grid;grid-template-columns:1.15fr 1fr;gap:4rem;align-items:center}
+.p5-paper{position:relative;border:1.5px solid var(--gray);border-radius:.5rem;background:var(--bg-card);padding:2.2rem;display:flex;flex-direction:column;gap:1.6rem}.p5-paper>.heading{color:var(--green)}
+.p5-field{display:grid;grid-template-columns:5rem 1fr;gap:1.5rem;font-size:var(--body);line-height:1.5}.p5-field dt{color:var(--text-dim)}.p5-field dd{margin:0}
+.p5-doc-layout .copy{margin-top:1.1rem}.p5-role{display:grid;grid-template-columns:1fr 4rem 1.35fr;gap:2rem;align-items:center;width:min(100%,85rem)}
+.p5-role-input{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1rem}.p5-role-input .p5-icon{width:8rem;height:8rem}.p5-role .p5-evidence{min-height:0}.p5-role .p5-paper{gap:1.1rem}
+.p5-team{width:min(100%,78rem);height:min(76cqh,34rem);position:relative}
+.p5-node{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%);display:flex;align-items:center;flex-direction:column;gap:.45rem;text-align:center;white-space:nowrap}
+.p5-node .p5-icon{width:6.3rem;height:6.3rem}.p5-node .heading{font-size:var(--body)}.p5-node .copy{font-size:var(--body)}
+.p5-team-wires{position:absolute;inset:0;width:100%;height:100%;overflow:visible}.p5-wirelabel{position:absolute;font-size:var(--body);color:var(--yellow);background:var(--bg);padding:0 .5rem;transform:translate(-50%,-50%)}
+.p5-state{font-size:var(--body);display:flex;gap:.4rem;align-items:center}.p5-node .p5-state .p5-icon{width:1.5rem;height:1.5rem;color:inherit}.p5-serial .p5-node .copy{font-size:1.12rem}
+.p5-stages{display:flex;flex-direction:column;gap:1.8rem;width:min(100%,82rem)}.p5-stage{display:grid;grid-template-columns:9rem 1fr;gap:2rem;align-items:start}.p5-stage .heading{color:var(--brand)}.p5-stage .p5-stage-line{font-size:var(--heading);font-weight:700}.p5-stage .copy{margin-top:.7rem}
+.p5-handoff{width:min(100%,88rem);display:flex;flex-direction:column;gap:1.7rem}.p5-handoff-head{display:grid;grid-template-columns:1fr 4rem 1fr;gap:2rem;align-items:center;margin-bottom:.6rem}.p5-handoff-head h2{display:flex;gap:1rem;align-items:center;color:var(--green)}.p5-handoff-head .p5-icon{width:4rem;height:4rem}
+.p5-handoff .p5-row{font-size:var(--body);line-height:1.5;gap:2rem}.p5-handoff .p5-answer{font-size:var(--body);color:var(--text)}
+.p5-review{width:min(100%,76rem);display:flex;align-items:center;flex-direction:column;gap:1rem}.p5-review .p5-item{width:16rem}.p5-loop:after{content:"";position:absolute;left:-7px;top:-5px;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:9px solid var(--orange)}.p5-review-row{display:flex;align-items:center;gap:2rem}.p5-review .p5-loop{width:70%;height:3rem;position:relative;border-bottom:2px solid var(--orange);border-left:2px solid var(--orange);border-right:2px solid var(--orange);color:var(--orange);text-align:center;font-size:var(--body)}.p5-loop span{background:var(--bg);padding:0 1rem;position:relative;top:1.9rem}
+.p5-gate .p5-review-row{width:100%;display:grid;grid-template-columns:1fr 3rem 1fr 3rem 1fr;gap:2rem}.p5-gate .p5-item{width:100%;max-width:none}.p5-gate .p5-arrow{width:3rem}.p5-gate .p5-loop{width:calc((100% + 7rem)/3);align-self:flex-start;margin-left:calc((100% - 14rem)/6);margin-bottom:2rem}.p5-gate .p5-loop span{position:absolute;top:3.5rem;left:0;width:max-content;padding:0;text-align:left}
+.p5-brief{width:min(100%,76rem);display:flex;flex-direction:column;gap:2.5rem}.p5-brief blockquote{font-size:var(--heading);line-height:1.55;font-weight:700;padding-left:1.6rem;border-left:4px solid var(--brand)}.p5-brief-fields{display:flex;justify-content:space-between;gap:2rem}.p5-brief-fields .copy{margin-bottom:.5rem}
+.scene .p5-team{height:min(76cqh,32rem)}.scene .p5-node .p5-icon{width:5rem;height:5rem}.scene .p5-node .heading,.scene .p5-node .copy{font-size:var(--body)}
+@media(max-width:1400px){.p5-item{width:18rem}.p5-icon{width:7rem;height:7rem}.p5-flow{gap:1.2rem}.p5-arrow{width:3rem}.p5-team{height:min(77cqh,30rem)}.p5-node .p5-icon{width:5.2rem;height:5.2rem}.p5-two,.p5-badgood{gap:2.5rem}.p5-paper{padding:1.5rem;gap:1.2rem}.p5-doc-layout{gap:2.5rem}.p5-role{gap:1.2rem;grid-template-columns:1fr 3rem 1.2fr}.p5-role .p5-paper{gap:.8rem}.p5-rows{gap:1.7rem}.p5-project{gap:2rem}.p5-project .statement{margin:.6rem 0 1rem}.p5-stage{gap:1rem}.p5-stages{gap:1.4rem}}
+
+
+/* 의미별 제목 강조는 장별 명시값. 끝 단어 자동 분리는 사용하지 않는다. */
+.slide__body{padding-block:1rem}
+.slide__body.p5-has-note{display:grid;grid-template-columns:minmax(0,1fr);justify-content:stretch;justify-items:stretch;grid-template-rows:minmax(0,1fr) auto;row-gap:clamp(2rem,3vh,2.5rem);padding-top:1rem;padding-bottom:.8rem}
+.p5-main-content{min-height:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--gap)}
+.p5-main-content>.p5-team{height:min(100%,34rem)}
+.p5-has-note>.p5-note{align-self:end;max-width:none;width:100%;margin:0;line-height:1.55}
+.p5-item{gap:1.2rem}
+.p5-serial .p5-node .copy{font-size:var(--body)}
+.p5-role-input{gap:1.25rem}.p5-role .p5-paper{gap:1.5rem;padding-block:2rem}
+.p5-role .p5-evidence{line-height:1.6}
+.p5-project .statement{margin:1rem 0 1.75rem}
+.p5-project .copy{margin-top:.65rem;line-height:1.55}
+.p5-project .p5-link{margin-top:2rem}
+.p5-review{gap:1.5rem}.p5-review>.heading{font-size:var(--body);color:var(--text-dim)}
+.p5-review .p5-item{gap:.9rem}.p5-review .p5-icon{height:6rem;width:6rem}
+.p5-gate .p5-loop{margin-bottom:2.5rem}
+.p5-pattern-criteria{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2rem;width:min(100%,86rem)}
+.p5-criterion{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.6rem}
+.p5-criterion>svg{width:100%;max-width:16rem;height:11rem}
+.p5-criterion .heading{font-size:var(--heading)}
+.p5-criterion .copy{line-height:1.5}
+.p5-failure-visual{width:100%;height:100%;max-height:30rem}
+@media(max-width:1400px){.p5-pattern-criteria{gap:1.2rem}.p5-role .p5-paper{gap:1rem;padding-block:1.5rem}.p5-project{grid-template-columns:1fr 1.15fr;gap:2rem}.p5-review{gap:1.1rem}}
+
+/* 과정의 선은 본문 라벨이 아니라 실제 아이콘 중심에 연결한다. */
+.p5-flow{align-items:flex-start}.p5-flow>.p5-arrow{margin-top:3.5rem}
+.p5-review-row{align-items:flex-start}.p5-review-row>.p5-arrow{margin-top:2rem}
+.p5-gate .p5-review-row{align-items:start}
+@media(max-width:1400px){.p5-flow>.p5-arrow{margin-top:2.5rem}}
+</style>
+  </head>
+  <body>
+    <svg class="symbols" aria-hidden="true">
+      <defs>
+        <g id="shape-person">
+          <circle cx="50" cy="28" r="15" />
+          <path d="M18 85V73C18 44 82 44 82 73V85" />
+        </g>
+        <g id="shape-document">
+          <path
+            d="M24 12H59L77 30V88H24ZM59 12V30H77M35 45H64M35 58H64M35 71H55"
+          />
+        </g>
+        <g id="shape-folder">
+          <path d="M12 28V18H39L50 28H88V81H12ZM12 38H88" />
+        </g>
+        <g id="shape-done">
+          <circle cx="50" cy="50" r="35" />
+          <path d="M30 50L44 64L72 35" />
+        </g>
+        <g id="shape-working">
+          <circle cx="50" cy="50" r="35" opacity=".18" />
+          <path d="M50 15A35 35 0 1 1 15 50" stroke-width="5" />
+        </g>
+        <g id="shape-waiting">
+          <path
+            d="M25 15H75Q85 15 85 25V65Q85 75 75 75H45L25 90V75H25Q15 75 15 65V25Q15 15 25 15Z"
+          />
+          <path d="M38 37C38 22 64 24 61 39C60 46 50 46 50 55M50 65V66" />
+        </g>
+<g id="shape-agent"><rect x="18" y="10" width="64" height="48" rx="22" fill="var(--text)" stroke="var(--gray)"/><rect x="27" y="27" width="46" height="14" rx="7" fill="var(--bg)" stroke="none"/><path d="M36 34H64" stroke-width="5"/><path d="M30 60Q20 67 20 81H80Q80 67 70 60"/></g><g id="shape-point"><circle cx="50" cy="50" r="10" fill="var(--bg)"/></g><g id="shape-cloud"><path d="M22 72C0 72 0 34 26 34C32 6 69 7 76 32C101 29 109 72 82 72Z"/></g><g id="shape-gate"><path d="M50 9L91 50L50 91L9 50Z"/><path d="M36 50L46 61L66 39"/></g><marker id="tx-arrowhead" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto-start-reverse"><path d="M1 1L7 4L1 7" fill="none" stroke="context-stroke" stroke-width="1.4"/></marker>
+      <marker id="tx-tip-brand" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="var(--brand)" stroke-width="1.4"/></marker><marker id="tx-tip-purple" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="var(--purple)" stroke-width="1.4"/></marker><marker id="tx-tip-gray" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="var(--gray)" stroke-width="1.4"/></marker><marker id="tx-tip-yellow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="var(--yellow)" stroke-width="1.4"/></marker><marker id="tx-tip-orange" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="var(--orange)" stroke-width="1.4"/></marker><marker id="tx-tip-green" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="var(--green)" stroke-width="1.4"/></marker><g id="shape-workspace"><use href="#shape-folder"/><g stroke="var(--gray)" stroke-width="1.6"><path d="M29 45H36L41 50V68H29ZM36 45V50H41M33 56H37M33 61H37"/><path d="M45 45H52L57 50V68H45ZM52 45V50H57M49 56H53M49 61H53"/></g><path stroke-width="1.6" d="M61 45H68L73 50V68H61ZM68 45V50H73M65 56H69M65 61H69"/></g></defs>
+    </svg>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress"></div>
+    </div>
+    <button class="nav-btn" id="btn-prev" aria-label="이전 슬라이드">
+      &#8592;
+    </button>
+    <button class="nav-btn" id="btn-next" aria-label="다음 슬라이드">
+      &#8594;
+    </button>
+    <div class="dot-nav" id="dot-nav"></div>
+    <div class="slide-counter">
+      <span id="cur">1</span> / <span id="tot">9</span>
+    </div>
+    <div class="slide-deck" id="deck">
+<!-- 발표 노트: 전달·완료·검증의 기준이 없으면 에이전트가 늘어도 결과를 믿기 어렵습니다. -->
+<article class="slide active" data-index="0" data-pattern="cover"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-02</span><h1 class="slide__title">멀티 에이전트가 <span class="hl">오히려 나빠지는</span> 3가지 이유</h1><p class="slide__sub">전달·완료·검증의 기준이 없으면 에이전트가 늘어도 결과를 믿기 어렵습니다.</p></header><main class="slide__body"><div class="scene scene--cover"><div class="scene__copy anim-item"><p class="statement">에이전트를 늘려도<strong>협업은 저절로<br>완성되지 않습니다</strong></p></div><figure class="scene__visual anim-item"><svg class="p5-failure-visual" viewBox="0 0 600 340" fill="none" stroke="currentColor" stroke-width="2.5" aria-label="에이전트 사이의 끊어진 문서 전달"><svg x="25" y="90" width="130" height="130" viewBox="0 0 100 100"><use href="#shape-agent" class="tone-brand"/></svg><svg x="445" y="90" width="130" height="130" viewBox="0 0 100 100"><use href="#shape-agent" class="tone-purple"/></svg><svg x="260" y="100" width="80" height="80" viewBox="0 0 100 100"><use href="#shape-document" class="tone-orange"/></svg><path d="M170 155H242" stroke="var(--gray)" fill="none" stroke-width="2" marker-end="url(#tx-tip-gray)"/><path d="M355 155H387M415 155H430" stroke="var(--orange)" stroke-width="3" stroke-dasharray="5 5"/><path d="M387 136L411 174M411 136L387 174" stroke="var(--orange)" stroke-width="4"/><svg x="277" y="219" width="42" height="42" viewBox="0 0 100 100"><use href="#shape-waiting" class="tone-orange"/></svg></svg></figure></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<!-- 발표 노트: 각 작업을 잘하는 것과 작업 사이를 잘 연결하는 것은 별개입니다. -->
+<article class="slide " data-index="1" data-pattern="flow"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-02</span><h1 class="slide__title">협업의 <span class="hl">확인 지점</span></h1><p class="slide__sub">각 작업을 잘하는 것과 작업 사이를 잘 연결하는 것은 별개입니다.</p></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="p5-flow"><div class="p5-item anim-item"><svg class="p5-icon tone-brand" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><h2 class="heading">전달</h2><p class="copy">필요한 조건을 받았나</p></div><div class="p5-arrow tone-gray" aria-hidden="true"><svg viewBox="0 0 100 20"><path d="M2 10H94" fill="none" stroke="currentColor" stroke-width="2.5" marker-end="url(#tx-tip-gray)"/></svg></div><div class="p5-item anim-item"><svg class="p5-icon tone-yellow" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-folder"/></svg><h2 class="heading">완료</h2><p class="copy">실제 파일이 남았나</p></div><div class="p5-arrow tone-gray" aria-hidden="true"><svg viewBox="0 0 100 20"><path d="M2 10H94" fill="none" stroke="currentColor" stroke-width="2.5" marker-end="url(#tx-tip-gray)"/></svg></div><div class="p5-item anim-item"><svg class="p5-icon tone-purple" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-done"/></svg><h2 class="heading">검증</h2><p class="copy">기준으로 확인했나</p></div></div></div><p class="p5-note anim-item" data-anim-step="4">이 강의에서는 세 실패를 맥락 붕괴·유령 위임·검증 오류로 나눕니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<!-- 발표 노트: 앞에서 정한 사업 조건이 다음 담당의 입력에서 빠집니다. -->
+<article class="slide " data-index="2" data-pattern="badgood"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-02</span><h1 class="slide__title"><span class="hl">맥락 붕괴</span></h1><p class="slide__sub">앞에서 정한 사업 조건이 다음 담당의 입력에서 빠집니다.</p></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="p5-badgood"><section class="p5-side anim-item" style="--accent:var(--orange)"><h2 class="heading">조건이 빠진 전달</h2><div class="p5-evidence"><svg class="p5-icon tone-orange" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-person"/></svg><p>사람의 조건: 재고를 쌓지 않기</p></div><div class="p5-evidence"><svg class="p5-icon tone-orange" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><p>다음 담당에게: 잘 팔릴 아이템 추천</p></div><div class="p5-evidence"><svg class="p5-icon tone-orange" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-waiting"/></svg><p>결과: 대량 사입이 필요한 품목</p></div></section><section class="p5-side anim-item" style="--accent:var(--green)"><h2 class="heading">문서로 조건 전달</h2><div class="p5-evidence"><svg class="p5-icon tone-green" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><p>사업 조건과 제외 조건</p></div><div class="p5-evidence"><svg class="p5-icon tone-green" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-done"/></svg><p>시장 조사 노트의 근거와 미확인 정보</p></div><div class="p5-evidence"><svg class="p5-icon tone-green" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-agent"/></svg><p>다음 담당이 같은 조건으로 비교</p></div></section></div></div><p class="p5-note anim-item" data-anim-step="4">문서 형식과 실제 입력 전달을 함께 정합니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<!-- 발표 노트: 다음 담당이 판단할 정보를 같은 항목과 이름으로 받게 합니다. -->
+<article class="slide " data-index="3" data-pattern="document"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-02</span><h1 class="slide__title"><span class="hl">맥락</span>을 담은 문서</h1><p class="slide__sub">다음 담당이 판단할 정보를 같은 항목과 이름으로 받게 합니다.</p></header><main class="slide__body"><div class="p5-doc-layout"><div class="p5-paper anim-item"><h2 class="heading">시장 조사 노트</h2><dl class="p5-field"><dt>조건</dt><dd>무재고 운영 · 허용할 CS 부담</dd></dl><dl class="p5-field"><dt>근거</dt><dd>조사 범위 · 출처 · 확인 시점</dd></dl><dl class="p5-field"><dt>구분</dt><dd>확인된 사실 · 추정 · 미확인</dd></dl></div><div class="anim-item"><p class="statement">문서에 조건을 남기고<strong>다음 작업에 전달합니다</strong></p><p class="copy">결과 파일을 입력으로 지정</p><p class="copy">빠진 조건을 확인한 뒤 시작</p></div></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<!-- 발표 노트: 완료했다는 보고가 있어도 다음 작업에 쓸 파일이 없을 수 있습니다. -->
+<article class="slide " data-index="4" data-pattern="badgood"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-02</span><h1 class="slide__title"><span class="hl">유령 위임</span></h1><p class="slide__sub">완료했다는 보고가 있어도 다음 작업에 쓸 파일이 없을 수 있습니다.</p></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="p5-badgood"><section class="p5-side anim-item" style="--accent:var(--orange)"><h2 class="heading">보고만 확인</h2><div class="p5-evidence"><svg class="p5-icon tone-orange" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-person"/></svg><p>“아이템 후보 비교표를 완성했습니다”</p></div><div class="p5-evidence"><svg class="p5-icon tone-orange" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><p>지정 폴더에는 파일 없음</p></div><div class="p5-evidence"><svg class="p5-icon tone-orange" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-waiting"/></svg><p>기획서 작성 담당은 입력 없이 시작</p></div></section><section class="p5-side anim-item" style="--accent:var(--green)"><h2 class="heading">완료 조건 확인</h2><div class="p5-evidence"><svg class="p5-icon tone-green" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><p>지정 경로에 실제 파일 저장</p></div><div class="p5-evidence"><svg class="p5-icon tone-green" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-done"/></svg><p>파일 열기와 필수 항목 확인</p></div><div class="p5-evidence"><svg class="p5-icon tone-green" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-agent"/></svg><p>입력으로 쓸 수 있을 때 다음 작업</p></div></section></div></div><p class="p5-note anim-item" data-anim-step="4">완료 보고와 실제 파일을 함께 확인합니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<!-- 발표 노트: 작성자의 설명에 동의하는 것만으로 오류가 드러나지는 않습니다. -->
+<article class="slide " data-index="5" data-pattern="badgood"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-02</span><h1 class="slide__title"><span class="hl">검증 오류</span></h1><p class="slide__sub">작성자의 설명에 동의하는 것만으로 오류가 드러나지는 않습니다.</p></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="p5-badgood"><section class="p5-side anim-item" style="--accent:var(--orange)"><h2 class="heading">결론을 따라가는 검사</h2><div class="p5-evidence"><svg class="p5-icon tone-orange" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-person"/></svg><p>초안: 예산 항목과 합계 불일치</p></div><div class="p5-evidence"><svg class="p5-icon tone-orange" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><p>“문제없지?”라고 다시 질문</p></div><div class="p5-evidence"><svg class="p5-icon tone-orange" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-waiting"/></svg><p>원본 대조 없이 적절하다고 답변</p></div></section><section class="p5-side anim-item" style="--accent:var(--green)"><h2 class="heading">기준으로 다시 판단</h2><div class="p5-evidence"><svg class="p5-icon tone-green" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><p>원본 조건과 초안을 함께 전달</p></div><div class="p5-evidence"><svg class="p5-icon tone-green" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-done"/></svg><p>항목별 근거와 PASS/FAIL 기록</p></div><div class="p5-evidence"><svg class="p5-icon tone-green" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-agent"/></svg><p>실패 항목 수정 후 전체 재확인</p></div></section></div></div><p class="p5-note anim-item" data-anim-step="4">다른 모델도 오류를 놓칠 수 있어 원본과 판정 근거가 필요합니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<!-- 발표 노트: 작성 결과를 별도 평가 담당이 원본 조건과 비교합니다. -->
+<article class="slide " data-index="6" data-pattern="review"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-02</span><h1 class="slide__title"><span class="hl">생성과 평가</span> 분리</h1><p class="slide__sub">작성 결과를 별도 평가 담당이 원본 조건과 비교합니다.</p></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="p5-review"><p class="heading anim-item">원본 조건 · 평가 기준</p><div class="p5-review-row"><div class="p5-item anim-item"><svg class="p5-icon tone-brand" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-agent"/></svg><h2 class="heading">작성 담당</h2><p class="copy">Generator</p></div><div class="p5-arrow tone-gray" aria-hidden="true"><svg viewBox="0 0 100 20"><path d="M2 10H94" fill="none" stroke="currentColor" stroke-width="2.5" marker-end="url(#tx-tip-gray)"/></svg></div><div class="p5-item anim-item"><svg class="p5-icon tone-green" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><h2 class="heading">초안</h2><p class="copy"></p></div><div class="p5-arrow tone-gray" aria-hidden="true"><svg viewBox="0 0 100 20"><path d="M2 10H94" fill="none" stroke="currentColor" stroke-width="2.5" marker-end="url(#tx-tip-gray)"/></svg></div><div class="p5-item anim-item"><svg class="p5-icon tone-purple" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-agent"/></svg><h2 class="heading">평가 담당</h2><p class="copy">Evaluator</p></div></div><div class="p5-loop anim-item"><span>반려 사유와 수정 요청</span></div></div></div><p class="p5-note anim-item" data-anim-step="4">Part 6에서 다른 모델을 사용한 교차 검증을 다룹니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<!-- 발표 노트: 각 실패가 생기는 지점에 확인 가능한 규칙을 둡니다. -->
+<article class="slide " data-index="7" data-pattern="rows"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-02</span><h1 class="slide__title">실패를 <span class="hl">막는 기준</span></h1><p class="slide__sub">각 실패가 생기는 지점에 확인 가능한 규칙을 둡니다.</p></header><main class="slide__body"><div class="p5-rows"><div class="p5-row anim-item" style="--accent:var(--brand)"><h2 class="heading">맥락 붕괴</h2><div class="p5-arrow tone-brand" aria-hidden="true"><svg viewBox="0 0 100 20"><path d="M2 10H94" fill="none" stroke="currentColor" stroke-width="2.5" marker-end="url(#tx-tip-brand)"/></svg></div><p class="p5-answer">문서 형식 고정 + 입력 파일 전달</p></div><div class="p5-row anim-item" style="--accent:var(--yellow)"><h2 class="heading">유령 위임</h2><div class="p5-arrow tone-yellow" aria-hidden="true"><svg viewBox="0 0 100 20"><path d="M2 10H94" fill="none" stroke="currentColor" stroke-width="2.5" marker-end="url(#tx-tip-yellow)"/></svg></div><p class="p5-answer">파일과 완료 조건 확인</p></div><div class="p5-row anim-item" style="--accent:var(--purple)"><h2 class="heading">검증 오류</h2><div class="p5-arrow tone-purple" aria-hidden="true"><svg viewBox="0 0 100 20"><path d="M2 10H94" fill="none" stroke="currentColor" stroke-width="2.5" marker-end="url(#tx-tip-purple)"/></svg></div><p class="p5-answer">생성과 평가 분리 + 근거 대조</p></div></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<!-- 발표 노트: 문서 전달과 완료 확인부터 만들고 기획서를 자체 검사합니다. -->
+<article class="slide " data-index="8" data-pattern="flow"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-02</span><h1 class="slide__title"><span class="hl">Part 5</span>의 범위</h1><p class="slide__sub">문서를 전달하고 완료를 확인한 뒤 같은 모델로 기준을 검사합니다.</p></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="p5-flow"><div class="p5-item anim-item"><svg class="p5-icon tone-brand" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><h2 class="heading">문서 전달</h2><p class="copy">같은 조건과 양식</p></div><div class="p5-arrow tone-gray" aria-hidden="true"><svg viewBox="0 0 100 20"><path d="M2 10H94" fill="none" stroke="currentColor" stroke-width="2.5" marker-end="url(#tx-tip-gray)"/></svg></div><div class="p5-item anim-item"><svg class="p5-icon tone-yellow" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-folder"/></svg><h2 class="heading">완료 확인</h2><p class="copy">파일과 필수 정보</p></div><div class="p5-arrow tone-gray" aria-hidden="true"><svg viewBox="0 0 100 20"><path d="M2 10H94" fill="none" stroke="currentColor" stroke-width="2.5" marker-end="url(#tx-tip-gray)"/></svg></div><div class="p5-item anim-item"><svg class="p5-icon tone-green" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-done"/></svg><h2 class="heading">자체 검사</h2><p class="copy">동일 모델의 점검·수정</p></div></div></div><p class="p5-note anim-item" data-anim-step="4">다른 모델 평가 루프는 Part 6에서 이어갑니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+</div>
+    <script>
+      // file:// 로 열었을 때만 경로를 보정한다. 정식 덱과 같은 코드다 —
+      // 이 템플릿을 복사해 만든 덱이 그대로 동작해야 한다. HTTP 경로에는 개입하지 않는다.
+      (function () {
+        if (location.protocol !== "file:") return;
+        // 정식 덱은 경로의 /artifacts/ 앞이 저장소 루트다.
+        // 스킬 assets 안의 템플릿처럼 /artifacts/ 밖에 있는 파일은 깊이로 되짚는다.
+        var m = location.pathname.match(/^(.*\/)artifacts\//);
+        var root = m
+          ? m[1]
+          : new URL(
+              /\/\.(claude|agents)\/skills\/fastcampus-slide\/assets\//.test(
+                location.pathname,
+              )
+                ? "../../../../"
+                : "../../../",
+              location.href,
+            ).pathname;
+        function apply() {
+          document.querySelectorAll('img[src^="/"]').forEach(function (el) {
+            var s = el.getAttribute("src");
+            if (s.indexOf(root) === 0) return;
+            el.setAttribute("src", root + s.slice(1));
+          });
+        }
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", apply);
+        } else {
+          apply();
+        }
+      })();
+      /* 조작 규칙 (성공 기준):
+         페이지 이동은 좌우 nav-btn · 하단 dot · 키보드(←/→/스페이스)로만.
+         #deck/body/.slide에 이동용 click 리스너를 절대 달지 않는다 —
+         강의 중 화면을 가리키며 클릭해도 슬라이드가 넘어가면 안 된다. */
+// A connector uses visible icon bounds; labels are not endpoint anchors.
+function drawPatternConnections(){
+ document.querySelectorAll('.tx-graph').forEach(graph=>{
+  const svg=graph.querySelector('.tx-wires');const rect=graph.getBoundingClientRect();
+  if(!rect.width||!rect.height)return;
+  svg.setAttribute('viewBox',`0 0 ${rect.width} ${rect.height}`);
+  const anchor=(node)=>{const r=node.querySelector('.tx-art').getBoundingClientRect();return {x:r.x-rect.x+r.width/2,y:r.y-rect.y+r.height/2,w:r.width,h:r.height}};
+  graph.querySelectorAll('.tx-link').forEach(link=>{
+   const f=graph.querySelector(`[data-node="${link.dataset.from}"]`),t=graph.querySelector(`[data-node="${link.dataset.to}"]`);if(!f||!t)return;
+   const a=anchor(f),b=anchor(t),route=link.dataset.route||'',path=link.querySelector('path');let d;const gap=12;
+   if(route.includes('tree')){const y=(a.y+a.h*.3+b.y-b.h*.3)/2;d=`M${a.x} ${a.y+a.h*.32+gap}V${y}H${b.x}V${b.y-b.h*.32-gap}`;}
+   else if(route.includes('return')){const fromBottom=f.getBoundingClientRect().bottom-rect.y+gap,toBottom=t.getBoundingClientRect().bottom-rect.y+gap,y=Math.min(rect.height*.9,Math.max(fromBottom,toBottom)+25);d=`M${a.x} ${fromBottom}V${y}H${b.x}V${toBottom}`;}
+   else if(Math.abs(b.y-a.y)>rect.height*.26&&graph.classList.contains('tx-delegation')){const x1=a.x+(b.x<a.x?-15:15),y1=a.y+a.h*.4+gap,x2=b.x,y2=b.y-b.h*.4-gap;d=`M${x1} ${y1}C${x1} ${(y1+y2)/2} ${x2} ${(y1+y2)/2} ${x2} ${y2}`;}
+   else{const sign=b.x>a.x?1:-1,x1=a.x+sign*(a.w*.4+gap),x2=b.x-sign*(b.w*.4+gap);d=route.includes('curve')||Math.abs(b.y-a.y)>20?`M${x1} ${a.y}C${x1+(x2-x1)*.55} ${a.y} ${x2-(x2-x1)*.35} ${b.y} ${x2} ${b.y}`:`M${x1} ${a.y}L${x2} ${b.y}`;}
+   path.setAttribute('d',d);if(route.includes('draw'))path.setAttribute('pathLength','1');
+  });
+ });
+}
+const patternObserver=new ResizeObserver(()=>requestAnimationFrame(drawPatternConnections));
+document.querySelectorAll('.tx-graph').forEach(e=>patternObserver.observe(e));
+document.fonts.ready.then(drawPatternConnections);
+function selectPatternPanel(root,id){
+ root.querySelectorAll('[data-panel]').forEach(b=>{const active=b.dataset.panel===id;b.setAttribute('aria-selected',active);b.tabIndex=active?0:-1;});
+ root.querySelectorAll('[data-panel-view]').forEach(p=>{const active=p.dataset.panelView===id;p.classList.toggle('active',active);p.setAttribute('aria-hidden',!active);p.inert=!active;});
+}
+document.querySelectorAll('.tx-switch').forEach((root,n)=>{
+ root.querySelectorAll('[data-panel]').forEach(button=>{
+  const id=button.dataset.panel;button.id=`tx-tab-${n}-${id}`;button.setAttribute('aria-controls',`tx-panel-${n}-${id}`);
+  const panel=root.querySelector(`[data-panel-view="${id}"]`);panel.id=`tx-panel-${n}-${id}`;panel.setAttribute('aria-labelledby',button.id);
+  button.addEventListener('click',()=>selectPatternPanel(root,id));
+  button.addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key))return;event.preventDefault();event.stopPropagation();const buttons=[...root.querySelectorAll('[data-panel]')],next=buttons[(buttons.indexOf(button)+(event.key==='ArrowLeft'||event.key==='ArrowUp'?-1:1)+buttons.length)%buttons.length];next.focus();selectPatternPanel(root,next.dataset.panel);});
+ });selectPatternPanel(root,root.dataset.defaultPanel);
+});
+document.querySelectorAll('.tx-time-car').forEach(car=>{
+ const root=car.closest('.tx-time');const run=e=>{e.preventDefault();e.stopPropagation();root.classList.remove('is-running');void root.offsetWidth;root.classList.add('is-running');};
+ car.addEventListener('pointerdown',e=>e.preventDefault());car.addEventListener('click',run);car.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')run(e);});
+});
+function resetPatternInteractions(slide){
+ slide.querySelectorAll('.tx-time').forEach(e=>e.classList.remove('is-running'));
+ slide.querySelectorAll('.tx-switch').forEach(e=>selectPatternPanel(e,e.dataset.defaultPanel));
+ requestAnimationFrame(drawPatternConnections);
+}
+
+      class SlidePresentation {
+        constructor() {
+          this.slides = Array.from(document.querySelectorAll(".slide"));
+          this.total = this.slides.length;
+          const requested = Number.parseInt(
+            new URLSearchParams(window.location.search).get("slide"),
+            10,
+          );
+          this.current =
+            Number.isInteger(requested) &&
+            requested >= 1 &&
+            requested <= this.total
+              ? requested - 1
+              : 0;
+          this.isAnimating = false;
+          this._init();
+        }
+        _init() {
+          this.slides.forEach((slide, i) =>
+            slide.classList.toggle("active", i === this.current),
+          );
+          document.getElementById("tot").textContent = this.total;
+          this._buildDots();
+          this._bindKeys();
+          this._bindButtons();
+          this._update();
+          this._runSlide(this.current);
+        }
+        /* 슬라이드 진입 시 .anim-item 을 순차 등장시킨다.
+           스토리보드의 "애니메이션 순서" = DOM 순서 */
+        _runSlide(i) {
+          const slide = this.slides[i];
+          resetPatternInteractions(slide);
+          const items = [...slide.querySelectorAll('.anim-item')];
+          items.forEach(el => el.classList.remove('do-fadeinup'));
+          void slide.offsetWidth;
+          const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+          const instant = reduced || slide.dataset.motion === 'none';
+          items.forEach((el,n) => {
+            const requested = Number(el.dataset.animStep ?? n);
+            const step = Number.isFinite(requested) ? Math.max(0, requested) : n;
+            el.style.animationDelay = instant ? '0ms' : `${150 + step * 260}ms`;
+            el.style.setProperty('--draw-delay',el.style.animationDelay);
+            el.classList.add('do-fadeinup');
+          });
+        }
+        next() {
+          if (!this.isAnimating) this._go(this.current + 1);
+        }
+        prev() {
+          if (!this.isAnimating) this._go(this.current - 1);
+        }
+        _go(i) {
+          if (
+            i < 0 ||
+            i >= this.total ||
+            i === this.current ||
+            this.isAnimating
+          )
+            return;
+          this.isAnimating = true;
+          this.slides[this.current].classList.remove("active");
+          this.slides[i].classList.add("active");
+          this.current = i;
+          const url = new URL(window.location.href);
+          url.searchParams.set("slide", this.current + 1);
+          window.history.replaceState({}, "", url);
+          this._runSlide(i);
+          setTimeout(() => {
+            this.isAnimating = false;
+            this._update();
+          }, 420);
+          this._update();
+        }
+        _update() {
+          const pct = ((this.current + 1) / this.total) * 100;
+          document.getElementById("progress").style.width = pct + "%";
+          document.getElementById("cur").textContent = this.current + 1;
+          document.getElementById("btn-prev").disabled = this.current === 0;
+          document.getElementById("btn-next").disabled =
+            this.current === this.total - 1;
+          document
+            .querySelectorAll(".dot")
+            .forEach((d, i) =>
+              d.classList.toggle("active", i === this.current),
+            );
+        }
+        _buildDots() {
+          const nav = document.getElementById("dot-nav");
+          this.slides.forEach((_, i) => {
+            const b = document.createElement("button");
+            b.className = "dot" + (i === 0 ? " active" : "");
+            b.setAttribute("aria-label", `슬라이드 ${i + 1}`);
+            b.addEventListener("click", () => this._go(i));
+            nav.appendChild(b);
+          });
+        }
+        _bindButtons() {
+          document
+            .getElementById("btn-prev")
+            .addEventListener("click", () => this.prev());
+          document
+            .getElementById("btn-next")
+            .addEventListener("click", () => this.next());
+        }
+        _bindKeys() {
+          document.addEventListener("keydown", (e) => {
+            if (e.target.closest(".tx-switch, .tx-time-car")) return;
+            if (this.isAnimating) return;
+            if (e.key === "ArrowRight" || e.key === " ") {
+              e.preventDefault();
+              this.next();
+            }
+            if (e.key === "ArrowLeft") {
+              e.preventDefault();
+              this.prev();
+            }
+          });
+        }
+      }
+      function drawP5(){document.querySelectorAll('.p5-team').forEach(g=>{let rect=g.getBoundingClientRect(),svg=g.querySelector('svg.p5-team-wires');if(!rect.width||!svg)return;svg.setAttribute('viewBox',`0 0 ${rect.width} ${rect.height}`);const a=id=>{const r=g.querySelector(`[data-node="${id}"] .p5-icon`).getBoundingClientRect();return {x:r.x-rect.x+r.width/2,y:r.y-rect.y+r.height*.46,w:r.width,h:r.height}};svg.querySelectorAll('path[data-from]').forEach(p=>{const f=a(p.dataset.from),t=a(p.dataset.to),o=+(p.dataset.offset||0),sg=t.x>=f.x?1:-1;let d;if(p.dataset.route==='tree'){const x=f.x,y=g.querySelector(`[data-node="${p.dataset.from}"]`).getBoundingClientRect().bottom-rect.top+10,tx=t.x,ty=t.y-t.h*.4-10,my=(y+ty)/2;d=`M${x} ${y}V${my}H${tx}V${ty}`}else{const x=f.x+sg*(f.w*.4+12),y=f.y+o,tx=t.x-sg*(t.w*.4+12),ty=t.y+o;d=`M${x} ${y}C${(x+tx)/2} ${y} ${(x+tx)/2} ${ty} ${tx} ${ty}`}p.setAttribute('d',d)});});}
+      const p5Observer=new ResizeObserver(()=>requestAnimationFrame(drawP5));document.querySelectorAll('.p5-team').forEach(g=>p5Observer.observe(g));document.fonts.ready.then(drawP5);window.addEventListener('resize',drawP5);requestAnimationFrame(drawP5);
+      new SlidePresentation();
+    </script>
+  </body>
+</html>

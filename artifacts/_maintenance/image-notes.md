@@ -75,3 +75,56 @@ Edit the provided reference image for a Korean educational slide. Preserve its e
 - 검수 캡처: `artifacts/part2/_qa/orca-cover-after-1280.png`, `orca-cover-after-1920.png`.
 
 프롬프트 핵심: 첫 번째 참조의 흰색 로봇 세 명과 정면으로 보이는 얼굴, 대각선 책상 배치, 단순한 검은 윤곽선과 부드러운 입체감을 유지한다. 두 번째 참조에서는 하나의 사무실임을 보여주는 벽·문·공용 진행 보드·메시지 보드만 가져온다. 노트북으로 일하는 로봇이 주인공이며 소파·과도한 가구·복잡한 케이블·사람을 넣지 않는다. 정사각형 중앙 구도, 짙은 #0d1117 배경, 그림 전체를 여백 안에 넣고 글자·로고·워터마크 없이 생성한다. 로봇 바이저는 빨강·보라·회청색으로 구분한다.
+
+
+## part4 · ch03-02-solo-business-skills 표지 (미생성, 2026-09-19)
+
+상태: 생성 보류. Higgsfield 크레딧 0, Codex image_gen 사용 한도 초과(2026-09-20 13:23 이후 가능). 현재 표지는 Part 3의 `ch01-01-what-is-git--version-history-transparent.png`를 재사용한다.
+
+장면 원장
+- 사람: 문서 여러 장이 꽂힌 트레이 앞 → 한 장을 뽑아 듦 → 에이전트에게 건넴.
+- 에이전트: 옆자리 → 한 손을 내밀어 그 문서를 받음 → 다른 손은 노트북 위.
+- 문서: 고른 한 장만 red 막대, 나머지는 회색. 글자 없음.
+- 검수 기준: 사람 1명, 봇 1명, 고른 문서 1장만 강조, 배경 #0d1117, 글자·로고·화살표 없음.
+
+참조 입력: `part1/_images/ch02-01-single-agent-limits--human-directs-ai-executes.png`(캐릭터·화풍), `part3/_images/ch01-01-what-is-git--version-history.png`(문서 트레이).
+
+프롬프트:
+
+Use the built-in image generation tool (image_gen) to create ONE illustration, then save the PNG to
+artifacts/part4/_images/ch03-02-solo-business-skills--cover.png . Do not edit any other file. Do not write HTML.
+
+Use case: style-transfer / illustration-story. Asset type: Korean lecture slide cover illustration.
+Input 1 (A): exact character design and rendering style. Brown-haired simple cartoon person in a white long-sleeve top, white rounded robot with a black horizontal visor and a red face bar, clean dark outlines, restrained shallow 2.5D cel shading, gray desk.
+Input 2 (B): reference for document cards standing in a gray desk tray with simple red unlettered bars.
+
+Scene: choosing the right guide for the agent. Exactly ONE human on the left and ONE white robot on the right, at a gray desk. On the desk in front of the human stands a gray tray holding FOUR upright document cards. Three cards are muted gray with faint gray bars. The human has pulled ONE card out of the tray: it is white with simple red unlettered bars, and the human is handing it toward the robot with one hand while the other hand still rests on the tray. The robot reaches out with one hand to receive that card and looks at it; its other hand rests on an open gray laptop. The human looks friendly and confident. Only the chosen card is red-accented, so it clearly reads as "this one, out of several".
+
+Composition: 1536x1024 landscape, subjects large and centered, whole desk visible, a little dark margin on every side. Background: flat dark #0d1117 that melts into a dark slide, no floor line, no vignette border, no frame. Bright clearly visible white characters, gray furniture. Colors limited to white, grays, brown hair, red #fc1c49 accents. No letters, no numbers, no logos, no captions, no arrows, no UI windows, no watermark.
+
+
+## artifacts/part5/_source/ch04-04-quality-gate-image-prompts.md
+
+# 3장 역할 대비 이미지 제작 기록
+
+도구: 내장 image_gen, 두 개의 독립 생성 호출. CLI/API fallback 미사용. 원본은 `/Users/dasom/.codex/generated_images/01a0bf02-0b07-7bc2-ba12-fd24325389c0/`에 보존하고 프로젝트에 복사했다.
+
+## 공통 프롬프트
+
+Create a professional instructional slide illustration asset, landscape 3:2. No letters, no words, no labels, no arrows, no diagram, no logos. Isolated compact desk vignette on a perfectly flat solid #0d1117 background, generous empty margins, no floor horizon. Restrained high quality soft 3D editorial illustration, matte ceramic white and slate materials, crisp silhouettes, subtle shadows, no neon glow, no busy decoration. This is one of a coordinated pair for a Korean business course explaining creation versus verification. Character should be an approachable small robot agent with an opaque white rounded head and dark face visor, understated, not a human. The physical action and props must communicate the role instantly; occupy the central 80% with large readable props.
+
+## 생성 담당 — 공통 프롬프트 뒤에 추가
+
+CREATION ROLE: compact stocky white robot with red #fc1c49 shoulder and face accents seated at a low writing desk, actually writing on a large unfinished paper report with a red pencil in right hand. On its left a clearly separate upright open reference rulebook, which the robot consults while composing. Paper report has a few abstract gray horizontal marks and visible empty space to suggest work in progress. Reference book has simple bullet glyphs only. Three-quarter front view. Red pencil and in-progress writing are the unmistakable focal point. No magnifying glass, no tick marks, no approval seals. Make the robot body form and posture visibly that of a maker.
+
+원본: `exec-aaf3d916-5e70-4edb-88ac-865632d3c1b0.png` → `artifacts/part5/_images/ch04-04-quality-gate--creation.png`
+
+## 검증 담당 — 공통 프롬프트 뒤에 추가
+
+VERIFICATION ROLE: taller white robot with a distinctly squarer head, yellow #f7c85a accents, standing at a compact examination desk. It is examining a finished green-tabbed report using a LARGE handheld magnifying glass in one hand while holding a separate inspection checklist in the other. The completed report has neatly filled abstract gray line marks. Checklist shows small empty square boxes and two restrained tick marks, no words. Three-quarter front view, composition same overall visual size as a writing-desk vignette. Magnifying glass held prominently OVER the finished report must be instantly legible. Yellow inspector silhouette and inspection tools contrast with a red seated writing robot; no pencil, no creation activity, no automatic conveyor belt, no external connections.
+
+원본: `exec-0f5d2c7f-8596-46c7-b89a-bc6cae602081.png` → `artifacts/part5/_images/ch04-04-quality-gate--verification.png`
+
+## 육안 확인
+
+작성 장면에는 규칙책·연필·작성 중 문서, 검증 장면에는 돋보기·검사표·완성 문서가 식별된다. 두 역할의 도구·자세·색이 다르며 이미지에 한글 라벨이나 단계 연결이 없다. 라벨은 HTML로 표시한다.

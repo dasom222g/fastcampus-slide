@@ -1,0 +1,1046 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Part 5 · 4가지 협업 패턴과 프로젝트 미리보기</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css"
+    />
+    <style>
+      :root {
+        --bg: #0d1117;
+        --bg-card: #161b22;
+        --text: #e6edf3;
+        --text-dim: #8b949e;
+        --text-muted: #59636e;
+        --brand: #fc1c49;
+        --purple: #9188ff;
+        --orange: #ff6d3b;
+        --yellow: #f0b429;
+        --green: #4ade80;
+        --gray: #8b949e;
+        --border: rgba(255, 255, 255, 0.08);
+        --dot: rgba(255, 255, 255, 0.055);
+        --title: clamp(2rem, 5.2vw, 3.8rem);
+        --statement: clamp(2rem, 3.8vw, 3.7rem);
+        --heading: clamp(1.5rem, 2.2vw, 2.25rem);
+        --body: clamp(1.1rem, 1.6vw, 1.42rem);
+        --gap: clamp(1.5rem, 3vw, 3rem);
+        --content-width: 86rem;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        font-family:
+          Pretendard,
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        font-size: clamp(13px, 1.35vw, 16px);
+        background: var(--bg);
+        color: var(--text);
+        word-break: keep-all;
+      }
+      body {
+        overflow: hidden;
+      }
+      button {
+        font: inherit;
+      }
+      .slide-deck {
+        position: fixed;
+        inset: 0;
+      }
+      .slide {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr) auto;
+        gap: clamp(1.5rem, 3.75vh, 3rem);
+        padding: clamp(2.6rem, 5.5vh, 4.2rem) clamp(4rem, 7.5vw, 7rem);
+        background:
+          radial-gradient(circle, var(--dot) 1px, transparent 1px) 0 0/26px 26px,
+          var(--bg);
+        overflow: hidden;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.36s ease;
+      }
+      .slide[data-motion="none"]{transition:none}
+      .slide.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .slide__header {
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+        padding-bottom: clamp(0.9rem, 2.2vh, 1.6rem);
+        border-bottom: 1px solid var(--border);
+      }
+      .slide__label {
+        font-size: clamp(0.58rem, 0.85vw, 0.72rem);
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--brand);
+      }
+      .slide__title {
+        font-size: var(--title);
+        font-weight: 800;
+        line-height: 1.08;
+        letter-spacing: -0.015em;
+      }
+      .slide__sub {
+        font-size: clamp(1.05rem, 1.6vw, 1.28rem);
+        line-height: 1.5;
+        color: var(--text-dim);
+      }
+      .slide__body {
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: var(--gap);
+        overflow: hidden;
+        container-type: size;
+      }
+      .slide__footer {
+        border-top: 1px solid var(--border);
+        padding-top: clamp(0.5rem, 1.3vh, 0.9rem);
+      }
+      .fastcampus-logo {
+        display: block;
+        width: clamp(7.2rem, 9vw, 8.5rem);
+        height: auto;
+      }
+      .hl,
+      .tone-brand {
+        color: var(--brand);
+      }
+      .tone-purple {
+        color: var(--purple);
+      }
+      .tone-gray {
+        color: var(--gray);
+      }
+      .tone-yellow {
+        color: var(--yellow);
+      }
+      .tone-orange {
+        color: var(--orange);
+      }
+      .tone-green {
+        color: var(--green);
+      }
+      /* Shared roles: cover and split layouts inherit exactly the same type. */
+      .statement {
+        font-family: inherit;
+        font-size: var(--statement);
+        font-weight: 850;
+        line-height: 1.35;
+        letter-spacing: -0.035em;
+      }
+      .statement strong {
+        display: block;
+        color: var(--brand);
+        font-weight: 900;
+      }
+      .heading {
+        font-size: var(--heading);
+        font-weight: 800;
+        line-height: 1.35;
+        letter-spacing: -0.025em;
+      }
+      .copy {
+        font-size: var(--body);
+        line-height: 1.6;
+        color: var(--text-dim);
+      }
+      .eyebrow {
+        font-size: clamp(1rem, 1.5vw, 1.3rem);
+        line-height: 1.5;
+        color: var(--text-dim);
+      }
+      .diagram {
+        display: block;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+        color: var(--gray);
+      }
+      .symbols {
+        position: absolute;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+        pointer-events: none;
+      }
+      .content {
+        width: min(100%, var(--content-width));
+        margin-inline: auto;
+      }
+      /* Image slots are borderless. Replace the SVG slot with the clip's image. */
+      .scene {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.65fr);
+        gap: var(--gap);
+        align-items: center;
+        width: min(100%, 92rem);
+      }
+      .scene--visual-first {
+        grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+      }
+      .scene__copy {
+        display: flex;
+        flex-direction: column;
+        gap: clamp(1.3rem, 3vh, 2.5rem);
+      }
+      .scene__visual {
+        width: 100%;
+        height: min(52cqh, 28rem);
+        min-height: 15rem;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+      }
+      .scene--cover .scene__visual,
+      .scene--image .scene__visual {
+        height: min(78cqh, 34rem);
+      }
+      .scene__visual > img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border: 0;
+        box-shadow: none;
+      }
+      .scene__visual > .diagram {
+        min-height: 0;
+        flex: 1;
+      }
+      .scene__visual figcaption {
+        font-size: var(--body);
+        color: var(--text-dim);
+        text-align: center;
+      }
+      /* Open parallel concepts: diagram, heading, caption; no card shells. */
+      .triptych {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--gap);
+        align-items: start;
+      }
+      .concept {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: clamp(1rem, 2.6vh, 2rem);
+        min-width: 0;
+      }
+      .concept > .diagram {
+        height: clamp(11rem, 25vh, 19rem);
+      }
+      .concept .copy {
+        max-width: 17em;
+      }
+      /* Optional transition copy, never wrapped in a banner or bordered box. */
+      .handoff {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1.25rem;
+        color: var(--text-dim);
+        font-size: var(--body);
+        line-height: 1.5;
+      }
+      .handoff strong {
+        color: var(--text);
+        font-weight: 800;
+      }
+      .progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        z-index: 200;
+        background: var(--border);
+      }
+      .progress-fill {
+        height: 100%;
+        background: var(--brand);
+        transition: width 0.3s ease;
+      }
+      .nav-btn {
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 150;
+        width: clamp(1.9rem, 2.8vw, 2.5rem);
+        height: clamp(1.9rem, 2.8vw, 2.5rem);
+        display: grid;
+        place-items: center;
+        border: 1px solid var(--border);
+        border-radius: 3px;
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--text-dim);
+        cursor: pointer;
+      }
+      .nav-btn:hover:not(:disabled) {
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .nav-btn:disabled {
+        opacity: 0.1;
+        cursor: default;
+      }
+      #btn-prev {
+        left: clamp(0.4rem, 1.2vw, 1.1rem);
+      }
+      #btn-next {
+        right: clamp(0.4rem, 1.2vw, 1.1rem);
+      }
+      .dot-nav {
+        position: fixed;
+        bottom: 1.3rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        z-index: 150;
+      }
+      .dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.18);
+        border: 0;
+        cursor: pointer;
+        transition: all 0.22s ease;
+      }
+      .dot.active {
+        width: 22px;
+        border-radius: 3px;
+        background: var(--brand);
+      }
+      .slide-counter {
+        position: fixed;
+        bottom: 1.2rem;
+        right: 1.8rem;
+        font:
+          0.62rem Monaco,
+          monospace;
+        color: var(--text-muted);
+        z-index: 150;
+      }
+      @keyframes s-fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .anim-item {
+        opacity: 0;
+      }
+      .anim-item.do-fadeinup {
+        animation: s-fadeInUp 0.48s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .slide,
+        .progress-fill {
+          transition: none;
+        }
+        .anim-item.do-fadeinup {
+          animation-duration: 0.001s;
+        }
+      }
+
+      .status-one-line {
+        white-space: nowrap;
+        max-width: none;
+      }
+
+      /* STRUCTURE_BRANCH: root and children are content, connecting lines encode membership. */
+      .structure-tree {
+        width: min(100%, 72rem);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .structure-node {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        text-align: center;
+        min-width: 0;
+      }
+      .structure-node > .diagram {
+        width: 6rem;
+        height: 6rem;
+      }
+      .structure-tree__root {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+      .structure-tree__root > .diagram {
+        width: 5rem;
+        height: 5rem;
+      }
+      .structure-tree__stem {
+        height: 3rem;
+        border-left: 2px solid var(--gray);
+      }
+      .structure-tree__children {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+        position: relative;
+      }
+      .structure-tree__children::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 25%;
+        right: 25%;
+        border-top: 2px solid var(--gray);
+      }
+      .structure-tree__children > .structure-node {
+        position: relative;
+        padding: 3rem 1.5rem 0;
+      }
+      .structure-tree__children > .structure-node::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 0;
+        height: 2rem;
+        border-left: 2px solid var(--gray);
+      }
+      .structure-tree__root .copy {
+        margin-top: 0.45rem;
+      }
+      /* STRUCTURE_EXCHANGE: only the common scope gets a boundary, not every text node. */
+      .exchange {
+        position: relative;
+        aspect-ratio: 600/430;
+        width: 100%;
+        border: 1px solid var(--gray);
+        border-radius: 0.5rem;
+      }
+      .exchange__scope {
+        position: absolute;
+        top: 1rem;
+        left: 1.25rem;
+      }
+      .exchange > .diagram {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .exchange__node {
+        position: absolute;
+        width: 43%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+      .exchange__node--root {
+        top: 14%;
+        left: 28.5%;
+      }
+      .exchange__node--a {
+        bottom: 9%;
+        left: 3.5%;
+      }
+      .exchange__node--b {
+        bottom: 9%;
+        right: 3.5%;
+      }
+      .exchange__legend {
+        position: absolute;
+        top: 46%;
+        left: 37%;
+        width: 26%;
+        display: grid;
+        gap: 0.7rem;
+        text-align: center;
+      }
+      .exchange__legend .copy {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+      .line-key {
+        width: 1.5rem;
+        border-top: 2px solid var(--yellow);
+      }
+      .line-key--return {
+        border-top-style: dashed;
+      }
+      /* TRANSITION_COMPARE: mirror all four rows; the center is a transition arrow only. */
+      .transition-compare {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 4rem minmax(0, 1fr);
+        align-items: center;
+        gap: 2.5rem;
+        width: min(100%, var(--content-width));
+      }
+      .transition-side {
+        display: grid;
+        grid-template-rows: 2rem 5.5rem 12rem minmax(3.2rem, auto);
+        align-items: center;
+        justify-items: center;
+        text-align: center;
+        gap: 1rem;
+        min-width: 0;
+      }
+      .transition-side > .diagram {
+        height: 12rem;
+        width: 100%;
+      }
+      .transition-side > .copy {
+        max-width: 20em;
+      }
+      .transition-compare__arrow {
+        height: 4rem;
+      }
+
+/* Animate the semantic boundary separately; never hide or move its children as a group. */
+.motion-scope{position:relative;border-color:transparent!important}
+.motion-scope>.scope-frame{position:absolute;inset:-1.5px;display:block;border:1.5px solid var(--gray);border-radius:inherit;pointer-events:none}
+.motion-scope>.scope-frame.anim-item.do-fadeinup,.scope-caption.anim-item.do-fadeinup{animation-name:scope-fade;animation-duration:.48s;animation-timing-function:cubic-bezier(.23,1,.32,1);animation-fill-mode:both;transform:none}
+@keyframes scope-fade{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.motion-scope>.scope-frame.anim-item,.scope-caption.anim-item{opacity:1;animation:none!important;transform:none}}
+
+      /* CONTAINED_STRUCTURE: a semantic scope, followed by independently revealed contents. */
+      .scope-panel{width:min(100%,78rem);border:1.5px solid var(--gray);border-radius:.7rem;padding:2rem 2.4rem}
+      .scope-panel__header{display:flex;align-items:baseline;gap:1.6rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
+      .scope-panel__content{display:grid;grid-template-columns:minmax(0,2.2fr) minmax(0,1fr);gap:2rem;padding-top:1.6rem}
+      .scope-panel__items{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.5rem;margin-top:1.5rem}
+      .scope-panel__item,.scope-panel__shared{display:flex;flex-direction:column;align-items:center;gap:.8rem;text-align:center}
+      .scope-panel__item .diagram{width:6rem;height:7rem}
+      .scope-panel__shared{border-left:1px solid var(--border);padding-left:1.5rem}
+      .scope-panel__shared .diagram{width:7rem;height:8rem}
+      .scope-panel .anim-item.do-fadeinup{animation-name:scope-fade}
+      [data-motion="none"] .anim-item{opacity:1;animation:none!important}
+      @media(max-height:650px){.scope-panel{padding:1.2rem}.scope-panel__header{padding-bottom:1rem}.scope-panel__content{gap:1.2rem;padding-top:1rem}.scope-panel__items{gap:1rem;margin-top:1rem}.scope-panel__item .diagram{width:4rem;height:5rem}.scope-panel__shared .diagram{width:5rem;height:6rem}}
+/* Approved pattern families 10–29. Geometry is shared by role; slots contain no lecture copy. */
+.tx-body{--art:clamp(4rem,18cqh,10rem);--tx-space:clamp(.6rem,2.2cqh,1.5rem)}
+.tx-body .anim-item.do-fadeinup{animation-name:scope-fade}
+.tx-art{display:block;width:var(--art);height:var(--art);flex-shrink:0}
+.tx-item{display:flex;flex-direction:column;gap:.7rem;align-items:center;text-align:center;min-width:0}
+.tx-item .heading{color:inherit}.tx-item .copy{color:var(--gray)}
+.tx-compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3.5rem;width:min(100%,80rem)}
+.tx-compare-side{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.5rem;min-width:0}
+.tx-window{width:100%;padding:2.8rem 1.5rem 1.5rem;border:1.5px solid transparent;border-radius:.4rem;position:relative}
+.tx-window-bar{position:absolute;top:.25rem;left:1rem;color:var(--gray);letter-spacing:.2rem}
+.tx-agents{display:flex;justify-content:center;gap:1.5rem}.tx-agents .tx-art{width:min(6rem,10vw);height:min(6rem,10vw)}.tx-agents .heading{font-size:var(--body)}
+.tx-folder-art{width:min(100%,23rem);height:min(42cqh,18rem);position:relative}
+.tx-folder-art>.tx-art{width:100%;height:100%}.tx-files{position:absolute;inset:41% 30% 23%;display:flex;justify-content:center}.tx-files .tx-art{width:33%;height:100%}
+.tx-hidden-detail{position:absolute;right:19%;bottom:23%;font-size:.75rem;opacity:.35;border:1px dashed currentColor;padding:.05rem .5rem}
+.tx-arrow{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.3rem;width:100%;min-width:0}
+.tx-arrow>svg{width:100%;height:1.6rem;overflow:visible}.tx-arrow--back>svg{transform:scaleX(-1)}.tx-arrow>.copy{color:inherit;font-size:var(--body);white-space:nowrap}
+.tx-transfer{width:min(100%,78rem);display:grid;grid-template-columns:1fr .65fr 1fr;align-items:center;gap:2rem}
+.tx-transfer .tx-art{width:min(20rem,36cqh);height:min(20rem,36cqh)}
+.tx-process,.tx-stage-row{display:grid;grid-template-columns:1fr .32fr 1fr .32fr 1fr .32fr 1fr;align-items:center;gap:1rem;width:min(100%,86rem)}
+.tx-process .heading{font-size:var(--body)}.tx-process .tx-arrow>.copy{font-size:1rem}
+.tx-stage-focus{width:min(100%,80rem);display:flex;flex-direction:column;align-items:center;gap:2rem}.tx-stage-row{grid-template-columns:1fr .3fr 1fr .3fr 1fr}
+.tx-stage{display:flex;flex-direction:column;align-items:center;gap:.7rem;opacity:.34}.tx-stage .heading{color:inherit}.tx-stage-note{text-align:center}
+.tx-stage-focus[data-focus="1"] [data-stage="1"],.tx-stage-focus[data-focus="2"] [data-stage="2"],.tx-stage-focus[data-focus="3"] [data-stage="3"]{opacity:1}
+.tx-record{display:grid;grid-template-columns:1fr 1.5fr;align-items:center;gap:5rem;width:min(100%,72rem)}.tx-record>.tx-item .tx-art{width:min(23rem,38cqh);height:min(23rem,38cqh)}
+.tx-fields{display:flex;flex-direction:column;gap:1.5rem}.tx-fields>div{display:grid;grid-template-columns:7rem minmax(0,1fr);gap:1.5rem;align-items:baseline}.tx-fields dt{font-size:var(--body);color:var(--gray)}.tx-fields dd{margin:0}
+.tx-graph{position:relative;width:min(100%,76rem);height:min(100cqh,36rem);min-height:0;flex-shrink:0}
+.tx-wires{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.tx-node{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,calc(var(--node-art)/-2));display:flex;flex-direction:column;align-items:center;gap:.6rem;text-align:center;max-width:29%;--node-art:clamp(3.3rem,15cqh,8rem)}
+.tx-node .tx-art{width:var(--node-art);height:var(--node-art)}.tx-node .heading{white-space:nowrap;font-size:var(--heading)}.tx-node .copy{white-space:nowrap;font-size:var(--body)}
+.tx-history .tx-node{--node-art:3rem}.tx-history .tx-node .copy{font-size:var(--body)}
+.tx-origin [data-node="origin"]{--node-art:min(8rem,17cqh)}.tx-origin [data-node="origin"] .heading{position:absolute;left:calc(100% + .8rem);top:40%}.tx-origin [data-node="origin"] .heading{font-size:var(--body)}
+.tx-origin [data-node="a"],.tx-origin [data-node="b"]{--node-art:min(20rem,33cqh)}
+.tx-history-spaces .tx-node{--node-art:min(17rem,28cqh)}.tx-history-spaces [data-node="seed"]{--node-art:2.5rem}.tx-history-spaces .tx-node .heading{font-size:var(--body)}
+.tx-label{position:absolute;left:34%;color:var(--brand)}.tx-label--a{top:14%}.tx-label--b{top:62%;color:var(--purple)}
+.tx-draw.do-fadeinup{animation:none!important;opacity:1}.tx-draw.do-fadeinup path{stroke-dasharray:1;stroke-dashoffset:1;animation:tx-grow .85s linear both;animation-delay:var(--draw-delay,0s)}
+@keyframes tx-grow{to{stroke-dashoffset:0}}
+.tx-switch{width:min(100%,70rem);height:min(100cqh,31rem);border:1.5px solid transparent;border-radius:.45rem;display:grid;grid-template-columns:13rem 1fr;padding:1.3rem;gap:2rem}
+.tx-switch-tabs{display:flex;flex-direction:column;gap:.75rem;padding-right:1.3rem;border-right:1px solid var(--border)}
+.tx-switch-tabs button{appearance:none;border:0;background:transparent;color:var(--gray);padding:1rem;text-align:left;cursor:pointer;border-radius:.25rem;font-size:var(--body)}
+.tx-switch-tabs button[aria-selected="true"]{background:var(--bg-card);color:var(--brand)}.tx-switch-tabs button[data-panel="b"][aria-selected="true"]{color:var(--purple)}
+.tx-switch-tabs button:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.tx-switch-content{position:relative;min-height:0}.tx-panel{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s ease,visibility .3s}
+.tx-panel.active{opacity:1;visibility:visible;pointer-events:auto}.tx-panel .anim-item{opacity:1;animation:none!important}
+.tx-shared{position:relative;width:min(100%,56rem);height:min(100cqh,34rem);border:1.5px solid transparent;border-radius:.4rem;padding:2.8rem 1.5rem 2.2rem}
+.tx-space-label{position:absolute;top:.65rem;left:1.3rem}.tx-shared .tx-graph{width:100%;height:100%}.tx-shared-note{position:absolute;left:43%;top:18%;font-size:var(--body)}
+.tx-shared .tx-node{--node-art:min(7rem,15cqh)}.tx-shared .tx-node .heading{font-size:var(--body)}
+.tx-messages{width:min(100%,78rem);height:min(100cqh,32rem);display:grid;grid-template-columns:max-content minmax(0,1fr) max-content;grid-template-rows:repeat(3,minmax(0,1fr));gap:.65rem 2rem;align-items:center}
+.tx-message-left{grid-column:1;grid-row:1/-1}.tx-message-right{grid-column:3;grid-row:1/-1}.tx-messages>.tx-item .tx-art{width:6rem;height:6rem}.tx-messages>.tx-item .heading{font-size:var(--body)}
+.tx-message{grid-column:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.2rem}.tx-message-name{display:flex;align-items:center;gap:.6rem}.tx-message-name .tx-art{width:2rem;height:2rem}.tx-message-name .heading{font-size:var(--body)}.tx-message>.copy{font-size:var(--body)}
+.tx-brief{width:min(100%,80rem);display:grid;grid-template-columns:7rem 1fr;gap:2.5rem}.tx-brief>.tx-art{width:6rem;height:7rem}.tx-brief .statement{font-size:var(--heading)}.tx-brief>div>.copy{margin-top:.8rem;color:var(--text)}.tx-brief .tx-fields{margin-top:1.6rem;gap:.9rem}.tx-brief dd{font-size:var(--body)}
+.tx-bottom-note{position:absolute;bottom:0;width:100%;text-align:center}
+.tx-dispatch{width:min(100%,72rem);display:flex;flex-direction:column;gap:clamp(2rem,8cqh,5.12rem)}.tx-dispatch-row{display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;gap:3rem}.tx-dispatch .tx-art{width:clamp(3rem,16cqh,8rem);height:clamp(3rem,16cqh,8rem)}
+.tx-dispatch .heading{font-size:var(--heading)}.tx-dispatch .tx-arrow{transform:translateY(-1rem)}
+.tx-pass-label{position:absolute;top:25%;left:66%;color:var(--purple)}.tx-return-label{position:absolute;top:77%;left:29%;color:var(--orange)}
+.tx-delegation .tx-node{gap:.6rem}.tx-delegation .tx-node{--node-art:min(7rem,15cqh)}.tx-delegation .tx-node .heading{font-size:var(--body)}.tx-delegation .tx-node .copy{font-size:1.05rem}
+.tx-cause-list{width:min(100%,75rem);display:flex;flex-direction:column;gap:clamp(1rem,5cqh,3rem)}.tx-cause{display:grid;grid-template-columns:4rem 1fr;gap:2rem;align-items:baseline}.tx-cause .copy{margin-top:.6rem}.tx-number{font-size:var(--heading);font-weight:800}
+.tx-time{position:relative;width:min(100%,80rem,calc(94cqh * 2.5));aspect-ratio:5/2}.tx-time>svg{width:100%;height:100%;overflow:visible}.tx-time-label{position:absolute;transform:translateX(-50%);white-space:nowrap}.tx-time-car{transform:translate(820px,125px);cursor:pointer}.tx-time-car:focus{outline:none}.tx-time-car:focus-visible>circle{fill:var(--yellow)}.tx-time-branch{clip-path:inset(0 100% 0 0)}.tx-time-new{opacity:0}
+.tx-time.is-running .tx-time-car{animation:tx-time-travel 4s linear both}.tx-time.is-running .tx-time-branch{animation:tx-time-reveal 1.6s linear 2.2s both}.tx-time.is-running .tx-time-new{animation:scope-fade .3s ease 3.8s both}
+@keyframes tx-time-travel{0%{transform:translate(820px,125px);animation-timing-function:cubic-bezier(.23,1,.32,1)}40%,55%{transform:translate(220px,125px)}65%{transform:translate(299px,152px)}75%{transform:translate(355px,212px)}85%{transform:translate(422px,272px)}95%,100%{transform:translate(530px,300px)}}
+@keyframes tx-time-reveal{from{clip-path:inset(0 78% 0 0)}to{clip-path:inset(0 27% 0 0)}}
+@media(max-height:650px){.tx-compare-side{gap:.8rem}.tx-fields{gap:.8rem}.tx-graph{height:100cqh}.tx-node{gap:.3rem}.tx-node .heading{font-size:var(--body)}.tx-node .copy{font-size:1rem}.tx-messages>.tx-item .tx-art{width:4.5rem;height:4.5rem}.tx-shared{padding-top:2rem;padding-bottom:1rem}.tx-brief .tx-fields{margin-top:.8rem;gap:.45rem}.tx-brief .statement{font-size:var(--heading)}.tx-stage-focus{gap:1rem}.tx-switch{grid-template-columns:10rem 1fr}.tx-record{gap:2rem}.tx-delegation .tx-node .copy{font-size:.95rem}}
+@media(prefers-reduced-motion:reduce){.tx-draw.do-fadeinup path{animation:none;stroke-dashoffset:0}.tx-panel{transition:none}.tx-time.is-running .tx-time-car{animation:none;transform:translate(530px,300px)}.tx-time.is-running .tx-time-branch{animation:none;clip-path:none}.tx-time.is-running .tx-time-new{animation:none;opacity:1}}
+
+    @media(max-height:650px){.structure-tree{gap:0}.structure-tree__stem{height:1.5rem}.structure-tree__children{padding-top:0}.structure-tree__children>.structure-node{padding-top:1.8rem;gap:.65rem}.structure-tree__children>.structure-node::before{height:1.2rem}.structure-node>.diagram{height:min(22cqh,7rem)}.exchange{height:min(100cqh,23rem);min-height:0}.transition-side{gap:.5rem;grid-template-rows:auto auto minmax(0,1fr) auto}.transition-side>.diagram{height:min(30cqh,8rem)}.transition-compare{height:100cqh}.tx-delegation [data-node="person"],.tx-delegation [data-node="center"]{top:19%}}
+.tx-origin [data-node="a"],.tx-origin [data-node="b"]{top:60%}.tx-history-spaces [data-node="b"]{top:65%}.tx-history [data-node="branch"]{top:69%}.tx-history-spaces .tx-label--b{top:55%}
+.tx-folder-scope{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.tx-agent-badge{position:absolute;right:-1.5rem;top:0;width:2.6rem;height:2.6rem}.tx-delegation [data-node="a"],.tx-delegation [data-node="b"],.tx-delegation [data-node="c"]{top:65%}
+.tx-delegation [data-node="center"] .heading{position:absolute;left:calc(100% + 1rem);top:.4rem}.tx-delegation [data-node="center"] .copy{position:absolute;left:calc(100% + 1rem);top:2.5rem}@media(max-height:650px){.tx-delegation [data-node="a"],.tx-delegation [data-node="b"],.tx-delegation [data-node="c"]{top:60%}.tx-delegation [data-node="center"] .copy{top:2rem}}
+
+/* ── 이번 덱 전용 변형: 프로젝트 문서·입력/출력·순차 배정 ── */
+.slide__body .anim-item.do-fadeinup{animation-name:scope-fade}
+.p5-note{font-size:var(--body);color:var(--text-dim);text-align:center;line-height:1.5;max-width:65rem}
+.p5-flow{display:flex;align-items:center;justify-content:center;gap:2rem;max-width:100%;width:fit-content}
+.p5-item{display:flex;flex-direction:column;align-items:center;gap:1rem;text-align:center;width:21rem;max-width:26vw}
+.p5-icon{width:9rem;height:9rem;display:block;flex-shrink:0}
+.p5-arrow{width:5rem;flex-shrink:0;color:var(--gray)}.p5-arrow svg{width:100%;height:2rem;overflow:visible}
+.p5-flow .heading{font-size:var(--heading)}.p5-flow .copy{max-width:19em}
+.p5-image{mix-blend-mode:lighten;object-fit:contain;max-width:100%;max-height:100%}
+.p5-project{width:min(100%,86rem);display:grid;grid-template-columns:1.1fr 1fr;gap:3rem;align-items:center}
+.p5-project figure{height:min(75cqh,35rem);display:flex;align-items:center;justify-content:center}
+.p5-project .statement{margin:.8rem 0 1.4rem}.p5-project .copy{margin-top:.5rem}
+.p5-link{display:inline-block;color:var(--text);font-size:var(--body);margin-top:1.7rem;text-underline-offset:.35em}
+.p5-kicker{font-size:var(--heading);font-weight:700;color:var(--accent,var(--brand))}
+.p5-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4rem;width:min(100%,82rem)}
+.p5-side{display:flex;flex-direction:column;align-items:center;gap:1.4rem;text-align:center;min-width:0}.p5-side>.heading{color:var(--accent)}
+.p5-root{display:flex;align-items:center;gap:.7rem;font-size:var(--body)}.p5-root .p5-icon{width:4rem;height:4rem}
+.p5-leaves{display:flex;justify-content:center;gap:1.5rem;width:100%;position:relative;padding-top:2rem}
+.p5-leaves:before{content:'';position:absolute;top:0;left:25%;right:25%;height:1.5rem;border-top:2px solid var(--accent);border-left:2px solid var(--accent);border-right:2px solid var(--accent)}
+.p5-leaf{flex:1;display:flex;align-items:center;flex-direction:column;gap:.7rem;font-size:var(--body)}.p5-leaf .p5-icon{width:5rem;height:5rem;color:var(--accent)}
+.p5-result{font-size:var(--heading);font-weight:800;color:var(--accent);margin-top:.4rem}
+.p5-rows{display:flex;flex-direction:column;gap:2.1rem;width:min(100%,82rem)}
+.p5-row{display:grid;grid-template-columns:minmax(0,1fr) 4rem minmax(0,1fr);gap:2rem;align-items:center}.p5-row .heading{font-size:var(--heading)}.p5-row .p5-arrow{width:4rem;color:var(--accent)}.p5-row .p5-answer{color:var(--accent);font-size:var(--heading);font-weight:700}
+.p5-badgood{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4rem;width:min(100%,82rem)}
+.p5-badgood .p5-side{align-items:stretch;text-align:left;gap:1.5rem}.p5-evidence{display:flex;align-items:center;gap:1.3rem;min-height:4.5rem;font-size:var(--body);line-height:1.5}.p5-evidence .p5-icon{width:4rem;height:4rem;color:var(--accent)}
+.p5-doc-layout{width:min(100%,82rem);display:grid;grid-template-columns:1.15fr 1fr;gap:4rem;align-items:center}
+.p5-paper{position:relative;border:1.5px solid var(--gray);border-radius:.5rem;background:var(--bg-card);padding:2.2rem;display:flex;flex-direction:column;gap:1.6rem}.p5-paper>.heading{color:var(--green)}
+.p5-field{display:grid;grid-template-columns:5rem 1fr;gap:1.5rem;font-size:var(--body);line-height:1.5}.p5-field dt{color:var(--text-dim)}.p5-field dd{margin:0}
+.p5-doc-layout .copy{margin-top:1.1rem}.p5-role{display:grid;grid-template-columns:1fr 4rem 1.35fr;gap:2rem;align-items:center;width:min(100%,85rem)}
+.p5-role-input{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1rem}.p5-role-input .p5-icon{width:8rem;height:8rem}.p5-role .p5-evidence{min-height:0}.p5-role .p5-paper{gap:1.1rem}
+.p5-team{width:min(100%,78rem);height:min(76cqh,34rem);position:relative}
+.p5-node{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%);display:flex;align-items:center;flex-direction:column;gap:.45rem;text-align:center;white-space:nowrap}
+.p5-node .p5-icon{width:6.3rem;height:6.3rem}.p5-node .heading{font-size:var(--body)}.p5-node .copy{font-size:var(--body)}
+.p5-team-wires{position:absolute;inset:0;width:100%;height:100%;overflow:visible}.p5-wirelabel{position:absolute;font-size:var(--body);color:var(--yellow);background:var(--bg);padding:0 .5rem;transform:translate(-50%,-50%)}
+.p5-state{font-size:var(--body);display:flex;gap:.4rem;align-items:center}.p5-node .p5-state .p5-icon{width:1.5rem;height:1.5rem;color:inherit}.p5-serial .p5-node .copy{font-size:1.12rem}
+.p5-stages{display:flex;flex-direction:column;gap:1.8rem;width:min(100%,82rem)}.p5-stage{display:grid;grid-template-columns:9rem 1fr;gap:2rem;align-items:start}.p5-stage .heading{color:var(--brand)}.p5-stage .p5-stage-line{font-size:var(--heading);font-weight:700}.p5-stage .copy{margin-top:.7rem}
+.p5-handoff{width:min(100%,88rem);display:flex;flex-direction:column;gap:1.7rem}.p5-handoff-head{display:grid;grid-template-columns:1fr 4rem 1fr;gap:2rem;align-items:center;margin-bottom:.6rem}.p5-handoff-head h2{display:flex;gap:1rem;align-items:center;color:var(--green)}.p5-handoff-head .p5-icon{width:4rem;height:4rem}
+.p5-handoff .p5-row{font-size:var(--body);line-height:1.5;gap:2rem}.p5-handoff .p5-answer{font-size:var(--body);color:var(--text)}
+.p5-review{width:min(100%,76rem);display:flex;align-items:center;flex-direction:column;gap:1rem}.p5-review .p5-item{width:16rem}.p5-loop:after{content:"";position:absolute;left:-7px;top:-5px;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:9px solid var(--orange)}.p5-review-row{display:flex;align-items:center;gap:2rem}.p5-review .p5-loop{width:70%;height:3rem;position:relative;border-bottom:2px solid var(--orange);border-left:2px solid var(--orange);border-right:2px solid var(--orange);color:var(--orange);text-align:center;font-size:var(--body)}.p5-loop span{background:var(--bg);padding:0 1rem;position:relative;top:1.9rem}
+.p5-gate .p5-review-row{width:100%;display:grid;grid-template-columns:1fr 3rem 1fr 3rem 1fr;gap:2rem}.p5-gate .p5-item{width:100%;max-width:none}.p5-gate .p5-arrow{width:3rem}.p5-gate .p5-loop{width:calc((100% + 7rem)/3);align-self:flex-start;margin-left:calc((100% - 14rem)/6);margin-bottom:2rem}.p5-gate .p5-loop span{position:absolute;top:3.5rem;left:0;width:max-content;padding:0;text-align:left}
+.p5-brief{width:min(100%,76rem);display:flex;flex-direction:column;gap:2.5rem}.p5-brief blockquote{font-size:var(--heading);line-height:1.55;font-weight:700;padding-left:1.6rem;border-left:4px solid var(--brand)}.p5-brief-fields{display:flex;justify-content:space-between;gap:2rem}.p5-brief-fields .copy{margin-bottom:.5rem}
+.scene .p5-team{height:min(76cqh,32rem)}.scene .p5-node .p5-icon{width:5rem;height:5rem}.scene .p5-node .heading,.scene .p5-node .copy{font-size:var(--body)}
+@media(max-width:1400px){.p5-item{width:18rem}.p5-icon{width:7rem;height:7rem}.p5-flow{gap:1.2rem}.p5-arrow{width:3rem}.p5-team{height:min(77cqh,30rem)}.p5-node .p5-icon{width:5.2rem;height:5.2rem}.p5-two,.p5-badgood{gap:2.5rem}.p5-paper{padding:1.5rem;gap:1.2rem}.p5-doc-layout{gap:2.5rem}.p5-role{gap:1.2rem;grid-template-columns:1fr 3rem 1.2fr}.p5-role .p5-paper{gap:.8rem}.p5-rows{gap:1.7rem}.p5-project{gap:2rem}.p5-project .statement{margin:.6rem 0 1rem}.p5-stage{gap:1rem}.p5-stages{gap:1.4rem}}
+
+
+/* 의미별 제목 강조는 장별 명시값. 끝 단어 자동 분리는 사용하지 않는다. */
+.slide__body{padding-block:1rem}
+.slide__body.p5-has-note{display:grid;grid-template-columns:minmax(0,1fr);justify-content:stretch;justify-items:stretch;grid-template-rows:minmax(0,1fr) auto;row-gap:clamp(2rem,3vh,2.5rem);padding-top:1rem;padding-bottom:.8rem}
+.p5-main-content{min-height:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--gap)}
+.p5-main-content>.p5-team{height:min(100%,34rem)}
+.p5-has-note>.p5-note{align-self:end;max-width:none;width:100%;margin:0;line-height:1.55}
+.p5-item{gap:1.2rem}
+.p5-serial .p5-node .copy{font-size:var(--body)}
+.p5-role-input{gap:1.25rem}.p5-role .p5-paper{gap:1.5rem;padding-block:2rem}
+.p5-role .p5-evidence{line-height:1.6}
+.p5-project .statement{margin:1rem 0 1.75rem}
+.p5-project .copy{margin-top:.65rem;line-height:1.55}
+.p5-project .p5-link{margin-top:2rem}
+.p5-review{gap:1.5rem}.p5-review>.heading{font-size:var(--body);color:var(--text-dim)}
+.p5-review .p5-item{gap:.9rem}.p5-review .p5-icon{height:6rem;width:6rem}
+.p5-gate .p5-loop{margin-bottom:2.5rem}
+.p5-pattern-criteria{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2rem;width:min(100%,86rem)}
+.p5-criterion{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.6rem}
+.p5-criterion>svg{width:100%;max-width:16rem;height:11rem}
+.p5-criterion .heading{font-size:var(--heading)}
+.p5-criterion .copy{line-height:1.5}
+.p5-failure-visual{width:100%;height:100%;max-height:30rem}
+@media(max-width:1400px){.p5-pattern-criteria{gap:1.2rem}.p5-role .p5-paper{gap:1rem;padding-block:1.5rem}.p5-project{grid-template-columns:1fr 1.15fr;gap:2rem}.p5-review{gap:1.1rem}}
+
+/* 과정의 선은 본문 라벨이 아니라 실제 아이콘 중심에 연결한다. */
+.p5-flow{align-items:flex-start}.p5-flow>.p5-arrow{margin-top:3.5rem}
+.p5-review-row{align-items:flex-start}.p5-review-row>.p5-arrow{margin-top:2rem}
+.p5-gate .p5-review-row{align-items:start}
+@media(max-width:1400px){.p5-flow>.p5-arrow{margin-top:2.5rem}}
+
+/* Ch01-01: single cover scene and input/output design foundation. */
+.io-flow{display:grid;grid-template-columns:minmax(0,1fr) 5rem minmax(0,1fr) 5rem minmax(0,1fr);align-items:center;gap:1.5rem;width:min(100%,78rem)}
+.io-node{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.25rem;min-width:0}
+.io-label{font-size:var(--body);font-weight:750;letter-spacing:.025em}
+.io-symbol{width:10rem;height:10rem;flex:none}
+.io-flow .io-node .io-symbol{width:12rem;height:12rem;margin-block:1rem}
+.io-node .copy{white-space:nowrap}
+.io-arrow{width:100%;height:1.5rem;overflow:visible}
+.io-design{display:grid;grid-template-columns:minmax(0,1.2fr) 8rem minmax(0,1fr);align-items:center;gap:2.5rem;width:min(100%,84rem)}
+.io-result,.io-materials{display:flex;flex-direction:column;gap:1.6rem;min-width:0}
+.io-preview{border:1px solid var(--border);border-top:3px solid var(--green);background:var(--bg-card);padding:1.8rem 1.6rem 2.6rem}
+.io-preview-top{font-size:var(--heading);font-weight:800;margin-bottom:2rem}
+.io-preview table{width:100%;border-collapse:collapse;font-size:var(--body);line-height:1.55}
+.io-preview th,.io-preview td{text-align:left;padding:1rem .45rem;border-bottom:1px solid var(--border);font-weight:450}
+.io-preview th{color:var(--text-dim);font-weight:650}
+.io-preview th:first-child,.io-preview td:first-child{padding-left:0;white-space:nowrap}
+.io-preview th:last-child,.io-preview td:last-child{padding-right:0;white-space:nowrap}
+.io-derive{display:flex;flex-direction:column;align-items:center;gap:1.2rem}
+.io-derive .copy{font-size:1.1rem;white-space:nowrap}
+.io-source-row{display:flex;align-items:center;gap:1rem}
+.io-source-row .io-symbol{width:3.5rem;height:4rem}
+.io-source-row .heading{font-size:var(--body);margin-bottom:.25rem}
+.io-request{border-left:3px solid var(--purple);padding:.1rem 0 .1rem 1.2rem;font-size:var(--body);line-height:1.55}
+.io-request>span{display:block;margin-bottom:.4rem;font-weight:750}
+.io-chain{display:grid;grid-template-columns:minmax(0,1.2fr) 2rem minmax(0,1fr) 2rem minmax(0,1.2fr) 2rem minmax(0,1fr) 2rem minmax(0,1.2fr);gap:.8rem;align-items:center;width:min(100%,90rem)}
+.io-chain .io-symbol{width:8rem;height:8rem;margin-block:.6rem}
+.io-chain .heading{font-size:var(--body);white-space:nowrap}
+.io-chain .copy{font-size:1.1rem}
+.io-shared{background:rgba(74,222,128,.05);border:1px solid rgba(74,222,128,.22);padding:1.5rem .6rem;border-radius:.5rem}
+@media(max-width:1400px){.io-design{gap:1.5rem;grid-template-columns:minmax(0,1.2fr) 6.5rem minmax(0,1fr)}.io-preview{padding:1.5rem 1.1rem 2rem}.io-preview table{font-size:1.12rem}.io-flow{gap:1rem;grid-template-columns:minmax(0,1fr) 4rem minmax(0,1fr) 4rem minmax(0,1fr)}.io-chain{gap:.5rem;grid-template-columns:minmax(0,1.2fr) 1.3rem minmax(0,1fr) 1.3rem minmax(0,1.2fr) 1.3rem minmax(0,1fr) 1.3rem minmax(0,1.2fr)}.io-chain .io-symbol{width:6rem;height:6rem}.io-chain .copy{font-size:1rem}}
+
+/* Cover geometry copied from approved ch01-01-terminal-problem. */
+.p5-reference-cover .slide__body{padding:0;align-items:stretch}
+.p5-reference-cover .scene--cover{position:relative;display:block;width:100%;height:100%;min-height:38vh;overflow:hidden}
+.p5-reference-cover .scene__copy{position:absolute;left:3%;top:0;bottom:0;width:34%;display:flex;flex-direction:column;justify-content:center;z-index:1}
+.p5-reference-cover .scene__visual{position:absolute;left:35%;top:0;bottom:0;width:65%;height:100%;min-height:0;display:block}
+.p5-reference-cover .scene__visual>img{width:100%;height:100%;object-fit:contain;object-position:center;border:0;border-radius:0;box-shadow:none}
+
+/* Slide 4: adapted from the seminar's preserved sequential-stages second state. */
+.h4-map{position:relative;width:min(100%,86rem);height:100%;max-height:38rem;flex:none}
+.h4-wires{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.h4-goal-line,.h4-assign-line{stroke:var(--yellow)}.h4-result-line,.h4-report-line,.h4-output-line{stroke:var(--green)}.h4-report-line{stroke-dasharray:7 7}.h4-input-line{stroke:var(--purple)}
+.h4-goal-line,.h4-result-line{opacity:.6}
+.h4-actor{position:absolute;transform:translate(-50%,-50%);text-align:center;width:12rem;height:5.4rem}
+.h4-art{height:100%;display:flex;align-items:center;justify-content:center}
+.h4-icon{width:5.2rem;height:5.4rem;overflow:visible;flex:none}
+.h4-label{position:absolute;top:calc(100% + .8rem);left:50%;transform:translateX(-50%);display:grid;gap:.5rem;width:max-content}
+.h4-label .heading{white-space:nowrap}.h4-label .copy{white-space:nowrap}
+.h4-person{left:12%;top:17%;height:5.5rem}.h4-person .h4-icon{width:5rem;height:5.5rem}
+.h4-coordinator{left:56%;top:17%;height:6rem}.h4-coordinator .h4-icon{width:5.8rem;height:6rem}
+.h4-coordinator .h4-label{top:50%;left:calc(50% + 4.5rem);transform:translateY(-50%);text-align:left;gap:.5rem}
+.h4-a{left:20%;top:65%}.h4-b{left:83%;top:65%}
+.h4-document{left:51.5%;top:65%;height:7rem}.h4-document .h4-icon{width:6.3rem;height:7rem}.h4-document .heading{font-size:var(--body);color:var(--green)}
+.h4-wire-label{position:absolute;transform:translate(-50%,-50%);font-size:var(--body);font-weight:650;white-space:nowrap;background:var(--bg);padding:0 .5rem}
+@media(max-height:850px){.h4-map{max-height:none}.h4-person,.h4-coordinator{top:17%}.h4-a,.h4-b,.h4-document{top:66%}.h4-coordinator .h4-label{left:calc(50% + 3.8rem)}.h4-coordinator .heading{font-size:1.8rem}.h4-coordinator .copy{font-size:1.1rem}.h4-label .heading{font-size:1.7rem}.h4-document .heading{font-size:var(--body)}}
+</style>
+  </head>
+  <body>
+    <svg class="symbols" aria-hidden="true">
+      <defs>
+        <g id="shape-person">
+          <circle cx="50" cy="28" r="15" />
+          <path d="M18 85V73C18 44 82 44 82 73V85" />
+        </g>
+        <g id="shape-document">
+          <path
+            d="M24 12H59L77 30V88H24ZM59 12V30H77M35 45H64M35 58H64M35 71H55"
+          />
+        </g>
+        <g id="shape-folder">
+          <path d="M12 28V18H39L50 28H88V81H12ZM12 38H88" />
+        </g>
+        <g id="shape-done">
+          <circle cx="50" cy="50" r="35" />
+          <path d="M30 50L44 64L72 35" />
+        </g>
+        <g id="shape-working">
+          <circle cx="50" cy="50" r="35" opacity=".18" />
+          <path d="M50 15A35 35 0 1 1 15 50" stroke-width="5" />
+        </g>
+        <g id="shape-waiting">
+          <path
+            d="M25 15H75Q85 15 85 25V65Q85 75 75 75H45L25 90V75H25Q15 75 15 65V25Q15 15 25 15Z"
+          />
+          <path d="M38 37C38 22 64 24 61 39C60 46 50 46 50 55M50 65V66" />
+        </g>
+<g id="shape-agent"><rect x="18" y="10" width="64" height="48" rx="22" fill="var(--text)" stroke="var(--gray)"/><rect x="27" y="27" width="46" height="14" rx="7" fill="var(--bg)" stroke="none"/><path d="M36 34H64" stroke-width="5"/><path d="M30 60Q20 67 20 81H80Q80 67 70 60"/></g><g id="shape-point"><circle cx="50" cy="50" r="10" fill="var(--bg)"/></g><g id="shape-cloud"><path d="M22 72C0 72 0 34 26 34C32 6 69 7 76 32C101 29 109 72 82 72Z"/></g><g id="shape-gate"><path d="M50 9L91 50L50 91L9 50Z"/><path d="M36 50L46 61L66 39"/></g><marker id="tx-arrowhead" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto-start-reverse"><path d="M1 1L7 4L1 7" fill="none" stroke="context-stroke" stroke-width="1.4"/></marker>
+      <marker id="tx-tip-brand" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="var(--brand)" stroke-width="1.4"/></marker><marker id="tx-tip-purple" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="var(--purple)" stroke-width="1.4"/></marker><marker id="tx-tip-gray" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="var(--gray)" stroke-width="1.4"/></marker><marker id="tx-tip-yellow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="var(--yellow)" stroke-width="1.4"/></marker><marker id="tx-tip-orange" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="var(--orange)" stroke-width="1.4"/></marker><marker id="tx-tip-green" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="var(--green)" stroke-width="1.4"/></marker><g id="shape-workspace"><use href="#shape-folder"/><g stroke="var(--gray)" stroke-width="1.6"><path d="M29 45H36L41 50V68H29ZM36 45V50H41M33 56H37M33 61H37"/><path d="M45 45H52L57 50V68H45ZM52 45V50H57M49 56H53M49 61H53"/></g><path stroke-width="1.6" d="M61 45H68L73 50V68H61ZM68 45V50H73M65 56H69M65 61H69"/></g></defs>
+    </svg>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress"></div>
+    </div>
+    <button class="nav-btn" id="btn-prev" aria-label="이전 슬라이드">
+      &#8592;
+    </button>
+    <button class="nav-btn" id="btn-next" aria-label="다음 슬라이드">
+      &#8594;
+    </button>
+    <div class="dot-nav" id="dot-nav"></div>
+    <div class="slide-counter">
+      <span id="cur">1</span> / <span id="tot">12</span>
+    </div>
+    <div class="slide-deck" id="deck">
+<!-- 발표 노트: 업무에 맞는 역할과 연결 방식을 프로젝트로 살펴봅니다. -->
+<article class="slide active p5-reference-cover" data-index="0" data-pattern="COVER_SCENE"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-01</span><h1 class="slide__title"><span class="hl">4가지 협업 패턴</span>과 프로젝트 미리보기</h1><p class="slide__sub">업무에 맞는 역할과 연결 방식을 프로젝트로 살펴봅니다.</p></header><main class="slide__body "><div class="scene scene--cover"><div class="scene__copy anim-item"><p class="statement">무엇을 주고<strong>무엇을 받을까</strong></p></div><figure class="scene__visual anim-item"><img src="/artifacts/part5/_images/ch01-01-collaboration-patterns--cover-team-transparent.png" alt="사람과 세 로봇 에이전트가 문서 작성·검토·디자인 작업을 함께 살펴보는 장면"></figure></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<!-- 발표 노트: AI에 넣는 자료와 요청이 Input이고, 작업을 거쳐 받는 결과물이 Output입니다. -->
+<article class="slide" data-index="1" data-pattern="INPUT_AI_OUTPUT"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-01</span><h1 class="slide__title">AI의 <span class="hl">입력과 출력</span></h1><p class="slide__sub">AI에 넣는 자료와 요청이 Input이고, 작업을 거쳐 받는 결과물이 Output입니다.</p></header><main class="slide__body "><div class="io-flow"><section class="io-node anim-item " data-anim-step="0"><p class="io-label tone-purple">Input · 입력</p><svg class="io-symbol tone-purple " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><use href="#shape-document"/></svg><h2 class="heading">자료 + 요청</h2><p class="copy">일의 근거와 해야 할 일</p></section><svg class="io-arrow anim-item" data-anim-step="1" viewBox="0 0 80 24" fill="none" aria-hidden="true"><path d="M3 12H72" stroke="var(--gray)" stroke-width="2" marker-end="url(#tx-tip-gray)"/></svg><section class="io-node anim-item " data-anim-step="2"><p class="io-label tone-brand">AI · 에이전트</p><svg class="io-symbol tone-brand " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><use href="#shape-agent"/></svg><h2 class="heading">작업 수행</h2><p class="copy">자료를 읽고 요청을 처리</p></section><svg class="io-arrow anim-item" data-anim-step="3" viewBox="0 0 80 24" fill="none" aria-hidden="true"><path d="M3 12H72" stroke="var(--gray)" stroke-width="2" marker-end="url(#tx-tip-gray)"/></svg><section class="io-node anim-item " data-anim-step="4"><p class="io-label tone-green">Output · 출력</p><svg class="io-symbol tone-green " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><use href="#shape-document"/></svg><h2 class="heading">원하는 결과물</h2><p class="copy">문서·디자인·콘텐츠 등</p></section></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<!-- 발표 노트: 받고 싶은 결과의 내용과 형식을 정하면, 필요한 자료와 요청을 정할 수 있습니다. -->
+<article class="slide" data-index="2" data-pattern="OUTPUT_FIRST"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-01</span><h1 class="slide__title"><span class="hl">출력부터</span> 정하는 설계</h1><p class="slide__sub">받고 싶은 결과의 내용과 형식을 정하면, 필요한 자료와 요청을 정할 수 있습니다.</p></header><main class="slide__body "><div class="io-design"><section class="io-result anim-item" data-anim-step="0"><p class="io-label tone-green">먼저 정할 Output</p><div class="io-preview"><div class="io-preview-top">고객 문의 유형표</div><table><thead><tr><th>유형</th><th>반복 질문</th><th>답변 근거</th></tr></thead><tbody><tr><td>배송</td><td>언제 출고되나요?</td><td>배송 정책</td></tr><tr><td>교환</td><td>어떻게 교환하나요?</td><td>교환 정책</td></tr></tbody></table></div><p class="copy">무슨 내용을 어떤 형식으로 받을까?</p></section><div class="io-derive anim-item" data-anim-step="1"><span class="copy">필요한 입력 도출</span><svg class="io-arrow anim-item" data-anim-step="1" viewBox="0 0 80 24" fill="none" aria-hidden="true"><path d="M3 12H72" stroke="var(--gray)" stroke-width="2" marker-end="url(#tx-tip-gray)"/></svg></div><section class="io-materials anim-item" data-anim-step="2"><p class="io-label tone-purple">그다음 정할 Input</p><div class="io-source-row"><svg class="io-symbol tone-purple " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><use href="#shape-document"/></svg><div><h2 class="heading">고객 문의 원문</h2><p class="copy">실제 질문을 분류할 자료</p></div></div><div class="io-source-row"><svg class="io-symbol tone-purple " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><use href="#shape-document"/></svg><div><h2 class="heading">상품·배송·교환 정책</h2><p class="copy">답변의 근거가 될 자료</p></div></div><div class="io-request"><span class="tone-purple">요청</span><p>문의 유형·반복 질문·답변 근거를<br>표로 정리해줘.</p></div></section></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<!-- 발표 노트: 앞 작업의 출력이 다음 작업의 입력이 되면, 두 작업은 순서대로 이어집니다. -->
+<article class="slide" data-index="3" data-pattern="ARTIFACT_HANDOFF" data-motion="none"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-01</span><h1 class="slide__title"><span class="hl">출력과 입력</span>의 연결</h1><p class="slide__sub">앞 에이전트의 결과물을 받은 뒤, 다음 에이전트가 작업을 시작합니다.</p></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="h4-map" role="group" aria-label="앞 워커의 출력인 문의 유형표가 다음 워커의 입력으로 전달되는 구조"><svg class="h4-wires" fill="none" aria-hidden="true"><path data-wire="goal" class="h4-goal-line"/><path data-wire="result" class="h4-result-line"/><path data-wire="report" class="h4-report-line"/><path data-wire="assign" class="h4-assign-line"/><path data-wire="output" class="h4-output-line"/><path data-wire="input" class="h4-input-line"/></svg><section class="h4-actor h4-person"><div class="h4-art"><svg class="h4-icon tone-gray" viewBox="0 0 60 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="30" cy="16" r="11"/><path d="M10 58V43C10 21 50 21 50 43V58"/></svg></div><div class="h4-label"><h2 class="heading">사람</h2></div></section><section class="h4-actor h4-coordinator"><div class="h4-art"><svg class="h4-icon tone-yellow" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><div class="h4-label"><h2 class="heading">Coordinator</h2><p class="copy">완료 확인·다음 작업 배정</p></div></section><section class="h4-actor h4-a"><div class="h4-art"><svg class="h4-icon tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><div class="h4-label"><h2 class="heading">Worker A</h2><p class="copy">문의 분류 · <span class="tone-green">완료</span></p></div></section><section class="h4-actor h4-document"><div class="h4-art"><svg class="h4-icon tone-green" viewBox="0 0 100 110" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="12" y="5" width="76" height="100" rx="3" fill="var(--bg-card)"/><path d="M24 24H63" stroke-width="4"/><path d="M24 42H76M24 59H76M24 76H76M43 42V91M64 42V91M24 91H76" opacity=".65"/></svg></div><div class="h4-label"><h2 class="heading">문의 유형표</h2></div></section><section class="h4-actor h4-b"><div class="h4-art"><svg class="h4-icon tone-purple" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><div class="h4-label"><h2 class="heading">Worker B</h2><p class="copy">FAQ 개선안 작성</p></div></section><span class="h4-wire-label h4-goal tone-yellow">목표·기준</span><span class="h4-wire-label h4-result tone-green">진행·결과</span><span class="h4-wire-label h4-output tone-green">Output</span><span class="h4-wire-label h4-input tone-purple">Input</span></div></div><p class="p5-note">코디네이터가 완료를 확인하고, 결과물을 넘겨 다음 작업을 배정합니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<!-- 발표 노트: 파일이 만들어진 뒤 어디에 쓰이는지가 협업 구조를 정합니다. -->
+<article class="slide " data-index="4" data-pattern="flow"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-01</span><h1 class="slide__title">협업을 <span class="hl">나누는 기준</span></h1><p class="slide__sub">파일이 만들어진 뒤 어디에 쓰이는지가 협업 구조를 정합니다.</p></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="p5-pattern-criteria"><section class="p5-criterion anim-item"><svg viewBox="0 0 240 145" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><svg x="5" y="45" width="50" height="50" viewBox="0 0 100 100"><use href="#shape-agent" class="tone-brand"/></svg><svg x="95" y="45" width="50" height="50" viewBox="0 0 100 100"><use href="#shape-agent" class="tone-brand"/></svg><svg x="185" y="45" width="50" height="50" viewBox="0 0 100 100"><use href="#shape-agent" class="tone-brand"/></svg><path d="M59 70H87" stroke="var(--brand)" fill="none" stroke-width="2" marker-end="url(#tx-tip-brand)"/><path d="M149 70H177" stroke="var(--brand)" fill="none" stroke-width="2" marker-end="url(#tx-tip-brand)"/></svg><h2 class="heading tone-brand">앞 결과 전달</h2><p class="copy">다음 작업의 입력</p></section><section class="p5-criterion anim-item"><svg viewBox="0 0 240 145" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><svg x="25" y="45" width="50" height="50" viewBox="0 0 100 100"><use href="#shape-agent" class="tone-brand"/></svg><svg x="165" y="45" width="50" height="50" viewBox="0 0 100 100"><use href="#shape-agent" class="tone-purple"/></svg><path d="M80 58H157" stroke="var(--purple)" fill="none" stroke-width="2" marker-end="url(#tx-tip-purple)"/><path d="M165 90C145 123 85 123 66 100" stroke="var(--purple)" fill="none" stroke-width="2" marker-end="url(#tx-tip-purple)"/></svg><h2 class="heading tone-purple">작성·평가 분리</h2><p class="copy">서로 다른 담당이 검토</p></section><section class="p5-criterion anim-item"><svg viewBox="0 0 240 145" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><svg x="100" y="0" width="35" height="35" viewBox="0 0 100 100"><use href="#shape-document" class="tone-gray"/></svg><svg x="35" y="55" width="45" height="45" viewBox="0 0 100 100"><use href="#shape-agent" class="tone-brand"/></svg><svg x="160" y="55" width="45" height="45" viewBox="0 0 100 100"><use href="#shape-agent" class="tone-purple"/></svg><svg x="100" y="107" width="28" height="28" viewBox="0 0 100 100"><use href="#shape-done" class="tone-yellow"/></svg><path d="M104 32L65 50" stroke="var(--yellow)" fill="none" stroke-width="2" marker-end="url(#tx-tip-yellow)"/><path d="M134 32L177 50" stroke="var(--yellow)" fill="none" stroke-width="2" marker-end="url(#tx-tip-yellow)"/><path d="M68 103L98 121" stroke="var(--yellow)" fill="none" stroke-width="2" marker-end="url(#tx-tip-yellow)"/><path d="M176 103L134 121" stroke="var(--yellow)" fill="none" stroke-width="2" marker-end="url(#tx-tip-yellow)"/></svg><h2 class="heading tone-yellow">시안 중 선택</h2><p class="copy">같은 의뢰의 다른 결과</p></section><section class="p5-criterion anim-item"><svg viewBox="0 0 240 145" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><svg x="10" y="50" width="45" height="45" viewBox="0 0 100 100"><use href="#shape-document" class="tone-gray"/></svg><svg x="173" y="0" width="31" height="31" viewBox="0 0 100 100"><use href="#shape-document" class="tone-green"/></svg><svg x="173" y="50" width="31" height="31" viewBox="0 0 100 100"><use href="#shape-document" class="tone-green"/></svg><svg x="173" y="100" width="31" height="31" viewBox="0 0 100 100"><use href="#shape-document" class="tone-green"/></svg><path d="M65 72H115V16H163" stroke="var(--green)" fill="none" stroke-width="2" marker-end="url(#tx-tip-green)"/><path d="M115 72H163" stroke="var(--green)" fill="none" stroke-width="2" marker-end="url(#tx-tip-green)"/><path d="M115 72V117H163" stroke="var(--green)" fill="none" stroke-width="2" marker-end="url(#tx-tip-green)"/></svg><h2 class="heading tone-green">역할별 모두 활용</h2><p class="copy">각 채널에 맞춘 결과</p></section></div></div><p class="p5-note anim-item" data-anim-step="4">결과를 이어 쓸지, 검토할지, 골라 쓸지, 모두 쓸지에 따라 협업 방식이 달라집니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<!-- 발표 노트: 스마트스토어에서 팔 아이템과 실행 계획을 하나의 문서로 만듭니다. -->
+<article class="slide " data-index="5" data-pattern="project"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-01</span><h1 class="slide__title"><span class="hl">판매 아이템</span> 기획서</h1><p class="slide__sub">스마트스토어에서 팔 아이템과 실행 계획을 하나의 문서로 만듭니다.</p></header><main class="slide__body"><div class="p5-project"><figure class="anim-item"><img class="p5-image" src="/artifacts/part5/_images/pattern-1-sequential.png" alt="순차 파이프라인 원본 일러스트"></figure><div class="anim-item" style="--accent:var(--brand)"><p class="p5-kicker">순차 파이프라인</p><p class="statement">앞 결과를 받아<strong>다음 작업으로</strong></p><p class="copy">차박용 접이식 미니 수납함 판매 아이템 기획서</p><p class="copy">시장조사에서 후보 비교를 거쳐 기획서로</p><a class="p5-link" href="https://fastcampus-orca-course.vercel.app/project1-sidehustle-proposal/final/proposal-final.html" target="_blank" rel="noopener">판매 아이템 기획서 보기</a></div></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<!-- 발표 노트: 작성한 제안과 견적을 다른 에이전트가 기준에 맞춰 평가합니다. -->
+<article class="slide " data-index="6" data-pattern="project"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-01</span><h1 class="slide__title">클라이언트 <span class="hl">제안서</span></h1><p class="slide__sub">작성한 제안과 견적을 다른 에이전트가 기준에 맞춰 평가합니다.</p></header><main class="slide__body"><div class="p5-project"><figure class="anim-item"><img class="p5-image" src="/artifacts/part5/_images/pattern-2-cross-check.png" alt="교차 검증 원본 일러스트"></figure><div class="anim-item" style="--accent:var(--purple)"><p class="p5-kicker">교차 검증</p><p class="statement">작성과 평가를<strong>서로 다른 담당에게</strong></p><p class="copy">무브펫 자동 순환 급수기 제안·견적서</p><p class="copy">작성 → 평가 → 반려 사항 수정</p><a class="p5-link" href="https://fastcampus-orca-course.vercel.app/project2-ads-proposal/final/proposal-quote-final.html" target="_blank" rel="noopener">무브펫 제안·견적서 보기</a></div></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<!-- 발표 노트: 같은 브랜드와 행사 조건을 주고 서로 다른 디자인을 받습니다. -->
+<article class="slide " data-index="7" data-pattern="project"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-01</span><h1 class="slide__title">프로모션 <span class="hl">시안</span></h1><p class="slide__sub">같은 브랜드와 행사 조건을 주고 서로 다른 디자인을 받습니다.</p></header><main class="slide__body"><div class="p5-project"><figure class="anim-item"><img class="p5-image" src="/artifacts/part5/_images/pattern-3-parallel.png" alt="병렬 실행 원본 일러스트"></figure><div class="anim-item" style="--accent:var(--yellow)"><p class="p5-kicker">병렬 실행</p><p class="statement">같은 요청을 맡기고<strong>사람이 선택</strong></p><p class="copy">무드온 블랙프라이데이 랜딩페이지</p><p class="copy">같은 요청으로 두 시안 제작 후 비교·선택</p><a class="p5-link" href="https://fastcampus-orca-course.vercel.app/project3-blackfriday-landing/final/preview.html" target="_blank" rel="noopener">무드온 시안 두 개 보기</a></div></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<!-- 발표 노트: 하나의 레시피를 채널마다 다른 역할의 콘텐츠로 확장합니다. -->
+<article class="slide " data-index="8" data-pattern="project"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-01</span><h1 class="slide__title"><span class="hl">플랫폼별</span> 콘텐츠</h1><p class="slide__sub">하나의 레시피를 채널마다 다른 역할의 콘텐츠로 확장합니다.</p></header><main class="slide__body"><div class="p5-project"><figure class="anim-item"><img class="p5-image" src="/artifacts/part5/_images/pattern-4-rnr.png" alt="R&R 분배 원본 일러스트"></figure><div class="anim-item" style="--accent:var(--green)"><p class="p5-kicker">R&R 분배</p><p class="statement">다른 역할로 나눠<strong>결과를 모두 활용</strong></p><p class="copy">스트로베리 퐁당 케이크 콘텐츠 3종</p><p class="copy">한 레시피에서 블로그·카드뉴스·스레드로</p><a class="p5-link" href="https://fastcampus-orca-course.vercel.app/project4-recipe-content/final/preview.html" target="_blank" rel="noopener">레시피 콘텐츠 3종 보기</a></div></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<!-- 발표 노트: 둘 다 동시에 만들지만 결과물을 사용하는 방식이 다릅니다. -->
+<article class="slide " data-index="9" data-pattern="compare"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-01</span><h1 class="slide__title"><span class="hl">선택과 활용</span>의 차이</h1><p class="slide__sub">둘 다 동시에 만들지만 결과물을 사용하는 방식이 다릅니다.</p></header><main class="slide__body"><div class="p5-two"><section class="p5-side anim-item" style="--accent:var(--yellow)"><h2 class="heading">병렬 실행</h2><div class="p5-root"><svg class="p5-icon tone-yellow" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg>같은 랜딩페이지 요청</div><div class="p5-leaves"><div class="p5-leaf"><svg class="p5-icon tone-yellow" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-agent"/></svg>시안 A</div><div class="p5-leaf"><svg class="p5-icon tone-yellow" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-agent"/></svg>시안 B</div></div><p class="p5-result">사람이 하나 선택</p></section><section class="p5-side anim-item" style="--accent:var(--green)"><h2 class="heading">R&amp;R 분배</h2><div class="p5-root"><svg class="p5-icon tone-green" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg>하나의 레시피 소재</div><div class="p5-leaves"><div class="p5-leaf"><svg class="p5-icon tone-green" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-agent"/></svg>블로그</div><div class="p5-leaf"><svg class="p5-icon tone-green" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-agent"/></svg>카드뉴스</div><div class="p5-leaf"><svg class="p5-icon tone-green" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-agent"/></svg>스레드</div></div><p class="p5-result">역할별 결과 모두 활용</p></section></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<!-- 발표 노트: 업무가 요구하는 관계를 확인하면 패턴을 고를 수 있습니다. -->
+<article class="slide " data-index="10" data-pattern="rows"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-01</span><h1 class="slide__title"><span class="hl">업무에 맞는</span> 패턴</h1><p class="slide__sub">업무가 요구하는 관계를 확인하면 패턴을 고를 수 있습니다.</p></header><main class="slide__body"><div class="p5-rows"><div class="p5-row anim-item" style="--accent:var(--brand)"><h2 class="heading">앞 결과가 다음 작업에 필요한가?</h2><div class="p5-arrow tone-brand" aria-hidden="true"><svg viewBox="0 0 100 20"><path d="M2 10H94" fill="none" stroke="currentColor" stroke-width="2.5" marker-end="url(#tx-tip-brand)"/></svg></div><p class="p5-answer">순차 파이프라인</p></div><div class="p5-row anim-item" style="--accent:var(--purple)"><h2 class="heading">완성본을 별도로 검사해야 하는가?</h2><div class="p5-arrow tone-purple" aria-hidden="true"><svg viewBox="0 0 100 20"><path d="M2 10H94" fill="none" stroke="currentColor" stroke-width="2.5" marker-end="url(#tx-tip-purple)"/></svg></div><p class="p5-answer">교차 검증</p></div><div class="p5-row anim-item" style="--accent:var(--yellow)"><h2 class="heading">같은 의뢰의 다른 안을 보고 싶은가?</h2><div class="p5-arrow tone-yellow" aria-hidden="true"><svg viewBox="0 0 100 20"><path d="M2 10H94" fill="none" stroke="currentColor" stroke-width="2.5" marker-end="url(#tx-tip-yellow)"/></svg></div><p class="p5-answer">병렬 실행</p></div><div class="p5-row anim-item" style="--accent:var(--green)"><h2 class="heading">다른 채널의 결과가 모두 필요한가?</h2><div class="p5-arrow tone-green" aria-hidden="true"><svg viewBox="0 0 100 20"><path d="M2 10H94" fill="none" stroke="currentColor" stroke-width="2.5" marker-end="url(#tx-tip-green)"/></svg></div><p class="p5-answer">R&amp;R 분배</p></div></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<!-- 발표 노트: 먼저 하나의 결과물을 순서대로 완성하는 구조를 만듭니다. -->
+<article class="slide " data-index="11" data-pattern="image"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-01</span><h1 class="slide__title"><span class="hl">기획팀</span> 프로젝트</h1><p class="slide__sub">먼저 하나의 결과물을 순서대로 완성하는 구조를 만듭니다.</p></header><main class="slide__body"><div class="scene scene--cover"><div class="scene__copy anim-item"><p class="statement">시장조사에서<strong>판매 아이템 기획서까지</strong></p><p class="copy">Part 5 · 기획팀</p><p class="copy">입력과 결과가 이어지는 협업</p></div><figure class="scene__visual anim-item"><img class="p5-image" src="/artifacts/part5/_images/pattern-1-sequential.png" alt="순차 파이프라인 원본 일러스트"></figure></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+</div>
+    <script>
+      // file:// 로 열었을 때만 경로를 보정한다. 정식 덱과 같은 코드다 —
+      // 이 템플릿을 복사해 만든 덱이 그대로 동작해야 한다. HTTP 경로에는 개입하지 않는다.
+      (function () {
+        if (location.protocol !== "file:") return;
+        // 정식 덱은 경로의 /artifacts/ 앞이 저장소 루트다.
+        // 스킬 assets 안의 템플릿처럼 /artifacts/ 밖에 있는 파일은 깊이로 되짚는다.
+        var m = location.pathname.match(/^(.*\/)artifacts\//);
+        var root = m
+          ? m[1]
+          : new URL(
+              /\/\.(claude|agents)\/skills\/fastcampus-slide\/assets\//.test(
+                location.pathname,
+              )
+                ? "../../../../"
+                : "../../../",
+              location.href,
+            ).pathname;
+        function apply() {
+          document.querySelectorAll('img[src^="/"]').forEach(function (el) {
+            var s = el.getAttribute("src");
+            if (s.indexOf(root) === 0) return;
+            el.setAttribute("src", root + s.slice(1));
+          });
+        }
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", apply);
+        } else {
+          apply();
+        }
+      })();
+      /* 조작 규칙 (성공 기준):
+         페이지 이동은 좌우 nav-btn · 하단 dot · 키보드(←/→/스페이스)로만.
+         #deck/body/.slide에 이동용 click 리스너를 절대 달지 않는다 —
+         강의 중 화면을 가리키며 클릭해도 슬라이드가 넘어가면 안 된다. */
+// A connector uses visible icon bounds; labels are not endpoint anchors.
+function drawPatternConnections(){
+ document.querySelectorAll('.tx-graph').forEach(graph=>{
+  const svg=graph.querySelector('.tx-wires');const rect=graph.getBoundingClientRect();
+  if(!rect.width||!rect.height)return;
+  svg.setAttribute('viewBox',`0 0 ${rect.width} ${rect.height}`);
+  const anchor=(node)=>{const r=node.querySelector('.tx-art').getBoundingClientRect();return {x:r.x-rect.x+r.width/2,y:r.y-rect.y+r.height/2,w:r.width,h:r.height}};
+  graph.querySelectorAll('.tx-link').forEach(link=>{
+   const f=graph.querySelector(`[data-node="${link.dataset.from}"]`),t=graph.querySelector(`[data-node="${link.dataset.to}"]`);if(!f||!t)return;
+   const a=anchor(f),b=anchor(t),route=link.dataset.route||'',path=link.querySelector('path');let d;const gap=12;
+   if(route.includes('tree')){const y=(a.y+a.h*.3+b.y-b.h*.3)/2;d=`M${a.x} ${a.y+a.h*.32+gap}V${y}H${b.x}V${b.y-b.h*.32-gap}`;}
+   else if(route.includes('return')){const fromBottom=f.getBoundingClientRect().bottom-rect.y+gap,toBottom=t.getBoundingClientRect().bottom-rect.y+gap,y=Math.min(rect.height*.9,Math.max(fromBottom,toBottom)+25);d=`M${a.x} ${fromBottom}V${y}H${b.x}V${toBottom}`;}
+   else if(Math.abs(b.y-a.y)>rect.height*.26&&graph.classList.contains('tx-delegation')){const x1=a.x+(b.x<a.x?-15:15),y1=a.y+a.h*.4+gap,x2=b.x,y2=b.y-b.h*.4-gap;d=`M${x1} ${y1}C${x1} ${(y1+y2)/2} ${x2} ${(y1+y2)/2} ${x2} ${y2}`;}
+   else{const sign=b.x>a.x?1:-1,x1=a.x+sign*(a.w*.4+gap),x2=b.x-sign*(b.w*.4+gap);d=route.includes('curve')||Math.abs(b.y-a.y)>20?`M${x1} ${a.y}C${x1+(x2-x1)*.55} ${a.y} ${x2-(x2-x1)*.35} ${b.y} ${x2} ${b.y}`:`M${x1} ${a.y}L${x2} ${b.y}`;}
+   path.setAttribute('d',d);if(route.includes('draw'))path.setAttribute('pathLength','1');
+  });
+ });
+}
+const patternObserver=new ResizeObserver(()=>requestAnimationFrame(drawPatternConnections));
+document.querySelectorAll('.tx-graph').forEach(e=>patternObserver.observe(e));
+document.fonts.ready.then(drawPatternConnections);
+function selectPatternPanel(root,id){
+ root.querySelectorAll('[data-panel]').forEach(b=>{const active=b.dataset.panel===id;b.setAttribute('aria-selected',active);b.tabIndex=active?0:-1;});
+ root.querySelectorAll('[data-panel-view]').forEach(p=>{const active=p.dataset.panelView===id;p.classList.toggle('active',active);p.setAttribute('aria-hidden',!active);p.inert=!active;});
+}
+document.querySelectorAll('.tx-switch').forEach((root,n)=>{
+ root.querySelectorAll('[data-panel]').forEach(button=>{
+  const id=button.dataset.panel;button.id=`tx-tab-${n}-${id}`;button.setAttribute('aria-controls',`tx-panel-${n}-${id}`);
+  const panel=root.querySelector(`[data-panel-view="${id}"]`);panel.id=`tx-panel-${n}-${id}`;panel.setAttribute('aria-labelledby',button.id);
+  button.addEventListener('click',()=>selectPatternPanel(root,id));
+  button.addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key))return;event.preventDefault();event.stopPropagation();const buttons=[...root.querySelectorAll('[data-panel]')],next=buttons[(buttons.indexOf(button)+(event.key==='ArrowLeft'||event.key==='ArrowUp'?-1:1)+buttons.length)%buttons.length];next.focus();selectPatternPanel(root,next.dataset.panel);});
+ });selectPatternPanel(root,root.dataset.defaultPanel);
+});
+document.querySelectorAll('.tx-time-car').forEach(car=>{
+ const root=car.closest('.tx-time');const run=e=>{e.preventDefault();e.stopPropagation();root.classList.remove('is-running');void root.offsetWidth;root.classList.add('is-running');};
+ car.addEventListener('pointerdown',e=>e.preventDefault());car.addEventListener('click',run);car.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')run(e);});
+});
+function resetPatternInteractions(slide){
+ slide.querySelectorAll('.tx-time').forEach(e=>e.classList.remove('is-running'));
+ slide.querySelectorAll('.tx-switch').forEach(e=>selectPatternPanel(e,e.dataset.defaultPanel));
+ requestAnimationFrame(drawPatternConnections);
+ requestAnimationFrame(drawHandoff4);
+}
+
+      class SlidePresentation {
+        constructor() {
+          this.slides = Array.from(document.querySelectorAll(".slide"));
+          this.total = this.slides.length;
+          const requested = Number.parseInt(
+            new URLSearchParams(window.location.search).get("slide"),
+            10,
+          );
+          this.current =
+            Number.isInteger(requested) &&
+            requested >= 1 &&
+            requested <= this.total
+              ? requested - 1
+              : 0;
+          this.isAnimating = false;
+          this._init();
+        }
+        _init() {
+          this.slides.forEach((slide, i) =>
+            slide.classList.toggle("active", i === this.current),
+          );
+          document.getElementById("tot").textContent = this.total;
+          this._buildDots();
+          this._bindKeys();
+          this._bindButtons();
+          this._update();
+          this._runSlide(this.current);
+        }
+        /* 슬라이드 진입 시 .anim-item 을 순차 등장시킨다.
+           스토리보드의 "애니메이션 순서" = DOM 순서 */
+        _runSlide(i) {
+          const slide = this.slides[i];
+          resetPatternInteractions(slide);
+          const items = [...slide.querySelectorAll('.anim-item')];
+          items.forEach(el => el.classList.remove('do-fadeinup'));
+          void slide.offsetWidth;
+          const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+          const instant = reduced || slide.dataset.motion === 'none';
+          items.forEach((el,n) => {
+            const requested = Number(el.dataset.animStep ?? n);
+            const step = Number.isFinite(requested) ? Math.max(0, requested) : n;
+            el.style.animationDelay = instant ? '0ms' : `${150 + step * 260}ms`;
+            el.style.setProperty('--draw-delay',el.style.animationDelay);
+            el.classList.add('do-fadeinup');
+          });
+        }
+        next() {
+          if (!this.isAnimating) this._go(this.current + 1);
+        }
+        prev() {
+          if (!this.isAnimating) this._go(this.current - 1);
+        }
+        _go(i) {
+          if (
+            i < 0 ||
+            i >= this.total ||
+            i === this.current ||
+            this.isAnimating
+          )
+            return;
+          this.isAnimating = true;
+          this.slides[this.current].classList.remove("active");
+          this.slides[i].classList.add("active");
+          this.current = i;
+          const url = new URL(window.location.href);
+          url.searchParams.set("slide", this.current + 1);
+          window.history.replaceState({}, "", url);
+          this._runSlide(i);
+          setTimeout(() => {
+            this.isAnimating = false;
+            this._update();
+          }, 420);
+          this._update();
+        }
+        _update() {
+          const pct = ((this.current + 1) / this.total) * 100;
+          document.getElementById("progress").style.width = pct + "%";
+          document.getElementById("cur").textContent = this.current + 1;
+          document.getElementById("btn-prev").disabled = this.current === 0;
+          document.getElementById("btn-next").disabled =
+            this.current === this.total - 1;
+          document
+            .querySelectorAll(".dot")
+            .forEach((d, i) =>
+              d.classList.toggle("active", i === this.current),
+            );
+        }
+        _buildDots() {
+          const nav = document.getElementById("dot-nav");
+          this.slides.forEach((_, i) => {
+            const b = document.createElement("button");
+            b.className = "dot" + (i === 0 ? " active" : "");
+            b.setAttribute("aria-label", `슬라이드 ${i + 1}`);
+            b.addEventListener("click", () => this._go(i));
+            nav.appendChild(b);
+          });
+        }
+        _bindButtons() {
+          document
+            .getElementById("btn-prev")
+            .addEventListener("click", () => this.prev());
+          document
+            .getElementById("btn-next")
+            .addEventListener("click", () => this.next());
+        }
+        _bindKeys() {
+          document.addEventListener("keydown", (e) => {
+            if (e.target.closest(".tx-switch, .tx-time-car")) return;
+            if (this.isAnimating) return;
+            if (e.key === "ArrowRight" || e.key === " ") {
+              e.preventDefault();
+              this.next();
+            }
+            if (e.key === "ArrowLeft") {
+              e.preventDefault();
+              this.prev();
+            }
+          });
+        }
+      }
+      function drawP5(){document.querySelectorAll('.p5-team').forEach(g=>{let rect=g.getBoundingClientRect(),svg=g.querySelector('svg.p5-team-wires');if(!rect.width||!svg)return;svg.setAttribute('viewBox',`0 0 ${rect.width} ${rect.height}`);const a=id=>{const r=g.querySelector(`[data-node="${id}"] .p5-icon`).getBoundingClientRect();return {x:r.x-rect.x+r.width/2,y:r.y-rect.y+r.height*.46,w:r.width,h:r.height}};svg.querySelectorAll('path[data-from]').forEach(p=>{const f=a(p.dataset.from),t=a(p.dataset.to),o=+(p.dataset.offset||0),sg=t.x>=f.x?1:-1;let d;if(p.dataset.route==='tree'){const x=f.x,y=g.querySelector(`[data-node="${p.dataset.from}"]`).getBoundingClientRect().bottom-rect.top+10,tx=t.x,ty=t.y-t.h*.4-10,my=(y+ty)/2;d=`M${x} ${y}V${my}H${tx}V${ty}`}else{const x=f.x+sg*(f.w*.4+12),y=f.y+o,tx=t.x-sg*(t.w*.4+12),ty=t.y+o;d=`M${x} ${y}C${(x+tx)/2} ${y} ${(x+tx)/2} ${ty} ${tx} ${ty}`}p.setAttribute('d',d)});});}
+      const p5Observer=new ResizeObserver(()=>requestAnimationFrame(drawP5));document.querySelectorAll('.p5-team').forEach(g=>p5Observer.observe(g));document.fonts.ready.then(drawP5);window.addEventListener('resize',drawP5);requestAnimationFrame(drawP5);
+
+function drawHandoff4(){
+ const map=document.querySelector('.h4-map');if(!map)return;
+ const r=map.getBoundingClientRect();if(!r.width||!r.height)return;
+ const svg=map.querySelector('.h4-wires');svg.setAttribute('viewBox',`0 0 ${r.width} ${r.height}`);
+ const box=cls=>{const b=map.querySelector('.h4-'+cls+' .h4-icon').getBoundingClientRect();return {l:b.left-r.left,rr:b.right-r.left,t:b.top-r.top,b:b.bottom-r.top,x:(b.left+b.right)/2-r.left,y:(b.top+b.bottom)/2-r.top}};
+ const human=box('person'),co=box('coordinator'),a=box('a'),b=box('b'),doc=box('document'),gap=16;
+ const head=(x,y,axis)=>axis==='r'?`M${x-8} ${y-5}L${x} ${y}L${x-8} ${y+5}`:axis==='l'?`M${x+8} ${y-5}L${x} ${y}L${x+8} ${y+5}`:axis==='u'?`M${x-5} ${y+8}L${x} ${y}L${x+5} ${y+8}`:`M${x-5} ${y-8}L${x} ${y}L${x+5} ${y-8}`;
+ const set=(k,d)=>map.querySelector('[data-wire="'+k+'"]').setAttribute('d',d);
+ const line=(k,x1,y1,x2,y2,dir)=>set(k,`M${x1} ${y1}L${x2} ${y2}`+head(x2,y2,dir));
+ const label=(k,x,y)=>{let e=map.querySelector('.h4-'+k);e.style.left=x+'px';e.style.top=y+'px'};
+ line('goal',human.rr+gap,co.y-13,co.l-gap,co.y-13,'r');
+ line('result',co.l-gap,co.y+13,human.rr+gap,co.y+13,'l');
+ label('goal',(human.rr+co.l)/2,co.y-34);label('result',(human.rr+co.l)/2,co.y+36);
+ const sy=a.t-gap,ey=co.b+gap,mid=(sy+ey)/2;
+ set('report',`M${a.x} ${sy}C${a.x} ${mid},${co.x-22} ${mid},${co.x-22} ${ey}`+head(co.x-22,ey,'u'));
+ set('assign',`M${co.x+22} ${ey}C${co.x+22} ${mid},${b.x} ${mid},${b.x} ${sy}`+head(b.x,sy,'d'));
+ line('output',a.rr+gap,a.y,doc.l-gap,doc.y,'r');line('input',doc.rr+gap,doc.y,b.l-gap,b.y,'r');
+ label('output',(a.rr+doc.l)/2,a.y-23);label('input',(doc.rr+b.l)/2,b.y-23);
+}
+new ResizeObserver(drawHandoff4).observe(document.querySelector('.h4-map'));
+document.fonts.ready.then(drawHandoff4);window.addEventListener('resize',drawHandoff4);requestAnimationFrame(drawHandoff4);
+
+      new SlidePresentation();
+    </script>
+  </body>
+</html>

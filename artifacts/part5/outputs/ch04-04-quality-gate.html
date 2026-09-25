@@ -1,0 +1,1084 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>품질 게이트로 통과 기준 세우기 — Part 5 Ch04-04</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css"
+    />
+    <style>
+      :root {
+        --bg: #0d1117;
+        --bg-card: #161b22;
+        --text: #e6edf3;
+        --text-dim: #8b949e;
+        --text-muted: #59636e;
+        --brand: #fc1c49;
+        --purple: #9188ff;
+        --orange: #ff6d3b;
+        --yellow: #f0b429;
+        --green: #4ade80;
+        --gray: #8b949e;
+        --border: rgba(255, 255, 255, 0.08);
+        --dot: rgba(255, 255, 255, 0.055);
+        --title: clamp(2rem, 5.2vw, 3.8rem);
+        --statement: clamp(2rem, 3.8vw, 3.7rem);
+        --heading: clamp(1.5rem, 2.2vw, 2.25rem);
+        --body: clamp(1.1rem, 1.6vw, 1.42rem);
+        --gap: clamp(1.5rem, 3vw, 3rem);
+        --content-width: 86rem;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        font-family:
+          Pretendard,
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        font-size: clamp(13px, 1.35vw, 16px);
+        background: var(--bg);
+        color: var(--text);
+        word-break: keep-all;
+      }
+      body {
+        overflow: hidden;
+      }
+      button {
+        font: inherit;
+      }
+      .slide-deck {
+        position: fixed;
+        inset: 0;
+      }
+      .slide {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr) auto;
+        gap: clamp(1.5rem, 3.75vh, 3rem);
+        padding: clamp(2.6rem, 5.5vh, 4.2rem) clamp(4rem, 7.5vw, 7rem);
+        background:
+          radial-gradient(circle, var(--dot) 1px, transparent 1px) 0 0/26px 26px,
+          var(--bg);
+        overflow: hidden;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.36s ease;
+      }
+      .slide[data-motion="none"]{transition:none}
+      .slide.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .slide__header {
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+        padding-bottom: clamp(0.9rem, 2.2vh, 1.6rem);
+        border-bottom: 1px solid var(--border);
+      }
+      .slide__label {
+        font-size: clamp(0.58rem, 0.85vw, 0.72rem);
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--brand);
+      }
+      .slide__title {
+        font-size: var(--title);
+        font-weight: 800;
+        line-height: 1.08;
+        letter-spacing: -0.015em;
+      }
+      .slide__sub {
+        font-size: clamp(1.05rem, 1.6vw, 1.28rem);
+        line-height: 1.5;
+        color: var(--text-dim);
+      }
+      .slide__body {
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: var(--gap);
+        overflow: hidden;
+        container-type: size;
+      }
+      .slide__footer {
+        border-top: 1px solid var(--border);
+        padding-top: clamp(0.5rem, 1.3vh, 0.9rem);
+      }
+      .fastcampus-logo {
+        display: block;
+        width: clamp(7.2rem, 9vw, 8.5rem);
+        height: auto;
+      }
+      .hl,
+      .tone-brand {
+        color: var(--brand);
+      }
+      .tone-purple {
+        color: var(--purple);
+      }
+      .tone-gray {
+        color: var(--gray);
+      }
+      .tone-yellow {
+        color: var(--yellow);
+      }
+      .tone-orange {
+        color: var(--orange);
+      }
+      .tone-green {
+        color: var(--green);
+      }
+      /* Shared roles: cover and split layouts inherit exactly the same type. */
+      .statement {
+        font-family: inherit;
+        font-size: var(--statement);
+        font-weight: 850;
+        line-height: 1.35;
+        letter-spacing: -0.035em;
+      }
+      .statement strong {
+        display: block;
+        color: var(--brand);
+        font-weight: 900;
+      }
+      .heading {
+        font-size: var(--heading);
+        font-weight: 800;
+        line-height: 1.35;
+        letter-spacing: -0.025em;
+      }
+      .copy {
+        font-size: var(--body);
+        line-height: 1.6;
+        color: var(--text-dim);
+      }
+      .eyebrow {
+        font-size: clamp(1rem, 1.5vw, 1.3rem);
+        line-height: 1.5;
+        color: var(--text-dim);
+      }
+      .diagram {
+        display: block;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+        color: var(--gray);
+      }
+      .symbols {
+        position: absolute;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+        pointer-events: none;
+      }
+      .content {
+        width: min(100%, var(--content-width));
+        margin-inline: auto;
+      }
+      /* Image slots are borderless. Replace the SVG slot with the clip's image. */
+      .scene {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.65fr);
+        gap: var(--gap);
+        align-items: center;
+        width: min(100%, 92rem);
+      }
+      .scene--visual-first {
+        grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+      }
+      .scene__copy {
+        display: flex;
+        flex-direction: column;
+        gap: clamp(1.3rem, 3vh, 2.5rem);
+      }
+      .scene__visual {
+        width: 100%;
+        height: min(52cqh, 28rem);
+        min-height: 15rem;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+      }
+      .scene--cover .scene__visual,
+      .scene--image .scene__visual {
+        height: min(78cqh, 34rem);
+      }
+      .scene__visual > img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border: 0;
+        box-shadow: none;
+      }
+      .scene__visual > .diagram {
+        min-height: 0;
+        flex: 1;
+      }
+      .scene__visual figcaption {
+        font-size: var(--body);
+        color: var(--text-dim);
+        text-align: center;
+      }
+      /* Open parallel concepts: diagram, heading, caption; no card shells. */
+      .triptych {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--gap);
+        align-items: start;
+      }
+      .concept {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: clamp(1rem, 2.6vh, 2rem);
+        min-width: 0;
+      }
+      .concept > .diagram {
+        height: clamp(11rem, 25vh, 19rem);
+      }
+      .concept .copy {
+        max-width: 17em;
+      }
+      /* Optional transition copy, never wrapped in a banner or bordered box. */
+      .handoff {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1.25rem;
+        color: var(--text-dim);
+        font-size: var(--body);
+        line-height: 1.5;
+      }
+      .handoff strong {
+        color: var(--text);
+        font-weight: 800;
+      }
+      .progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        z-index: 200;
+        background: var(--border);
+      }
+      .progress-fill {
+        height: 100%;
+        background: var(--brand);
+        transition: width 0.3s ease;
+      }
+      .nav-btn {
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 150;
+        width: clamp(1.9rem, 2.8vw, 2.5rem);
+        height: clamp(1.9rem, 2.8vw, 2.5rem);
+        display: grid;
+        place-items: center;
+        border: 1px solid var(--border);
+        border-radius: 3px;
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--text-dim);
+        cursor: pointer;
+      }
+      .nav-btn:hover:not(:disabled) {
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .nav-btn:disabled {
+        opacity: 0.1;
+        cursor: default;
+      }
+      #btn-prev {
+        left: clamp(0.4rem, 1.2vw, 1.1rem);
+      }
+      #btn-next {
+        right: clamp(0.4rem, 1.2vw, 1.1rem);
+      }
+      .dot-nav {
+        position: fixed;
+        bottom: 1.3rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        z-index: 150;
+      }
+      .dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.18);
+        border: 0;
+        cursor: pointer;
+        transition: all 0.22s ease;
+      }
+      .dot.active {
+        width: 22px;
+        border-radius: 3px;
+        background: var(--brand);
+      }
+      .slide-counter {
+        position: fixed;
+        bottom: 1.2rem;
+        right: 1.8rem;
+        font:
+          0.62rem Monaco,
+          monospace;
+        color: var(--text-muted);
+        z-index: 150;
+      }
+      @keyframes s-fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .anim-item {
+        opacity: 0;
+      }
+      .anim-item.do-fadeinup {
+        animation: s-fadeInUp 0.48s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .slide,
+        .progress-fill {
+          transition: none;
+        }
+        .anim-item.do-fadeinup {
+          animation-duration: 0.001s;
+        }
+      }
+
+      .status-one-line {
+        white-space: nowrap;
+        max-width: none;
+      }
+
+      /* STRUCTURE_BRANCH: root and children are content, connecting lines encode membership. */
+      .structure-tree {
+        width: min(100%, 72rem);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .structure-node {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        text-align: center;
+        min-width: 0;
+      }
+      .structure-node > .diagram {
+        width: 6rem;
+        height: 6rem;
+      }
+      .structure-tree__root {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+      .structure-tree__root > .diagram {
+        width: 5rem;
+        height: 5rem;
+      }
+      .structure-tree__stem {
+        height: 3rem;
+        border-left: 2px solid var(--gray);
+      }
+      .structure-tree__children {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+        position: relative;
+      }
+      .structure-tree__children::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 25%;
+        right: 25%;
+        border-top: 2px solid var(--gray);
+      }
+      .structure-tree__children > .structure-node {
+        position: relative;
+        padding: 3rem 1.5rem 0;
+      }
+      .structure-tree__children > .structure-node::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 0;
+        height: 2rem;
+        border-left: 2px solid var(--gray);
+      }
+      .structure-tree__root .copy {
+        margin-top: 0.45rem;
+      }
+      /* STRUCTURE_EXCHANGE: only the common scope gets a boundary, not every text node. */
+      .exchange {
+        position: relative;
+        aspect-ratio: 600/430;
+        width: 100%;
+        border: 1px solid var(--gray);
+        border-radius: 0.5rem;
+      }
+      .exchange__scope {
+        position: absolute;
+        top: 1rem;
+        left: 1.25rem;
+      }
+      .exchange > .diagram {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .exchange__node {
+        position: absolute;
+        width: 43%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+      .exchange__node--root {
+        top: 14%;
+        left: 28.5%;
+      }
+      .exchange__node--a {
+        bottom: 9%;
+        left: 3.5%;
+      }
+      .exchange__node--b {
+        bottom: 9%;
+        right: 3.5%;
+      }
+      .exchange__legend {
+        position: absolute;
+        top: 46%;
+        left: 37%;
+        width: 26%;
+        display: grid;
+        gap: 0.7rem;
+        text-align: center;
+      }
+      .exchange__legend .copy {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+      .line-key {
+        width: 1.5rem;
+        border-top: 2px solid var(--yellow);
+      }
+      .line-key--return {
+        border-top-style: dashed;
+      }
+      /* TRANSITION_COMPARE: mirror all four rows; the center is a transition arrow only. */
+      .transition-compare {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 4rem minmax(0, 1fr);
+        align-items: center;
+        gap: 2.5rem;
+        width: min(100%, var(--content-width));
+      }
+      .transition-side {
+        display: grid;
+        grid-template-rows: 2rem 5.5rem 12rem minmax(3.2rem, auto);
+        align-items: center;
+        justify-items: center;
+        text-align: center;
+        gap: 1rem;
+        min-width: 0;
+      }
+      .transition-side > .diagram {
+        height: 12rem;
+        width: 100%;
+      }
+      .transition-side > .copy {
+        max-width: 20em;
+      }
+      .transition-compare__arrow {
+        height: 4rem;
+      }
+
+/* Animate the semantic boundary separately; never hide or move its children as a group. */
+.motion-scope{position:relative;border-color:transparent!important}
+.motion-scope>.scope-frame{position:absolute;inset:-1.5px;display:block;border:1.5px solid var(--gray);border-radius:inherit;pointer-events:none}
+.motion-scope>.scope-frame.anim-item.do-fadeinup,.scope-caption.anim-item.do-fadeinup{animation-name:scope-fade;animation-duration:.48s;animation-timing-function:cubic-bezier(.23,1,.32,1);animation-fill-mode:both;transform:none}
+@keyframes scope-fade{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.motion-scope>.scope-frame.anim-item,.scope-caption.anim-item{opacity:1;animation:none!important;transform:none}}
+
+      /* CONTAINED_STRUCTURE: a semantic scope, followed by independently revealed contents. */
+      .scope-panel{width:min(100%,78rem);border:1.5px solid var(--gray);border-radius:.7rem;padding:2rem 2.4rem}
+      .scope-panel__header{display:flex;align-items:baseline;gap:1.6rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
+      .scope-panel__content{display:grid;grid-template-columns:minmax(0,2.2fr) minmax(0,1fr);gap:2rem;padding-top:1.6rem}
+      .scope-panel__items{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.5rem;margin-top:1.5rem}
+      .scope-panel__item,.scope-panel__shared{display:flex;flex-direction:column;align-items:center;gap:.8rem;text-align:center}
+      .scope-panel__item .diagram{width:6rem;height:7rem}
+      .scope-panel__shared{border-left:1px solid var(--border);padding-left:1.5rem}
+      .scope-panel__shared .diagram{width:7rem;height:8rem}
+      .scope-panel .anim-item.do-fadeinup{animation-name:scope-fade}
+      [data-motion="none"] .anim-item{opacity:1;animation:none!important}
+      @media(max-height:650px){.scope-panel{padding:1.2rem}.scope-panel__header{padding-bottom:1rem}.scope-panel__content{gap:1.2rem;padding-top:1rem}.scope-panel__items{gap:1rem;margin-top:1rem}.scope-panel__item .diagram{width:4rem;height:5rem}.scope-panel__shared .diagram{width:5rem;height:6rem}}
+/* Approved pattern families 10–29. Geometry is shared by role; slots contain no lecture copy. */
+.tx-body{--art:clamp(4rem,18cqh,10rem);--tx-space:clamp(.6rem,2.2cqh,1.5rem)}
+.tx-body .anim-item.do-fadeinup{animation-name:scope-fade}
+.tx-art{display:block;width:var(--art);height:var(--art);flex-shrink:0}
+.tx-item{display:flex;flex-direction:column;gap:.7rem;align-items:center;text-align:center;min-width:0}
+.tx-item .heading{color:inherit}.tx-item .copy{color:var(--gray)}
+.tx-compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3.5rem;width:min(100%,80rem)}
+.tx-compare-side{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.5rem;min-width:0}
+.tx-window{width:100%;padding:2.8rem 1.5rem 1.5rem;border:1.5px solid transparent;border-radius:.4rem;position:relative}
+.tx-window-bar{position:absolute;top:.25rem;left:1rem;color:var(--gray);letter-spacing:.2rem}
+.tx-agents{display:flex;justify-content:center;gap:1.5rem}.tx-agents .tx-art{width:min(6rem,10vw);height:min(6rem,10vw)}.tx-agents .heading{font-size:var(--body)}
+.tx-folder-art{width:min(100%,23rem);height:min(42cqh,18rem);position:relative}
+.tx-folder-art>.tx-art{width:100%;height:100%}.tx-files{position:absolute;inset:41% 30% 23%;display:flex;justify-content:center}.tx-files .tx-art{width:33%;height:100%}
+.tx-hidden-detail{position:absolute;right:19%;bottom:23%;font-size:.75rem;opacity:.35;border:1px dashed currentColor;padding:.05rem .5rem}
+.tx-arrow{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.3rem;width:100%;min-width:0}
+.tx-arrow>svg{width:100%;height:1.6rem;overflow:visible}.tx-arrow--back>svg{transform:scaleX(-1)}.tx-arrow>.copy{color:inherit;font-size:var(--body);white-space:nowrap}
+.tx-transfer{width:min(100%,78rem);display:grid;grid-template-columns:1fr .65fr 1fr;align-items:center;gap:2rem}
+.tx-transfer .tx-art{width:min(20rem,36cqh);height:min(20rem,36cqh)}
+.tx-process,.tx-stage-row{display:grid;grid-template-columns:1fr .32fr 1fr .32fr 1fr .32fr 1fr;align-items:center;gap:1rem;width:min(100%,86rem)}
+.tx-process .heading{font-size:var(--body)}.tx-process .tx-arrow>.copy{font-size:1rem}
+.tx-stage-focus{width:min(100%,80rem);display:flex;flex-direction:column;align-items:center;gap:2rem}.tx-stage-row{grid-template-columns:1fr .3fr 1fr .3fr 1fr}
+.tx-stage{display:flex;flex-direction:column;align-items:center;gap:.7rem;opacity:.34}.tx-stage .heading{color:inherit}.tx-stage-note{text-align:center}
+.tx-stage-focus[data-focus="1"] [data-stage="1"],.tx-stage-focus[data-focus="2"] [data-stage="2"],.tx-stage-focus[data-focus="3"] [data-stage="3"]{opacity:1}
+.tx-record{display:grid;grid-template-columns:1fr 1.5fr;align-items:center;gap:5rem;width:min(100%,72rem)}.tx-record>.tx-item .tx-art{width:min(23rem,38cqh);height:min(23rem,38cqh)}
+.tx-fields{display:flex;flex-direction:column;gap:1.5rem}.tx-fields>div{display:grid;grid-template-columns:7rem minmax(0,1fr);gap:1.5rem;align-items:baseline}.tx-fields dt{font-size:var(--body);color:var(--gray)}.tx-fields dd{margin:0}
+.tx-graph{position:relative;width:min(100%,76rem);height:min(100cqh,36rem);min-height:0;flex-shrink:0}
+.tx-wires{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.tx-node{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,calc(var(--node-art)/-2));display:flex;flex-direction:column;align-items:center;gap:.6rem;text-align:center;max-width:29%;--node-art:clamp(3.3rem,15cqh,8rem)}
+.tx-node .tx-art{width:var(--node-art);height:var(--node-art)}.tx-node .heading{white-space:nowrap;font-size:var(--heading)}.tx-node .copy{white-space:nowrap;font-size:var(--body)}
+.tx-history .tx-node{--node-art:3rem}.tx-history .tx-node .copy{font-size:var(--body)}
+.tx-origin [data-node="origin"]{--node-art:min(8rem,17cqh)}.tx-origin [data-node="origin"] .heading{position:absolute;left:calc(100% + .8rem);top:40%}.tx-origin [data-node="origin"] .heading{font-size:var(--body)}
+.tx-origin [data-node="a"],.tx-origin [data-node="b"]{--node-art:min(20rem,33cqh)}
+.tx-history-spaces .tx-node{--node-art:min(17rem,28cqh)}.tx-history-spaces [data-node="seed"]{--node-art:2.5rem}.tx-history-spaces .tx-node .heading{font-size:var(--body)}
+.tx-label{position:absolute;left:34%;color:var(--brand)}.tx-label--a{top:14%}.tx-label--b{top:62%;color:var(--purple)}
+.tx-draw.do-fadeinup{animation:none!important;opacity:1}.tx-draw.do-fadeinup path{stroke-dasharray:1;stroke-dashoffset:1;animation:tx-grow .85s linear both;animation-delay:var(--draw-delay,0s)}
+@keyframes tx-grow{to{stroke-dashoffset:0}}
+.tx-switch{width:min(100%,70rem);height:min(100cqh,31rem);border:1.5px solid transparent;border-radius:.45rem;display:grid;grid-template-columns:13rem 1fr;padding:1.3rem;gap:2rem}
+.tx-switch-tabs{display:flex;flex-direction:column;gap:.75rem;padding-right:1.3rem;border-right:1px solid var(--border)}
+.tx-switch-tabs button{appearance:none;border:0;background:transparent;color:var(--gray);padding:1rem;text-align:left;cursor:pointer;border-radius:.25rem;font-size:var(--body)}
+.tx-switch-tabs button[aria-selected="true"]{background:var(--bg-card);color:var(--brand)}.tx-switch-tabs button[data-panel="b"][aria-selected="true"]{color:var(--purple)}
+.tx-switch-tabs button:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.tx-switch-content{position:relative;min-height:0}.tx-panel{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s ease,visibility .3s}
+.tx-panel.active{opacity:1;visibility:visible;pointer-events:auto}.tx-panel .anim-item{opacity:1;animation:none!important}
+.tx-shared{position:relative;width:min(100%,56rem);height:min(100cqh,34rem);border:1.5px solid transparent;border-radius:.4rem;padding:2.8rem 1.5rem 2.2rem}
+.tx-space-label{position:absolute;top:.65rem;left:1.3rem}.tx-shared .tx-graph{width:100%;height:100%}.tx-shared-note{position:absolute;left:43%;top:18%;font-size:var(--body)}
+.tx-shared .tx-node{--node-art:min(7rem,15cqh)}.tx-shared .tx-node .heading{font-size:var(--body)}
+.tx-messages{width:min(100%,78rem);height:min(100cqh,32rem);display:grid;grid-template-columns:max-content minmax(0,1fr) max-content;grid-template-rows:repeat(3,minmax(0,1fr));gap:.65rem 2rem;align-items:center}
+.tx-message-left{grid-column:1;grid-row:1/-1}.tx-message-right{grid-column:3;grid-row:1/-1}.tx-messages>.tx-item .tx-art{width:6rem;height:6rem}.tx-messages>.tx-item .heading{font-size:var(--body)}
+.tx-message{grid-column:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.2rem}.tx-message-name{display:flex;align-items:center;gap:.6rem}.tx-message-name .tx-art{width:2rem;height:2rem}.tx-message-name .heading{font-size:var(--body)}.tx-message>.copy{font-size:var(--body)}
+.tx-brief{width:min(100%,80rem);display:grid;grid-template-columns:7rem 1fr;gap:2.5rem}.tx-brief>.tx-art{width:6rem;height:7rem}.tx-brief .statement{font-size:var(--heading)}.tx-brief>div>.copy{margin-top:.8rem;color:var(--text)}.tx-brief .tx-fields{margin-top:1.6rem;gap:.9rem}.tx-brief dd{font-size:var(--body)}
+.tx-bottom-note{position:absolute;bottom:0;width:100%;text-align:center}
+.tx-dispatch{width:min(100%,72rem);display:flex;flex-direction:column;gap:clamp(2rem,8cqh,5.12rem)}.tx-dispatch-row{display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;gap:3rem}.tx-dispatch .tx-art{width:clamp(3rem,16cqh,8rem);height:clamp(3rem,16cqh,8rem)}
+.tx-dispatch .heading{font-size:var(--heading)}.tx-dispatch .tx-arrow{transform:translateY(-1rem)}
+.tx-pass-label{position:absolute;top:25%;left:66%;color:var(--purple)}.tx-return-label{position:absolute;top:77%;left:29%;color:var(--orange)}
+.tx-delegation .tx-node{gap:.6rem}.tx-delegation .tx-node{--node-art:min(7rem,15cqh)}.tx-delegation .tx-node .heading{font-size:var(--body)}.tx-delegation .tx-node .copy{font-size:1.05rem}
+.tx-cause-list{width:min(100%,75rem);display:flex;flex-direction:column;gap:clamp(1rem,5cqh,3rem)}.tx-cause{display:grid;grid-template-columns:4rem 1fr;gap:2rem;align-items:baseline}.tx-cause .copy{margin-top:.6rem}.tx-number{font-size:var(--heading);font-weight:800}
+.tx-time{position:relative;width:min(100%,80rem,calc(94cqh * 2.5));aspect-ratio:5/2}.tx-time>svg{width:100%;height:100%;overflow:visible}.tx-time-label{position:absolute;transform:translateX(-50%);white-space:nowrap}.tx-time-car{transform:translate(820px,125px);cursor:pointer}.tx-time-car:focus{outline:none}.tx-time-car:focus-visible>circle{fill:var(--yellow)}.tx-time-branch{clip-path:inset(0 100% 0 0)}.tx-time-new{opacity:0}
+.tx-time.is-running .tx-time-car{animation:tx-time-travel 4s linear both}.tx-time.is-running .tx-time-branch{animation:tx-time-reveal 1.6s linear 2.2s both}.tx-time.is-running .tx-time-new{animation:scope-fade .3s ease 3.8s both}
+@keyframes tx-time-travel{0%{transform:translate(820px,125px);animation-timing-function:cubic-bezier(.23,1,.32,1)}40%,55%{transform:translate(220px,125px)}65%{transform:translate(299px,152px)}75%{transform:translate(355px,212px)}85%{transform:translate(422px,272px)}95%,100%{transform:translate(530px,300px)}}
+@keyframes tx-time-reveal{from{clip-path:inset(0 78% 0 0)}to{clip-path:inset(0 27% 0 0)}}
+@media(max-height:650px){.tx-compare-side{gap:.8rem}.tx-fields{gap:.8rem}.tx-graph{height:100cqh}.tx-node{gap:.3rem}.tx-node .heading{font-size:var(--body)}.tx-node .copy{font-size:1rem}.tx-messages>.tx-item .tx-art{width:4.5rem;height:4.5rem}.tx-shared{padding-top:2rem;padding-bottom:1rem}.tx-brief .tx-fields{margin-top:.8rem;gap:.45rem}.tx-brief .statement{font-size:var(--heading)}.tx-stage-focus{gap:1rem}.tx-switch{grid-template-columns:10rem 1fr}.tx-record{gap:2rem}.tx-delegation .tx-node .copy{font-size:.95rem}}
+@media(prefers-reduced-motion:reduce){.tx-draw.do-fadeinup path{animation:none;stroke-dashoffset:0}.tx-panel{transition:none}.tx-time.is-running .tx-time-car{animation:none;transform:translate(530px,300px)}.tx-time.is-running .tx-time-branch{animation:none;clip-path:none}.tx-time.is-running .tx-time-new{animation:none;opacity:1}}
+
+    @media(max-height:650px){.structure-tree{gap:0}.structure-tree__stem{height:1.5rem}.structure-tree__children{padding-top:0}.structure-tree__children>.structure-node{padding-top:1.8rem;gap:.65rem}.structure-tree__children>.structure-node::before{height:1.2rem}.structure-node>.diagram{height:min(22cqh,7rem)}.exchange{height:min(100cqh,23rem);min-height:0}.transition-side{gap:.5rem;grid-template-rows:auto auto minmax(0,1fr) auto}.transition-side>.diagram{height:min(30cqh,8rem)}.transition-compare{height:100cqh}.tx-delegation [data-node="person"],.tx-delegation [data-node="center"]{top:19%}}
+.tx-origin [data-node="a"],.tx-origin [data-node="b"]{top:60%}.tx-history-spaces [data-node="b"]{top:65%}.tx-history [data-node="branch"]{top:69%}.tx-history-spaces .tx-label--b{top:55%}
+.tx-folder-scope{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.tx-agent-badge{position:absolute;right:-1.5rem;top:0;width:2.6rem;height:2.6rem}.tx-delegation [data-node="a"],.tx-delegation [data-node="b"],.tx-delegation [data-node="c"]{top:65%}
+.tx-delegation [data-node="center"] .heading{position:absolute;left:calc(100% + 1rem);top:.4rem}.tx-delegation [data-node="center"] .copy{position:absolute;left:calc(100% + 1rem);top:2.5rem}@media(max-height:650px){.tx-delegation [data-node="a"],.tx-delegation [data-node="b"],.tx-delegation [data-node="c"]{top:60%}.tx-delegation [data-node="center"] .copy{top:2rem}}
+
+/* ── 이번 덱 전용 변형: 프로젝트 문서·입력/출력·순차 배정 ── */
+.slide__body .anim-item.do-fadeinup{animation-name:scope-fade}
+.p5-note{font-size:var(--body);color:var(--text-dim);text-align:center;line-height:1.5;max-width:65rem}
+.p5-flow{display:flex;align-items:center;justify-content:center;gap:2rem;max-width:100%;width:fit-content}
+.p5-item{display:flex;flex-direction:column;align-items:center;gap:1rem;text-align:center;width:21rem;max-width:26vw}
+.p5-icon{width:9rem;height:9rem;display:block;flex-shrink:0}
+.p5-arrow{width:5rem;flex-shrink:0;color:var(--gray)}.p5-arrow svg{width:100%;height:2rem;overflow:visible}
+.p5-flow .heading{font-size:var(--heading)}.p5-flow .copy{max-width:19em}
+.p5-image{mix-blend-mode:lighten;object-fit:contain;max-width:100%;max-height:100%}
+.p5-project{width:min(100%,86rem);display:grid;grid-template-columns:1.1fr 1fr;gap:3rem;align-items:center}
+.p5-project figure{height:min(75cqh,35rem);display:flex;align-items:center;justify-content:center}
+.p5-project .statement{margin:.8rem 0 1.4rem}.p5-project .copy{margin-top:.5rem}
+.p5-link{display:inline-block;color:var(--text);font-size:var(--body);margin-top:1.7rem;text-underline-offset:.35em}
+.p5-kicker{font-size:var(--heading);font-weight:700;color:var(--accent,var(--brand))}
+.p5-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4rem;width:min(100%,82rem)}
+.p5-side{display:flex;flex-direction:column;align-items:center;gap:1.4rem;text-align:center;min-width:0}.p5-side>.heading{color:var(--accent)}
+.p5-root{display:flex;align-items:center;gap:.7rem;font-size:var(--body)}.p5-root .p5-icon{width:4rem;height:4rem}
+.p5-leaves{display:flex;justify-content:center;gap:1.5rem;width:100%;position:relative;padding-top:2rem}
+.p5-leaves:before{content:'';position:absolute;top:0;left:25%;right:25%;height:1.5rem;border-top:2px solid var(--accent);border-left:2px solid var(--accent);border-right:2px solid var(--accent)}
+.p5-leaf{flex:1;display:flex;align-items:center;flex-direction:column;gap:.7rem;font-size:var(--body)}.p5-leaf .p5-icon{width:5rem;height:5rem;color:var(--accent)}
+.p5-result{font-size:var(--heading);font-weight:800;color:var(--accent);margin-top:.4rem}
+.p5-rows{display:flex;flex-direction:column;gap:2.1rem;width:min(100%,82rem)}
+.p5-row{display:grid;grid-template-columns:minmax(0,1fr) 4rem minmax(0,1fr);gap:2rem;align-items:center}.p5-row .heading{font-size:var(--heading)}.p5-row .p5-arrow{width:4rem;color:var(--accent)}.p5-row .p5-answer{color:var(--accent);font-size:var(--heading);font-weight:700}
+.p5-badgood{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4rem;width:min(100%,82rem)}
+.p5-badgood .p5-side{align-items:stretch;text-align:left;gap:1.5rem}.p5-evidence{display:flex;align-items:center;gap:1.3rem;min-height:4.5rem;font-size:var(--body);line-height:1.5}.p5-evidence .p5-icon{width:4rem;height:4rem;color:var(--accent)}
+.p5-doc-layout{width:min(100%,82rem);display:grid;grid-template-columns:1.15fr 1fr;gap:4rem;align-items:center}
+.p5-paper{position:relative;border:1.5px solid var(--gray);border-radius:.5rem;background:var(--bg-card);padding:2.2rem;display:flex;flex-direction:column;gap:1.6rem}.p5-paper>.heading{color:var(--green)}
+.p5-field{display:grid;grid-template-columns:5rem 1fr;gap:1.5rem;font-size:var(--body);line-height:1.5}.p5-field dt{color:var(--text-dim)}.p5-field dd{margin:0}
+.p5-doc-layout .copy{margin-top:1.1rem}.p5-role{display:grid;grid-template-columns:1fr 4rem 1.35fr;gap:2rem;align-items:center;width:min(100%,85rem)}
+.p5-role-input{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1rem}.p5-role-input .p5-icon{width:8rem;height:8rem}.p5-role .p5-evidence{min-height:0}.p5-role .p5-paper{gap:1.1rem}
+.p5-team{width:min(100%,78rem);height:min(76cqh,34rem);position:relative}
+.p5-node{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%);display:flex;align-items:center;flex-direction:column;gap:.45rem;text-align:center;white-space:nowrap}
+.p5-node .p5-icon{width:6.3rem;height:6.3rem}.p5-node .heading{font-size:var(--body)}.p5-node .copy{font-size:var(--body)}
+.p5-team-wires{position:absolute;inset:0;width:100%;height:100%;overflow:visible}.p5-wirelabel{position:absolute;font-size:var(--body);color:var(--yellow);background:var(--bg);padding:0 .5rem;transform:translate(-50%,-50%)}
+.p5-state{font-size:var(--body);display:flex;gap:.4rem;align-items:center}.p5-node .p5-state .p5-icon{width:1.5rem;height:1.5rem;color:inherit}.p5-serial .p5-node .copy{font-size:1.12rem}
+.p5-stages{display:flex;flex-direction:column;gap:1.8rem;width:min(100%,82rem)}.p5-stage{display:grid;grid-template-columns:9rem 1fr;gap:2rem;align-items:start}.p5-stage .heading{color:var(--brand)}.p5-stage .p5-stage-line{font-size:var(--heading);font-weight:700}.p5-stage .copy{margin-top:.7rem}
+.p5-handoff{width:min(100%,88rem);display:flex;flex-direction:column;gap:1.7rem}.p5-handoff-head{display:grid;grid-template-columns:1fr 4rem 1fr;gap:2rem;align-items:center;margin-bottom:.6rem}.p5-handoff-head h2{display:flex;gap:1rem;align-items:center;color:var(--green)}.p5-handoff-head .p5-icon{width:4rem;height:4rem}
+.p5-handoff .p5-row{font-size:var(--body);line-height:1.5;gap:2rem}.p5-handoff .p5-answer{font-size:var(--body);color:var(--text)}
+.p5-review{width:min(100%,76rem);display:flex;align-items:center;flex-direction:column;gap:1rem}.p5-review .p5-item{width:16rem}.p5-loop:after{content:"";position:absolute;left:-7px;top:-5px;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:9px solid var(--orange)}.p5-review-row{display:flex;align-items:center;gap:2rem}.p5-review .p5-loop{width:70%;height:3rem;position:relative;border-bottom:2px solid var(--orange);border-left:2px solid var(--orange);border-right:2px solid var(--orange);color:var(--orange);text-align:center;font-size:var(--body)}.p5-loop span{background:var(--bg);padding:0 1rem;position:relative;top:1.9rem}
+.p5-gate .p5-review-row{width:100%;display:grid;grid-template-columns:1fr 3rem 1fr 3rem 1fr;gap:2rem}.p5-gate .p5-item{width:100%;max-width:none}.p5-gate .p5-arrow{width:3rem}.p5-gate .p5-loop{width:calc((100% + 7rem)/3);align-self:flex-start;margin-left:calc((100% - 14rem)/6);margin-bottom:2rem}.p5-gate .p5-loop span{position:absolute;top:3.5rem;left:0;width:max-content;padding:0;text-align:left}
+.p5-brief{width:min(100%,76rem);display:flex;flex-direction:column;gap:2.5rem}.p5-brief blockquote{font-size:var(--heading);line-height:1.55;font-weight:700;padding-left:1.6rem;border-left:4px solid var(--brand)}.p5-brief-fields{display:flex;justify-content:space-between;gap:2rem}.p5-brief-fields .copy{margin-bottom:.5rem}
+.scene .p5-team{height:min(76cqh,32rem)}.scene .p5-node .p5-icon{width:5rem;height:5rem}.scene .p5-node .heading,.scene .p5-node .copy{font-size:var(--body)}
+@media(max-width:1400px){.p5-item{width:18rem}.p5-icon{width:7rem;height:7rem}.p5-flow{gap:1.2rem}.p5-arrow{width:3rem}.p5-team{height:min(77cqh,30rem)}.p5-node .p5-icon{width:5.2rem;height:5.2rem}.p5-two,.p5-badgood{gap:2.5rem}.p5-paper{padding:1.5rem;gap:1.2rem}.p5-doc-layout{gap:2.5rem}.p5-role{gap:1.2rem;grid-template-columns:1fr 3rem 1.2fr}.p5-role .p5-paper{gap:.8rem}.p5-rows{gap:1.7rem}.p5-project{gap:2rem}.p5-project .statement{margin:.6rem 0 1rem}.p5-stage{gap:1rem}.p5-stages{gap:1.4rem}}
+
+
+/* 의미별 제목 강조는 장별 명시값. 끝 단어 자동 분리는 사용하지 않는다. */
+.slide__body{padding-block:1rem}
+.slide__body.p5-has-note{display:grid;grid-template-columns:minmax(0,1fr);justify-content:stretch;justify-items:stretch;grid-template-rows:minmax(0,1fr) auto;row-gap:clamp(2rem,3vh,2.5rem);padding-top:1rem;padding-bottom:.8rem}
+.p5-main-content{min-height:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--gap)}
+.p5-main-content>.p5-team{height:min(100%,34rem)}
+.p5-has-note>.p5-note{align-self:end;max-width:none;width:100%;margin:0;line-height:1.55}
+.p5-item{gap:1.2rem}
+.p5-serial .p5-node .copy{font-size:var(--body)}
+.p5-role-input{gap:1.25rem}.p5-role .p5-paper{gap:1.5rem;padding-block:2rem}
+.p5-role .p5-evidence{line-height:1.6}
+.p5-project .statement{margin:1rem 0 1.75rem}
+.p5-project .copy{margin-top:.65rem;line-height:1.55}
+.p5-project .p5-link{margin-top:2rem}
+.p5-review{gap:1.5rem}.p5-review>.heading{font-size:var(--body);color:var(--text-dim)}
+.p5-review .p5-item{gap:.9rem}.p5-review .p5-icon{height:6rem;width:6rem}
+.p5-gate .p5-loop{margin-bottom:2.5rem}
+.p5-pattern-criteria{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2rem;width:min(100%,86rem)}
+.p5-criterion{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.6rem}
+.p5-criterion>svg{width:100%;max-width:16rem;height:11rem}
+.p5-criterion .heading{font-size:var(--heading)}
+.p5-criterion .copy{line-height:1.5}
+.p5-failure-visual{width:100%;height:100%;max-height:30rem}
+@media(max-width:1400px){.p5-pattern-criteria{gap:1.2rem}.p5-role .p5-paper{gap:1rem;padding-block:1.5rem}.p5-project{grid-template-columns:1fr 1.15fr;gap:2rem}.p5-review{gap:1.1rem}}
+
+/* 과정의 선은 본문 라벨이 아니라 실제 아이콘 중심에 연결한다. */
+.p5-flow{align-items:flex-start}.p5-flow>.p5-arrow{margin-top:3.5rem}
+.p5-review-row{align-items:flex-start}.p5-review-row>.p5-arrow{margin-top:2rem}
+.p5-gate .p5-review-row{align-items:start}
+@media(max-width:1400px){.p5-flow>.p5-arrow{margin-top:2.5rem}}
+
+/* 연속 실행 장: 담당 업무와 상태를 한 행에 두어 두 워커 사이의 여백을 확보한다. */
+.p5-serial .p5-node:has(.p5-state){display:grid;grid-template-columns:auto auto;column-gap:.85rem;row-gap:.65rem;align-items:center}
+.p5-serial .p5-node:has(.p5-state)>.p5-icon,.p5-serial .p5-node:has(.p5-state)>.heading{grid-column:1/-1;justify-self:center}
+.p5-serial .p5-node:has(.p5-state)>.copy{grid-column:1}
+.p5-serial .p5-node:has(.p5-state)>.p5-state{grid-column:2}
+
+/* Ch04-04: 기준을 실제 문서에 연결하고, 판정에서 다음 행동이 갈라진다. */
+.qg-contrast{position:relative;gap:8rem;max-width:70rem}.qg-contrast .heading{color:var(--text)}
+.qg-not-equal{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:var(--statement);color:var(--gray)}
+.qg-checks{display:flex;flex-direction:column;gap:2.1rem}.qg-check{display:flex;align-items:center;gap:1.25rem}.qg-check .p5-icon{width:3.5rem;height:3.5rem}.qg-check .copy{margin-top:.6rem;line-height:1.55}
+.qg-fields{display:flex;flex-direction:column;gap:1.7rem;font-size:var(--body);line-height:1.55}.qg-fields>div{display:flex;flex-direction:column;gap:.45rem}.qg-fields dt{color:var(--text-dim)}.qg-fields dd{margin:0}
+.qg-sections{display:grid;grid-template-columns:1fr 1fr;gap:1.8rem 2rem;padding-left:1.5rem;font-size:var(--body);line-height:1.6}.qg-sections li::marker{color:var(--gray)}
+.qg-budget{border-collapse:collapse;font-size:var(--body);width:100%}.qg-budget th,.qg-budget td{padding:.8rem 0;text-align:left;font-weight:400}.qg-budget td{text-align:right}.qg-budget tr:last-child>*{border-top:1px solid var(--gray);padding-top:1.3rem;font-weight:700}.qg-fail{color:var(--orange)}
+.qg-calculation{display:flex;flex-direction:column;align-items:flex-start;gap:1.7rem}.qg-calculation .statement strong{color:var(--green)}.qg-verdict{display:flex;gap:1rem;align-items:center;font-size:var(--body)}.qg-verdict .p5-arrow{width:2.5rem}
+.qg-next{display:grid;grid-template-columns:1fr 3rem 1.2fr;gap:2.2rem;align-items:start}.qg-next>div:not(.p5-arrow){display:flex;flex-direction:column;gap:.75rem}.qg-next .p5-arrow{width:3rem;margin-top:3.5rem}
+.qg-stop{display:grid;grid-template-columns:1.4fr 4rem 1fr;gap:3rem;align-items:center;width:min(100%,78rem)}.qg-stop-causes{display:flex;flex-direction:column;gap:3rem}.qg-stop-cause{display:flex;gap:1.3rem;align-items:center}.qg-stop-cause .p5-icon{width:4.5rem;height:4.5rem}.qg-stop-cause .copy{margin-top:.7rem}.qg-person{display:flex;flex-direction:column;align-items:center;gap:1.3rem;text-align:center}
+.qg-cover-graph{position:relative;width:100%;max-width:44rem;aspect-ratio:600/330}.qg-cover-node{position:absolute;display:flex;flex-direction:column;align-items:center;gap:.75rem;transform:translateX(-50%);top:15%;z-index:1}.qg-cover-node .p5-icon{width:5.7rem;height:5.7rem}.qg-cover-node .copy{white-space:nowrap}.qg-cover-doc{left:11%}.qg-cover-check{left:50%}.qg-cover-pass{left:89%}.qg-cover-wires{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke-width:2}.qg-cover-return{position:absolute;top:83%;left:9%;color:var(--orange);text-align:left}
+@media(max-width:1400px){.qg-checks{gap:1.5rem}.qg-fields{gap:1.1rem}.qg-sections{gap:1.6rem}.qg-stop{gap:2rem;grid-template-columns:1.5fr 3rem 1fr}.qg-stop>.p5-arrow{width:3rem}.qg-stop-causes{gap:2rem}.qg-cover-node .p5-icon{width:4.8rem;height:4.8rem}.qg-cover-node{top:12%}.qg-next{gap:1.5rem}}
+
+
+/* 2026-09-22: 대응하는 항목은 같은 grid row를 공유한다. */
+.qg-method{width:min(100%,88rem);display:flex;flex-direction:column;gap:2rem}.qg-method-request{display:flex;justify-content:center;align-items:baseline;gap:1.5rem}.qg-method-request>.copy{color:var(--text-dim)}
+.qg-method-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2.8rem;padding-block:1.3rem}.qg-method-steps section{display:grid;grid-template-rows:auto auto;gap:1.2rem}.qg-method-steps .heading{white-space:nowrap}.qg-step-no{font:var(--body) Monaco,monospace;color:var(--accent);margin-right:.8rem}.qg-method-steps .copy{line-height:1.6}
+.qg-method-verdict{display:grid;grid-template-columns:1fr 1fr;gap:2.8rem;border-top:1px solid var(--line);padding-top:1.8rem}.qg-method-verdict>div{display:flex;flex-direction:column;gap:.65rem}
+.qg-map{position:relative;isolation:isolate;width:min(100%,88rem);display:flex;flex-direction:column;gap:1.65rem;padding-block:1.8rem}
+.qg-map:before{content:'';position:absolute;z-index:-1;inset:0 auto 0 0;width:calc((100% - 4rem)/2);border:1.5px solid var(--gray);border-radius:.5rem;background:var(--bg-card)}
+.qg-map-head,.qg-map-row{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}.qg-map-head{padding-bottom:.2rem}.qg-map-head>*:first-child,.qg-map-field{padding-inline:2rem}.qg-map-head>*:first-child{color:var(--green)}.qg-map-head>*:last-child{color:var(--yellow)}
+.qg-map-row .copy{margin-top:.65rem;line-height:1.55}.qg-map-row .heading{font-size:var(--heading);line-height:1.35}.qg-map-check{padding-right:.5rem}
+.qg-budget-compare{position:relative;isolation:isolate;width:min(100%,82rem);display:grid;grid-template-columns:1.1fr 1fr;gap:2rem 4rem;padding-block:2rem;align-items:start}.qg-budget-compare:before{content:'';position:absolute;z-index:-1;inset:0 auto 0 0;width:calc((100% - 4rem)*1.1/2.1);background:var(--bg-card);border:1.5px solid var(--gray);border-radius:.5rem}
+.qg-budget-heading,.qg-budget-items,.qg-budget-total:nth-last-child(2){padding-inline:2rem}.qg-budget-heading{color:var(--green)}.qg-budget-items{display:flex;flex-direction:column;gap:1.2rem;font-size:var(--body);line-height:1.5}.qg-budget-items p{display:flex;justify-content:space-between;gap:2rem}.qg-budget-math{align-self:center;white-space:nowrap}.qg-budget-total{display:flex;flex-direction:column;gap:.5rem}.qg-budget-total .statement{line-height:1.3}
+.qg-next .heading{min-height:2.7em}
+@media(max-width:1400px){.qg-method{gap:1.3rem}.qg-method-steps{gap:2rem;padding-block:.8rem}.qg-method-steps section{gap:.8rem}.qg-step-no{margin-right:.4rem}.qg-method-verdict{padding-top:1.2rem}.qg-map{gap:1.2rem;padding-block:1.5rem}.qg-map-head,.qg-map-row{gap:3rem}.qg-map:before{width:calc((100% - 3rem)/2)}.qg-map-head>*:first-child,.qg-map-field{padding-inline:1.5rem}.qg-budget-compare{gap:1.5rem 3rem;padding-block:1.6rem}.qg-budget-compare:before{width:calc((100% - 3rem)*1.1/2.1)}.qg-budget-heading,.qg-budget-items,.qg-budget-total:nth-last-child(2){padding-inline:1.5rem}}
+
+
+.qg-stop-flow{--qg-art:9rem;display:grid;grid-template-columns:1fr 3rem 1fr 4rem 1fr;gap:1.8rem;width:min(100%,88rem);align-items:start}.qg-stop-item{display:flex;align-items:center;flex-direction:column;text-align:center;gap:1.2rem}.qg-stop-item>.p5-icon{width:var(--qg-art);height:var(--qg-art)}.qg-stop-item>.heading{white-space:nowrap}.qg-stop-item>.copy{line-height:1.55}.qg-stop-flow>.qg-or{align-self:start;margin-top:calc(var(--qg-art)/2 - .75em);text-align:center;line-height:1.5}.qg-stop-flow>.p5-arrow{width:100%;height:2rem;line-height:0;margin-top:calc(var(--qg-art)/2 - 1rem)}
+@media(max-width:1400px){.qg-stop-flow{--qg-art:7rem;grid-template-columns:1fr 2rem 1fr 3rem 1fr;gap:1rem}}
+
+
+.qg-method-example{display:grid;grid-template-columns:10rem 1fr;gap:2rem;align-items:start}.qg-method-example>.copy{font-size:var(--body);line-height:1.55}.qg-method-example>.copy:first-child{color:var(--text-dim)}.qg-method-result{padding-top:1.6rem;border-top:1px solid var(--gray)}.qg-method-result>.copy:first-child{color:var(--green)}
+.qg-conversions{width:min(100%,88rem);display:flex;flex-direction:column;gap:0}.qg-conversion-head,.qg-conversion-row{display:grid;grid-template-columns:1fr 2.2fr;gap:3rem;align-items:start}.qg-conversion-head{padding-bottom:1.6rem}.qg-conversion-head>.heading:last-child{color:var(--green)}.qg-conversion-row{padding-block:1.5rem;border-top:1px solid var(--gray)}.qg-conversion-row .copy{font-size:var(--body);line-height:1.55;color:var(--text)}.qg-conversion-row strong{color:var(--accent);font-weight:700}
+@media(max-width:1400px){.qg-method-example{grid-template-columns:9rem 1fr;gap:1.5rem}.qg-conversion-head,.qg-conversion-row{grid-template-columns:1fr 2.2fr;gap:2rem}.qg-conversion-head{padding-bottom:1.2rem}.qg-conversion-row{padding-block:1.15rem}}
+
+
+.qg-speech{position:relative;border:1.5px solid var(--accent,var(--gray));border-radius:1rem;padding:1.2rem 1.5rem;background:var(--bg)}.qg-speech>.copy{color:var(--text);white-space:nowrap;line-height:1.55}
+.qg-request-transforms{width:min(100%,91rem);display:flex;flex-direction:column;gap:2.2rem}.qg-request-transform{display:grid;grid-template-columns:max-content 4rem minmax(0,1fr);align-items:center;gap:2.4rem}.qg-request-transform>.qg-speech{width:23rem;text-align:center}.qg-request-transform>.p5-arrow{width:4rem;height:2rem;line-height:0}
+.qg-written-criterion{display:flex;align-items:center;gap:1.4rem;min-width:0}.qg-written-criterion>.p5-icon{width:4.5rem;height:4.5rem}.qg-written-criterion>.copy{line-height:1.65;color:var(--text)}
+.qg-method-origin{display:flex;align-items:center;gap:1.5rem}.qg-method-origin>.p5-icon{width:3.5rem;height:3.5rem}.qg-method-origin .qg-speech{padding:.8rem 1.3rem}.qg-method-derived{display:flex;gap:1.4rem;align-items:center}.qg-method-derived>.p5-icon{height:5rem;width:5rem}.qg-method-derived .heading{color:var(--green)}.qg-method-derived .copy{margin-top:.7rem;color:var(--text);line-height:1.55}
+.qg-v-scene{position:relative;width:min(100%,86rem)}.qg-v-inspection{display:grid;grid-template-columns:1.2fr .85fr;gap:10rem;align-items:center}
+.qg-v-doc{position:relative;isolation:isolate;z-index:1;display:flex;flex-direction:column;gap:1.8rem;padding:2rem}.qg-v-frame{position:absolute;z-index:-1;inset:0;border:1.5px solid var(--gray);border-radius:.5rem;background:var(--bg-card)}.qg-v-doc>.heading{color:var(--green)}.qg-v-field{display:flex;flex-direction:column;gap:.6rem}.qg-v-field>.copy{color:var(--text-dim)}.qg-v-problem{padding:1.1rem 1.2rem;border:1.5px solid var(--orange);border-radius:.35rem}.qg-v-problem>.heading{color:var(--orange)}
+.qg-v-inspector{display:flex;align-items:center;flex-direction:column;gap:2.7rem}.qg-v-actor{display:flex;align-items:center;flex-direction:column;gap:1rem;text-align:center;position:relative;z-index:1}.qg-v-actor .p5-icon{width:7rem;height:7rem}.qg-v-verdict{text-align:center}.qg-v-verdict>.copy{margin-top:.8rem}
+.qg-v-wires{position:absolute;inset:0;width:100%;height:100%;z-index:0;overflow:visible;pointer-events:none}
+.qg-v-comparison{width:min(100%,86rem);display:flex;flex-direction:column;align-items:stretch;gap:3rem}.qg-v-evidence-pair{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:7rem;align-items:stretch}.qg-v-mismatch{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:var(--statement);font-weight:800;color:var(--orange)}.qg-v-review-result{display:flex;align-items:center;justify-content:center;gap:1.5rem}.qg-v-review-result>.p5-icon{width:5rem;height:5rem}.qg-v-review-result .heading{margin-top:.5rem}
+.qg-v-review-loop{height:25rem;max-width:84rem}.qg-v-loop-node{position:absolute;top:0;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:1rem;white-space:nowrap;text-align:center;z-index:1}.qg-v-loop-node>.p5-icon{width:6rem;height:6rem}.qg-v-author{left:14%}.qg-v-coordinator{left:50%}.qg-v-next{left:86%}.qg-v-return-copy{position:absolute;top:calc(100% - 1.9rem);left:32%;transform:translateX(-50%);white-space:nowrap}
+.qg-v-final-request{display:grid;grid-template-columns:12rem minmax(0,1fr);gap:3rem;align-items:center}.qg-v-prompt{border-left:3px solid var(--brand);padding-left:2rem}.qg-v-prompt .heading{line-height:1.65}.qg-v-final-request .qg-v-actor>.p5-icon{width:5.5rem;height:5.5rem}
+.qg-budget-compare:before{display:none}.qg-budget-frame{position:absolute;z-index:-1;inset:0 auto 0 0;width:calc((100% - 4rem)*1.1/2.1);background:var(--bg-card);border:1.5px solid var(--gray);border-radius:.5rem}
+@media(max-width:1400px){.qg-request-transforms{gap:1.7rem}.qg-request-transform{grid-template-columns:max-content 3rem minmax(0,1fr);gap:1.8rem}.qg-request-transform>.qg-speech{width:19rem;padding:1rem .9rem}.qg-request-transform>.p5-arrow{width:3rem}.qg-written-criterion{gap:1rem}.qg-written-criterion>.p5-icon{width:3.5rem;height:3.5rem}.qg-v-inspection{gap:6rem}.qg-v-doc{padding:1.6rem;gap:1.4rem}.qg-v-evidence-pair{gap:5.5rem}.qg-v-comparison{gap:2rem}.qg-v-review-loop{height:22rem}.qg-v-loop-node{gap:.8rem}.qg-v-loop-node .heading{font-size:var(--heading)}.qg-v-final-request{grid-template-columns:10rem 1fr;gap:2rem}.qg-v-prompt{padding-left:1.5rem}.qg-budget-frame{width:calc((100% - 3rem)*1.1/2.1)}}
+
+
+.qg-timing{--timing-art:7rem;width:min(100%,90rem);display:grid;grid-template-columns:1.1fr 3rem .8fr 3rem 1.1fr;gap:2rem;align-items:start}.qg-timing-item{display:grid;grid-template-rows:auto auto var(--timing-art) auto auto;gap:1.1rem;justify-items:center;text-align:center}.qg-timing-item>.p5-icon{height:var(--timing-art);width:var(--timing-art)}.qg-timing-item>.heading{white-space:nowrap}.qg-timing-rule{line-height:1.55!important;margin-top:.4rem;color:var(--text)!important}.qg-timing>.p5-arrow{width:100%;height:2rem;line-height:0;margin-top:calc(1.6em + 1.1rem + var(--heading)*1.35 + 1.1rem + var(--timing-art)/2 - 1rem)}
+@media(max-width:1400px){.qg-timing{gap:1.2rem;grid-template-columns:1.1fr 2.6rem .9fr 2.6rem 1.1fr}}
+
+.option-compare{position:relative;width:min(100%,88rem);display:grid;grid-template-columns:1fr 1fr;gap:7rem}
+.option-side{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.4rem}.option-side>.heading{color:var(--text)}
+.option-scene{position:relative;width:100%;height:17rem}.option-node{position:absolute;display:flex;flex-direction:column;align-items:center;gap:.6rem;transform:translateX(-50%);top:35%}.option-node .p5-icon{width:7rem;height:7rem}.option-source{left:17%}.option-reviewer{left:83%}
+.option-evidence{position:absolute;top:2%;left:0;width:100%;color:var(--text-dim)}.option-scene>.option-arrow{position:absolute;top:52%;left:34%;width:32%;height:1.5rem}
+.option-neq{position:absolute;left:50%;top:49%;transform:translate(-50%,-50%);font-size:var(--statement);font-weight:800;color:var(--brand)}.option-question{line-height:1.5}
+.option-single{display:grid;grid-template-columns:1.1fr 4rem .8fr 4rem 1.45fr;gap:1.5rem;align-items:center;width:min(100%,102rem)}
+.option-report,.option-inspection{display:grid;grid-template-rows:auto minmax(0,1fr) auto;align-items:center;justify-items:center;gap:1.6rem;text-align:center;min-width:0;height:21rem}.option-report>.copy,.option-inspection>.copy{line-height:1.55}
+.option-coordinator{display:flex;flex-direction:column;align-items:center;gap:1.2rem;text-align:center}.option-coordinator .p5-icon{width:9rem;height:9rem}
+.option-bubble{position:relative;border:1.5px solid var(--gray);border-radius:.6rem;padding:1.8rem 1.4rem;width:100%;white-space:nowrap}.option-bubble:after{content:'';position:absolute;right:-.5rem;top:50%;width:1rem;height:1rem;background:var(--bg);border-top:1.5px solid var(--gray);border-right:1.5px solid var(--gray);transform:translateY(-50%) rotate(45deg)}
+.option-checksheet{border:1.5px solid var(--gray);border-radius:.5rem;padding:1.4rem;width:100%;background:var(--bg-card);display:flex;flex-direction:column;gap:1.1rem;text-align:left}.option-checksheet p{display:flex;justify-content:space-between;gap:1.2rem;font-size:var(--body);white-space:nowrap}.option-checksheet strong{color:var(--yellow);font-weight:600}
+.option-connection{position:relative;transform:translateY(-1.4rem)}.option-connection>.copy{position:absolute;left:50%;bottom:2.4rem;transform:translateX(-50%);white-space:nowrap;color:var(--text-dim)}.option-arrow{display:block;width:100%;height:1.5rem;overflow:visible}
+@media(max-width:1400px){.option-compare{gap:6rem}.option-scene{height:14rem}.option-side{gap:1rem}.option-single{grid-template-columns:1fr 2.8rem .9fr 2.8rem 1.5fr;gap:1.2rem}.option-bubble{padding:1.7rem .9rem;white-space:normal}.option-coordinator .p5-icon{width:7rem;height:7rem}.option-checksheet{padding:1.2rem .9rem}.option-checksheet p{gap:.75rem}}
+
+
+.option-scene{--contrast-art:7rem}.option-node .p5-icon{width:var(--contrast-art);height:var(--contrast-art)}.option-scene>.option-arrow{top:calc(35% + var(--contrast-art)/2 - .75rem)}
+
+
+/* Distinct actions, not a single production pipeline. */
+.qg-actions{width:min(100%,94rem);display:grid;grid-template-columns:1fr 4rem 1fr 4rem 1fr;gap:2rem;align-items:center}.qg-action-side{display:grid;grid-template-rows:auto 13rem auto;gap:2rem;text-align:center;justify-items:center}.qg-action-art{height:13rem;width:18rem}.qg-action-art>svg{width:100%;height:100%}.qg-action-coordinator{display:flex;flex-direction:column;align-items:center;gap:1.7rem;text-align:center}.qg-action-coordinator>.p5-icon{width:10rem;height:10rem}.qg-action-link{width:100%;margin-top:1rem}.qg-action-link>svg{width:100%;height:2rem}.qg-role-scenes{display:grid;grid-template-columns:1fr 1fr;gap:6rem;width:min(100%,104rem)}.qg-role-scene{display:grid;grid-template-rows:auto clamp(15rem,31vh,25rem) auto;gap:1.6rem;text-align:center;justify-items:center;min-width:0}.qg-role-head{display:flex;flex-direction:column;gap:.9rem}.qg-role-phase{color:var(--text-dim)}.qg-role-phase.tone-brand{color:var(--brand)}.qg-role-phase.tone-yellow{color:var(--yellow)}.qg-role-art{display:block;width:100%;height:100%;object-fit:contain;mix-blend-mode:lighten}.qg-role-scene>.copy{color:var(--text)}
+@media(max-width:1400px){.qg-actions{gap:1.2rem;grid-template-columns:1fr 2.4rem 1fr 2.4rem 1fr}.qg-action-side{grid-template-rows:auto 11rem auto;gap:1.6rem}.qg-action-art{height:11rem;width:15rem}.qg-action-coordinator>.p5-icon{width:8rem;height:8rem}.qg-role-scenes{gap:4rem}.qg-role-scene{gap:1.2rem;grid-template-rows:auto 15rem auto}}
+
+.qg-role-head>.heading.tone-brand{color:var(--brand)}.qg-role-head>.heading.tone-yellow{color:var(--yellow)}
+
+.qg-p-overview{width:min(100%,106rem);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3rem;text-align:center}.qg-p-overview-item{display:grid;grid-template-rows:7rem auto auto;gap:1.8rem;justify-items:center}.qg-p-overview-item .p5-icon{width:7rem;height:7rem}.qg-p-overview-item>.heading{white-space:nowrap}.qg-p-focus{display:flex;flex-direction:column;gap:1rem;margin-top:1rem}.qg-p-focus>.heading{color:var(--yellow)}
+.qg-p-conversions{width:min(100%,86rem);display:flex;flex-direction:column;gap:2.5rem}.qg-p-conversion{display:grid;grid-template-columns:1fr 5rem 1.3fr;gap:3rem;align-items:center}.qg-p-rule{display:flex;flex-direction:column;gap:.8rem}.qg-p-rule>.heading{color:var(--brand)}.qg-p-quality{display:flex;align-items:center;gap:1.5rem}.qg-p-quality>.heading{color:var(--yellow)}.qg-p-quality>.p5-icon{width:4rem;height:4rem;flex-shrink:0}.qg-p-arrow svg{width:100%;height:2rem}
+.qg-p-paper{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.8rem;min-width:0}.qg-p-paper>.heading{white-space:nowrap}.qg-p-paper-art{width:100%;display:flex;flex-direction:column;align-items:center;gap:1.2rem}.qg-p-paper-art>.p5-icon{width:9rem;height:9rem}.qg-p-paper-art>.heading{color:var(--green)}.qg-p-pair{width:min(100%,88rem);display:grid;grid-template-columns:1fr 14rem 1fr;gap:4rem;align-items:center}.qg-p-check{display:flex;flex-direction:column;align-items:center;gap:1rem;text-align:center}.qg-p-check>.p5-icon{width:6rem;height:6rem}.qg-p-check>.heading{color:var(--yellow);margin-top:.6rem}
+.qg-p-selection{width:min(100%,104rem);display:grid;grid-template-columns:1fr 7rem 1.5fr 7rem 1fr;gap:1.5rem;align-items:center}.qg-p-reference{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.3rem}.qg-p-reference>.p5-icon{width:6rem;height:6rem}.qg-p-reference>.copy{white-space:nowrap}.qg-p-relation{display:flex;flex-direction:column;gap:1rem;align-items:center;color:var(--yellow);font-size:var(--body);white-space:nowrap}.qg-p-relation>i{display:block;width:100%;height:1px;background:var(--yellow)}
+.qg-p-consistency{width:min(100%,92rem);display:grid;grid-template-columns:1.2fr 10rem 1.1fr;gap:2.5rem;align-items:center}.qg-p-upstream{display:flex;flex-direction:column;gap:2.8rem}.qg-p-upstream>.qg-p-paper{display:grid;grid-template-columns:1fr;gap:.65rem;text-align:left;align-items:start}.qg-p-upstream .qg-p-paper-art{flex-direction:row;gap:1rem}.qg-p-upstream .p5-icon{width:4rem;height:4rem}.qg-p-upstream>.qg-p-paper>.heading{font-size:var(--body);color:var(--text-dim);padding-left:5rem}.qg-p-transfer{position:relative;height:16rem}.qg-p-transfer>svg{width:100%;height:100%}.qg-p-transfer>.copy{position:absolute;top:-1.8rem;left:50%;transform:translateX(-50%);white-space:nowrap;color:var(--yellow)}
+.qg-p-verdicts{width:min(100%,80rem);display:grid;grid-template-columns:1fr 1fr;gap:10rem}.qg-p-verdict{display:flex;flex-direction:column;align-items:center;gap:2rem}.qg-p-checklist{width:100%;display:flex;flex-direction:column;gap:1.5rem;border-top:1px solid var(--gray);border-bottom:1px solid var(--gray);padding:1.6rem 1rem}.qg-p-checklist>p{display:flex;justify-content:space-between;align-items:center;gap:3rem;font-size:var(--body)}.qg-p-checklist svg{width:1.6rem;height:1.6rem}.qg-p-verdict>.statement{margin-top:.5rem}
+@media(max-width:1400px){.qg-p-overview{gap:2rem}.qg-p-overview-item{gap:1.3rem}.qg-p-focus{margin-top:.4rem}.qg-p-conversions{gap:2rem}.qg-p-conversion{grid-template-columns:1fr 3rem 1.4fr;gap:2rem}.qg-p-quality{gap:1rem}.qg-p-quality>.p5-icon{width:3rem;height:3rem}.qg-p-pair{grid-template-columns:1fr 10rem 1fr;gap:2rem}.qg-p-paper{gap:1.4rem}.qg-p-paper-art>.p5-icon{width:7rem;height:7rem}.qg-p-selection{grid-template-columns:1fr 4rem 1.6fr 4rem 1fr;gap:1rem}.qg-p-reference>.p5-icon{width:5rem;height:5rem}.qg-p-reference>.copy{white-space:normal}.qg-p-consistency{grid-template-columns:1.15fr 7rem 1.1fr;gap:2rem}.qg-p-upstream .qg-p-paper-art>.p5-icon{width:4rem;height:4rem}.qg-p-verdicts{gap:7rem}.qg-p-verdict{gap:1.5rem}.qg-p-checklist{gap:1.2rem;padding:1.3rem .6rem}}
+
+
+.qg-real-check{width:min(100%,100rem);display:flex;flex-direction:column;gap:3.5rem}.qg-real-pair{display:grid;grid-template-columns:1.2fr 1fr 1.1fr;gap:3rem;align-items:center}.qg-real-note{display:flex;flex-direction:column;gap:1.6rem;border-left:3px solid var(--green);padding:1rem 0 1rem 2rem}.qg-real-docname{display:flex;align-items:center;gap:1rem}.qg-real-docname>.p5-icon{width:3rem;height:3rem}.qg-real-note>.statement{font-size:var(--heading);line-height:1.4}.qg-real-note>.copy{padding-left:4rem}.qg-real-note>.statement{padding-left:4rem}.qg-real-inspector,.qg-real-evidence{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.3rem}.qg-real-inspector>.p5-icon{width:5rem;height:5rem}.qg-real-inspector>.heading{color:var(--yellow)}.qg-real-evidence>.p5-icon{width:7rem;height:7rem}.qg-real-verdicts{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-self:center;width:75%;text-align:center}.qg-real-verdicts>div{display:flex;flex-direction:column;gap:.9rem}.qg-real-verdicts .tone-green{color:var(--green)}.qg-real-verdicts .tone-orange{color:var(--orange)}
+@media(max-width:1400px){.qg-real-check{gap:2.7rem}.qg-real-pair{gap:1.8rem;grid-template-columns:1.2fr 1fr 1.15fr}.qg-real-note{padding-left:1rem;gap:1.2rem}.qg-real-note>.copy,.qg-real-note>.statement{padding-left:0}.qg-real-docname{gap:.6rem}.qg-real-docname>.p5-icon{width:2.3rem;height:2.3rem}.qg-real-docname>.heading{white-space:nowrap}.qg-real-inspector,.qg-real-evidence{gap:1rem}.qg-real-evidence>.p5-icon{width:6rem;height:6rem}.qg-real-verdicts{width:85%;gap:3rem}}
+
+.qg-real-note,.qg-real-evidence{display:grid;grid-template-rows:3rem 1.7rem 3rem;gap:1.4rem;align-content:center;align-items:center;text-align:left;padding:1rem 0 1rem 1rem}.qg-real-evidence{border-left:3px solid var(--gray)}.qg-real-note>.copy,.qg-real-note>.statement{padding-left:0}.qg-real-docname>.p5-icon{width:2.3rem;height:2.3rem}.qg-real-docname{gap:.6rem}.qg-real-evidence>.heading{white-space:nowrap;font-size:var(--heading)}
+.slide__title .qg-quality-key{color:var(--yellow)}
+
+.qg-map:before{display:none}.qg-restored-frame{position:absolute;z-index:-1;inset:0 auto 0 0;width:calc((100% - 4rem)/2);border:1.5px solid var(--gray);border-radius:.5rem;background:var(--bg-card)}
+@media(max-width:1400px){.qg-restored-frame{width:calc((100% - 3rem)/2)}}
+</style>
+  </head>
+  <body>
+    <svg class="symbols" aria-hidden="true">
+      <defs>
+        <g id="shape-person">
+          <circle cx="50" cy="28" r="15" />
+          <path d="M18 85V73C18 44 82 44 82 73V85" />
+        </g>
+        <g id="shape-document">
+          <path
+            d="M24 12H59L77 30V88H24ZM59 12V30H77M35 45H64M35 58H64M35 71H55"
+          />
+        </g>
+        <g id="shape-folder">
+          <path d="M12 28V18H39L50 28H88V81H12ZM12 38H88" />
+        </g>
+        <g id="shape-done">
+          <circle cx="50" cy="50" r="35" />
+          <path d="M30 50L44 64L72 35" />
+        </g>
+        <g id="shape-working">
+          <circle cx="50" cy="50" r="35" opacity=".18" />
+          <path d="M50 15A35 35 0 1 1 15 50" stroke-width="5" />
+        </g>
+        <g id="shape-waiting">
+          <path
+            d="M25 15H75Q85 15 85 25V65Q85 75 75 75H45L25 90V75H25Q15 75 15 65V25Q15 15 25 15Z"
+          />
+          <path d="M38 37C38 22 64 24 61 39C60 46 50 46 50 55M50 65V66" />
+        </g>
+<g id="shape-agent"><rect x="18" y="10" width="64" height="48" rx="22" fill="var(--text)" stroke="var(--gray)"/><rect x="27" y="27" width="46" height="14" rx="7" fill="var(--bg)" stroke="none"/><path d="M36 34H64" stroke-width="5"/><path d="M30 60Q20 67 20 81H80Q80 67 70 60"/></g><g id="shape-point"><circle cx="50" cy="50" r="10" fill="var(--bg)"/></g><g id="shape-cloud"><path d="M22 72C0 72 0 34 26 34C32 6 69 7 76 32C101 29 109 72 82 72Z"/></g><g id="shape-gate"><path d="M50 9L91 50L50 91L9 50Z"/><path d="M36 50L46 61L66 39"/></g><marker id="tx-arrowhead" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto-start-reverse"><path d="M1 1L7 4L1 7" fill="none" stroke="context-stroke" stroke-width="1.4"/></marker>
+      <marker id="tx-tip-brand" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="var(--brand)" stroke-width="1.4"/></marker><marker id="tx-tip-purple" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="var(--purple)" stroke-width="1.4"/></marker><marker id="tx-tip-gray" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="var(--gray)" stroke-width="1.4"/></marker><marker id="tx-tip-yellow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="var(--yellow)" stroke-width="1.4"/></marker><marker id="tx-tip-orange" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="var(--orange)" stroke-width="1.4"/></marker><marker id="tx-tip-green" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="var(--green)" stroke-width="1.4"/></marker><g id="shape-workspace"><use href="#shape-folder"/><g stroke="var(--gray)" stroke-width="1.6"><path d="M29 45H36L41 50V68H29ZM36 45V50H41M33 56H37M33 61H37"/><path d="M45 45H52L57 50V68H45ZM52 45V50H57M49 56H53M49 61H53"/></g><path stroke-width="1.6" d="M61 45H68L73 50V68H61ZM68 45V50H73M65 56H69M65 61H69"/></g></defs>
+    </svg>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress"></div>
+    </div>
+    <button class="nav-btn" id="btn-prev" aria-label="이전 슬라이드">
+      &#8592;
+    </button>
+    <button class="nav-btn" id="btn-next" aria-label="다음 슬라이드">
+      &#8594;
+    </button>
+    <div class="dot-nav" id="dot-nav"></div>
+    <div class="slide-counter">
+      <span id="cur">1</span> / <span id="tot">16</span>
+    </div>
+    <div class="slide-deck" id="deck">
+<article class="slide active" data-index="0" data-pattern="COVER_SCENE"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 4 · Ch04-04</span><h1 class="slide__title"><span class="hl">품질 게이트</span>로 통과 기준 세우기</h1><p class="slide__sub">문서가 다음 작업에 쓰여도 되는지 판단하는 절차입니다.</p></header><main class="slide__body"><div class="scene scene--cover"><div class="scene__copy anim-item" data-anim-step="0"><p class="statement">기준을 통과해야<strong>다음 작업으로</strong></p></div><figure class="scene__visual"><div class="qg-cover-graph"><div class="qg-cover-node qg-cover-doc anim-item" data-anim-step="1"><svg class="p5-icon tone-green" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><p class="copy">결과 문서</p></div><div class="qg-cover-node qg-cover-check anim-item" data-anim-step="2"><svg class="p5-icon tone-yellow" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-gate"/></svg><p class="copy">기준 검사</p></div><div class="qg-cover-node qg-cover-pass anim-item" data-anim-step="3"><svg class="p5-icon tone-green" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-done"/></svg><p class="copy">다음 작업</p></div><svg class="qg-cover-wires" viewBox="0 0 600 330" preserveAspectRatio="none" aria-hidden="true"><path class="anim-item" data-anim-step="3" d="M120 104H242" stroke="var(--gray)" marker-end="url(#tx-tip-gray)"/><path class="anim-item" data-anim-step="4" d="M360 104H478" stroke="var(--green)" marker-end="url(#tx-tip-green)"/><path class="anim-item" data-anim-step="5" d="M300 153V264H65V154" stroke="var(--orange)" marker-end="url(#tx-tip-orange)"/></svg><p class="copy qg-cover-return anim-item" data-anim-step="6">반려 · 수정 · 재검사</p></div></figure></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<article class="slide" data-index="1" data-pattern="TRANSITION_COMPARE"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 4 · Ch04-04</span><h1 class="slide__title">완료 확인 <span class="hl">≠</span> 품질 검토</h1></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="qg-actions"><section class="qg-action-side"><h2 class="heading anim-item" data-anim-step="1">완료 확인</h2><div class="qg-action-art anim-item" data-anim-step="1"><svg viewBox="0 0 200 150" fill="none" aria-hidden="true"><path d="M22 15H169Q185 15 185 31V101Q185 117 169 117H72L39 138V117H22Q6 117 6 101V31Q6 15 22 15Z" fill="var(--bg-card)" stroke="var(--gray)" stroke-width="2"/><path d="M73 63L89 79L122 45" stroke="var(--green)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></div><p class="copy anim-item" data-anim-step="2">완료 보고 접수</p></section><div class="qg-action-link anim-item" data-anim-step="2"><svg viewBox="0 0 100 24" aria-hidden="true"><path d="M2 12H94" fill="none" stroke="var(--gray)" stroke-width="2.4" marker-end="url(#tx-tip-gray)"/></svg></div><div class="qg-action-coordinator anim-item" data-anim-step="0"><svg class="p5-icon tone-yellow " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-agent"/></svg><h2 class="heading">코디네이터</h2></div><div class="qg-action-link anim-item" data-anim-step="4"><svg viewBox="0 0 100 24" aria-hidden="true"><path d="M2 12H94" fill="none" stroke="var(--gray)" stroke-width="2.4" marker-end="url(#tx-tip-gray)"/></svg></div><section class="qg-action-side"><h2 class="heading anim-item" data-anim-step="3">품질 검토</h2><div class="qg-action-art anim-item" data-anim-step="3"><svg viewBox="0 0 200 150" fill="none" aria-hidden="true"><path d="M48 5H112L143 36V133H48Z" fill="var(--bg-card)" stroke="var(--green)" stroke-width="2.8"/><path d="M112 5V36H143M64 48H117M64 66H112M64 84H100M64 103H95" stroke="var(--green)" stroke-width="2.8"/><circle cx="138" cy="94" r="29" fill="var(--bg)" stroke="var(--yellow)" stroke-width="5"/><path d="M159 116L179 138M125 94H152M125 85H146M125 103H146" stroke="var(--yellow)" stroke-width="4" stroke-linecap="round"/></svg></div><p class="copy anim-item" data-anim-step="4">문서 내용·근거 검토</p></section></div></div><p class="p5-note anim-item" data-anim-step="5">완료 보고만으로 품질 검토가 보장되지는 않습니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<article class="slide" data-index="2" data-pattern="TRANSITION_COMPARE"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 4 · Ch04-04</span><h1 class="slide__title"><span class="hl">작업</span> 기준과 <span class="hl qg-quality-key">품질</span> 기준의 구분</h1></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="qg-role-scenes"><section class="qg-role-scene"><div class="qg-role-head anim-item" data-anim-step="0"><p class="qg-role-phase copy">작업 중</p><h2 class="heading"><span class="tone-brand">작업</span> 기준</h2></div><img class="qg-role-art anim-item" data-anim-step="1" src="/artifacts/part5/_images/ch04-04-quality-gate--creation.png" alt="규칙을 보며 문서를 작성하는 워커"><p class="copy anim-item" data-anim-step="1">워커 · 결과물 작성</p></section><section class="qg-role-scene"><div class="qg-role-head anim-item" data-anim-step="2"><p class="qg-role-phase copy">작업 후</p><h2 class="heading"><span class="tone-yellow">품질</span> 기준</h2></div><img class="qg-role-art anim-item" data-anim-step="3" src="/artifacts/part5/_images/ch04-04-quality-gate--verification.png" alt="완료 문서와 검사표를 대조하는 코디네이터"><p class="copy anim-item" data-anim-step="3">코디네이터 · 통과·반려 판단</p></section></div></div><p class="p5-note anim-item" data-anim-step="5">각 단계의 결과가 나온 뒤, 다음 작업을 배정하기 전에 검사합니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<article class="slide" data-index="3" data-pattern="RECORD_ANATOMY"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 4 · Ch04-04</span><h1 class="slide__title">시장 조사 노트의 <span class="hl">통과 기준</span></h1></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="qg-real-check"><div class="qg-real-pair"><section class="qg-real-note anim-item" data-anim-step="0"><div class="qg-real-docname"><svg class="p5-icon tone-green" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><h2 class="heading">시장 조사 노트</h2></div><p class="copy">반려동물 소모품</p><blockquote class="statement">“트렌드: 상승”</blockquote></section><div class="qg-real-inspector anim-item" data-anim-step="2"><svg class="p5-icon tone-yellow" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-agent"/></svg><p class="copy">코디네이터</p><h2 class="heading tone-yellow">주장과 자료 대조</h2></div><section class="qg-real-evidence anim-item" data-anim-step="1"><div class="qg-real-docname"><svg class="p5-icon tone-gray" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><h2 class="heading">출처 자료</h2></div><p class="copy">같은 대상의 조사 자료</p><p class="heading">주장을 뒷받침할 근거</p></section></div><div class="qg-real-verdicts"><div class="anim-item" data-anim-step="3"><p class="copy">자료가 주장을 뒷받침</p><h3 class="heading tone-green">통과</h3></div><div class="anim-item" data-anim-step="4"><p class="copy">근거 없음 · 내용 불일치</p><h3 class="heading tone-orange">보완</h3></div></div></div></div><p class="p5-note anim-item" data-anim-step="5">검사할 문장과 대조할 자료를 정하고, 이 항목의 통과·보완 조건을 씁니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<article class="slide" data-index="4" data-pattern="RECORD_ANATOMY"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 4 · Ch04-04</span><h1 class="slide__title">작업 기준을 <span class="hl">품질 기준</span>으로</h1></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="qg-p-conversions"><section class="qg-p-conversion"><div class="qg-p-rule anim-item" data-anim-step="0"><p class="copy">시장 조사 노트</p><h2 class="heading tone-brand">출처를 기록</h2></div><div class="qg-p-arrow anim-item" data-anim-step="1" aria-hidden="true"><svg viewBox="0 0 100 24"><path d="M5 12H94" fill="none" stroke="var(--gray)" stroke-width="2.3" marker-end="url(#tx-tip-gray)"/></svg></div><div class="qg-p-quality anim-item" data-anim-step="1"><svg class="p5-icon tone-yellow " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><h2 class="heading tone-yellow">주장과 출처 대조</h2></div></section><section class="qg-p-conversion"><div class="qg-p-rule anim-item" data-anim-step="2"><p class="copy">아이템 후보 비교표</p><h2 class="heading tone-brand">선정 기준으로 후보 비교</h2></div><div class="qg-p-arrow anim-item" data-anim-step="3" aria-hidden="true"><svg viewBox="0 0 100 24"><path d="M5 12H94" fill="none" stroke="var(--gray)" stroke-width="2.3" marker-end="url(#tx-tip-gray)"/></svg></div><div class="qg-p-quality anim-item" data-anim-step="3"><svg class="p5-icon tone-yellow " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><h2 class="heading tone-yellow">추천과 선정 기준 대조</h2></div></section><section class="qg-p-conversion"><div class="qg-p-rule anim-item" data-anim-step="4"><p class="copy">판매 아이템 기획서</p><h2 class="heading tone-brand">앞 문서를 반영해 작성</h2></div><div class="qg-p-arrow anim-item" data-anim-step="5" aria-hidden="true"><svg viewBox="0 0 100 24"><path d="M5 12H94" fill="none" stroke="var(--gray)" stroke-width="2.3" marker-end="url(#tx-tip-gray)"/></svg></div><div class="qg-p-quality anim-item" data-anim-step="5"><svg class="p5-icon tone-yellow " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><h2 class="heading tone-yellow">원문과 기획서 대조</h2></div></section></div></div><p class="p5-note anim-item" data-anim-step="6">작업할 때 지킬 규칙을, 결과에서 확인할 항목으로 바꿉니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<article class="slide" data-index="5" data-pattern="RECORD_ANATOMY"><header class="slide__header"><span class="slide__label">Part 5 · Ch04-04 · 시장 조사 · 비교 A</span><h1 class="slide__title"><span class="hl">근거</span>를 확인하는 검사</h1><p class="slide__sub">다음 판단에 사용할 근거인지 확인합니다.</p></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="qg-map"><div class="qg-restored-frame anim-item" data-anim-step="0"></div><div class="qg-map-head anim-item" data-anim-step="1"><h2 class="heading">시장 조사 노트</h2><h2 class="heading">통과를 판단할 질문</h2></div><div class="qg-map-row anim-item" data-anim-step="2"><section class="qg-map-field"><h3 class="heading">조사 범위</h3><p class="copy">스마트스토어 판매 아이템</p></section><section class="qg-map-check"><h3 class="heading">사업 조건과 맞는가?</h3><p class="copy">사업 조건에 맞는 조사 대상</p></section></div><div class="qg-map-row anim-item" data-anim-step="3"><section class="qg-map-field"><h3 class="heading">주장·수치의 출처</h3><p class="copy">판매가 · 공급가 · 수요 근거</p></section><section class="qg-map-check"><h3 class="heading">주장을 뒷받침하는가?</h3><p class="copy">주요 주장·수치와 출처의 내용 대조</p></section></div><div class="qg-map-row anim-item" data-anim-step="4"><section class="qg-map-field"><h3 class="heading">확인 상태</h3><p class="copy">사실 / 추정 / 미확인</p></section><section class="qg-map-check"><h3 class="heading">추정을 구분했는가?</h3><p class="copy">미확인을 사실로 사용하지 않기</p></section></div></div></div><p class="p5-note anim-item" data-anim-step="5">선정을 좌우하는 공급가가 미확인이라면 보완 후 후보를 판단합니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<article class="slide" data-index="6" data-pattern="RECORD_ANATOMY"><header class="slide__header"><span class="slide__label">Part 5 · Ch04-04 · 시장 조사 · 비교 B</span><h1 class="slide__title"><span class="hl">근거</span>를 확인하는 검사</h1><p class="slide__sub">다음 판단에 사용할 근거인지 확인합니다.</p></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="qg-v-scene qg-v-inspection"><svg class="qg-v-wires" aria-hidden="true"><path class="anim-item" data-anim-step="4" data-v-from="source" data-v-to="review" fill="none" stroke="var(--orange)" stroke-width="2.5" marker-end="url(#tx-tip-orange)"/></svg><section class="qg-v-doc "><div class="qg-v-frame anim-item" data-anim-step="0" aria-hidden="true"></div><h2 class="heading anim-item" data-anim-step="1">시장 조사 노트</h2><div class="qg-v-field anim-item" data-anim-step="1"><p class="copy">핵심 주장</p><p class="heading">수요가 늘고 있다</p></div><div class="qg-v-field qg-v-problem anim-item" data-anim-step="2" data-v-anchor="source"><p class="copy">출처</p><p class="heading">확인할 근거 없음</p></div></section><div class="qg-v-inspector"><div class="qg-v-actor anim-item" data-anim-step="3" data-v-anchor="review"><svg class="p5-icon tone-yellow " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-agent"/></svg><h2 class="heading">코디네이터</h2></div><div class="qg-v-verdict anim-item" data-anim-step="5"><h2 class="heading tone-orange">근거 보완</h2><p class="copy">출처 확인 후 다시 검사</p></div></div></div></div><p class="p5-note anim-item" data-anim-step="6">주요 주장을 출처가 뒷받침하는지 확인합니다. 링크 개수만 세지 않습니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<article class="slide" data-index="7" data-pattern="RECORD_ANATOMY"><header class="slide__header"><span class="slide__label">Part 5 · Ch04-04 · 시장 조사 · 비교 C</span><h1 class="slide__title">시장 조사 노트의 <span class="hl">근거</span></h1></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="qg-p-pair"><section class="qg-p-paper anim-item" data-anim-step="0"><h2 class="heading">시장 조사 노트</h2><div class="qg-p-paper-art tone-green"><svg class="p5-icon tone-green " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><p class="heading">주장·수치</p></div><p class="copy">조사 결과에 적힌 내용</p></section><div class="qg-p-check anim-item" data-anim-step="2"><svg class="p5-icon tone-yellow " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-agent"/></svg><p class="copy">코디네이터</p><h3 class="heading tone-yellow">내용 대조</h3></div><section class="qg-p-paper anim-item" data-anim-step="1"><h2 class="heading">출처 자료</h2><div class="qg-p-paper-art tone-green"><svg class="p5-icon tone-green " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><p class="heading">뒷받침할 자료</p></div><p class="copy">직접 확인할 수 있는 근거</p></section></div></div><p class="p5-note anim-item" data-anim-step="6">출처가 있다는 것과, 출처가 주장을 뒷받침한다는 것은 다릅니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<article class="slide" data-index="8" data-pattern="RECORD_ANATOMY"><header class="slide__header"><span class="slide__label">Part 5 · Ch04-04 · 후보 선정 · 비교 A</span><h1 class="slide__title"><span class="hl">점수와 추천</span>의 연결</h1><p class="slide__sub">점수의 합계뿐 아니라 그 추천이 나온 이유를 검사합니다.</p></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="qg-map"><div class="qg-restored-frame anim-item" data-anim-step="0"></div><div class="qg-map-head anim-item" data-anim-step="1"><h2 class="heading">아이템 후보 비교표</h2><h2 class="heading">통과를 판단할 질문</h2></div><div class="qg-map-row anim-item" data-anim-step="2"><section class="qg-map-field"><h3 class="heading">품목별 근거</h3><p class="copy">시장 조사 노트의 세부 품목</p></section><section class="qg-map-check"><h3 class="heading">품목이 일치하는가?</h3><p class="copy">조사 대상과 비교 대상 대조</p></section></div><div class="qg-map-row anim-item" data-anim-step="3"><section class="qg-map-field"><h3 class="heading">평가 점수</h3><p class="copy">마진율 · 경쟁강도 · 트렌드</p></section><section class="qg-map-check"><h3 class="heading">계산이 맞는가?</h3><p class="copy">항목별 점수와 총점 대조</p></section></div><div class="qg-map-row anim-item" data-anim-step="4"><section class="qg-map-field"><h3 class="heading">최종 추천</h3><p class="copy">제외 조건 · 동점 처리 · 선정 이유</p></section><section class="qg-map-check"><h3 class="heading">추천이 규칙에 맞는가?</h3><p class="copy">사업 조건·제외·동점 규칙 확인</p></section></div></div></div><p class="p5-note anim-item" data-anim-step="5">점수가 높아도 사업 조건의 제외 대상이면 그대로 추천하지 않습니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<article class="slide" data-index="9" data-pattern="RECORD_ANATOMY"><header class="slide__header"><span class="slide__label">Part 5 · Ch04-04 · 후보 선정 · 비교 B</span><h1 class="slide__title"><span class="hl">사업 조건</span>에 맞는 추천인가?</h1><p class="slide__sub">점수의 합계뿐 아니라 그 추천이 나온 이유를 검사합니다.</p></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="qg-v-comparison"><div class="qg-v-evidence-pair"><section class="qg-v-doc "><div class="qg-v-frame anim-item" data-anim-step="0" aria-hidden="true"></div><h2 class="heading anim-item" data-anim-step="1">사업 조건</h2><div class="qg-v-field anim-item" data-anim-step="2"><p class="copy">운영 방식</p><p class="heading tone-green">재고를 보유하지 않음</p></div></section><span class="qg-v-mismatch anim-item" data-anim-step="4">≠</span><section class="qg-v-doc "><div class="qg-v-frame anim-item" data-anim-step="0" aria-hidden="true"></div><h2 class="heading anim-item" data-anim-step="1">아이템 후보 비교표</h2><div class="qg-v-field anim-item" data-anim-step="3"><p class="copy">추천 품목의 판매 조건</p><p class="heading tone-orange">대량 매입 필요</p></div></section></div><div class="qg-v-review-result anim-item" data-anim-step="5"><svg class="p5-icon tone-yellow " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-agent"/></svg><div><p class="copy">코디네이터 검사</p><h2 class="heading tone-orange">조건 위반 · 다시 선정</h2></div></div></div></div><p class="p5-note anim-item" data-anim-step="6">높은 점수라도 사업 조건에 어긋나면 그대로 추천하지 않습니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<article class="slide" data-index="10" data-pattern="RECORD_ANATOMY"><header class="slide__header"><span class="slide__label">Part 5 · Ch04-04 · 후보 선정 · 비교 C</span><h1 class="slide__title">아이템 후보 비교표의 <span class="hl">선정 근거</span></h1></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="qg-p-selection"><section class="qg-p-reference anim-item" data-anim-step="1"><svg class="p5-icon tone-gray " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><h2 class="heading">사업 조건</h2><p class="copy">예산 · 운영 여건</p></section><div class="qg-p-relation anim-item" data-anim-step="3"><span>조건 충족</span><i></i></div><section class="qg-p-paper anim-item" data-anim-step="0"><h2 class="heading">아이템 후보 비교표</h2><div class="qg-p-paper-art tone-green"><svg class="p5-icon tone-green " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><p class="heading">최종 추천</p></div><p class="copy">선택한 이유</p></section><div class="qg-p-relation anim-item" data-anim-step="4"><span>기준 적용</span><i></i></div><section class="qg-p-reference anim-item" data-anim-step="2"><svg class="p5-icon tone-gray " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><h2 class="heading">선정 기준</h2><p class="copy">비교 항목 · 선정 규칙</p></section></div></div><p class="p5-note anim-item" data-anim-step="6">추천 결과를 사업 조건과 선정 기준에 함께 대조합니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<article class="slide" data-index="11" data-pattern="RECORD_ANATOMY"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 4 · Ch04-04</span><h1 class="slide__title">판매 아이템 기획서의 <span class="hl">일관성</span></h1></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="qg-p-consistency"><div class="qg-p-upstream"><section class="qg-p-paper anim-item" data-anim-step="0"><h2 class="heading">시장 조사 노트</h2><div class="qg-p-paper-art tone-green"><svg class="p5-icon tone-green " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><p class="heading">조사 근거</p></div></section><section class="qg-p-paper anim-item" data-anim-step="1"><h2 class="heading">아이템 후보 비교표</h2><div class="qg-p-paper-art tone-green"><svg class="p5-icon tone-green " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><p class="heading">선정 결론</p></div></section></div><div class="qg-p-transfer anim-item" data-anim-step="3"><span class="copy">원문 대조</span><svg viewBox="0 0 120 200" aria-hidden="true"><path d="M2 175H38V100" fill="none" stroke="var(--yellow)" stroke-width="2.3"/><path d="M2 25H38V100H110" fill="none" stroke="var(--yellow)" stroke-width="2.3" marker-end="url(#tx-tip-yellow)"/></svg></div><section class="qg-p-paper anim-item" data-anim-step="2"><h2 class="heading">판매 아이템 기획서</h2><div class="qg-p-paper-art tone-green"><svg class="p5-icon tone-green " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><p class="heading">근거 · 선정 · 계획</p></div><p class="copy">앞 문서와 같은 내용으로 반영</p></section></div></div><p class="p5-note anim-item" data-anim-step="6">앞 문서의 결론이 기획서에서 바뀌거나 빠지지 않았는지 확인합니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<article class="slide" data-index="12" data-pattern="RECORD_ANATOMY"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 4 · Ch04-04</span><h1 class="slide__title">일부 충족 <span class="hl">≠</span> 전체 통과</h1><p class="slide__sub">판매 아이템 기획서 · 예산 검토</p></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="qg-p-verdicts"><section class="qg-p-verdict"><h2 class="heading anim-item" data-anim-step="0">모든 항목 충족</h2><div class="qg-p-checklist anim-item" data-anim-step="1"><p><span>금액의 근거</span><svg viewBox="0 0 24 24" aria-label="충족"><path d="M3 12L9 18L21 5" fill="none" stroke="var(--green)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></p><p><span>합계의 정확성</span><svg viewBox="0 0 24 24" aria-label="충족"><path d="M3 12L9 18L21 5" fill="none" stroke="var(--green)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></p><p><span>예산 한도</span><svg viewBox="0 0 24 24" aria-label="충족"><path d="M3 12L9 18L21 5" fill="none" stroke="var(--green)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></p></div><h3 class="statement tone-green anim-item" data-anim-step="3">통과</h3></section><section class="qg-p-verdict"><h2 class="heading anim-item" data-anim-step="1">한 항목 미충족</h2><div class="qg-p-checklist anim-item" data-anim-step="2"><p><span>금액의 근거</span><svg viewBox="0 0 24 24" aria-label="충족"><path d="M3 12L9 18L21 5" fill="none" stroke="var(--green)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></p><p><span>합계의 정확성</span><svg viewBox="0 0 24 24" aria-label="충족"><path d="M3 12L9 18L21 5" fill="none" stroke="var(--green)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></p><p><span>예산 한도</span><svg viewBox="0 0 24 24" aria-label="미충족"><path d="M5 5L19 19M19 5L5 19" fill="none" stroke="var(--orange)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></p></div><h3 class="statement tone-orange anim-item" data-anim-step="4">반려</h3></section></div></div><p class="p5-note anim-item" data-anim-step="6">한 항목을 고친 뒤에도 전체 필수 항목을 다시 검사합니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<article class="slide" data-index="13" data-pattern="REVIEW_LOOP"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 4 · Ch04-04</span><h1 class="slide__title"><span class="hl">반려 뒤에도</span> 규칙이 필요</h1><p class="slide__sub">반려 뒤의 수정·재검사와 통과 뒤의 배정까지 함께 요청합니다.</p></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="qg-v-review-loop qg-v-scene"><div class="qg-v-loop-node qg-v-author anim-item" data-anim-step="0" data-v-anchor="author"><svg class="p5-icon tone-brand " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-agent"/></svg><h2 class="heading">시장조사 담당</h2><p class="copy">문서 제출 · 반려 시 수정</p></div><div class="qg-v-loop-node qg-v-coordinator anim-item" data-anim-step="1" data-v-anchor="coordinator"><svg class="p5-icon tone-yellow " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-agent"/></svg><h2 class="heading">코디네이터</h2><p class="copy">전체 기준 검사·재검사</p></div><div class="qg-v-loop-node qg-v-next anim-item" data-anim-step="3" data-v-anchor="next"><svg class="p5-icon tone-purple " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-agent"/></svg><h2 class="heading">후보 도출 담당</h2><p class="copy">통과한 경우에만 배정</p></div><svg class="qg-v-wires" aria-hidden="true"><path class="anim-item" data-anim-step="2" data-v-from="author" data-v-to="coordinator" fill="none" stroke="var(--gray)" stroke-width="2.5" marker-end="url(#tx-tip-gray)"/><path class="anim-item" data-anim-step="4" data-v-from="coordinator" data-v-to="next" fill="none" stroke="var(--green)" stroke-width="2.5" marker-end="url(#tx-tip-green)"/><path class="anim-item" data-anim-step="5" data-v-return="true" fill="none" stroke="var(--orange)" stroke-width="2.5" marker-end="url(#tx-tip-orange)"/></svg><p class="qg-v-return-copy copy tone-orange anim-item" data-anim-step="6">반려 항목·근거 전달 → 담당 워커 수정</p></div></div><p class="p5-note anim-item" data-anim-step="7">수정한 문서를 다시 제출하면, 코디네이터가 전체 기준을 재검사합니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<article class="slide" data-index="14" data-pattern="PROCESS_STRIP"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 4 · Ch04-04</span><h1 class="slide__title"><span class="hl">바뀐 근거</span>는 다시 연결</h1><p class="slide__sub">앞 문서가 바뀌면, 그 근거를 사용한 후속 문서도 다시 확인합니다.</p></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="p5-flow"><div class="p5-item anim-item" data-anim-step="0"><svg class="p5-icon tone-green" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><h2 class="heading">시장 조사 노트</h2><p class="copy">조사 내용 변경</p></div><div class="p5-arrow tone-orange anim-item" data-anim-step="3" aria-hidden="true"><svg viewBox="0 0 100 20"><path d="M2 10H94" fill="none" stroke="currentColor" stroke-width="2.5" marker-end="url(#tx-tip-orange)"/></svg></div><div class="p5-item anim-item" data-anim-step="2"><svg class="p5-icon tone-green" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><h2 class="heading">아이템 후보 비교표</h2><p class="copy">선정 결론 재검토</p></div><div class="p5-arrow tone-orange anim-item" data-anim-step="5" aria-hidden="true"><svg viewBox="0 0 100 20"><path d="M2 10H94" fill="none" stroke="currentColor" stroke-width="2.5" marker-end="url(#tx-tip-orange)"/></svg></div><div class="p5-item anim-item" data-anim-step="4"><svg class="p5-icon tone-green" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><h2 class="heading">판매 아이템 기획서</h2><p class="copy">선정 근거·예산 재검토</p></div></div></div><p class="p5-note anim-item" data-anim-step="6">영향받는 후속 문서의 통과 상태를 해제하고, 순서대로 수정·재검사합니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<article class="slide" data-index="15" data-pattern="GOAL_ACCEPTANCE"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 4 · Ch04-04</span><h1 class="slide__title"><span class="hl">사람의 판단</span>이 필요할 때</h1><p class="slide__sub">수정만으로 해결할 수 없는 문제는 사람이 판단합니다.</p></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="qg-stop-flow"><section class="qg-stop-item anim-item" data-anim-step="0"><svg class="p5-icon tone-orange" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-working"/></svg><h2 class="heading">수정 한도에 도달</h2><p class="copy">정한 횟수만큼 고쳐도<br>기준을 충족하지 못함</p></section><span class="qg-or copy anim-item" data-anim-step="1">또는</span><section class="qg-stop-item anim-item" data-anim-step="1"><svg class="p5-icon tone-orange" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><h2 class="heading">조건·자료가 필요</h2><p class="copy">예산 변경<br>확인되지 않은 공급가</p></section><div class="p5-arrow tone-orange anim-item" aria-hidden="true" data-anim-step="3"><svg viewBox="0 0 100 20"><path d="M2 10H94" fill="none" stroke="currentColor" stroke-width="2.5" marker-end="url(#tx-tip-orange)"/></svg></div><section class="qg-stop-item anim-item" data-anim-step="2"><svg class="p5-icon tone-gray" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-person"/></svg><h2 class="heading">중단하고 질문</h2><p class="copy">미해결 항목 · 시도한 수정<br>필요한 결정</p></section></div></div><p class="p5-note anim-item" data-anim-step="4">자동 수정의 횟수와 중단 조건도 작업 전에 정합니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+
+</div>
+    <script>
+      // file:// 로 열었을 때만 경로를 보정한다. 정식 덱과 같은 코드다 —
+      // 이 템플릿을 복사해 만든 덱이 그대로 동작해야 한다. HTTP 경로에는 개입하지 않는다.
+      (function () {
+        if (location.protocol !== "file:") return;
+        // 정식 덱은 경로의 /artifacts/ 앞이 저장소 루트다.
+        // 스킬 assets 안의 템플릿처럼 /artifacts/ 밖에 있는 파일은 깊이로 되짚는다.
+        var m = location.pathname.match(/^(.*\/)artifacts\//);
+        var root = m
+          ? m[1]
+          : new URL(
+              /\/\.(claude|agents)\/skills\/fastcampus-slide\/assets\//.test(
+                location.pathname,
+              )
+                ? "../../../../"
+                : "../../../",
+              location.href,
+            ).pathname;
+        function apply() {
+          document.querySelectorAll('img[src^="/"]').forEach(function (el) {
+            var s = el.getAttribute("src");
+            if (s.indexOf(root) === 0) return;
+            el.setAttribute("src", root + s.slice(1));
+          });
+        }
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", apply);
+        } else {
+          apply();
+        }
+      })();
+      /* 조작 규칙 (성공 기준):
+         페이지 이동은 좌우 nav-btn · 하단 dot · 키보드(←/→/스페이스)로만.
+         #deck/body/.slide에 이동용 click 리스너를 절대 달지 않는다 —
+         강의 중 화면을 가리키며 클릭해도 슬라이드가 넘어가면 안 된다. */
+// A connector uses visible icon bounds; labels are not endpoint anchors.
+function drawPatternConnections(){
+ document.querySelectorAll('.tx-graph').forEach(graph=>{
+  const svg=graph.querySelector('.tx-wires');const rect=graph.getBoundingClientRect();
+  if(!rect.width||!rect.height)return;
+  svg.setAttribute('viewBox',`0 0 ${rect.width} ${rect.height}`);
+  const anchor=(node)=>{const r=node.querySelector('.tx-art').getBoundingClientRect();return {x:r.x-rect.x+r.width/2,y:r.y-rect.y+r.height/2,w:r.width,h:r.height}};
+  graph.querySelectorAll('.tx-link').forEach(link=>{
+   const f=graph.querySelector(`[data-node="${link.dataset.from}"]`),t=graph.querySelector(`[data-node="${link.dataset.to}"]`);if(!f||!t)return;
+   const a=anchor(f),b=anchor(t),route=link.dataset.route||'',path=link.querySelector('path');let d;const gap=12;
+   if(route.includes('tree')){const y=(a.y+a.h*.3+b.y-b.h*.3)/2;d=`M${a.x} ${a.y+a.h*.32+gap}V${y}H${b.x}V${b.y-b.h*.32-gap}`;}
+   else if(route.includes('return')){const fromBottom=f.getBoundingClientRect().bottom-rect.y+gap,toBottom=t.getBoundingClientRect().bottom-rect.y+gap,y=Math.min(rect.height*.9,Math.max(fromBottom,toBottom)+25);d=`M${a.x} ${fromBottom}V${y}H${b.x}V${toBottom}`;}
+   else if(Math.abs(b.y-a.y)>rect.height*.26&&graph.classList.contains('tx-delegation')){const x1=a.x+(b.x<a.x?-15:15),y1=a.y+a.h*.4+gap,x2=b.x,y2=b.y-b.h*.4-gap;d=`M${x1} ${y1}C${x1} ${(y1+y2)/2} ${x2} ${(y1+y2)/2} ${x2} ${y2}`;}
+   else{const sign=b.x>a.x?1:-1,x1=a.x+sign*(a.w*.4+gap),x2=b.x-sign*(b.w*.4+gap);d=route.includes('curve')||Math.abs(b.y-a.y)>20?`M${x1} ${a.y}C${x1+(x2-x1)*.55} ${a.y} ${x2-(x2-x1)*.35} ${b.y} ${x2} ${b.y}`:`M${x1} ${a.y}L${x2} ${b.y}`;}
+   path.setAttribute('d',d);if(route.includes('draw'))path.setAttribute('pathLength','1');
+  });
+ });
+}
+const patternObserver=new ResizeObserver(()=>requestAnimationFrame(drawPatternConnections));
+document.querySelectorAll('.tx-graph').forEach(e=>patternObserver.observe(e));
+document.fonts.ready.then(drawPatternConnections);
+function selectPatternPanel(root,id){
+ root.querySelectorAll('[data-panel]').forEach(b=>{const active=b.dataset.panel===id;b.setAttribute('aria-selected',active);b.tabIndex=active?0:-1;});
+ root.querySelectorAll('[data-panel-view]').forEach(p=>{const active=p.dataset.panelView===id;p.classList.toggle('active',active);p.setAttribute('aria-hidden',!active);p.inert=!active;});
+}
+document.querySelectorAll('.tx-switch').forEach((root,n)=>{
+ root.querySelectorAll('[data-panel]').forEach(button=>{
+  const id=button.dataset.panel;button.id=`tx-tab-${n}-${id}`;button.setAttribute('aria-controls',`tx-panel-${n}-${id}`);
+  const panel=root.querySelector(`[data-panel-view="${id}"]`);panel.id=`tx-panel-${n}-${id}`;panel.setAttribute('aria-labelledby',button.id);
+  button.addEventListener('click',()=>selectPatternPanel(root,id));
+  button.addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key))return;event.preventDefault();event.stopPropagation();const buttons=[...root.querySelectorAll('[data-panel]')],next=buttons[(buttons.indexOf(button)+(event.key==='ArrowLeft'||event.key==='ArrowUp'?-1:1)+buttons.length)%buttons.length];next.focus();selectPatternPanel(root,next.dataset.panel);});
+ });selectPatternPanel(root,root.dataset.defaultPanel);
+});
+document.querySelectorAll('.tx-time-car').forEach(car=>{
+ const root=car.closest('.tx-time');const run=e=>{e.preventDefault();e.stopPropagation();root.classList.remove('is-running');void root.offsetWidth;root.classList.add('is-running');};
+ car.addEventListener('pointerdown',e=>e.preventDefault());car.addEventListener('click',run);car.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')run(e);});
+});
+function resetPatternInteractions(slide){
+ slide.querySelectorAll('.tx-time').forEach(e=>e.classList.remove('is-running'));
+ slide.querySelectorAll('.tx-switch').forEach(e=>selectPatternPanel(e,e.dataset.defaultPanel));
+ requestAnimationFrame(drawPatternConnections);
+}
+
+      class SlidePresentation {
+        constructor() {
+          this.slides = Array.from(document.querySelectorAll(".slide"));
+          this.total = this.slides.length;
+          const requested = Number.parseInt(
+            new URLSearchParams(window.location.search).get("slide"),
+            10,
+          );
+          this.current =
+            Number.isInteger(requested) &&
+            requested >= 1 &&
+            requested <= this.total
+              ? requested - 1
+              : 0;
+          this.isAnimating = false;
+          this._init();
+        }
+        _init() {
+          this.slides.forEach((slide, i) =>
+            slide.classList.toggle("active", i === this.current),
+          );
+          document.getElementById("tot").textContent = this.total;
+          this._buildDots();
+          this._bindKeys();
+          this._bindButtons();
+          this._update();
+          this._runSlide(this.current);
+        }
+        /* 슬라이드 진입 시 .anim-item 을 순차 등장시킨다.
+           스토리보드의 "애니메이션 순서" = DOM 순서 */
+        _runSlide(i) {
+          const slide = this.slides[i];
+          resetPatternInteractions(slide);
+          const items = [...slide.querySelectorAll('.anim-item')];
+          items.forEach(el => el.classList.remove('do-fadeinup'));
+          void slide.offsetWidth;
+          const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+          const instant = reduced || slide.dataset.motion === 'none';
+          items.forEach((el,n) => {
+            const requested = Number(el.dataset.animStep ?? n);
+            const step = Number.isFinite(requested) ? Math.max(0, requested) : n;
+            el.style.animationDelay = instant ? '0ms' : `${150 + step * 260}ms`;
+            el.style.setProperty('--draw-delay',el.style.animationDelay);
+            el.classList.add('do-fadeinup');
+          });
+        }
+        next() {
+          if (!this.isAnimating) this._go(this.current + 1);
+        }
+        prev() {
+          if (!this.isAnimating) this._go(this.current - 1);
+        }
+        _go(i) {
+          if (
+            i < 0 ||
+            i >= this.total ||
+            i === this.current ||
+            this.isAnimating
+          )
+            return;
+          this.isAnimating = true;
+          this.slides[this.current].classList.remove("active");
+          this.slides[i].classList.add("active");
+          this.current = i;
+          const url = new URL(window.location.href);
+          url.searchParams.set("slide", this.current + 1);
+          window.history.replaceState({}, "", url);
+          this._runSlide(i);
+          setTimeout(() => {
+            this.isAnimating = false;
+            this._update();
+          }, 420);
+          this._update();
+        }
+        _update() {
+          const pct = ((this.current + 1) / this.total) * 100;
+          document.getElementById("progress").style.width = pct + "%";
+          document.getElementById("cur").textContent = this.current + 1;
+          document.getElementById("btn-prev").disabled = this.current === 0;
+          document.getElementById("btn-next").disabled =
+            this.current === this.total - 1;
+          document
+            .querySelectorAll(".dot")
+            .forEach((d, i) =>
+              d.classList.toggle("active", i === this.current),
+            );
+        }
+        _buildDots() {
+          const nav = document.getElementById("dot-nav");
+          this.slides.forEach((_, i) => {
+            const b = document.createElement("button");
+            b.className = "dot" + (i === 0 ? " active" : "");
+            b.setAttribute("aria-label", `슬라이드 ${i + 1}`);
+            b.addEventListener("click", () => this._go(i));
+            nav.appendChild(b);
+          });
+        }
+        _bindButtons() {
+          document
+            .getElementById("btn-prev")
+            .addEventListener("click", () => this.prev());
+          document
+            .getElementById("btn-next")
+            .addEventListener("click", () => this.next());
+        }
+        _bindKeys() {
+          document.addEventListener("keydown", (e) => {
+            if (e.target.closest(".tx-switch, .tx-time-car")) return;
+            if (this.isAnimating) return;
+            if (e.key === "ArrowRight" || e.key === " ") {
+              e.preventDefault();
+              this.next();
+            }
+            if (e.key === "ArrowLeft") {
+              e.preventDefault();
+              this.prev();
+            }
+          });
+        }
+      }
+
+      function drawQualityCover(){
+        const g=document.querySelector('.qg-cover-graph');if(!g)return;
+        const r=g.getBoundingClientRect();if(!r.width)return;
+        const svg=g.querySelector('.qg-cover-wires');svg.setAttribute('viewBox',`0 0 ${r.width} ${r.height}`);
+        const get=c=>{const n=g.querySelector(c),a=n.querySelector('svg').getBoundingClientRect(),b=n.getBoundingClientRect();return {x:a.x-r.x+a.width/2,y:a.y-r.y+a.height/2,w:a.width,b:b.bottom-r.top}};
+        const a=get('.qg-cover-doc'),b=get('.qg-cover-check'),c=get('.qg-cover-pass'),p=svg.querySelectorAll('path');
+        p[0].setAttribute('d',`M${a.x+a.w*.35+8} ${a.y}H${b.x-b.w*.45-10}`);
+        p[1].setAttribute('d',`M${b.x+b.w*.45+10} ${b.y}H${c.x-c.w*.4-10}`);
+        p[2].setAttribute('d',`M${b.x} ${b.b+10}V${r.height*.80}H${a.x}V${a.b+10}`);
+      }
+      document.fonts.ready.then(drawQualityCover);new ResizeObserver(drawQualityCover).observe(document.querySelector('.qg-cover-graph'));
+
+      function drawP5(){document.querySelectorAll('.p5-team').forEach(g=>{let rect=g.getBoundingClientRect(),svg=g.querySelector('svg.p5-team-wires');if(!rect.width||!svg)return;svg.setAttribute('viewBox',`0 0 ${rect.width} ${rect.height}`);const a=id=>{const r=g.querySelector(`[data-node="${id}"] .p5-icon`).getBoundingClientRect();return {x:r.x-rect.x+r.width/2,y:r.y-rect.y+r.height*.46,w:r.width,h:r.height}};svg.querySelectorAll('path[data-from]').forEach(p=>{const f=a(p.dataset.from),t=a(p.dataset.to),o=+(p.dataset.offset||0),sg=t.x>=f.x?1:-1;let d;if(p.dataset.route==='tree'){const x=f.x,y=g.querySelector(`[data-node="${p.dataset.from}"]`).getBoundingClientRect().bottom-rect.top+10,tx=t.x,ty=t.y-t.h*.4-10,my=(y+ty)/2;d=`M${x} ${y}V${my}H${tx}V${ty}`}else{const x=f.x+sg*(f.w*.4+12),y=f.y+o,tx=t.x-sg*(t.w*.4+12),ty=t.y+o;d=`M${x} ${y}C${(x+tx)/2} ${y} ${(x+tx)/2} ${ty} ${tx} ${ty}`}p.setAttribute('d',d)});});}
+      const p5Observer=new ResizeObserver(()=>requestAnimationFrame(drawP5));document.querySelectorAll('.p5-team').forEach(g=>p5Observer.observe(g));document.fonts.ready.then(drawP5);window.addEventListener('resize',drawP5);requestAnimationFrame(drawP5);
+
+      function drawQualityVisuals(){document.querySelectorAll('.qg-v-scene').forEach(g=>{
+        const r=g.getBoundingClientRect(),svg=g.querySelector('.qg-v-wires');if(!r.width||!svg)return;
+        svg.setAttribute('viewBox',`0 0 ${r.width} ${r.height}`);
+        const anchor=id=>{const n=g.querySelector(`[data-v-anchor="${id}"]`),art=n.querySelector('.p5-icon')||n,a=art.getBoundingClientRect(),nr=n.getBoundingClientRect();return {x:a.x-r.x+a.width/2,y:a.y-r.y+a.height/2,w:a.width,b:nr.bottom-r.top}};
+        svg.querySelectorAll('[data-v-from]').forEach(p=>{let a=anchor(p.dataset.vFrom),b=anchor(p.dataset.vTo),x=a.x+a.w/2+16,tx=b.x-b.w/2-16,m=(x+tx)/2;p.setAttribute('d',`M${x} ${a.y}C${m} ${a.y} ${m} ${b.y} ${tx} ${b.y}`)});
+        let back=svg.querySelector('[data-v-return]');if(back){let a=anchor('coordinator'),b=anchor('author'),bottom=r.height-65;back.setAttribute('d',`M${a.x} ${a.b+28}V${bottom}H${b.x}V${b.b+28}`)}
+      });}
+      document.fonts.ready.then(drawQualityVisuals);document.querySelectorAll('.qg-v-scene').forEach(g=>new ResizeObserver(drawQualityVisuals).observe(g));window.addEventListener('resize',drawQualityVisuals);
+
+      new SlidePresentation();
+    </script>
+  </body>
+</html>

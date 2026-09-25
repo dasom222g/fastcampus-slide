@@ -1,0 +1,43 @@
+[
+  {
+    "name": "pattern-1-sequential",
+    "origin": "git:9e0f869:artifacts/part1/_images/ch01-01-course-intro--pattern-1-sequential.png",
+    "file": "artifacts/part5/_images/pattern-1-sequential.png",
+    "sha256": "0800ec3c34b545b25c23c3ce8ad58c23b5828e26ec1f837eeb2a5ec21e0f6591",
+    "used_in": [
+      "Ch01-01 표지",
+      "Ch01-01 3장",
+      "Ch01-01 9장"
+    ]
+  },
+  {
+    "name": "pattern-2-cross-check",
+    "origin": "git:9e0f869:artifacts/part1/_images/ch01-01-course-intro--pattern-2-cross-check.png",
+    "file": "artifacts/part5/_images/pattern-2-cross-check.png",
+    "sha256": "0ed31e74b250b4924a4ecc3a2852045c8b498c5274836253a0adc700d38ebe86",
+    "used_in": [
+      "Ch01-01 표지",
+      "Ch01-01 4장"
+    ]
+  },
+  {
+    "name": "pattern-3-parallel",
+    "origin": "git:9e0f869:artifacts/part1/_images/ch01-01-course-intro--pattern-3-parallel.png",
+    "file": "artifacts/part5/_images/pattern-3-parallel.png",
+    "sha256": "2dcc9632566014e7465ab4b43273f9c208a6354ff2a96ae2e9510362eb0bde93",
+    "used_in": [
+      "Ch01-01 표지",
+      "Ch01-01 5장"
+    ]
+  },
+  {
+    "name": "pattern-4-rnr",
+    "origin": "git:9e0f869:artifacts/part1/_images/ch01-01-course-intro--pattern-4-rnr.png",
+    "file": "artifacts/part5/_images/pattern-4-rnr.png",
+    "sha256": "1ef45addfb05476a45daab9a5c9bf4d33574b7c6b2c5b7bfed84109a3973d220",
+    "used_in": [
+      "Ch01-01 표지",
+      "Ch01-01 6장"
+    ]
+  }
+]
