@@ -21,11 +21,11 @@
   해당없음  애초에 그 공정이 없다 (실습 대본, 불필요한 실습자료)
 
 판정 규칙
-  실습 클립(슬라이드: false)은 실습자료 제작 → 촬영. 대본은 해당없음, 실습자료도 필요 없으면 해당없음
+  실습 클립(슬라이드: false)은 실습자료 제작 → 촬영 → 편집(필요 시). 대본은 해당없음, 실습자료도 필요 없으면 해당없음
   제작  덱 없음 → 미착수 / 있고 확정 → 완료 / 있고 확정 아님 → 작업중
   대본  파일 없음 → 미착수 / 있음 → 작업중(초안) / 촬영을 마쳤으면 → 완료
         강사 검수는 촬영 때 이뤄지므로 촬영 완료를 대본 확정으로 본다.
-  촬영  clips.json에 적힌 값 그대로 (자동 판정 불가)
+  촬영·편집  clips.json에 적힌 값 그대로 (자동 판정 불가). 실습 편집의 기본값은 편집 안 함
   미착수는 두 가지로 갈린다.
     앞 공정이 완료면 → 예정 (제작 완료 → 대본 예정, 대본 완료 → 촬영 예정)
     그 밖에는 파트의 납기를 보고 → 지금 납기면 예정, 아니면 시작전
@@ -48,13 +48,16 @@ SRC = Path(__file__).resolve().parent
 
 DONE, WIP, DUE, LATER, NA = "완료", "작업중", "예정", "시작전", "해당없음"
 MANUAL_STATES = (DONE, WIP, DUE, LATER)
+# 수강생에게 제공하지 않는 촬영용 참고자료를 마쳤을 때 쓴다. 집계·공정·색상은 완료와 같고 표시 글자만 다르다.
+REF_DONE = "촬영용 완료"
 CLS = {DONE: "done", WIP: "wip", DUE: "due", LATER: "later", NA: "na"}
-CHIP = {DONE: "완료", WIP: "작업중", DUE: "예정", LATER: "시작전", NA: "—"}
+CHIP = {DONE: "완료", WIP: "작업중", DUE: "예정", LATER: "시작전", NA: "해당 없음"}
 
 STAGES = (
     ("제작", "슬라이드 또는 실습자료를 만들었는가", "전체 클립"),
     ("대본", "강사 검수까지 끝난 대본이 있는가", "슬라이드 클립"),
     ("촬영", "영상 수록을 마쳤는가", "전체 클립"),
+    ("편집", "영상 편집을 마쳤는가", "편집 대상 클립"),
 )
 
 
@@ -156,6 +159,10 @@ def delivery_config(manifest: dict) -> tuple[list[dict], dict[str, str], dict[in
     return batches, schedule, assigned
 
 
+def completed(row: dict) -> bool:
+    return row.get("촬영") == DONE and row.get("편집", NA) in (DONE, NA)
+
+
 def due_parts(schedule: dict, rows_by_part: dict[int, list[dict]]) -> tuple[set[int], str]:
     """지금 납기에 속한 파트를 고른다.
 
@@ -171,7 +178,7 @@ def due_parts(schedule: dict, rows_by_part: dict[int, list[dict]]) -> tuple[set[
         raw = schedule.get(str(part))
         if not raw:
             continue
-        if any(r.get("촬영") != DONE for r in rows):
+        if any(not completed(r) for r in rows):
             open_dates.append(raw)
     if not open_dates:
         return set(), ""
@@ -211,6 +218,25 @@ def build_rows() -> tuple[list[dict], list[str], str]:
         row["차수"] = assigned.get(part, 0)
         row["_미착수"] = False
 
+        editing = e.get("편집", LATER if row["슬라이드"] else "편집 안 함")
+        if editing == "편집 안 함":
+            editing = NA
+        if editing not in (*MANUAL_STATES, NA):
+            die(f"Part {part} {clip} 의 「편집」 값이 이상하다: {editing!r}")
+        row["편집"] = None if editing in (DUE, LATER) else editing
+        if editing == NA:
+            row["편집_표시"] = "편집 안 함"
+
+        duration = e.get("실제분량_초")
+        if duration is not None and (type(duration) is not int or duration <= 0):
+            die(f"Part {part} {clip} 의 실제분량_초는 양의 정수여야 한다.")
+        row["계획분량_초"] = int(row["길이"].removesuffix("분")) * 60
+        show_duration = editing == DONE or (editing == NA and e.get("촬영") == DONE and duration is not None)
+        row["실제분량_초"] = duration if show_duration else None
+        row["실제분량"] = "—"
+        if show_duration:
+            row["실제분량"] = f"{duration // 60}분 {duration % 60:02}초" if duration else "확인 필요"
+
         shot = e.get("촬영", LATER)
         if shot not in MANUAL_STATES:
             die(f"Part {part} {clip} 의 「촬영」 값이 이상하다: {shot!r}")
@@ -224,6 +250,9 @@ def build_rows() -> tuple[list[dict], list[str], str]:
                     f"Part {part} {clip} — clips.json에 없다. 실습 클립으로 처리했다."
                 )
             material = e.get("실습자료", LATER)
+            if material == REF_DONE:
+                row["제작_표시"] = REF_DONE
+                material = DONE
             if material not in (*MANUAL_STATES, NA):
                 die(f"Part {part} {clip} 의 실습자료 상태가 올바르지 않다.")
             if material in (DUE, LATER):
@@ -264,13 +293,6 @@ def build_rows() -> tuple[list[dict], list[str], str]:
                 given = e[stage]
                 if given not in MANUAL_STATES:
                     die(f"Part {part} {clip} 의 「{stage}」 값이 이상하다: {given!r}")
-                if given != auto:
-                    reason = e.get(f"{stage}_사유", "") or f"{stage} 수기 지정"
-                    # 제작과 대본에 같은 사유가 걸리면 비고에 두 번 적히지 않게 한다
-                    if reason not in row["비고"]:
-                        row["비고"] = (
-                            row["비고"] + " · " if row["비고"] else ""
-                        ) + reason
                 value = None if given in (DUE, LATER) else given
             if value is None:
                 row["_미착수"] = True
@@ -316,7 +338,7 @@ def build_rows() -> tuple[list[dict], list[str], str]:
 
 
 def stage_scope(rows: list[dict], stage: str) -> list[dict]:
-    """대본은 이론 클립만, 자료 제작과 촬영은 전체 클립이 모집단이다."""
+    """해당없음인 공정은 집계에서 제외한다. 편집 안 함도 편집 집계에서 제외한다."""
     return [r for r in rows if r[stage] != NA]
 
 
@@ -327,9 +349,10 @@ def esc(s: str) -> str:
     return html.escape(s or "")
 
 
-def chip(state: str, stage: str) -> str:
-    title = f"{stage} {state}" if state != NA else f"{stage} 해당없음 — 실습 클립"
-    return f'<span class="chip chip--{CLS[state]}" title="{title}">{CHIP[state]}</span>'
+def chip(state: str, stage: str, label: str | None = None) -> str:
+    shown = label or state
+    title = f"{stage} {shown}"
+    return f'<span class="chip chip--{CLS[state]}" title="{title}">{esc(label) if label else CHIP[state]}</span>'
 
 
 def kind_label(theory: bool) -> str:
@@ -349,13 +372,52 @@ def kind_label(theory: bool) -> str:
 HEAD_ROW = """<thead><tr>
             <th scope="col" class="c-clip">클립</th>
             <th scope="col" class="c-title">제목</th>
-            <th scope="col" class="c-len">길이</th>
+            <th scope="col" class="c-len">계획 / 실제</th>
             <th scope="col" class="c-count">유형</th>
             <th scope="col" class="c-stage">자료 제작</th>
             <th scope="col" class="c-stage">대본</th>
             <th scope="col" class="c-stage">촬영</th>
+            <th scope="col" class="c-stage">편집</th>
             <th scope="col" class="c-note">비고</th>
           </tr></thead>"""
+
+
+def format_duration(seconds: int) -> str:
+    minutes, remainder = divmod(seconds, 60)
+    return f"{minutes}분 {remainder:02}초" if remainder else f"{minutes}분"
+
+
+def part_tally(rows: list[dict]) -> str:
+    planned = sum(r["계획분량_초"] for r in rows)
+    known = [r["실제분량_초"] for r in rows if r["실제분량_초"] is not None]
+    actual = format_duration(sum(known)) if known else "—"
+    if known and len(known) < len(rows):
+        actual += f" ({len(known)}/{len(rows)}클립 집계)"
+    return f"{len(rows)}클립 · 계획 {format_duration(planned)} / 실제 {actual}"
+
+
+def changed_public_title(row: dict, kind: str) -> str:
+    """2차 이후 공개본과 다른 제목만 표시한다. 비고가 원래 이름의 출처다."""
+    if row.get("차수", 0) < 2:
+        return ""
+    match = re.search(rf"(?:^| / )공개본 {kind}명:\s*(.*?)(?= / |$)", row.get("비고", ""))
+    if not match:
+        return ""
+    original = match.group(1).strip()
+    current = row["제목" if kind == "클립" else "챕터"]
+    normalize = lambda s: re.sub(r"^Chapter\s+\d+\.\s*", "", s).strip()
+    return original if normalize(original) != normalize(current) else ""
+
+
+def title_markup(title: str, original: str, *, chapter: bool = False) -> str:
+    if not original:
+        return esc(title)
+    modifier = " published-change--chapter" if chapter else ""
+    return (
+        f'<span class="published-change{modifier}" title="공개본: {esc(original)}">'
+        f'<span class="published-change__text">{esc(title)}</span>'
+        '</span>'
+    )
 
 
 def render_parts(rows: list[dict], due_note: dict[int, str]) -> str:
@@ -366,7 +428,7 @@ def render_parts(rows: list[dict], due_note: dict[int, str]) -> str:
     out = []
     for no, rs in parts.items():
         slides = [r for r in rs if r["슬라이드"]]
-        done = sum(r["촬영"] == DONE for r in rs)
+        done = sum(completed(r) for r in rs)
         total = len(rs) or 1
         due = due_note.get(no, "")
         due_html = (
@@ -379,8 +441,8 @@ def render_parts(rows: list[dict], due_note: dict[int, str]) -> str:
           <h3 class="part__name">Part {no}</h3>
           <span class="part__title">{esc(rs[0]["파트제목"])}</span>
           {due_html}
-          <span class="part__tally">{len(rs)}클립</span>
-          <span class="part__meter" role="img" aria-label="촬영 {done}/{total} 완료">
+          <span class="part__tally" title="총 계획 시간 / 실제 시간" aria-label="총 계획 시간 / 실제 시간: {esc(part_tally(rs))}">{esc(part_tally(rs))}</span>
+          <span class="part__meter" role="img" aria-label="최종 {done}/{total} 완료">
             <span class="part__meter-fill" style="width:{done / total * 100:.4f}%"></span>
           </span>
           <span class="part__pct">{done}/{total}</span>
@@ -389,24 +451,29 @@ def render_parts(rows: list[dict], due_note: dict[int, str]) -> str:
         <table class="grid">
           {HEAD_ROW}
           <tbody>""")
+        changed_chapters = {
+            r["챕터"]: original for r in rs
+            if (original := changed_public_title(r, "챕터"))
+        }
         chapter = None
         for r in rs:
             if r["챕터"] != chapter:
                 chapter = r["챕터"]
                 if chapter:
                     out.append(
-                        '<tr class="chap"><th colspan="8" scope="colgroup">'
-                        f"{esc(chapter)}</th></tr>"
+                        '<tr class="chap"><th colspan="9" scope="colgroup">'
+                        f"{title_markup(chapter, changed_chapters.get(chapter, ''), chapter=True)}</th></tr>"
                     )
             cls = "" if r["슬라이드"] else ' class="row--practice"'
             out.append(f"""<tr{cls} data-key="{no}-{r['클립']}" data-clip>
               <td class="c-clip"><code>{esc(r["클립"])}</code></td>
-              <td class="c-title">{esc(r["제목"])}</td>
-              <td class="c-len">{esc(r["길이"])}</td>
+              <td class="c-title">{title_markup(r["제목"], changed_public_title(r, "클립"))}</td>
+              <td class="c-len">{esc(r["길이"])} / {esc(r["실제분량"])}</td>
               <td class="c-count">{kind_label(r["슬라이드"])}</td>
-              <td class="c-stage"><div class="stage-stack"><small>{'슬라이드' if r['슬라이드'] else '실습자료'}</small>{chip(r["제작"], "자료 제작")}</div></td>
+              <td class="c-stage"><div class="stage-stack"><small>{'슬라이드' if r['슬라이드'] else '실습자료'}</small>{chip(r["제작"], "자료 제작", r.get("제작_표시"))}</div></td>
               <td class="c-stage"><div class="stage-stack">{chip(r["대본"], "대본")}</div></td>
               <td class="c-stage"><div class="stage-stack">{chip(r["촬영"], "촬영")}</div></td>
+              <td class="c-stage"><div class="stage-stack">{chip(r["편집"], "편집", r.get("편집_표시"))}</div></td>
               <td class="c-note">{esc(r["비고"] if r["비고"] != "실습" else "")}</td>
             </tr>""")
         out.append("          </tbody>\n        </table>\n        </div>\n      </section>")
@@ -450,10 +517,10 @@ def render_markdown(rows: list[dict], warnings: list[str], nearest: str) -> str:
         "",
         "# 강의 제작 현황",
         "",
-        f"커리큘럼 {len(rows)}클립의 자료 제작과 촬영을 추적한다. 이론은 슬라이드 → 대본 → 촬영 순이다.",
+        f"커리큘럼 {len(rows)}클립의 자료 제작부터 편집까지 추적한다. 이론은 슬라이드 → 대본 → 촬영 → 편집 순이다.",
         f"슬라이드를 만드는 클립은 {len(slides)}개, 나머지 {len(rows) - len(slides)}개는 "
-        "실습자료 제작(필요 시) → 촬영으로 진행한다. 대본과 불필요한 실습자료는 **해당없음**이다.",
-        "촬영 완료를 클립의 최종 완료로 본다. 해당없음인 공정은 집계에서 제외한다.",
+        "실습자료 제작(필요 시) → 촬영 → 편집(필요 시)으로 진행한다. 대본과 불필요한 실습자료는 **해당없음**이다.",
+        "촬영과 편집을 마치면 최종 완료다. 편집 안 함인 클립은 촬영 완료가 최종 완료다. 편집 안 함은 편집 집계에서 제외한다.",
         "",
         "상태는 다섯 가지다 — **완료 · 작업중 · 예정**(앞 공정 완료 또는 지금 납기) **· "
         "시작전**(납기가 뒤) **· 해당없음**.",
@@ -485,15 +552,15 @@ def render_markdown(rows: list[dict], warnings: list[str], nearest: str) -> str:
                 if chapter:
                     L += [f"### {chapter}", ""]
                 L += [
-                    "| 클립 | 제목 | 길이 | 장수 | 제작 | 대본 | 촬영 | 비고 |",
-                    "|---|---|---|---|---|---|---|---|",
+                    "| 클립 | 제목 | 계획 / 실제 | 장수 | 제작 | 대본 | 촬영 | 편집 | 비고 |",
+                    "|---|---|---|---|---|---|---|---|---|",
                 ]
             L.append(
                 "| "
                 + " | ".join(
                     [
-                        r["클립"], r["제목"], r["길이"], r["장수"],
-                        ("슬라이드 " if r["슬라이드"] else "실습자료 ") + r["제작"], r["대본"], r["촬영"], r["비고"] or "",
+                        r["클립"], r["제목"], f'{r["길이"]} / {r["실제분량"]}', r["장수"],
+                        ("슬라이드 " if r["슬라이드"] else "실습자료 ") + (r.get("제작_표시") or r["제작"]), r["대본"], r["촬영"], r.get("편집_표시") or r["편집"], r["비고"] or "",
                     ]
                 )
                 + " |"
