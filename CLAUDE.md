@@ -129,7 +129,7 @@ index.html                         덱 목록 — 커리큘럼 순서대로
 루트 절대경로와 rewrite 때문에 `file://`로 열면 에셋이 깨진다.
 
 ```bash
-vercel dev    # http://localhost:3000/<part>/outputs/<clip>
+python3 preview.py    # http://localhost:3000/<part>/outputs/<clip>
 ```
 
 ## 슬라이드 HTML 저장 위치 — 사용자 확정

@@ -47,5 +47,5 @@ Claude Code에서 클립을 지목하면 됩니다 — 예: `Part 1 Ch01-01 슬�
 루트 절대경로와 rewrite 때문에 `file://`로 열면 에셋이 깨집니다.
 
 ```bash
-vercel dev    # http://localhost:3000/part2/ch02-01-setup-prep
+python3 preview.py    # http://localhost:3000/part2/ch02-01-setup-prep
 ```
