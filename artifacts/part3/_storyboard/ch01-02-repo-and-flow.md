@@ -5,7 +5,7 @@
 소스: artifacts/part3/_source/ch01-02-repo-and-flow.md
 산출물: artifacts/part3/outputs/ch01-02-repo-and-flow.html
 대본: artifacts/part3/_script/ch01-02-repo-and-flow.md
-비교 분석: ch01-02-repo-and-flow--version-analysis.md
+비교 분석: 1차 납품 후 정리했다 (git 이력의 `ch01-02-repo-and-flow--version-analysis.md`)
 
 시각 기준: 같은 역할의 Pretendard 크기를 유지한다. 영역은 중립적인 경계와 같은 위치의 도식으로 구분한다. V2의 커밋 정보 묶음을 살린다. 사용자 정정에 따라 반복된 명령어·상태·상단 지도·보조 설명을 제거한다.
 

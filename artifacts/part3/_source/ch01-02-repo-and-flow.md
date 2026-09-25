@@ -27,7 +27,7 @@
 7. 내 기록과 원격 기록
 8. 한 번의 작업 흐름
 
-비교·근거: ../_storyboard/ch01-02-repo-and-flow--version-analysis.md
+비교·근거: 1차 납품 후 정리했다 (git 이력의 `_storyboard/ch01-02-repo-and-flow--version-analysis.md`)
 
 
 ## 추가 사용자 지시
