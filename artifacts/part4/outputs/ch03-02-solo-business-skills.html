@@ -1,0 +1,1117 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>1인 회사 운영에 유용한 스킬 모음 · Part 4 · 후츠릿</title>
+    <!-- TEMPLATE ONLY: 실제 강의 내용·제품명·작업 캡처를 넣지 않는다.
+     사용법: 이 파일을 복사 → 필요한 article 선택 → 모든 data-slot/제목/부제 교체.
+     diagram의 공통 shape 정의를 유지하거나 사용한 도형만 각 SVG에 펼친다.
+     같은 역할은 공통 CSS를 공유한다. 강의 덱의 내용은 소스·스토리보드에서 가져온다. -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css"
+    />
+    <style>
+      :root {
+        --bg: #0d1117;
+        --bg-card: #161b22;
+        --text: #e6edf3;
+        --text-dim: #8b949e;
+        --text-muted: #59636e;
+        --brand: #fc1c49;
+        --purple: #9188ff;
+        --orange: #ff6d3b;
+        --yellow: #f0b429;
+        --green: #4ade80;
+        --gray: #8b949e;
+        --border: rgba(255, 255, 255, 0.08);
+        --dot: rgba(255, 255, 255, 0.055);
+        --title: clamp(2rem, 5.2vw, 3.8rem);
+        --statement: clamp(2rem, 3.8vw, 3.7rem);
+        --heading: clamp(1.5rem, 2.2vw, 2.25rem);
+        --body: clamp(1.1rem, 1.6vw, 1.42rem);
+        --gap: clamp(1.5rem, 3vw, 3rem);
+        --content-width: 86rem;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        font-family:
+          Pretendard,
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        font-size: clamp(13px, 1.35vw, 16px);
+        background: var(--bg);
+        color: var(--text);
+        word-break: keep-all;
+      }
+      body {
+        overflow: hidden;
+      }
+      button {
+        font: inherit;
+      }
+      .slide-deck {
+        position: fixed;
+        inset: 0;
+      }
+      .slide {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr) auto;
+        gap: clamp(1.5rem, 3.75vh, 3rem);
+        padding: clamp(2.6rem, 5.5vh, 4.2rem) clamp(4rem, 7.5vw, 7rem);
+        background:
+          radial-gradient(circle, var(--dot) 1px, transparent 1px) 0 0/26px 26px,
+          var(--bg);
+        overflow: hidden;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.36s ease;
+      }
+      .slide[data-motion="none"]{transition:none}
+      .slide.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .slide__header {
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+        padding-bottom: clamp(0.9rem, 2.2vh, 1.6rem);
+        border-bottom: 1px solid var(--border);
+      }
+      .slide__label {
+        font-size: clamp(0.58rem, 0.85vw, 0.72rem);
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--brand);
+      }
+      .slide__title {
+        font-size: var(--title);
+        font-weight: 800;
+        line-height: 1.08;
+        letter-spacing: -0.015em;
+      }
+      .slide__sub {
+        font-size: clamp(1.05rem, 1.6vw, 1.28rem);
+        line-height: 1.5;
+        color: var(--text-dim);
+      }
+      .slide__body {
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: var(--gap);
+        overflow: hidden;
+        container-type: size;
+      }
+      .slide__footer {
+        border-top: 1px solid var(--border);
+        padding-top: clamp(0.5rem, 1.3vh, 0.9rem);
+      }
+      .fastcampus-logo {
+        display: block;
+        width: clamp(7.2rem, 9vw, 8.5rem);
+        height: auto;
+      }
+      .hl,
+      .tone-brand {
+        color: var(--brand);
+      }
+      .tone-purple {
+        color: var(--purple);
+      }
+      .tone-gray {
+        color: var(--gray);
+      }
+      .tone-yellow {
+        color: var(--yellow);
+      }
+      .tone-orange {
+        color: var(--orange);
+      }
+      .tone-green {
+        color: var(--green);
+      }
+      /* Shared roles: cover and split layouts inherit exactly the same type. */
+      .statement {
+        font-family: inherit;
+        font-size: var(--statement);
+        font-weight: 850;
+        line-height: 1.35;
+        letter-spacing: -0.035em;
+      }
+      .statement strong {
+        display: block;
+        color: var(--brand);
+        font-weight: 900;
+      }
+      .heading {
+        font-size: var(--heading);
+        font-weight: 800;
+        line-height: 1.35;
+        letter-spacing: -0.025em;
+      }
+      .copy {
+        font-size: var(--body);
+        line-height: 1.6;
+        color: var(--text-dim);
+      }
+      .eyebrow {
+        font-size: clamp(1rem, 1.5vw, 1.3rem);
+        line-height: 1.5;
+        color: var(--text-dim);
+      }
+      .diagram {
+        display: block;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+        color: var(--gray);
+      }
+      .symbols {
+        position: absolute;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+        pointer-events: none;
+      }
+      .content {
+        width: min(100%, var(--content-width));
+        margin-inline: auto;
+      }
+      /* Image slots are borderless. Replace the SVG slot with the clip's image. */
+      .scene {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.65fr);
+        gap: var(--gap);
+        align-items: center;
+        width: min(100%, 92rem);
+      }
+      .scene--visual-first {
+        grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+      }
+      .scene__copy {
+        display: flex;
+        flex-direction: column;
+        gap: clamp(1.3rem, 3vh, 2.5rem);
+      }
+      .scene__visual {
+        width: 100%;
+        height: min(52cqh, 28rem);
+        min-height: 15rem;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+      }
+      .scene--cover .scene__visual,
+      .scene--image .scene__visual {
+        height: min(78cqh, 34rem);
+      }
+      .scene__visual > img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border: 0;
+        box-shadow: none;
+      }
+      .scene__visual > .diagram {
+        min-height: 0;
+        flex: 1;
+      }
+      .scene__visual figcaption {
+        font-size: var(--body);
+        color: var(--text-dim);
+        text-align: center;
+      }
+      /* Open parallel concepts: diagram, heading, caption; no card shells. */
+      .triptych {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--gap);
+        align-items: start;
+      }
+      .concept {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: clamp(1rem, 2.6vh, 2rem);
+        min-width: 0;
+      }
+      .concept > .diagram {
+        height: clamp(11rem, 25vh, 19rem);
+      }
+      .concept .copy {
+        max-width: 17em;
+      }
+      /* Optional transition copy, never wrapped in a banner or bordered box. */
+      .handoff {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1.25rem;
+        color: var(--text-dim);
+        font-size: var(--body);
+        line-height: 1.5;
+      }
+      .handoff strong {
+        color: var(--text);
+        font-weight: 800;
+      }
+      .progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        z-index: 200;
+        background: var(--border);
+      }
+      .progress-fill {
+        height: 100%;
+        background: var(--brand);
+        transition: width 0.3s ease;
+      }
+      .nav-btn {
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 150;
+        width: clamp(1.9rem, 2.8vw, 2.5rem);
+        height: clamp(1.9rem, 2.8vw, 2.5rem);
+        display: grid;
+        place-items: center;
+        border: 1px solid var(--border);
+        border-radius: 3px;
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--text-dim);
+        cursor: pointer;
+      }
+      .nav-btn:hover:not(:disabled) {
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .nav-btn:disabled {
+        opacity: 0.1;
+        cursor: default;
+      }
+      #btn-prev {
+        left: clamp(0.4rem, 1.2vw, 1.1rem);
+      }
+      #btn-next {
+        right: clamp(0.4rem, 1.2vw, 1.1rem);
+      }
+      .dot-nav {
+        position: fixed;
+        bottom: 1.3rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        z-index: 150;
+      }
+      .dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.18);
+        border: 0;
+        cursor: pointer;
+        transition: all 0.22s ease;
+      }
+      .dot.active {
+        width: 22px;
+        border-radius: 3px;
+        background: var(--brand);
+      }
+      .slide-counter {
+        position: fixed;
+        bottom: 1.2rem;
+        right: 1.8rem;
+        font:
+          0.62rem Monaco,
+          monospace;
+        color: var(--text-muted);
+        z-index: 150;
+      }
+      @keyframes s-fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .anim-item {
+        opacity: 0;
+      }
+      .anim-item.do-fadeinup {
+        animation: s-fadeInUp 0.48s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .slide,
+        .progress-fill {
+          transition: none;
+        }
+        .anim-item.do-fadeinup {
+          animation-duration: 0.001s;
+        }
+      }
+
+      .status-one-line {
+        white-space: nowrap;
+        max-width: none;
+      }
+
+      /* STRUCTURE_BRANCH: root and children are content, connecting lines encode membership. */
+      .structure-tree {
+        width: min(100%, 72rem);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .structure-node {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        text-align: center;
+        min-width: 0;
+      }
+      .structure-node > .diagram {
+        width: 6rem;
+        height: 6rem;
+      }
+      .structure-tree__root {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+      .structure-tree__root > .diagram {
+        width: 5rem;
+        height: 5rem;
+      }
+      .structure-tree__stem {
+        height: 3rem;
+        border-left: 2px solid var(--gray);
+      }
+      .structure-tree__children {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+        position: relative;
+      }
+      .structure-tree__children::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 25%;
+        right: 25%;
+        border-top: 2px solid var(--gray);
+      }
+      .structure-tree__children > .structure-node {
+        position: relative;
+        padding: 3rem 1.5rem 0;
+      }
+      .structure-tree__children > .structure-node::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 0;
+        height: 2rem;
+        border-left: 2px solid var(--gray);
+      }
+      .structure-tree__root .copy {
+        margin-top: 0.45rem;
+      }
+      /* STRUCTURE_EXCHANGE: only the common scope gets a boundary, not every text node. */
+      .exchange {
+        position: relative;
+        aspect-ratio: 600/430;
+        width: 100%;
+        border: 1px solid var(--gray);
+        border-radius: 0.5rem;
+      }
+      .exchange__scope {
+        position: absolute;
+        top: 1rem;
+        left: 1.25rem;
+      }
+      .exchange > .diagram {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .exchange__node {
+        position: absolute;
+        width: 43%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+      .exchange__node--root {
+        top: 14%;
+        left: 28.5%;
+      }
+      .exchange__node--a {
+        bottom: 9%;
+        left: 3.5%;
+      }
+      .exchange__node--b {
+        bottom: 9%;
+        right: 3.5%;
+      }
+      .exchange__legend {
+        position: absolute;
+        top: 46%;
+        left: 37%;
+        width: 26%;
+        display: grid;
+        gap: 0.7rem;
+        text-align: center;
+      }
+      .exchange__legend .copy {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+      .line-key {
+        width: 1.5rem;
+        border-top: 2px solid var(--yellow);
+      }
+      .line-key--return {
+        border-top-style: dashed;
+      }
+      /* TRANSITION_COMPARE: mirror all four rows; the center is a transition arrow only. */
+      .transition-compare {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 4rem minmax(0, 1fr);
+        align-items: center;
+        gap: 2.5rem;
+        width: min(100%, var(--content-width));
+      }
+      .transition-side {
+        display: grid;
+        grid-template-rows: 2rem 5.5rem 12rem minmax(3.2rem, auto);
+        align-items: center;
+        justify-items: center;
+        text-align: center;
+        gap: 1rem;
+        min-width: 0;
+      }
+      .transition-side > .diagram {
+        height: 12rem;
+        width: 100%;
+      }
+      .transition-side > .copy {
+        max-width: 20em;
+      }
+      .transition-compare__arrow {
+        height: 4rem;
+      }
+
+/* Animate the semantic boundary separately; never hide or move its children as a group. */
+.motion-scope{position:relative;border-color:transparent!important}
+.motion-scope>.scope-frame{position:absolute;inset:-1.5px;display:block;border:1.5px solid var(--gray);border-radius:inherit;pointer-events:none}
+.motion-scope>.scope-frame.anim-item.do-fadeinup,.scope-caption.anim-item.do-fadeinup{animation-name:scope-fade;animation-duration:.48s;animation-timing-function:cubic-bezier(.23,1,.32,1);animation-fill-mode:both;transform:none}
+@keyframes scope-fade{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.motion-scope>.scope-frame.anim-item,.scope-caption.anim-item{opacity:1;animation:none!important;transform:none}}
+
+      /* CONTAINED_STRUCTURE: a semantic scope, followed by independently revealed contents. */
+      .scope-panel{width:min(100%,78rem);border:1.5px solid var(--gray);border-radius:.7rem;padding:2rem 2.4rem}
+      .scope-panel__header{display:flex;align-items:baseline;gap:1.6rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
+      .scope-panel__content{display:grid;grid-template-columns:minmax(0,2.2fr) minmax(0,1fr);gap:2rem;padding-top:1.6rem}
+      .scope-panel__items{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.5rem;margin-top:1.5rem}
+      .scope-panel__item,.scope-panel__shared{display:flex;flex-direction:column;align-items:center;gap:.8rem;text-align:center}
+      .scope-panel__item .diagram{width:6rem;height:7rem}
+      .scope-panel__shared{border-left:1px solid var(--border);padding-left:1.5rem}
+      .scope-panel__shared .diagram{width:7rem;height:8rem}
+      .scope-panel .anim-item.do-fadeinup{animation-name:scope-fade}
+      [data-motion="none"] .anim-item{opacity:1;animation:none!important}
+      @media(max-height:650px){.scope-panel{padding:1.2rem}.scope-panel__header{padding-bottom:1rem}.scope-panel__content{gap:1.2rem;padding-top:1rem}.scope-panel__items{gap:1rem;margin-top:1rem}.scope-panel__item .diagram{width:4rem;height:5rem}.scope-panel__shared .diagram{width:5rem;height:6rem}}
+/* Approved pattern families 10–29. Geometry is shared by role; slots contain no lecture copy. */
+.tx-body{--art:clamp(4rem,18cqh,10rem);--tx-space:clamp(.6rem,2.2cqh,1.5rem)}
+.tx-body .anim-item.do-fadeinup{animation-name:scope-fade}
+.tx-art{display:block;width:var(--art);height:var(--art);flex-shrink:0}
+.tx-item{display:flex;flex-direction:column;gap:.7rem;align-items:center;text-align:center;min-width:0}
+.tx-item .heading{color:inherit}.tx-item .copy{color:var(--gray)}
+.tx-compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3.5rem;width:min(100%,80rem)}
+.tx-compare-side{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.5rem;min-width:0}
+.tx-window{width:100%;padding:2.8rem 1.5rem 1.5rem;border:1.5px solid transparent;border-radius:.4rem;position:relative}
+.tx-window-bar{position:absolute;top:.25rem;left:1rem;color:var(--gray);letter-spacing:.2rem}
+.tx-agents{display:flex;justify-content:center;gap:1.5rem}.tx-agents .tx-art{width:min(6rem,10vw);height:min(6rem,10vw)}.tx-agents .heading{font-size:var(--body)}
+.tx-folder-art{width:min(100%,23rem);height:min(42cqh,18rem);position:relative}
+.tx-folder-art>.tx-art{width:100%;height:100%}.tx-files{position:absolute;inset:41% 30% 23%;display:flex;justify-content:center}.tx-files .tx-art{width:33%;height:100%}
+.tx-hidden-detail{position:absolute;right:19%;bottom:23%;font-size:.75rem;opacity:.35;border:1px dashed currentColor;padding:.05rem .5rem}
+.tx-arrow{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.3rem;width:100%;min-width:0}
+.tx-arrow>svg{width:100%;height:1.6rem;overflow:visible}.tx-arrow--back>svg{transform:scaleX(-1)}.tx-arrow>.copy{color:inherit;font-size:var(--body);white-space:nowrap}
+.tx-transfer{width:min(100%,78rem);display:grid;grid-template-columns:1fr .65fr 1fr;align-items:center;gap:2rem}
+.tx-transfer .tx-art{width:min(20rem,36cqh);height:min(20rem,36cqh)}
+.tx-process,.tx-stage-row{display:grid;grid-template-columns:1fr .32fr 1fr .32fr 1fr .32fr 1fr;align-items:center;gap:1rem;width:min(100%,86rem)}
+.tx-process .heading{font-size:var(--body)}.tx-process .tx-arrow>.copy{font-size:1rem}
+.tx-stage-focus{width:min(100%,80rem);display:flex;flex-direction:column;align-items:center;gap:2rem}.tx-stage-row{grid-template-columns:1fr .3fr 1fr .3fr 1fr}
+.tx-stage{display:flex;flex-direction:column;align-items:center;gap:.7rem;opacity:.34}.tx-stage .heading{color:inherit}.tx-stage-note{text-align:center}
+.tx-stage-focus[data-focus="1"] [data-stage="1"],.tx-stage-focus[data-focus="2"] [data-stage="2"],.tx-stage-focus[data-focus="3"] [data-stage="3"]{opacity:1}
+.tx-record{display:grid;grid-template-columns:1fr 1.5fr;align-items:center;gap:5rem;width:min(100%,72rem)}.tx-record>.tx-item .tx-art{width:min(23rem,38cqh);height:min(23rem,38cqh)}
+.tx-fields{display:flex;flex-direction:column;gap:1.5rem}.tx-fields>div{display:grid;grid-template-columns:7rem minmax(0,1fr);gap:1.5rem;align-items:baseline}.tx-fields dt{font-size:var(--body);color:var(--gray)}.tx-fields dd{margin:0}
+.tx-graph{position:relative;width:min(100%,76rem);height:min(100cqh,36rem);min-height:0;flex-shrink:0}
+.tx-wires{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.tx-node{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,calc(var(--node-art)/-2));display:flex;flex-direction:column;align-items:center;gap:.6rem;text-align:center;max-width:29%;--node-art:clamp(3.3rem,15cqh,8rem)}
+.tx-node .tx-art{width:var(--node-art);height:var(--node-art)}.tx-node .heading{white-space:nowrap;font-size:var(--heading)}.tx-node .copy{white-space:nowrap;font-size:var(--body)}
+.tx-history .tx-node{--node-art:3rem}.tx-history .tx-node .copy{font-size:var(--body)}
+.tx-origin [data-node="origin"]{--node-art:min(8rem,17cqh)}.tx-origin [data-node="origin"] .heading{position:absolute;left:calc(100% + .8rem);top:40%}.tx-origin [data-node="origin"] .heading{font-size:var(--body)}
+.tx-origin [data-node="a"],.tx-origin [data-node="b"]{--node-art:min(20rem,33cqh)}
+.tx-history-spaces .tx-node{--node-art:min(17rem,28cqh)}.tx-history-spaces [data-node="seed"]{--node-art:2.5rem}.tx-history-spaces .tx-node .heading{font-size:var(--body)}
+.tx-label{position:absolute;left:34%;color:var(--brand)}.tx-label--a{top:14%}.tx-label--b{top:62%;color:var(--purple)}
+.tx-draw.do-fadeinup{animation:none!important;opacity:1}.tx-draw.do-fadeinup path{stroke-dasharray:1;stroke-dashoffset:1;animation:tx-grow .85s linear both;animation-delay:var(--draw-delay,0s)}
+@keyframes tx-grow{to{stroke-dashoffset:0}}
+.tx-switch{width:min(100%,70rem);height:min(100cqh,31rem);border:1.5px solid transparent;border-radius:.45rem;display:grid;grid-template-columns:13rem 1fr;padding:1.3rem;gap:2rem}
+.tx-switch-tabs{display:flex;flex-direction:column;gap:.75rem;padding-right:1.3rem;border-right:1px solid var(--border)}
+.tx-switch-tabs button{appearance:none;border:0;background:transparent;color:var(--gray);padding:1rem;text-align:left;cursor:pointer;border-radius:.25rem;font-size:var(--body)}
+.tx-switch-tabs button[aria-selected="true"]{background:var(--bg-card);color:var(--brand)}.tx-switch-tabs button[data-panel="b"][aria-selected="true"]{color:var(--purple)}
+.tx-switch-tabs button:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.tx-switch-content{position:relative;min-height:0}.tx-panel{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s ease,visibility .3s}
+.tx-panel.active{opacity:1;visibility:visible;pointer-events:auto}.tx-panel .anim-item{opacity:1;animation:none!important}
+.tx-shared{position:relative;width:min(100%,56rem);height:min(100cqh,34rem);border:1.5px solid transparent;border-radius:.4rem;padding:2.8rem 1.5rem 2.2rem}
+.tx-space-label{position:absolute;top:.65rem;left:1.3rem}.tx-shared .tx-graph{width:100%;height:100%}.tx-shared-note{position:absolute;left:43%;top:18%;font-size:var(--body)}
+.tx-shared .tx-node{--node-art:min(7rem,15cqh)}.tx-shared .tx-node .heading{font-size:var(--body)}
+.tx-messages{width:min(100%,78rem);height:min(100cqh,32rem);display:grid;grid-template-columns:max-content minmax(0,1fr) max-content;grid-template-rows:repeat(3,minmax(0,1fr));gap:.65rem 2rem;align-items:center}
+.tx-message-left{grid-column:1;grid-row:1/-1}.tx-message-right{grid-column:3;grid-row:1/-1}.tx-messages>.tx-item .tx-art{width:6rem;height:6rem}.tx-messages>.tx-item .heading{font-size:var(--body)}
+.tx-message{grid-column:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.2rem}.tx-message-name{display:flex;align-items:center;gap:.6rem}.tx-message-name .tx-art{width:2rem;height:2rem}.tx-message-name .heading{font-size:var(--body)}.tx-message>.copy{font-size:var(--body)}
+.tx-brief{width:min(100%,80rem);display:grid;grid-template-columns:7rem 1fr;gap:2.5rem}.tx-brief>.tx-art{width:6rem;height:7rem}.tx-brief .statement{font-size:var(--heading)}.tx-brief>div>.copy{margin-top:.8rem;color:var(--text)}.tx-brief .tx-fields{margin-top:1.6rem;gap:.9rem}.tx-brief dd{font-size:var(--body)}
+.tx-bottom-note{position:absolute;bottom:0;width:100%;text-align:center}
+.tx-dispatch{width:min(100%,72rem);display:flex;flex-direction:column;gap:clamp(2rem,8cqh,5.12rem)}.tx-dispatch-row{display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;gap:3rem}.tx-dispatch .tx-art{width:clamp(3rem,16cqh,8rem);height:clamp(3rem,16cqh,8rem)}
+.tx-dispatch .heading{font-size:var(--heading)}.tx-dispatch .tx-arrow{transform:translateY(-1rem)}
+.tx-pass-label{position:absolute;top:25%;left:66%;color:var(--purple)}.tx-return-label{position:absolute;top:77%;left:29%;color:var(--orange)}
+.tx-delegation .tx-node{gap:.6rem}.tx-delegation .tx-node{--node-art:min(7rem,15cqh)}.tx-delegation .tx-node .heading{font-size:var(--body)}.tx-delegation .tx-node .copy{font-size:1.05rem}
+.tx-cause-list{width:min(100%,75rem);display:flex;flex-direction:column;gap:clamp(1rem,5cqh,3rem)}.tx-cause{display:grid;grid-template-columns:4rem 1fr;gap:2rem;align-items:baseline}.tx-cause .copy{margin-top:.6rem}.tx-number{font-size:var(--heading);font-weight:800}
+.tx-time{position:relative;width:min(100%,80rem,calc(94cqh * 2.5));aspect-ratio:5/2}.tx-time>svg{width:100%;height:100%;overflow:visible}.tx-time-label{position:absolute;transform:translateX(-50%);white-space:nowrap}.tx-time-car{transform:translate(820px,125px);cursor:pointer}.tx-time-car:focus{outline:none}.tx-time-car:focus-visible>circle{fill:var(--yellow)}.tx-time-branch{clip-path:inset(0 100% 0 0)}.tx-time-new{opacity:0}
+.tx-time.is-running .tx-time-car{animation:tx-time-travel 4s linear both}.tx-time.is-running .tx-time-branch{animation:tx-time-reveal 1.6s linear 2.2s both}.tx-time.is-running .tx-time-new{animation:scope-fade .3s ease 3.8s both}
+@keyframes tx-time-travel{0%{transform:translate(820px,125px);animation-timing-function:cubic-bezier(.23,1,.32,1)}40%,55%{transform:translate(220px,125px)}65%{transform:translate(299px,152px)}75%{transform:translate(355px,212px)}85%{transform:translate(422px,272px)}95%,100%{transform:translate(530px,300px)}}
+@keyframes tx-time-reveal{from{clip-path:inset(0 78% 0 0)}to{clip-path:inset(0 27% 0 0)}}
+@media(max-height:650px){.tx-compare-side{gap:.8rem}.tx-fields{gap:.8rem}.tx-graph{height:100cqh}.tx-node{gap:.3rem}.tx-node .heading{font-size:var(--body)}.tx-node .copy{font-size:1rem}.tx-messages>.tx-item .tx-art{width:4.5rem;height:4.5rem}.tx-shared{padding-top:2rem;padding-bottom:1rem}.tx-brief .tx-fields{margin-top:.8rem;gap:.45rem}.tx-brief .statement{font-size:var(--heading)}.tx-stage-focus{gap:1rem}.tx-switch{grid-template-columns:10rem 1fr}.tx-record{gap:2rem}.tx-delegation .tx-node .copy{font-size:.95rem}}
+@media(prefers-reduced-motion:reduce){.tx-draw.do-fadeinup path{animation:none;stroke-dashoffset:0}.tx-panel{transition:none}.tx-time.is-running .tx-time-car{animation:none;transform:translate(530px,300px)}.tx-time.is-running .tx-time-branch{animation:none;clip-path:none}.tx-time.is-running .tx-time-new{animation:none;opacity:1}}
+
+    @media(max-height:650px){.structure-tree{gap:0}.structure-tree__stem{height:1.5rem}.structure-tree__children{padding-top:0}.structure-tree__children>.structure-node{padding-top:1.8rem;gap:.65rem}.structure-tree__children>.structure-node::before{height:1.2rem}.structure-node>.diagram{height:min(22cqh,7rem)}.exchange{height:min(100cqh,23rem);min-height:0}.transition-side{gap:.5rem;grid-template-rows:auto auto minmax(0,1fr) auto}.transition-side>.diagram{height:min(30cqh,8rem)}.transition-compare{height:100cqh}.tx-delegation [data-node="person"],.tx-delegation [data-node="center"]{top:19%}}
+.tx-origin [data-node="a"],.tx-origin [data-node="b"]{top:60%}.tx-history-spaces [data-node="b"]{top:65%}.tx-history [data-node="branch"]{top:69%}.tx-history-spaces .tx-label--b{top:55%}
+.tx-folder-scope{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.tx-agent-badge{position:absolute;right:-1.5rem;top:0;width:2.6rem;height:2.6rem}.tx-delegation [data-node="a"],.tx-delegation [data-node="b"],.tx-delegation [data-node="c"]{top:65%}
+.tx-delegation [data-node="center"] .heading{position:absolute;left:calc(100% + 1rem);top:.4rem}.tx-delegation [data-node="center"] .copy{position:absolute;left:calc(100% + 1rem);top:2.5rem}@media(max-height:650px){.tx-delegation [data-node="a"],.tx-delegation [data-node="b"],.tx-delegation [data-node="c"]{top:60%}.tx-delegation [data-node="center"] .copy{top:2rem}}
+
+/* Chapter 3: diagrams inherit the shared slide typography and colors. */
+.skill-stage {width:min(100%,var(--content-width));margin-inline:auto;}
+.skill-stage p,.skill-stage h2,.skill-stage h3 {margin:0;}
+.skill-stage .copy {color:var(--text-dim);}
+
+.skill-art {width:8rem;height:8rem;display:block;margin:auto;overflow:visible;}
+.skill-art--large {width:13rem;height:13rem;}
+.skill-art--small {width:5rem;height:5rem;}
+.skill-art--inline {width:3rem;height:3rem;}
+.tone-result{color:var(--green)}
+.skill-paper {border:2px solid var(--border);background:var(--bg-card);padding:1.5rem 1.6rem;position:relative;min-width:0;}
+.skill-paper .heading {font-size:var(--heading);}
+.skill-paper p + p,.skill-paper h2 + p {margin-top:.8rem;}
+.skill-paper--method{border-color:var(--brand)}
+.skill-paper--result{border-color:var(--green)}
+.skill-arrow {display:flex;align-items:center;justify-content:center;width:100%;max-width:3.5rem;height:1.25rem;justify-self:center;align-self:center;color:var(--gray);}
+.connector-art {display:block;width:100%;height:100%;overflow:visible;flex:none;}
+.skill-arrow.vertical{width:1.25rem;height:2.5rem;min-width:0;margin:.5rem auto .75rem;}
+.skill-caption {font-size:var(--body);line-height:1.5;color:var(--text-dim);text-align:center;}
+.skill-eyebrow {font-size:1.05rem;color:var(--text-dim);font-weight:700;letter-spacing:.05em;}
+
+
+
+
+
+.skill-agent {text-align:center;}
+.skill-agent .heading {margin-top:.7rem;}
+.skill-agent .copy {margin-top:.6rem;}
+.skill-split {display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:stretch;}
+.skill-split > section {min-width:0;}
+.skill-split > section + section {border-left:1px solid var(--border);padding-left:5rem;}
+.skill-split .heading {margin-bottom:1.25rem;}
+.skill-split .copy {margin-block:.8rem 1.6rem;}
+.skill-list {display:flex;flex-direction:column;gap:1.1rem;margin-top:1.5rem;}
+.skill-list > div {display:flex;align-items:center;gap:1rem;font-size:var(--body);}
+.skill-line {height:2px;background:currentColor;width:2rem;flex-shrink:0;opacity:.7;}
+.skill-input {text-align:center;}
+.skill-input .skill-paper {margin-top:1rem;}
+.skill-flow {display:grid;grid-template-columns:1fr 5rem 1.2fr 5rem 1fr;grid-template-rows:auto auto;gap:1rem 1.25rem;align-items:center;}
+.skill-flow .skill-guide{grid-column:3;grid-row:1;text-align:center;}
+.skill-guide .skill-paper {border-color:var(--brand);padding:1.1rem;}
+.skill-guide .heading {margin-bottom:.4rem;}
+.skill-guide .copy {font-size:1.1rem;}
+.skill-guide > .skill-caption {margin:.45rem 0;}
+.skill-flow .flow-row {grid-row:2;}
+.skill-plugin {position:relative;padding:2.5rem 3rem;}
+.skill-plugin .scope-frame {inset:0;border-color:var(--gray);border-radius:.7rem;}
+.skill-plugin-header{display:flex;justify-content:space-between;align-items:baseline;position:relative;margin-bottom:2.5rem;}
+.skill-plugin-parts {display:grid;grid-template-columns:repeat(3,1fr);gap:3rem;position:relative;}
+.skill-plugin-part {text-align:center;border-top:2px solid var(--border);padding-top:1rem;}
+.skill-plugin-part:first-child{border-color:var(--brand)}
+.skill-plugin-part .heading {margin:.6rem 0;}
+.skill-footnote {margin-top:2rem!important;text-align:center;font-size:var(--body);color:var(--text-dim);}
+.skill-install {display:grid;grid-template-columns:1fr 3rem 1fr 3rem 1fr 3rem 1fr;align-items:center;gap:1.5rem;}
+.skill-step {text-align:center;}
+.skill-step .step-no {font-family:Monaco,monospace;color:var(--brand);font-size:1.2rem;display:block;margin-bottom:.8rem;}
+.skill-step .skill-art {width:8rem;height:8rem;}
+.skill-step .heading{margin:1rem 0 .7rem;}
+.skill-context {display:grid;grid-template-columns:1.3fr 4rem 1fr 4rem 1fr;gap:1.5rem;align-items:center;}
+.skill-context-input {display:flex;flex-direction:column;gap:2rem;}
+.skill-context-input .heading {margin-bottom:.4rem;}
+.skill-context-input .copy {margin-top:.7rem;}
+.skill-collection {display:grid;grid-template-columns:repeat(3,1fr);gap:1.8rem;}
+.skill-collection > div {text-align:center;}
+.skill-collection .skill-art{width:8rem;height:8rem;}
+.skill-collection .heading {margin-top:1rem;}
+.skill-browser{border:2px solid currentColor;border-radius:.4rem;overflow:hidden;width:100%;max-width:20rem;margin:auto;aspect-ratio:1.35;color:var(--green);background:var(--bg-card);}
+.skill-browser-bar{height:1.4rem;border-bottom:1px solid currentColor;display:flex;gap:.35rem;align-items:center;padding-left:.65rem;}
+.skill-browser-bar i{display:block;width:.3rem;height:.3rem;border-radius:50%;background:currentColor;}
+.skill-browser-body{display:grid;grid-template-columns:1.15fr 1fr;align-items:center;gap:1.2rem;padding:1.8rem;height:calc(100% - 1.4rem);}
+.fake-lines{display:flex;flex-direction:column;gap:.6rem;}
+.fake-lines i{display:block;height:.25rem;background:currentColor;opacity:.5;}
+.fake-lines i:first-child {height:.55rem;opacity:1;margin-bottom:.4rem;width:90%;}
+.fake-lines i:last-child{width:60%;}
+.fake-image{width:100%;aspect-ratio:1;background:var(--green-dim);border:1px solid currentColor;position:relative;}
+.fake-image:after{content:'';position:absolute;inset:25%;border:2px solid currentColor;border-radius:50%;}
+.skill-column-flow {text-align:center;}
+.skill-column-flow .skill-tag{display:block;font-family:inherit;font-size:var(--body);line-height:1.6;color:var(--brand);margin-block:1.6rem;}
+.skill-column-flow .copy {margin:0 0 1.1rem;}
+.skill-results{display:flex;gap:1.4rem;justify-content:center;align-items:stretch;}
+.skill-results .skill-paper{flex:1;max-width:19rem;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:11rem;gap:.6rem;}
+.skill-results .skill-art {width:5rem;height:5rem;}
+.skill-results .heading {font-size:var(--heading);margin:0;}
+.skill-principles{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem 6rem;}
+.skill-principle{display:grid;grid-template-columns:7rem 1fr;align-items:center;gap:1.7rem;border-bottom:1px solid var(--border);padding-bottom:1.8rem;}
+.skill-principle .skill-art{width:6rem;height:6rem;}
+.skill-principle .copy{margin-top:.7rem;}
+.skill-output-pair .skill-paper{max-width:20rem;margin:auto;min-height:14rem;display:flex;flex-direction:column;justify-content:center;gap:1.4rem;color:var(--green);}
+.skill-output-pair .skill-tag{margin-top:0;}
+.skill-output-pair .heading{margin-top:1.5rem;}
+.skill-find .heading{margin:1rem 0;}
+.skill-find .skill-tag{margin:0 0 1rem;}
+.skill-find .skill-art {width:8rem;height:8rem;}
+.skill-handoff {display:grid;grid-template-columns:1.2fr 4rem 1fr 4rem 1fr;gap:1.5rem;align-items:center;}
+.skill-handoff-docs {display:flex;flex-direction:column;gap:1rem;}
+.skill-handoff-docs .skill-paper {padding:1rem 1.5rem;}
+.skill-handoff-docs .heading {font-size:var(--heading);}
+.skill-handoff-docs .copy {margin-top:.35rem;font-size:var(--body);}
+.skill-handoff .rule-book {text-align:center;}
+.skill-handoff .rule-book .heading {margin-top:1rem;}
+@media (max-width:1400px){
+.skill-split{gap:3rem}.skill-split>section+section{padding-left:3rem}
+.skill-context,.skill-handoff{gap:1rem;grid-template-columns:1.2fr 2.5rem 1fr 2.5rem 1fr}
+.skill-install{gap:1rem;grid-template-columns:1fr 1.6rem 1fr 1.6rem 1fr 1.6rem 1fr}
+.skill-flow{grid-template-columns:1fr 3rem 1.2fr 3rem 1fr}
+}
+
+
+@media (max-height:900px) {
+  .skill-flow {gap:.4rem 1rem;}
+  .skill-flow .skill-guide .skill-paper {padding:.7rem 1rem;}
+  .skill-flow .skill-art {width:6rem;height:6rem;}
+  .skill-flow .skill-art--large {width:9rem;height:9rem;}
+  .skill-flow .skill-arrow.vertical {height:1.5rem;}
+  .skill-flow .skill-guide > .skill-caption {margin:.15rem 0;}
+  .skill-column-flow > .skill-art {width:5.5rem;height:5.5rem;}
+  .skill-column-flow > .skill-tag {margin:.8rem 0;}
+  .skill-column-flow > .skill-arrow.vertical {height:1.6rem;}
+  .skill-column-flow > .copy {margin-bottom:.5rem;}
+  .skill-results .skill-paper {min-height:8rem;padding:.8rem;gap:.2rem;}
+  .skill-results .skill-art {width:3.5rem;height:3.5rem;}
+  .skill-find .skill-art {width:5rem;height:5rem;}
+  .skill-find .heading {margin:.6rem 0;}
+  .skill-find .skill-paper {padding:.8rem 1rem;}
+  .skill-footnote {margin-top:1rem!important;}
+}
+
+/* Course-approved skills: scoped content diagrams. */
+.course-skill-map{display:grid;grid-template-columns:repeat(2,max-content);justify-content:center;gap:2.5rem 4rem;text-align:center}
+.course-skill-map .skill-art{width:7rem;height:7rem;margin-bottom:.8rem}
+.course-interview{display:grid;width:min(100%,72rem);margin-inline:auto;grid-template-columns:1fr 3rem 1.25fr 3rem 1fr;gap:1.25rem;align-items:center}
+.course-interview--reuse{max-width:66rem;grid-template-columns:minmax(0,1fr) 3rem 11rem 3rem minmax(0,1fr);--agent-caption-space:calc(3.2rem + var(--body) * 1.6 + var(--heading) * 1.35);}
+.course-interview--reuse>.skill-arrow{position:relative;top:calc(var(--agent-caption-space) / -2);}
+.course-interview .skill-caption{margin-top:1rem}
+.course-questions{display:flex;flex-direction:column;gap:1rem}
+.course-questions .skill-tag,.skill-stage .skill-tag{font-size:var(--body);line-height:1.6;font-weight:700;color:var(--brand);display:block;text-align:center}
+.question-bubble{padding:1.1rem 1.4rem;border:1px solid var(--border);border-radius:1rem 1rem 1rem 0;background:var(--bg-card);font-size:var(--body);align-self:flex-start}
+.question-bubble.reply{border-color:var(--purple);color:var(--purple);align-self:flex-end;border-radius:1rem 1rem 0 1rem}
+.course-shared-input{display:flex;align-items:center;justify-content:center;gap:1rem}
+.course-shared-input .skill-art{width:4.5rem;height:4.5rem;margin:0}
+.course-content-fork{width:55%;height:2.7rem;border-top:2px solid var(--gray);border-inline:2px solid var(--gray);margin:2rem auto .4rem;position:relative}
+.course-content-fork:before{content:'';height:2rem;border-left:2px solid var(--gray);position:absolute;left:50%;bottom:100%}
+.course-content-pair .skill-tag{margin-top:0}
+.course-content-pair .skill-paper{min-height:11rem;display:flex;flex-direction:column;justify-content:center;gap:.7rem;max-width:28rem;margin:auto;text-align:left}
+.course-content-pair .skill-paper .heading{margin:0}
+.course-content-pair .skill-paper .copy{margin:0}
+.course-social-preview{border:1px solid var(--green);border-radius:1rem;padding:1.5rem;max-width:28rem;min-height:11rem;margin:auto;display:grid;grid-template-columns:2.5rem 1fr;gap:1rem;text-align:left;background:var(--bg-card)}
+.course-social-preview .heading{grid-column:1/-1;margin:0}
+.post-avatar{border:2px solid var(--purple);width:2.5rem;height:2.5rem;border-radius:50%}
+.course-social-preview .fake-lines{color:var(--green);align-self:center}
+.course-reuse{display:flex;flex-direction:column;gap:1.5rem}
+.course-code-preview{border:2px solid var(--green);border-radius:.7rem;min-height:14rem;padding:2rem;color:var(--green);display:flex;flex-direction:column;justify-content:space-around;background:var(--bg-card)}
+.course-code-preview>span{font-family:Monaco,monospace;font-size:2.8rem}
+.course-center{text-align:center;margin-top:1.3rem!important}
+.course-model-pair{display:grid;grid-template-columns:10.5rem 3rem 10.5rem;gap:1rem;justify-content:center;align-items:center;margin-top:1.7rem}
+.course-model-pair .skill-art{width:8rem;height:8rem}
+
+.course-model-pair .copy{font-size:var(--body);margin:.8rem 0 0}
+.course-model-pair .skill-arrow{align-self:start;margin-top:3rem;}
+.skill-column-flow>.skill-browser{margin:1.5rem auto}
+@media(max-width:1400px){.course-interview{grid-template-columns:1fr 1.6rem 1.3fr 1.6rem 1fr;gap:1rem}.course-skill-map{gap:2rem 3rem}}
+@media(max-width:1400px){.course-interview--reuse{grid-template-columns:minmax(0,1fr) 2.5rem 11rem 2.5rem minmax(0,1fr);}}
+@media(max-height:900px){.course-interview--reuse{--agent-caption-space:calc(1.6rem + var(--body) * 1.6 + var(--heading) * 1.35);}.course-skill-map{gap:1rem 2rem}.course-skill-map .skill-art{width:5rem;height:5rem}.course-content-pair .skill-paper,.course-social-preview{min-height:8rem}.course-content-fork{height:1.4rem;margin-top:1.5rem}.course-content-fork:before{height:1.5rem}.course-content-pair .skill-tag{margin-bottom:.7rem}.course-model-pair .skill-art{width:6rem;height:6rem}.course-questions{gap:.7rem}.course-code-preview{min-height:11rem}}
+@media(max-height:900px){.slide[data-index="5"] .skill-column-flow>.skill-browser{max-width:18rem;margin:.8rem auto}}
+
+/* Skill authoring: the agent produces a reusable skill. */
+
+.creator-scene {max-width:70rem;}
+.creator-flow {display:grid;grid-template-columns:minmax(0,1fr) 3rem 11rem 3rem minmax(0,1.15fr);gap:1.25rem;align-items:center;}
+.creator-input,.creator-output {height:29rem;min-width:0;}
+.creator-input>.heading:first-child,.creator-output>.heading:first-child {height:3.5rem;margin-bottom:3rem;}
+.creator-input>.heading {color:var(--gray);}
+.creator-output>.heading {color:var(--green);}
+.creator-material {display:flex;align-items:center;gap:1.3rem;padding:1.8rem 1.5rem;border:1.5px solid var(--gray);background:var(--bg-card);min-height:8rem;}
+.creator-material+.creator-material {margin-top:1.5rem;}
+.creator-material .skill-art {width:3.5rem;height:4rem;flex:none;margin:0;}
+.creator-material .heading {font-size:var(--heading);white-space:nowrap;}
+.creator-agent {display:flex;flex-direction:column;align-items:center;gap:1.5rem;}
+.creator-tool {border:1.5px solid var(--brand);padding:.7rem 1rem;font-family:inherit;font-size:var(--body);line-height:1.6;font-weight:700;color:var(--brand);background:var(--bg-card);}
+.creator-agent .skill-art {width:12rem;height:12rem;}
+.creator-folder {height:18rem;position:relative;padding:2rem;display:flex;align-items:center;justify-content:center;}
+.creator-folder-frame {position:absolute;inset:0;border:2px solid var(--green);border-radius:0 .6rem .6rem .6rem;background:var(--bg-card);pointer-events:none;}
+.creator-folder-frame:before {content:'';position:absolute;left:-2px;top:-1rem;width:40%;height:1rem;border:2px solid var(--green);border-bottom:0;border-radius:.4rem .4rem 0 0;background:var(--bg-card);}
+.creator-folder-frame.anim-item.do-fadeinup {animation-name:scope-fade;transform:none;}
+.creator-document {position:relative;width:90%;border:1.5px solid var(--green);background:var(--bg);padding:1.5rem;}
+.creator-document .heading {color:var(--green);font-size:var(--heading);}
+.creator-lines {display:flex;flex-direction:column;gap:.8rem;margin-top:1.5rem;}
+.creator-lines i {height:.2rem;background:var(--gray);width:100%;}
+.creator-lines i:first-child {height:.4rem;background:var(--green);width:60%;}
+.creator-lines i:last-child {width:80%;}
+.creator-result {color:var(--green);text-align:center;margin:1.5rem 0 0!important;}
+@media(max-width:1500px) {.creator-flow {grid-template-columns:minmax(0,1fr) 2.5rem 11rem 2.5rem minmax(0,1.1fr);gap:1.2rem;}.creator-material {padding:1.5rem 1rem;gap:.8rem;}.creator-material .skill-art {width:3rem;}.creator-agent .skill-art {width:10.5rem;height:10.5rem;}.creator-folder {padding:1.5rem;}}
+@media(max-height:900px) {.creator-input,.creator-output {height:26rem;}.creator-material {min-height:7rem;}.creator-folder {height:15rem;}.creator-agent {gap:1rem;}}
+
+
+/* Part 4 approved COVER_SCENE: shared header, type roles and footer. */
+.scene {width:min(100%,92rem);grid-template-columns:minmax(0,1fr) minmax(0,1.45fr);}
+.scene--cover .scene__copy {gap:1.5rem;}
+.scene--cover .scene__visual {height:min(86cqh,40rem);}
+.icon {display:block;overflow:visible;flex:none;}
+.icon--robot {width:8.5rem;height:9rem;margin-inline:auto;}
+.icon--file {width:5rem;height:6.2rem;margin-inline:auto;}
+.cover-map {display:grid;align-items:center;gap:1rem;height:28rem;width:max-content;max-width:100%;justify-self:center;}
+.cover-map--use {grid-template-columns:7rem 3.5rem 7rem 3.5rem 7rem;}
+.cover-map--select {grid-template-columns:10rem 3.5rem 10rem;gap:1.25rem;}
+.cover-node {position:relative;text-align:center;}
+.cover-node>.copy {position:absolute;top:calc(100% + 1.2rem);left:50%;transform:translateX(-50%);white-space:nowrap;}
+.cover-node .icon--robot {width:7rem;height:7.25rem;}
+.cover-link {display:flex;align-items:center;justify-content:center;width:3.5rem;height:1.25rem;}
+.cover-choice-stack {position:relative;display:flex;flex-direction:column;align-items:center;gap:1.2rem;}
+.cover-choice .icon--file {width:4.4rem;height:5.3rem;}
+.cover-choice-stack>.copy {position:absolute;top:calc(100% + 1.2rem);left:50%;transform:translateX(-50%);white-space:nowrap;}
+@media(max-height:900px) {.cover-map {height:25rem;}}
+
+.skill-stage .skill-tag--human {color:var(--purple);}
+.course-model-pair .icon--robot {width:7rem;height:7.25rem;}
+
+/* Scale all shared rem roles together on compact previews; no slide-specific type reduction. */
+@media(max-width:1100px),(max-height:650px) {html {font-size:min(16px,1.25vw,2vh);}}
+</style>
+  </head>
+  <body>
+    <svg class="symbols" aria-hidden="true">
+      <defs>
+        <g id="shape-person">
+          <circle cx="50" cy="28" r="15" />
+          <path d="M18 85V73C18 44 82 44 82 73V85" />
+        </g>
+        <g id="shape-document">
+          <path
+            d="M24 12H59L77 30V88H24ZM59 12V30H77M35 45H64M35 58H64M35 71H55"
+          />
+        </g>
+        <g id="shape-folder">
+          <path d="M12 28V18H39L50 28H88V81H12ZM12 38H88" />
+        </g>
+        <g id="shape-done">
+          <circle cx="50" cy="50" r="35" />
+          <path d="M30 50L44 64L72 35" />
+        </g>
+        <g id="shape-working">
+          <circle cx="50" cy="50" r="35" opacity=".18" />
+          <path d="M50 15A35 35 0 1 1 15 50" stroke-width="5" />
+        </g>
+        <g id="shape-waiting">
+          <path
+            d="M25 15H75Q85 15 85 25V65Q85 75 75 75H45L25 90V75H25Q15 75 15 65V25Q15 15 25 15Z"
+          />
+          <path d="M38 37C38 22 64 24 61 39C60 46 50 46 50 55M50 65V66" />
+        </g>
+<g id="shape-browser"><rect x="9" y="18" width="82" height="64" rx="4"/><path d="M9 33H91M20 25H23M29 25H32M21 47H44M21 57H44M21 67H35"/><rect x="56" y="44" width="23" height="25" rx="2"/></g><g id="shape-simple"><rect x="20" y="20" width="60" height="60" rx="5"/><path d="M36 50H64"/></g><g id="shape-agent"><rect x="18" y="10" width="64" height="48" rx="22" fill="var(--text)" stroke="var(--gray)"/><rect x="27" y="27" width="46" height="14" rx="7" fill="var(--bg)" stroke="none"/><path d="M36 34H64" stroke-width="5"/><path d="M30 60Q20 67 20 81H80Q80 67 70 60"/></g><g id="shape-point"><circle cx="50" cy="50" r="10" fill="var(--bg)"/></g><g id="shape-cloud"><path d="M22 72C0 72 0 34 26 34C32 6 69 7 76 32C101 29 109 72 82 72Z"/></g><g id="shape-gate"><path d="M50 9L91 50L50 91L9 50Z"/><path d="M36 50L46 61L66 39"/></g><marker id="tx-arrowhead" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto-start-reverse"><path d="M1 1L7 4L1 7" fill="none" stroke="context-stroke" stroke-width="1.4"/></marker>
+      <marker id="tx-tip-brand" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="var(--brand)" stroke-width="1.4"/></marker><marker id="tx-tip-purple" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="var(--purple)" stroke-width="1.4"/></marker><marker id="tx-tip-gray" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="var(--gray)" stroke-width="1.4"/></marker><marker id="tx-tip-yellow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="var(--yellow)" stroke-width="1.4"/></marker><marker id="tx-tip-orange" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="var(--orange)" stroke-width="1.4"/></marker><marker id="tx-tip-green" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="var(--green)" stroke-width="1.4"/></marker><g id="shape-workspace"><use href="#shape-folder"/><g stroke="var(--gray)" stroke-width="1.6"><path d="M29 45H36L41 50V68H29ZM36 45V50H41M33 56H37M33 61H37"/><path d="M45 45H52L57 50V68H45ZM52 45V50H57M49 56H53M49 61H53"/></g><path stroke-width="1.6" d="M61 45H68L73 50V68H61ZM68 45V50H73M65 56H69M65 61H69"/></g></defs>
+    </svg>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress"></div>
+    </div>
+    <button class="nav-btn" id="btn-prev" aria-label="이전 슬라이드">
+      &#8592;
+    </button>
+    <button class="nav-btn" id="btn-next" aria-label="다음 슬라이드">
+      &#8594;
+    </button>
+    <div class="dot-nav" id="dot-nav"></div>
+    <div class="slide-counter">
+      <span id="cur">1</span> / <span id="tot">2</span>
+    </div>
+    <div class="slide-deck" id="deck">
+      
+      <article class="slide active" data-index="0" data-pattern="COVER_SCENE">
+<header class="slide__header"><span class="slide__label">Part 4 · Ch03-02 · 1인 회사 운영에 유용한 스킬 모음</span><h1 class="slide__title">1인 회사 운영에 유용한 <span class="hl">스킬 모음</span></h1><p class="slide__sub">핵심 스킬 5종과 최신 트렌딩 스킬을 찾는 방법을 다룹니다.</p></header>
+<main class="slide__body"><div class="scene scene--cover"><div class="scene__copy anim-item" data-anim-step="0"><p class="statement">맡길 업무에 맞춰<strong>필요한 스킬 선택</strong></p></div><figure class="scene__visual anim-item" data-anim-step="1"><img src="/artifacts/part3/_images/ch01-02-repo-and-flow--staging-selection-transparent.png" alt="사람이 책상 위 문서들 가운데 필요한 것을 골라 에이전트 앞 트레이에 담는 장면"></figure></div></main>
+<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article>
+
+<!-- skill-creator is the author's tool; the output is a reusable skill, not company policy. -->
+<article class="slide" data-index="1" data-pattern="PROCESS_STRIP">
+<header class="slide__header"><span class="slide__label">Part 4 · Ch03-02 · 1인 회사 운영에 유용한 스킬 모음</span><h1 class="slide__title">나만의 <span class="hl">스킬 만들기</span></h1><p class="slide__sub">원하는 작업 방식과 결과물 예시를 스킬로 만듭니다.</p></header>
+<main class="slide__body"><div class="skill-stage creator-scene"><div class="creator-flow">
+<section class="creator-input"><h2 class="heading anim-item" data-anim-step="0">전달할 자료</h2><div class="creator-material anim-item" data-anim-step="0"><svg class="skill-art " viewBox="0 0 100 100" fill="none" stroke="var(--gray)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><h3 class="heading">작업 방식</h3></div><div class="creator-material anim-item" data-anim-step="1"><svg class="skill-art " viewBox="0 0 100 100" fill="none" stroke="var(--gray)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><h3 class="heading">결과물 예시</h3></div></section>
+<div class="skill-arrow anim-item" data-anim-step="2" aria-hidden="true"><svg class="connector-art" viewBox="0 0 56 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10H51M44 3L51 10L44 17"/></svg></div>
+<div class="creator-agent anim-item" data-anim-step="2"><div class="creator-tool">skill-creator</div><svg class="icon icon--robot tone-brand " viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><h2 class="heading">에이전트</h2></div>
+<div class="skill-arrow anim-item" data-anim-step="3" aria-hidden="true"><svg class="connector-art" viewBox="0 0 56 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10H51M44 3L51 10L44 17"/></svg></div>
+<section class="creator-output"><h2 class="heading anim-item" data-anim-step="3">결과물</h2><div class="creator-folder motion-scope"><span class="creator-folder-frame anim-item" data-anim-step="4" aria-hidden="true"></span><div class="creator-document anim-item" data-anim-step="5"><h3 class="heading">SKILL.md</h3><div class="creator-lines" aria-hidden="true"><i></i><i></i><i></i></div></div></div></section>
+</div></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+    </div>
+    <script>
+      // file:// 로 열었을 때만 경로를 보정한다. 정식 덱과 같은 코드다 —
+      // 이 템플릿을 복사해 만든 덱이 그대로 동작해야 한다. HTTP 경로에는 개입하지 않는다.
+      (function () {
+        if (location.protocol !== "file:") return;
+        // 정식 덱은 경로의 /artifacts/ 앞이 저장소 루트다.
+        // 스킬 assets 안의 템플릿처럼 /artifacts/ 밖에 있는 파일은 깊이로 되짚는다.
+        var m = location.pathname.match(/^(.*\/)artifacts\//);
+        var root = m
+          ? m[1]
+          : new URL(
+              /\/\.(claude|agents)\/skills\/fastcampus-slide\/assets\//.test(
+                location.pathname,
+              )
+                ? "../../../../"
+                : "../../../",
+              location.href,
+            ).pathname;
+        function apply() {
+          document.querySelectorAll('img[src^="/"]').forEach(function (el) {
+            var s = el.getAttribute("src");
+            if (s.indexOf(root) === 0) return;
+            el.setAttribute("src", root + s.slice(1));
+          });
+        }
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", apply);
+        } else {
+          apply();
+        }
+      })();
+      /* 조작 규칙 (성공 기준):
+         페이지 이동은 좌우 nav-btn · 하단 dot · 키보드(←/→/스페이스)로만.
+         #deck/body/.slide에 이동용 click 리스너를 절대 달지 않는다 —
+         강의 중 화면을 가리키며 클릭해도 슬라이드가 넘어가면 안 된다. */
+// A connector uses visible icon bounds; labels are not endpoint anchors.
+function drawPatternConnections(){
+ document.querySelectorAll('.tx-graph').forEach(graph=>{
+  const svg=graph.querySelector('.tx-wires');const rect=graph.getBoundingClientRect();
+  if(!rect.width||!rect.height)return;
+  svg.setAttribute('viewBox',`0 0 ${rect.width} ${rect.height}`);
+  const anchor=(node)=>{const r=node.querySelector('.tx-art').getBoundingClientRect();return {x:r.x-rect.x+r.width/2,y:r.y-rect.y+r.height/2,w:r.width,h:r.height}};
+  graph.querySelectorAll('.tx-link').forEach(link=>{
+   const f=graph.querySelector(`[data-node="${link.dataset.from}"]`),t=graph.querySelector(`[data-node="${link.dataset.to}"]`);if(!f||!t)return;
+   const a=anchor(f),b=anchor(t),route=link.dataset.route||'',path=link.querySelector('path');let d;const gap=12;
+   if(route.includes('tree')){const y=(a.y+a.h*.3+b.y-b.h*.3)/2;d=`M${a.x} ${a.y+a.h*.32+gap}V${y}H${b.x}V${b.y-b.h*.32-gap}`;}
+   else if(route.includes('return')){const fromBottom=f.getBoundingClientRect().bottom-rect.y+gap,toBottom=t.getBoundingClientRect().bottom-rect.y+gap,y=Math.min(rect.height*.9,Math.max(fromBottom,toBottom)+25);d=`M${a.x} ${fromBottom}V${y}H${b.x}V${toBottom}`;}
+   else if(Math.abs(b.y-a.y)>rect.height*.26&&graph.classList.contains('tx-delegation')){const x1=a.x+(b.x<a.x?-15:15),y1=a.y+a.h*.4+gap,x2=b.x,y2=b.y-b.h*.4-gap;d=`M${x1} ${y1}C${x1} ${(y1+y2)/2} ${x2} ${(y1+y2)/2} ${x2} ${y2}`;}
+   else{const sign=b.x>a.x?1:-1,x1=a.x+sign*(a.w*.4+gap),x2=b.x-sign*(b.w*.4+gap);d=route.includes('curve')||Math.abs(b.y-a.y)>20?`M${x1} ${a.y}C${x1+(x2-x1)*.55} ${a.y} ${x2-(x2-x1)*.35} ${b.y} ${x2} ${b.y}`:`M${x1} ${a.y}L${x2} ${b.y}`;}
+   path.setAttribute('d',d);if(route.includes('draw'))path.setAttribute('pathLength','1');
+  });
+ });
+}
+const patternObserver=new ResizeObserver(()=>requestAnimationFrame(drawPatternConnections));
+document.querySelectorAll('.tx-graph').forEach(e=>patternObserver.observe(e));
+document.fonts.ready.then(drawPatternConnections);
+function selectPatternPanel(root,id){
+ root.querySelectorAll('[data-panel]').forEach(b=>{const active=b.dataset.panel===id;b.setAttribute('aria-selected',active);b.tabIndex=active?0:-1;});
+ root.querySelectorAll('[data-panel-view]').forEach(p=>{const active=p.dataset.panelView===id;p.classList.toggle('active',active);p.setAttribute('aria-hidden',!active);p.inert=!active;});
+}
+document.querySelectorAll('.tx-switch').forEach((root,n)=>{
+ root.querySelectorAll('[data-panel]').forEach(button=>{
+  const id=button.dataset.panel;button.id=`tx-tab-${n}-${id}`;button.setAttribute('aria-controls',`tx-panel-${n}-${id}`);
+  const panel=root.querySelector(`[data-panel-view="${id}"]`);panel.id=`tx-panel-${n}-${id}`;panel.setAttribute('aria-labelledby',button.id);
+  button.addEventListener('click',()=>selectPatternPanel(root,id));
+  button.addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key))return;event.preventDefault();event.stopPropagation();const buttons=[...root.querySelectorAll('[data-panel]')],next=buttons[(buttons.indexOf(button)+(event.key==='ArrowLeft'||event.key==='ArrowUp'?-1:1)+buttons.length)%buttons.length];next.focus();selectPatternPanel(root,next.dataset.panel);});
+ });selectPatternPanel(root,root.dataset.defaultPanel);
+});
+document.querySelectorAll('.tx-time-car').forEach(car=>{
+ const root=car.closest('.tx-time');const run=e=>{e.preventDefault();e.stopPropagation();root.classList.remove('is-running');void root.offsetWidth;root.classList.add('is-running');};
+ car.addEventListener('pointerdown',e=>e.preventDefault());car.addEventListener('click',run);car.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')run(e);});
+});
+function resetPatternInteractions(slide){
+ slide.querySelectorAll('.tx-time').forEach(e=>e.classList.remove('is-running'));
+ slide.querySelectorAll('.tx-switch').forEach(e=>selectPatternPanel(e,e.dataset.defaultPanel));
+ requestAnimationFrame(drawPatternConnections);
+}
+
+      class SlidePresentation {
+        constructor() {
+          this.slides = Array.from(document.querySelectorAll(".slide"));
+          this.total = this.slides.length;
+          const requested = Number.parseInt(
+            new URLSearchParams(window.location.search).get("slide"),
+            10,
+          );
+          this.current =
+            Number.isInteger(requested) &&
+            requested >= 1 &&
+            requested <= this.total
+              ? requested - 1
+              : 0;
+          this.isAnimating = false;
+          this._init();
+        }
+        _init() {
+          this.slides.forEach((slide, i) =>
+            slide.classList.toggle("active", i === this.current),
+          );
+          document.getElementById("tot").textContent = this.total;
+          this._buildDots();
+          this._bindKeys();
+          this._bindButtons();
+          this._update();
+          this._runSlide(this.current);
+        }
+        /* 슬라이드 진입 시 .anim-item 을 순차 등장시킨다.
+           스토리보드의 "애니메이션 순서" = DOM 순서 */
+        _runSlide(i) {
+          const slide = this.slides[i];
+          resetPatternInteractions(slide);
+          const items = [...slide.querySelectorAll('.anim-item')];
+          items.forEach(el => el.classList.remove('do-fadeinup'));
+          void slide.offsetWidth;
+          const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+          const instant = reduced || slide.dataset.motion === 'none';
+          items.forEach((el,n) => {
+            const requested = Number(el.dataset.animStep ?? n);
+            const step = Number.isFinite(requested) ? Math.max(0, requested) : n;
+            el.style.animationDelay = instant ? '0ms' : `${150 + step * 260}ms`;
+            el.style.setProperty('--draw-delay',el.style.animationDelay);
+            el.classList.add('do-fadeinup');
+          });
+        }
+        next() {
+          if (!this.isAnimating) this._go(this.current + 1);
+        }
+        prev() {
+          if (!this.isAnimating) this._go(this.current - 1);
+        }
+        _go(i) {
+          if (
+            i < 0 ||
+            i >= this.total ||
+            i === this.current ||
+            this.isAnimating
+          )
+            return;
+          this.isAnimating = true;
+          this.slides[this.current].classList.remove("active");
+          this.slides[i].classList.add("active");
+          this.current = i;
+          const url = new URL(window.location.href);
+          url.searchParams.set("slide", this.current + 1);
+          window.history.replaceState({}, "", url);
+          this._runSlide(i);
+          setTimeout(() => {
+            this.isAnimating = false;
+            this._update();
+          }, 420);
+          this._update();
+        }
+        _update() {
+          this.slides.forEach((slide, i) => {
+            slide.inert = i !== this.current;
+            slide.setAttribute('aria-hidden', String(i !== this.current));
+          });
+          const pct = ((this.current + 1) / this.total) * 100;
+          document.getElementById("progress").style.width = pct + "%";
+          document.getElementById("cur").textContent = this.current + 1;
+          document.getElementById("btn-prev").disabled = this.current === 0;
+          document.getElementById("btn-next").disabled =
+            this.current === this.total - 1;
+          document
+            .querySelectorAll(".dot")
+            .forEach((d, i) =>
+              d.classList.toggle("active", i === this.current),
+            );
+        }
+        _buildDots() {
+          const nav = document.getElementById("dot-nav");
+          this.slides.forEach((_, i) => {
+            const b = document.createElement("button");
+            b.className = "dot" + (i === 0 ? " active" : "");
+            b.setAttribute("aria-label", `슬라이드 ${i + 1}`);
+            b.addEventListener("click", () => this._go(i));
+            nav.appendChild(b);
+          });
+        }
+        _bindButtons() {
+          document
+            .getElementById("btn-prev")
+            .addEventListener("click", () => this.prev());
+          document
+            .getElementById("btn-next")
+            .addEventListener("click", () => this.next());
+        }
+        _bindKeys() {
+          document.addEventListener("keydown", (e) => {
+            if (e.target.closest(".tx-switch, .tx-time-car")) return;
+            if (this.isAnimating) return;
+            if (e.key === "ArrowRight" || e.key === " ") {
+              e.preventDefault();
+              this.next();
+            }
+            if (e.key === "ArrowLeft") {
+              e.preventDefault();
+              this.prev();
+            }
+          });
+        }
+      }
+      const presentation = new SlidePresentation();
+      window.addEventListener('popstate', () => {
+        const n = Number.parseInt(new URLSearchParams(location.search).get('slide'), 10);
+        const i = Number.isInteger(n) && n >= 1 && n <= presentation.total ? n - 1 : 0;
+        presentation.isAnimating = false;
+        presentation.slides.forEach((s,k) => s.classList.toggle('active', k === i));
+        presentation.current = i;
+        presentation._runSlide(i);
+        presentation._update();
+      });
+    </script>
+  </body>
+</html>
