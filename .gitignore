@@ -27,3 +27,6 @@ storageState*.json
 # 로컬 템플릿 검수 캡처와 브라우저 점검 덤프
 artifacts/_maintenance/pattern-library-*/*.png
 artifacts/_maintenance/pattern-library-*/inspector-smoke.json
+
+# 납품용 PDF — 촬영 후 생성물, 저장소에 담지 않는다
+슬라이드-pdf/
