@@ -26,3 +26,8 @@
 - [스킬과 플러그인이란](part4/outputs/ch03-01-skills-and-plugins.html) — 10장. 슬러그 `ch03-01-skills-and-plugins`. 요청 → 에이전트 → 결과 도식을 무료 세미나 덱 규격으로 통일. 에이전트가 `SKILL.md`를 찾아서 읽는 방향으로 표현.
 - [1인 회사 운영에 유용한 스킬 모음](part4/outputs/ch03-02-solo-business-skills.html) — 2장. 슬러그 `ch03-02-solo-business-skills`. 표지와 「나만의 스킬 만들기」만 둔다. 스킬 5종과 최신 트렌딩 스킬 찾는 법은 제공 가이드에서 다룬다.
 - 슬라이드 제작 완료. 대본은 초안이며 촬영 때 강사 검수를 거친다. 촬영은 예정.
+
+
+## Part 5 확정
+
+- [4가지 협업 패턴과 프로젝트 미리보기](part5/outputs/ch01-01-collaboration-patterns.html) — 14장. 슬라이드·대본 사용자 승인 완료.
