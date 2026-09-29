@@ -615,6 +615,451 @@
 .tx-origin [data-node="a"],.tx-origin [data-node="b"]{top:60%}.tx-history-spaces [data-node="b"]{top:65%}.tx-history [data-node="branch"]{top:69%}.tx-history-spaces .tx-label--b{top:55%}
 .tx-folder-scope{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.tx-agent-badge{position:absolute;right:-1.5rem;top:0;width:2.6rem;height:2.6rem}.tx-delegation [data-node="a"],.tx-delegation [data-node="b"],.tx-delegation [data-node="c"]{top:65%}
 .tx-delegation [data-node="center"] .heading{position:absolute;left:calc(100% + 1rem);top:.4rem}.tx-delegation [data-node="center"] .copy{position:absolute;left:calc(100% + 1rem);top:2.5rem}@media(max-height:650px){.tx-delegation [data-node="a"],.tx-delegation [data-node="b"],.tx-delegation [data-node="c"]{top:60%}.tx-delegation [data-node="center"] .copy{top:2rem}}
+
+      /* ──────────────────────────────────────────────────────────────
+         무료 세미나 참고 덱에서 이식한 컴포넌트 (패턴 29~35)
+         원본: references/reference-deck-free-seminar.html
+         Input → AI → Output 흐름 · 산출물(문서) 카드 · 산출물 의존 지도 ·
+         역할 카드 · 사람/Coordinator/Worker 배정 지도 · 병렬 레인 · 입출력 기계.
+         토큰(:root)과 .slide 골격은 위 공통 규격과 같다 — 이 블록은 컴포넌트만 더한다.
+         ────────────────────────────────────────────────────────────── */
+      .machine-scene {width:100%;height:100%;max-height:39rem;display:flex;align-items:center;justify-content:center}
+      .machine-svg {width:100%;max-height:100%;overflow:visible}
+      .machine-fill {fill:var(--bg-card)}
+      .machine-outline {stroke:var(--purple);stroke-width:3;fill:none;stroke-linejoin:round}
+      .machine-kind {fill:var(--text-dim);font-size:19px}
+      .machine-name {fill:var(--purple);font-size:68px;font-weight:750}
+      .machine-label {fill:var(--text-dim);font-size:18px}
+      .machine-value {fill:var(--text);font-size:35px;font-weight:750}
+      .entry-arrow {fill:var(--gray)}
+      .exit-arrow {fill:var(--green)}
+      .machine-output .machine-value {fill:var(--green)}
+      .machine-input,.machine-output {transition:opacity .24s ease}
+      .ai .machine-outline {stroke:var(--brand)}
+      .ai .machine-name {fill:var(--brand)}
+      .ai .machine-value {font-size:26px}
+      .ai .machine-kind {font-size:19px}
+      .ai-function[data-focus='0'] .machine-input {opacity:.55}
+      .ai-function[data-focus='0'] .machine-output .machine-value {fill:var(--brand)}
+      .ai-function[data-focus='1'] .machine-input .machine-value {fill:var(--brand)}
+      /* Side-by-side dependency proof. */
+.pattern-pair {display:grid;grid-template-columns:1fr 1.2fr;width:min(100%,95rem);gap:4rem}
+      .pattern-number {font-size:3.2rem;color:var(--text-muted);line-height:1;font-weight:750}
+      .flow-file {display:block;text-align:center;color:var(--text-dim);font-size:1.25rem;background:var(--bg);padding:.5rem 1.2rem;z-index:1;line-height:1.4;position:relative}
+      .flow-task {padding:.8rem 1.5rem;border:1px solid var(--brand);color:var(--text);background:var(--bg-card);font-size:1.3rem;z-index:1;text-align:center;position:relative;min-width:13rem}
+      .sequence-body .flow-task:before {content:'';position:absolute;left:calc(50% - 4px);top:-8px;border-left:4px solid transparent;border-right:4px solid transparent;border-top:6px solid var(--gray)}
+      .fork {fill:none;stroke:var(--gray);stroke-width:1.6;flex-shrink:0}
+      .parallel-body>.fork {width:100%;height:5.5rem;margin-top:.7rem}
+      .parallel-lanes .flow-task {min-width:0;padding:1rem .35rem;font-size:1.2rem}
+      .down-arrow {display:block;font-size:1.8rem;color:var(--gray);padding:.65rem 0}
+      .pattern-verdict {text-align:center;font-size:var(--body);margin-top:1rem;color:var(--text-dim)}
+      .pattern-verdict strong {color:var(--text)}
+      @media(max-width:1400px) {
+        .pattern-pair {gap:2rem}
+        .parallel-lanes .flow-task,.parallel-lanes p {font-size:1rem}
+        .flow-task {font-size:1.1rem;padding:.55rem 1rem;min-width:10rem}
+        .flow-file {font-size:1.1rem}
+      }
+      @media(max-height:900px) and (min-height:651px) {
+        .pattern-pair {max-height:calc(100% - 3.5rem)}
+        .pattern-verdict {font-size:1.15rem}
+      }
+      @media(max-height:650px) {
+        .pattern-pair {gap:1.5rem}
+        .pattern-number {font-size:2.2rem}
+        .flow-file {font-size:.85rem;padding:.3rem .7rem}
+        .flow-task {font-size:.9rem;padding:.45rem 1rem;min-width:9rem}
+        .parallel-body>.fork {height:3rem;margin-top:.4rem}
+        .parallel-lanes .flow-task {font-size:.8rem;padding:.6rem .2rem}
+        .down-arrow {font-size:1.4rem;padding:.4rem 0}
+        .pattern-verdict {font-size:.95rem;margin-top:.4rem}
+      }
+      @media(prefers-reduced-motion:reduce) {
+        .slide,.reveal,.machine-input,.machine-output {transition:none!important}
+      }
+      .concept-stage {width:min(100%,68rem);height:100%;max-height:42rem;display:flex;align-items:center;justify-content:center}
+      .concept-stage .machine-svg {width:100%;height:100%}
+      .concept-stage .machine-name {font-size:84px;fill:var(--text);font-weight:600}
+      .concept-stage .ai .machine-name {fill:var(--brand);font-size:72px;font-weight:750}
+      .concept-stage .machine-input {opacity:1!important}
+      .concept-stage .machine-value,.concept-stage .ai .machine-value {font-size:34px;font-weight:750}
+      .concept-stage .machine-input .machine-value,.concept-stage .ai .machine-input .machine-value {fill:var(--purple)}
+      .concept-stage .machine-output .machine-value,.concept-stage .ai .machine-output .machine-value {fill:var(--green)}
+      .concept-stage .entry-arrow {fill:var(--purple)}
+      .concept-stage .machine-label {font-size:20px}
+      .machine-input .machine-glyph {color:var(--purple)}
+      .machine-output .machine-glyph {color:var(--green)}
+      .machine-io-label {font-size:26px;font-weight:750}
+      .ai .machine-io-caption {font-size:24px;font-weight:600;fill:var(--text)}
+      .machine-input .machine-io-label {fill:var(--purple)}
+      .machine-output .machine-io-label {fill:var(--green)}
+      .machine-glyph {overflow:visible}
+      .glyph-solid {fill:currentColor;stroke:currentColor;stroke-width:2;stroke-linejoin:round}
+      .glyph-outline {stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+      .glyph-paper {fill:color-mix(in srgb,currentColor 12%,var(--bg-card))}
+      .glyph-ink,.glyph-fold,.glyph-heading {fill:none}
+      .glyph-heading {stroke-width:4}
+      .dependency-comparison {width:min(100%,108rem);height:min(100%,43rem);display:grid;grid-template-columns:1fr 1fr;gap:0}
+      .dependency-panel {--pattern-accent:var(--brand);display:flex;flex-direction:column;min-width:0;padding-right:4rem}
+      .dependency-panel:last-child {--pattern-accent:var(--yellow);padding:0 0 0 4rem;border-left:1px solid var(--border)}
+      .dependency-panel header h2 {color:var(--pattern-accent);font-size:3.2rem;font-weight:800;line-height:1.2;letter-spacing:-.03em}
+      .dependency-panel header p {color:var(--text-dim);font-size:1.45rem;line-height:1.5;margin-top:.65rem}
+      .dependency-map {position:relative;flex:1;min-height:0;margin-top:2rem}
+      .dependency-wires {position:absolute;inset:0;width:100%;height:100%;overflow:visible;fill:none;stroke:var(--pattern-accent);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+      .dependency-node {position:absolute;transform:translate(-50%,-50%);width:10rem;height:8rem;margin:0;text-align:center}
+      .dependency-symbol {height:100%;display:flex;align-items:center;justify-content:center}
+      .dependency-symbol .icon {display:block;width:7.5rem;height:7.8rem;color:var(--pattern-accent)}
+      .dependency-document {display:block;width:7.1rem;height:8rem;color:var(--purple);fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+      .document-page {fill:var(--bg-card)}
+      .document-fold {fill:var(--bg)}
+      .document-lines {stroke-width:3}
+      .dependency-node figcaption {position:absolute;top:calc(100% + .85rem);left:50%;transform:translateX(-50%);width:max-content;font-size:1.6rem;line-height:1.4;font-weight:700;white-space:nowrap}
+      .dependency-node.is-document figcaption {color:var(--purple)}
+      @media(max-height:900px) {
+        .dependency-comparison {height:min(100%,34rem)}
+        .dependency-panel {padding-right:3rem}
+        .dependency-panel:last-child {padding-left:3rem}
+        .dependency-panel header h2 {font-size:2.8rem}
+        .dependency-panel header p {font-size:1.25rem}
+        .dependency-node {height:6.8rem;width:8rem}
+        .dependency-symbol .icon {width:6.3rem;height:6.5rem}
+        .dependency-document {width:6rem;height:6.8rem}
+        .dependency-node figcaption {font-size:1.4rem}
+      }
+      @media(max-height:650px) {
+        .dependency-comparison {height:100%}
+        .dependency-panel {padding-right:2rem}
+        .dependency-panel:last-child {padding-left:2rem}
+        .dependency-panel header h2 {font-size:2rem}
+        .dependency-panel header p {font-size:1rem;margin-top:.35rem}
+        .dependency-map {margin-top:1.25rem}
+        .dependency-node {height:4.5rem;width:6rem}
+        .dependency-symbol .icon {width:4.2rem;height:4.35rem}
+        .dependency-document {width:4rem;height:4.5rem}
+        .dependency-node figcaption {font-size:1.1rem;top:calc(100% + .5rem)}
+      }
+      @media(max-height:650px) {
+        .concept-stage {max-height:24rem}
+      }
+      /* Artifact silhouettes carry format; paths carry relationships. */
+.flow-canvas {position:relative;width:min(100%,104rem);height:min(100%,37rem);isolation:isolate}
+      .flow-connections {position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:-1;overflow:visible}
+      .flow-connections path {fill:none;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}
+      .edge-input {stroke:var(--purple)}
+      .edge-output {stroke:var(--green)}
+      .flow-stage {min-width:0;min-height:0}
+      .flow-heading {font-size:2rem;line-height:1;font-weight:750;letter-spacing:-.025em}
+      .stage-input .flow-heading {color:var(--purple)}
+      .stage-output .flow-heading {color:var(--green)}
+      .stage-ai .flow-heading {color:var(--text-dim)}
+      .flow-heading small {font-size:.9rem;font-weight:450;letter-spacing:0;margin-left:.7rem;white-space:nowrap}
+      .flow-items {min-height:0;min-width:0}
+      .flow-artifact {--artifact-color:var(--purple);display:flex;flex-direction:column;position:relative;min-width:0;background:var(--bg-card);border:1px solid color-mix(in srgb,var(--artifact-color) 42%,var(--bg));color:var(--text);border-radius:.35rem;padding:1.3rem 1.6rem;box-shadow:0 .5rem 1.6rem rgba(0,0,0,.06);transition:border-color .15s,background .15s}
+      .flow-artifact.tone-output {--artifact-color:var(--green)}
+      .flow-artifact:hover {border-color:var(--artifact-color);background:color-mix(in srgb,var(--artifact-color) 7%,var(--bg-card))}
+      .artifact-chrome {display:flex;gap:.6rem;align-items:center;font-size:.8rem;color:var(--text-dim);line-height:1.2;white-space:nowrap}
+      .artifact-chrome>b {font-size:1.1rem;font-weight:450;margin-left:auto;color:var(--artifact-color)}
+      .artifact-mark {font-size:.65rem;letter-spacing:.07em;font-weight:650;color:var(--artifact-color);line-height:1.3}
+      .artifact-title {font-size:1.75rem;font-weight:720;line-height:1.25;letter-spacing:-.025em;color:var(--artifact-color);margin-top:.75rem}
+      .artifact-decoration {margin-top:1rem;color:var(--text-muted);opacity:.45;pointer-events:none}
+      .shape-paper {border-radius:.2rem;clip-path:polygon(0 0,calc(100% - 1.6rem) 0,100% 1.6rem,100% 100%,0 100%);padding-right:2rem}
+      .shape-paper .artifact-chrome>b {margin-right:.75rem}
+      .paper-fold {position:absolute;top:0;right:0;width:1.6rem;height:1.6rem;background:var(--artifact-color);border-radius:0 0 0 .15rem;opacity:.5}
+      .paper-rules {display:flex;flex-direction:column;gap:.4rem;width:75%}
+      .paper-rules i {display:block;height:2px;background:currentColor;border-radius:2px}
+      .paper-rules i:nth-child(2) {width:80%}
+      .paper-rules i:last-child {width:57%}
+      .shape-prompt {border-radius:.6rem;border-style:dashed}
+      .shape-prompt .artifact-mark {background:color-mix(in srgb,var(--purple) 13%,transparent);padding:.2rem .35rem;border-radius:.2rem}
+      .shape-screen {border-radius:.6rem .6rem .15rem .15rem;border-top:2px solid var(--artifact-color)}
+      .shape-screen .artifact-mark:before {content:'•••';letter-spacing:.2rem;margin-right:.5rem;color:var(--text-muted)}
+      .flow-worker {display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;min-width:0;padding:1.2rem;border:1.5px solid var(--brand);background:var(--bg-card);border-radius:.2rem;min-height:8rem;gap:.55rem}
+      .ai-symbol {font-size:2.6rem;line-height:1.1;font-weight:800;color:var(--brand)}
+      .ai-role {font-size:1.15rem;color:var(--text);font-weight:550;line-height:1.2;white-space:nowrap}
+      .ai-port {position:absolute;width:.7rem;height:1.9rem;background:var(--bg-card);border:1.5px solid var(--brand)}
+      .flow-horizontal .port-before {left:-.7rem;top:calc(50% - .95rem);border-right:0;border-radius:.25rem 0 0 .25rem}
+      .flow-horizontal .port-after {right:-.7rem;top:calc(50% - .95rem);border-left:0;border-radius:0 .25rem .25rem 0}
+      .flow-vertical .ai-port {width:1.9rem;height:.7rem;left:calc(50% - .95rem)}
+      .flow-vertical .port-before {top:-.7rem;border-bottom:0;border-radius:.25rem .25rem 0 0}
+      .flow-vertical .port-after {bottom:-.7rem;border-top:0;border-radius:0 0 .25rem .25rem}
+      .flow-horizontal {display:grid;grid-template-columns:1.12fr .55fr .8fr .45fr 1.1fr}
+      .flow-horizontal .stage-input {grid-column:1}
+      .flow-horizontal .stage-ai {grid-column:3}
+      .flow-horizontal .stage-output {grid-column:5}
+      .flow-horizontal .flow-stage {display:grid;grid-template-rows:2rem minmax(0,1fr);gap:2rem}
+      .flow-horizontal .flow-items {display:flex;flex-direction:column;justify-content:center;gap:1.3rem}
+      .flow-horizontal .flow-artifact {min-height:8.3rem}
+      .flow-horizontal.flow-single .stage-output .flow-artifact {min-height:17rem;padding:2rem}
+      .flow-horizontal.flow-single .stage-output .artifact-title {font-size:2.2rem;margin-top:2rem}
+      .flow-horizontal.flow-single .stage-output .artifact-decoration {margin-top:3rem}
+      .flow-horizontal.flow-single .stage-output .paper-rules {gap:.9rem}
+      .flow-horizontal.flow-single .flow-worker {min-height:12rem}
+      .flow-horizontal.flow-single .ai-symbol {font-size:clamp(1.9rem,2.5vw,2.6rem);white-space:nowrap}
+      .flow-horizontal.flow-fanout .stage-ai .flow-items,.flow-horizontal.flow-fanout .stage-output .flow-items {display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:repeat(3,minmax(0,1fr));justify-content:stretch;gap:1.2rem}
+      .flow-horizontal.flow-fanout .stage-input .flow-artifact {min-height:17rem;padding:2rem}
+      .flow-horizontal.flow-fanout .stage-input .artifact-title {font-size:2.2rem;margin-top:2rem}
+      .flow-horizontal.flow-fanout .stage-input .artifact-decoration {margin-top:3rem}
+      .flow-horizontal.flow-fanout .flow-artifact {justify-content:center}
+      .flow-horizontal.flow-fanout .artifact-title {font-size:1.8rem}
+      .flow-horizontal.flow-fanout .flow-worker {min-height:0}
+      .flow-vertical {display:grid;grid-template-rows:10rem 7.2rem 10rem;row-gap:4.1rem;width:min(100%,101rem)}
+      .flow-vertical .flow-stage {display:grid;grid-template-columns:8rem minmax(0,1fr);gap:2rem;align-items:center}
+      .flow-vertical .flow-heading {align-self:center}
+      .flow-vertical .flow-heading small {display:block;margin:.7rem 0 0}
+      .flow-vertical .flow-items {display:flex;justify-content:center;gap:2.5rem;height:100%}
+      .flow-vertical .flow-artifact {flex:1;justify-content:center}
+      .flow-vertical .flow-worker {flex:1;min-height:0;padding:.8rem 1.2rem}
+      .flow-vertical.flow-single .stage-ai .flow-worker {flex:none;width:19rem}
+      .flow-vertical.flow-single .stage-output .flow-artifact {flex:none;width:25rem}
+      .flow-vertical.flow-fanout .stage-input .flow-artifact {flex:none;width:25rem}
+      .flow-vertical .artifact-title {font-size:1.7rem}
+      .flow-vertical .stage-output .artifact-title {font-size:1.8rem}
+      @media(max-width:1400px) {
+        .flow-canvas {height:min(100%,32rem)}
+        .flow-heading {font-size:1.65rem}
+        .flow-heading small {font-size:.7rem}
+        .flow-horizontal {grid-template-columns:1.15fr .45fr .8fr .35fr 1.1fr}
+        .flow-horizontal .flow-stage {gap:1.5rem}
+        .flow-artifact {padding:1rem 1.2rem}
+        .artifact-title {font-size:1.45rem}
+        .artifact-chrome {font-size:.7rem;gap:.4rem}
+        .artifact-mark {font-size:.6rem}
+        .artifact-decoration {margin-top:.75rem}
+        .flow-horizontal .flow-artifact {min-height:7.1rem}
+        .flow-horizontal .flow-items {gap:1rem}
+        .flow-horizontal.flow-fanout .flow-artifact .artifact-title {font-size:1.4rem}
+        .flow-horizontal.flow-single .stage-output .flow-artifact,.flow-horizontal.flow-fanout .stage-input .flow-artifact {min-height:15rem;padding:1.4rem}
+        .flow-horizontal.flow-single .stage-output .artifact-title,.flow-horizontal.flow-fanout .stage-input .artifact-title {font-size:1.8rem}
+        .ai-symbol {font-size:2.3rem}
+        .ai-role {font-size:1rem}
+        .flow-horizontal.flow-single .flow-worker {min-height:10rem}
+        .flow-vertical {grid-template-rows:8.5rem 6.2rem 8.5rem;row-gap:3.5rem}
+        .flow-vertical .flow-stage {grid-template-columns:6.5rem 1fr;gap:1.5rem}
+        .flow-vertical .flow-items {gap:1.6rem}
+        .flow-vertical .artifact-title,.flow-vertical .stage-output .artifact-title {font-size:1.4rem}
+      }
+      @media(max-height:650px) {
+        .flow-canvas {height:min(100%,23rem)}
+        .flow-heading {font-size:1.3rem}
+        .flow-heading small {font-size:.55rem;margin-left:.35rem}
+        .flow-horizontal .flow-stage {grid-template-rows:1.3rem 1fr;gap:.8rem}
+        .flow-artifact {padding:.65rem .8rem}
+        .artifact-title {font-size:1.08rem;margin-top:.5rem}
+        .artifact-chrome {font-size:.53rem;gap:.3rem}
+        .artifact-mark {font-size:.5rem}
+        .artifact-chrome>b {font-size:.75rem}
+        .artifact-decoration {margin-top:.55rem}
+        .paper-rules {gap:.3rem}
+        .paper-rules i {height:1px}
+        .flow-horizontal .flow-artifact {min-height:5.5rem}
+        .flow-horizontal .flow-items {gap:.6rem}
+        .flow-horizontal.flow-fanout .stage-ai .flow-items,.flow-horizontal.flow-fanout .stage-output .flow-items {gap:.6rem}
+        .flow-horizontal.flow-single .stage-output .flow-artifact,.flow-horizontal.flow-fanout .stage-input .flow-artifact {min-height:12rem;padding:1rem}
+        .flow-horizontal.flow-single .stage-output .artifact-title,.flow-horizontal.flow-fanout .stage-input .artifact-title {font-size:1.4rem;margin-top:1rem}
+        .flow-horizontal.flow-single .stage-output .artifact-decoration,.flow-horizontal.flow-fanout .stage-input .artifact-decoration {margin-top:1.5rem}
+        .flow-horizontal.flow-fanout .flow-artifact .artifact-title {font-size:1.05rem}
+        .ai-symbol {font-size:1.65rem}
+        .ai-role {font-size:.78rem}
+        .flow-worker {padding:.5rem;gap:.35rem}
+        .flow-horizontal.flow-single .flow-worker {min-height:8rem}
+        .flow-horizontal.flow-single .ai-symbol {font-size:2.5rem}
+        .flow-vertical {grid-template-rows:6.3rem 4.7rem 6.3rem;row-gap:2.3rem}
+        .flow-vertical .flow-stage {grid-template-columns:5rem 1fr;gap:1rem}
+        .flow-vertical .flow-items {gap:1rem}
+        .flow-vertical .artifact-title,.flow-vertical .stage-output .artifact-title {font-size:1.1rem}
+        .flow-vertical.flow-single .stage-ai .flow-worker {width:14rem}
+        .flow-vertical.flow-single .stage-output .flow-artifact,.flow-vertical.flow-fanout .stage-input .flow-artifact {width:20rem}
+        .flow-vertical .artifact-decoration {margin-top:.45rem}
+        .flow-vertical .flow-heading small {font-size:.6rem}
+        .flow-vertical .ai-symbol {font-size:1.65rem}
+        .flow-vertical .ai-role {font-size:.8rem}
+        .shape-screen .artifact-mark:before {display:none}
+      }
+      /* Selected exercise 2: each role is a large transparent character with a label below. */
+.flow-vertical.flow-fanout {height:40rem;grid-template-rows:7.5rem 19rem 7.5rem;row-gap:3rem}
+      .flow-fanout .role-agent {margin:0;flex:1;min-width:0;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;position:relative}
+      .role-agent-image {display:block;height:16.5rem;width:100%;object-fit:contain;flex:none}
+      .role-agent-label {font-size:1.5rem;line-height:1.4;font-weight:700;color:var(--text);letter-spacing:-.025em}
+      .flow-fanout .stage-ai .flow-items {align-items:stretch}
+      .flow-fanout .stage-ai .flow-heading {color:var(--brand)}
+      .flow-fanout .stage-ai .flow-heading small {color:var(--text-dim)}
+      .flow-vertical.flow-fanout .artifact-decoration {display:none}
+      .flow-vertical.flow-fanout .artifact-title {margin-top:.7rem}
+      @media(max-width:1400px) {
+        .flow-vertical.flow-fanout {height:32.5rem;grid-template-rows:6.5rem 15rem 6.5rem;row-gap:2.25rem}
+        .role-agent-image {height:12.8rem}
+        .role-agent-label {font-size:1.25rem}
+      }
+      @media(max-height:650px) {
+        .flow-vertical.flow-fanout {height:23rem;grid-template-rows:4.5rem 10.5rem 4.5rem;row-gap:1.75rem}
+        .role-agent-image {height:8.8rem}
+        .role-agent-label {font-size:1rem}
+        .flow-fanout .role-agent {gap:.3rem}
+        .flow-vertical.flow-fanout .artifact-title {margin-top:.5rem}
+      }
+      .orchestration-concept .concept-name {font-size:31px;font-weight:750}
+      .orchestration-concept .concept-sub {font-size:21px;fill:var(--text-dim)}
+      .orchestration-concept .concept-label {font-size:23px;font-weight:600}
+      .concept-human svg,.concept-worker svg {fill:var(--bg-card);stroke:var(--gray);stroke-width:2}
+      .concept-coordinator svg {fill:var(--bg-card);stroke:var(--yellow);stroke-width:2}
+      .concept-assignment {fill:none;stroke:var(--yellow);stroke-width:2}
+      .concept-result {fill:none;stroke:var(--green);stroke-width:2;stroke-dasharray:7 7}
+      /* Reference slide 9, reduced to two workers. No artifact cards in this concept view. */
+.reference-serial-map {position:relative;width:min(100%,86rem);height:min(100cqh,40rem);flex:none}
+      .ref-wires {position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+      .ref-request {stroke:var(--yellow)}
+      .ref-result {stroke:var(--green)}
+      .ref-report-one {stroke:var(--brand);stroke-dasharray:7 7}
+      .ref-report-two {stroke:var(--purple);stroke-dasharray:7 7}
+      .ref-report-three {stroke:var(--gray);stroke-dasharray:7 7}
+      .ref-sequence {stroke:var(--text-dim)}
+      .ref-actor {position:absolute;transform:translate(-50%,-50%);width:12rem;height:7.25rem;text-align:center}
+      .ref-icon {position:relative;height:100%;display:flex;align-items:center;justify-content:center}
+      .ref-icon .icon {display:block;width:7rem;height:7.25rem;overflow:visible;flex:none}
+      .ref-person .icon {width:6rem;height:6rem;color:var(--gray)}
+      .ref-label {position:absolute;top:calc(100% + 1rem);left:50%;transform:translateX(-50%);display:grid;gap:.7rem;width:max-content}
+      .ref-label h2 {font-size:var(--heading);font-weight:800;line-height:1.35;white-space:nowrap}
+      .ref-label p {font-size:var(--body);line-height:1.7;color:var(--text-dim)}
+      .ref-coordinator .ref-label {top:50%;left:calc(50% + 5.25rem);transform:translateY(-50%);text-align:left;gap:.85rem}
+      .ref-worker {height:5.4rem}
+      .ref-worker .icon {width:5.2rem;height:5.4rem}
+      .ref-link-label {position:absolute;transform:translate(-50%,-50%);white-space:nowrap;font-size:var(--body);color:var(--text-dim)}
+      .ref-goal {color:var(--yellow)}
+      .ref-result-label {color:var(--green)}
+      .ref-completed-report {stroke:var(--green);stroke-dasharray:7 7}
+      .ref-past {opacity:.3}
+      .ref-done {color:var(--green);font-weight:650}
+      .ref-working {color:var(--text);font-weight:650}
+      .is-complete .ref-icon {opacity:.45}
+      .reference-serial-map[data-mode="serial"] .ref-sequence {stroke-dasharray:4 6}
+      @media(max-height:850px) {
+        .reference-serial-map {height:min(100cqh,28rem)}
+        .ref-coordinator {height:5.6rem}
+        .ref-coordinator .icon {height:5.6rem;width:5.4rem}
+        .ref-coordinator .ref-label {left:calc(50% + 4.2rem);gap:.6rem}
+        .ref-worker {height:4.2rem}
+        .ref-worker .icon {height:4.2rem;width:4rem}
+        .ref-worker .ref-label {top:calc(100% + .8rem);gap:.3rem}
+        .ref-person .icon {width:4.8rem;height:4.8rem}
+      }
+      /* Format scenes are scoped so approved slides keep their geometry. */
+.format-scene {width:min(100%,108rem);display:flex;flex-direction:column;justify-content:center;gap:4rem;height:100%;max-height:43rem}
+      .format-flow {display:grid;grid-template-columns:minmax(16rem,1.05fr) 3.5rem 10rem 3.5rem minmax(35rem,2fr);gap:1.8rem;align-items:center;width:100%}
+      .format-heading {font-size:2.5rem;font-weight:800;line-height:1.2;letter-spacing:-.03em;margin:0 0 2.3rem}
+      .format-input>.format-heading {color:var(--purple)}
+      .format-output .format-heading {color:var(--green)}
+      .format-output>header {display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-bottom:2.3rem}
+      .format-output>header .format-heading {margin:0}
+      .format-output>header p {font-size:1.2rem;color:var(--text-dim)}
+      .format-prompt {position:relative;padding:2rem;border:1.5px solid color-mix(in srgb,var(--purple) 50%,var(--border));background:var(--bg-card);border-radius:1rem 1rem .2rem 1rem;color:var(--text);min-height:24rem;display:flex;flex-direction:column;justify-content:center}
+      .format-quote {font-size:4.5rem;line-height:.7;color:var(--purple);font-weight:700;margin-bottom:1.25rem}
+      .format-prompt>p {font-size:2rem;font-weight:700;line-height:1.45;letter-spacing:-.025em}
+      .format-prompt>p strong {color:var(--purple)}
+      .format-inline-info {border-top:1px solid var(--border);padding-top:1.3rem;margin-top:2rem}
+      .format-inline-info>b {display:block;font-size:1.1rem;color:var(--text-dim);font-weight:500;margin-bottom:1rem}
+      .format-lines {display:flex;flex-direction:column;gap:.55rem;margin-bottom:1.5rem}
+      .format-lines:last-child {margin-bottom:0}
+      .format-lines i {display:block;height:.32rem;border-radius:2px;background:var(--text-muted);opacity:.42}
+      .format-arrow {padding-top:4.8rem;color:var(--purple)}
+      .format-arrow.tone-output {color:var(--green)}
+      .format-arrow svg {width:100%;height:auto;display:block;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+      .format-agent {padding-top:4.8rem;text-align:center;color:var(--brand)}
+      .format-agent-symbol>.icon {width:8rem;height:8.3rem;display:block;margin:auto;color:var(--brand)}
+      .format-agent h2 {font-size:1.8rem;font-weight:750;margin-top:1.3rem;color:var(--text);white-space:nowrap}
+      .format-examples {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.2rem}
+      .format-example {margin:0;min-width:0}
+      .format-run {font-family:Monaco,Pretendard,sans-serif;color:var(--text-dim);font-size:1rem;margin-bottom:1rem}
+      .format-paper {position:relative;background:var(--bg-card);border:1.5px solid var(--border);border-radius:.2rem;padding:2rem 1.35rem;min-width:0;overflow:hidden}
+      .format-fold {position:absolute;right:-1px;top:-1px;width:1.6rem;height:1.6rem;background:linear-gradient(45deg,color-mix(in srgb,var(--text-muted) 25%,var(--bg-card)) 49%,var(--bg) 50%);border-left:1px solid var(--border);border-bottom:1px solid var(--border)}
+      .format-example .format-paper {height:19rem}
+      .format-title-line {width:65%;height:.55rem;background:var(--green);opacity:.8;border-radius:2px;margin-bottom:1.7rem}
+      .format-example figcaption {font-size:1.5rem;line-height:1.35;font-weight:650;text-align:center;margin-top:1.1rem}
+      .format-table {border:1px solid color-mix(in srgb,var(--text-muted) 50%,var(--border));border-radius:.1rem;overflow:hidden}
+      .format-table>span {display:grid;grid-template-columns:35% 65%;height:2rem;border-bottom:1px solid var(--border)}
+      .format-table>span:last-child {border-bottom:0}
+      .format-table>span:first-child {background:color-mix(in srgb,var(--green) 12%,var(--bg-card))}
+      .format-table i {display:block;position:relative;min-width:0}
+      .format-table i:first-child {border-right:1px solid var(--border)}
+      .format-table i:after {content:'';position:absolute;left:20%;right:20%;top:48%;height:3px;background:var(--text-muted);opacity:.4}
+      .format-bullets {display:flex;flex-direction:column;gap:1.3rem}
+      .format-bullets>span {display:flex;align-items:center;gap:.65rem}
+      .format-bullets>span:before {content:'';display:block;width:.4rem;height:.4rem;border-radius:50%;background:var(--green);flex:none}
+      .format-bullets i {width:100%;height:.35rem;border-radius:2px;background:var(--text-muted);opacity:.4}
+      .format-bullets>span:nth-child(even) i {width:72%}
+      .format-takeaway {font-size:1.75rem;line-height:1.5;text-align:center;color:var(--text-dim);margin:0}
+      .format-takeaway strong {color:var(--text);font-weight:750}
+      .format-variation .format-takeaway strong {color:var(--orange)}
+      .format-sample .format-flow {grid-template-columns:minmax(35rem,2fr) 3.5rem 10rem 3.5rem minmax(16rem,1fr)}
+      .format-input-pair {display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+      .format-input-pair>figure,.format-final {margin:0}
+      .format-sample .format-final {margin-right:1rem}
+      .format-input-pair figcaption,.format-final>figcaption {font-size:1.3rem;color:var(--text-dim);line-height:1.4;margin-bottom:1rem}
+      .format-sample .format-prompt,.format-paper-structure {height:26rem;min-height:0}
+      .format-sample .format-prompt {padding:1.8rem}
+      .format-sample .format-prompt>p {font-size:1.7rem}
+      .format-sample .format-heading {margin-bottom:1.6rem}
+      .format-sample .format-agent,.format-sample .format-arrow {padding-top:7rem}
+      .format-paper-structure {padding:1.7rem;border-color:color-mix(in srgb,var(--purple) 50%,var(--border))}
+      .format-paper-structure.is-result {border-color:color-mix(in srgb,var(--green) 70%,var(--border))}
+      .format-paper-structure h3 {font-size:1.55rem;font-weight:750;line-height:1.3;color:var(--text);margin:0 0 1.5rem}
+      .format-part h4 {font-size:1.1rem;line-height:1.4;font-weight:650;margin:0 0 .7rem}
+      .format-part {margin-bottom:1.45rem;border-left:3px solid currentColor;padding-left:.9rem}
+      .format-summary {color:var(--purple)}
+      .format-review {color:var(--yellow)}
+      .format-schedule {color:var(--green);margin-bottom:0}
+      .format-paper-structure .format-table>span {height:1.55rem}
+      .format-paper-structure .format-table>span:first-child {background:color-mix(in srgb,var(--yellow) 12%,var(--bg-card))}
+      .format-paper-structure .format-bullets {gap:.75rem}
+      .format-paper-structure .format-lines {gap:.45rem}
+      .format-paper-structure.is-result .format-table i:after {right:30%}
+      .format-paper-structure.is-result .format-bullets>span:nth-child(even) i {width:87%}
+      .format-sample .format-takeaway strong {color:var(--green)}
+      .format-intro .format-flow {grid-template-columns:27rem 3.5rem 10rem 3.5rem 27rem;width:fit-content;max-width:100%;margin-inline:auto}
+      .format-intro .format-input-pair {display:block}
+      .format-intro .format-final {margin-right:0}
+      .format-intro .format-paper-overview {height:26rem;padding:1.7rem;border-color:color-mix(in srgb,var(--green) 70%,var(--border))}
+      .format-intro .format-paper-overview h3 {font-size:1.55rem;line-height:1.4;font-weight:750;margin:0 0 2rem;color:var(--text)}
+      .format-intro .format-paper-overview .format-lines {gap:.65rem;margin-bottom:2rem}
+      .format-intro .format-takeaway strong:first-child {color:var(--purple)}
+      @media(max-width:1600px) {
+        .format-scene {gap:3rem}
+        .format-flow {grid-template-columns:minmax(13rem,1fr) 2.8rem 7.5rem 2.8rem minmax(28rem,1.9fr);gap:1.3rem}
+        .format-sample .format-flow {grid-template-columns:minmax(28rem,2fr) 2.8rem 7.5rem 2.8rem minmax(13rem,1fr)}
+        .format-input-pair {gap:1.2rem}
+        .format-sample .format-final {margin-right:.6rem}
+        .format-prompt {padding:1.5rem}
+        .format-prompt>p {font-size:1.75rem}
+        .format-agent-symbol>.icon {width:6.8rem;height:7rem}
+        .format-agent h2 {font-size:1.5rem}
+        .format-sample .format-prompt {padding:1.3rem}
+        .format-sample .format-prompt>p {font-size:1.5rem}
+        .format-paper-structure {padding:1.4rem}
+        .format-paper {padding-left:1.1rem;padding-right:1.1rem}
+        .format-output>header p {font-size:1rem}
+        .format-example figcaption {font-size:1.25rem}
+        .format-examples {gap:.8rem}
+        .format-intro .format-flow {grid-template-columns:18rem 2.8rem 7.5rem 2.8rem 18rem}
+        .format-intro .format-final {margin-right:0}
+        .format-intro .format-paper-overview {padding:1.4rem}
+      }
+      @media(max-height:900px) {
+        .format-scene {gap:2rem;max-height:35rem}
+        .format-heading {font-size:2rem;margin-bottom:1.8rem}
+        .format-output>header {margin-bottom:1.8rem}
+        .format-prompt {min-height:21rem}
+        .format-sample .format-prompt,.format-paper-structure {height:23rem}
+        .format-paper-structure h3 {margin-bottom:1.1rem}
+        .format-part {margin-bottom:1.1rem}
+        .format-part h4 {margin-bottom:.5rem}
+        .format-example .format-paper {height:17rem}
+        .format-example .format-table>span {height:1.6rem}
+        .format-inline-info {margin-top:1.5rem}
+        .format-quote {margin-bottom:1rem}
+        .format-takeaway {font-size:1.5rem}
+        .format-intro .format-paper-overview {height:23rem}
+      }
+      .compact .slide__sub {min-height:1.5em}
+      .compact .slide__body {gap:0}
 </style>
   </head>
   <body>
@@ -2371,6 +2816,128 @@
 <img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus">
 </footer>
 </article>
+<article class="slide compact" data-index="29" data-pattern="SEMINAR_IO_FLOW">
+<header class="slide__header"><span class="slide__label">Pattern 30 · SEMINAR IO FLOW</span><h1 class="slide__title" data-slot="title"><span class="hl">입력</span>과 출력</h1><p class="slide__sub" data-slot="subtitle">무엇을 넣으면 무엇이 나오는지를 한 화면에서 보여줍니다.</p></header>
+<main class="slide__body">
+<div class="flow-canvas flow-horizontal flow-single" data-direction="horizontal">
+<svg class="flow-connections" aria-hidden="true">
+<path data-from="source-a" data-to="worker" class="edge-input"/>
+<path data-from="source-b" data-to="worker" class="edge-input"/>
+<path data-from="worker" data-to="result" class="edge-output"/>
+</svg>
+<section class="flow-stage stage-input"><h2 class="flow-heading">Input</h2><div class="flow-items">
+<div class="flow-artifact shape-paper tone-input" data-node="source-a"><div class="artifact-chrome"><span class="artifact-mark">MD</span><span>내용의 근거</span></div><h2 class="artifact-title">자료 문서</h2><div class="artifact-decoration" aria-hidden="true"><span class="paper-fold"></span><div class="paper-rules"><i></i><i></i><i></i></div></div></div>
+<div class="flow-artifact shape-paper tone-input" data-node="source-b"><div class="artifact-chrome"><span class="artifact-mark">MD</span><span>형식의 기준</span></div><h2 class="artifact-title">양식 샘플</h2><div class="artifact-decoration" aria-hidden="true"><span class="paper-fold"></span><div class="paper-rules"><i></i><i></i><i></i></div></div></div>
+</div></section>
+<section class="flow-stage stage-ai"><h2 class="flow-heading">AI</h2><div class="flow-items">
+<div class="flow-worker" data-node="worker"><span class="ai-symbol">에이전트</span><span class="ai-role">담당 작업</span>
+<i class="ai-port port-before" aria-hidden="true"></i><i class="ai-port port-after" aria-hidden="true"></i></div>
+</div></section>
+<section class="flow-stage stage-output"><h2 class="flow-heading">Output</h2><div class="flow-items">
+<div class="flow-artifact shape-paper tone-output" data-node="result"><div class="artifact-chrome"><span class="artifact-mark">MD</span><span>작업 결과</span></div><h2 class="artifact-title">결과 문서</h2><div class="artifact-decoration" aria-hidden="true"><span class="paper-fold"></span><div class="paper-rules"><i></i><i></i><i></i></div></div></div>
+</div></section>
+</div>
+</main>
+<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer>
+</article>
+<article class="slide compact" data-index="30" data-pattern="SEMINAR_FANOUT_FLOW">
+<header class="slide__header"><span class="slide__label">Pattern 31 · SEMINAR FANOUT FLOW</span><h1 class="slide__title" data-slot="title">하나의 입력, <span class="hl">세 결과</span></h1><p class="slide__sub" data-slot="subtitle">같은 자료를 세 역할이 나눠 맡아 각자의 결과물을 만듭니다.</p></header>
+<main class="slide__body">
+<div class="flow-canvas flow-vertical flow-fanout" data-direction="vertical">
+<svg class="flow-connections" aria-hidden="true">
+<path data-from="shared" data-to="role-a" class="edge-input"/>
+<path data-from="shared" data-to="role-b" class="edge-input"/>
+<path data-from="shared" data-to="role-c" class="edge-input"/>
+<path data-from="role-a" data-to="out-a" class="edge-output"/>
+<path data-from="role-b" data-to="out-b" class="edge-output"/>
+<path data-from="role-c" data-to="out-c" class="edge-output"/>
+</svg>
+<section class="flow-stage stage-input"><h2 class="flow-heading">Input</h2><div class="flow-items">
+<div class="flow-artifact shape-paper tone-input" data-node="shared"><div class="artifact-chrome"><span class="artifact-mark">MD</span><span>공통 자료</span></div><h2 class="artifact-title">기준 문서</h2><div class="artifact-decoration" aria-hidden="true"><span class="paper-fold"></span><div class="paper-rules"><i></i><i></i><i></i></div></div></div>
+</div></section>
+<section class="flow-stage stage-ai"><h2 class="flow-heading">에이전트 <small>동시에 실행</small></h2><div class="flow-items">
+<figure class="role-agent" data-node="role-a"><img class="role-agent-image" src="/assets/character-executive-report.png" alt="역할 1 캐릭터" decoding="async"><figcaption class="role-agent-label">역할 1</figcaption></figure>
+<figure class="role-agent" data-node="role-b"><img class="role-agent-image" src="/assets/character-team-operations.png" alt="역할 2 캐릭터" decoding="async"><figcaption class="role-agent-label">역할 2</figcaption></figure>
+<figure class="role-agent" data-node="role-c"><img class="role-agent-image" src="/assets/character-internal-communication.png" alt="역할 3 캐릭터" decoding="async"><figcaption class="role-agent-label">역할 3</figcaption></figure>
+</div></section>
+<section class="flow-stage stage-output"><h2 class="flow-heading">Output</h2><div class="flow-items">
+<div class="flow-artifact shape-paper tone-output" data-node="out-a"><div class="artifact-chrome"><span class="artifact-mark">MD</span><span>역할 1의 결과</span></div><h2 class="artifact-title">결과 문서 1</h2><div class="artifact-decoration" aria-hidden="true"><span class="paper-fold"></span><div class="paper-rules"><i></i><i></i><i></i></div></div></div>
+<div class="flow-artifact shape-paper tone-output" data-node="out-b"><div class="artifact-chrome"><span class="artifact-mark">MD</span><span>역할 2의 결과</span></div><h2 class="artifact-title">결과 문서 2</h2><div class="artifact-decoration" aria-hidden="true"><span class="paper-fold"></span><div class="paper-rules"><i></i><i></i><i></i></div></div></div>
+<div class="flow-artifact shape-paper tone-output" data-node="out-c"><div class="artifact-chrome"><span class="artifact-mark">MD</span><span>역할 3의 결과</span></div><h2 class="artifact-title">결과 문서 3</h2><div class="artifact-decoration" aria-hidden="true"><span class="paper-fold"></span><div class="paper-rules"><i></i><i></i><i></i></div></div></div>
+</div></section>
+</div>
+</main>
+<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer>
+</article>
+<article class="slide compact" data-index="31" data-pattern="SEMINAR_DEPENDENCY_COMPARE">
+<header class="slide__header"><span class="slide__label">Pattern 32 · SEMINAR DEPENDENCY COMPARE</span><h1 class="slide__title" data-slot="title">일을 나누는 <span class="hl">기준</span></h1><p class="slide__sub" data-slot="subtitle">앞 작업의 결과를 기다려야 하는지가 기준입니다.</p></header>
+<main class="slide__body">
+<div class="dependency-comparison">
+<section class="dependency-panel">
+<header><h2>순차</h2><p>앞 결과가 다음 입력</p></header>
+<div class="dependency-map" data-dependency-mode="serial">
+<svg class="dependency-wires" aria-hidden="true"><path/><path/></svg>
+<figure class="dependency-node is-agent" data-dependency-node="n1" style="left:16%;top:18%"><div class="dependency-symbol"><svg class="icon icon--robot tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><figcaption>앞 작업</figcaption></figure>
+<figure class="dependency-node is-document" data-dependency-node="n2" style="left:50%;top:47%"><div class="dependency-symbol"><svg class="dependency-document" viewBox="0 0 88 100" aria-hidden="true"><path class="document-page" d="M16 4H56L76 24V96H16Z"/><path class="document-fold" d="M56 4V24H76"/><path class="document-lines" d="M30 43H61M30 57H61M30 71H51"/></svg></div><figcaption>중간 산출물</figcaption></figure>
+<figure class="dependency-node is-agent" data-dependency-node="n3" style="left:84%;top:76%"><div class="dependency-symbol"><svg class="icon icon--robot tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><figcaption>다음 작업</figcaption></figure>
+</div>
+</section>
+<section class="dependency-panel">
+<header><h2>병렬</h2><p>같은 입력으로 동시 실행</p></header>
+<div class="dependency-map" data-dependency-mode="parallel">
+<svg class="dependency-wires" aria-hidden="true"><path/><path/><path/><path/></svg>
+<figure class="dependency-node is-document" data-dependency-node="src" style="left:50%;top:18%"><div class="dependency-symbol"><svg class="dependency-document" viewBox="0 0 88 100" aria-hidden="true"><path class="document-page" d="M16 4H56L76 24V96H16Z"/><path class="document-fold" d="M56 4V24H76"/><path class="document-lines" d="M30 43H61M30 57H61M30 71H51"/></svg></div><figcaption>공통 입력</figcaption></figure>
+<figure class="dependency-node is-agent" data-dependency-node="w1" style="left:15%;top:76%"><div class="dependency-symbol"><svg class="icon icon--robot tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><figcaption>작업 1</figcaption></figure>
+<figure class="dependency-node is-agent" data-dependency-node="w2" style="left:50%;top:76%"><div class="dependency-symbol"><svg class="icon icon--robot tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><figcaption>작업 2</figcaption></figure>
+<figure class="dependency-node is-agent" data-dependency-node="w3" style="left:85%;top:76%"><div class="dependency-symbol"><svg class="icon icon--robot tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><figcaption>작업 3</figcaption></figure>
+</div>
+</section>
+</div>
+</main>
+<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer>
+</article>
+<article class="slide compact" data-index="32" data-pattern="SEMINAR_ROLE_MAP_SERIAL">
+<header class="slide__header"><span class="slide__label">Pattern 33 · SEMINAR ROLE MAP · SERIAL</span><h1 class="slide__title" data-slot="title">배정과 <span class="hl">보고</span></h1><p class="slide__sub" data-slot="subtitle">조율 담당이 작업을 배정하고, 앞 작업이 끝나야 다음 작업이 시작됩니다.</p></header>
+<main class="slide__body">
+<div class="reference-serial-map" data-mode="serial">
+<svg class="ref-wires" aria-hidden="true">
+<path data-route="goal" class="ref-request"/><path data-route="result" class="ref-result"/>
+<path data-route="assign-a" class="ref-request"/><path data-route="report-a" class="ref-report-one"/>
+<path data-route="assign-b" class="ref-request"/><path data-route="report-b" class="ref-report-two"/>
+<path data-route="sequence" class="ref-request"/>
+</svg>
+<div class="ref-actor ref-person" style="left:14%;top:20%"><div class="ref-icon"><svg class="icon icon--human" viewBox="0 0 60 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="30" cy="16" r="11"/><path d="M10 58V43C10 21 50 21 50 43V58"/></svg></div><div class="ref-label"><h2>사람</h2></div></div>
+<div class="ref-actor ref-coordinator" style="left:58%;top:20%"><div class="ref-icon"><svg class="icon icon--robot tone-yellow" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><div class="ref-label"><h2>Coordinator</h2><p>작업 배정·결과 확인</p></div></div>
+<div class="ref-actor ref-worker ref-worker-a" style="left:32%;top:67%"><div class="ref-icon"><svg class="icon icon--robot tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><div class="ref-label"><h2>Worker 1</h2><p>앞 단계</p></div></div>
+<div class="ref-actor ref-worker ref-worker-b" style="left:78%;top:67%"><div class="ref-icon"><svg class="icon icon--robot tone-purple" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><div class="ref-label"><h2>Worker 2</h2><p>다음 단계</p></div></div>
+<span class="ref-link-label ref-goal">목표·기준</span>
+<span class="ref-link-label ref-result-label">진행·결과</span>
+<span class="ref-link-label ref-sequence-label">앞 결과 전달</span>
+</div>
+</main>
+<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer>
+</article>
+<article class="slide compact" data-index="33" data-pattern="SEMINAR_ROLE_MAP_PARALLEL">
+<header class="slide__header"><span class="slide__label">Pattern 34 · SEMINAR ROLE MAP · PARALLEL</span><h1 class="slide__title" data-slot="title">동시에 맡기는 <span class="hl">배정</span></h1><p class="slide__sub" data-slot="subtitle">같은 기준을 세 워커에게 나눠 배정하고 결과를 함께 받습니다.</p></header>
+<main class="slide__body">
+<div class="reference-serial-map" data-mode="parallel">
+<svg class="ref-wires" aria-hidden="true">
+<path data-route="goal" class="ref-request"/><path data-route="result" class="ref-result"/>
+<path data-route="assign-a" class="ref-request"/><path data-route="report-a" class="ref-report-one"/>
+<path data-route="assign-b" class="ref-request"/><path data-route="report-b" class="ref-report-two"/>
+<path data-route="assign-c" class="ref-request"/><path data-route="report-c" class="ref-report-three"/>
+</svg>
+<div class="ref-actor ref-person" style="left:14%;top:20%"><div class="ref-icon"><svg class="icon icon--human" viewBox="0 0 60 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="30" cy="16" r="11"/><path d="M10 58V43C10 21 50 21 50 43V58"/></svg></div><div class="ref-label"><h2>사람</h2></div></div>
+<div class="ref-actor ref-coordinator" style="left:58%;top:20%"><div class="ref-icon"><svg class="icon icon--robot tone-yellow" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><div class="ref-label"><h2>Coordinator</h2><p>작업 배정·결과 확인</p></div></div>
+<div class="ref-actor ref-worker ref-worker-a" style="left:28%;top:67%"><div class="ref-icon"><svg class="icon icon--robot tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><div class="ref-label"><h2>Worker 1</h2><p>역할 1</p></div></div>
+<div class="ref-actor ref-worker ref-worker-b" style="left:58%;top:67%"><div class="ref-icon"><svg class="icon icon--robot tone-purple" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><div class="ref-label"><h2>Worker 2</h2><p>역할 2</p></div></div>
+<div class="ref-actor ref-worker ref-worker-c" style="left:88%;top:67%"><div class="ref-icon"><svg class="icon icon--robot tone-gray" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><div class="ref-label"><h2>Worker 3</h2><p>역할 3</p></div></div>
+<span class="ref-link-label ref-goal">목표·기준</span>
+<span class="ref-link-label ref-result-label">진행·결과</span>
+</div>
+</main>
+<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer>
+</article>
     </div>
     <script>
       // file:// 로 열었을 때만 경로를 보정한다. 정식 덱과 같은 코드다 —
@@ -2444,10 +3011,103 @@ document.querySelectorAll('.tx-time-car').forEach(car=>{
  const root=car.closest('.tx-time');const run=e=>{e.preventDefault();e.stopPropagation();root.classList.remove('is-running');void root.offsetWidth;root.classList.add('is-running');};
  car.addEventListener('pointerdown',e=>e.preventDefault());car.addEventListener('click',run);car.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')run(e);});
 });
+
+/* ── 무료 세미나 참고 덱에서 이식한 도식 계산 (패턴 29~35) ──
+   flow-canvas · orch-scene · reference-serial-map · dependency-map 의 연결선은
+   실제 요소 위치를 재서 SVG path 로 그린다. 슬라이드 진입·리사이즈마다 다시 계산한다. */
+function drawFlow(){
+ const canvas=document.querySelector('.slide.active .flow-canvas');if(!canvas)return;
+ const area=canvas.getBoundingClientRect(),vertical=canvas.dataset.direction==='vertical';
+ const svg=canvas.querySelector('.flow-connections');svg.setAttribute('viewBox',`0 0 ${area.width} ${area.height}`);
+ for(const path of svg.querySelectorAll('[data-from]')){
+  const a=canvas.querySelector(`[data-node="${path.dataset.from}"]`).getBoundingClientRect(),b=canvas.querySelector(`[data-node="${path.dataset.to}"]`).getBoundingClientRect();
+  let x1,y1,x2,y2,route,head;const gap=vertical?Math.min(10,Math.max(3,(b.top-a.bottom)/5)):10,wing=Math.min(5,Math.max(3,gap));
+  if(vertical){x1=(a.left+a.right)/2-area.left;y1=a.bottom-area.top+gap;x2=(b.left+b.right)/2-area.left;y2=b.top-area.top-gap;const mid=(y1+y2)/2;route=`M${x1} ${y1}V${mid}H${x2}V${y2}`;head=`M${x2-wing} ${y2-wing}L${x2} ${y2}L${x2+wing} ${y2-wing}`}
+  else{x1=a.right-area.left+gap;y1=(a.top+a.bottom)/2-area.top;x2=b.left-area.left-gap;y2=(b.top+b.bottom)/2-area.top;const mid=(x1+x2)/2;route=`M${x1} ${y1}H${mid}V${y2}H${x2}`;head=`M${x2-wing} ${y2-wing}L${x2} ${y2}L${x2-wing} ${y2+wing}`}
+  path.setAttribute('d',route+head);path.dataset.start=`${x1},${y1}`;path.dataset.end=`${x2},${y2}`;
+ }
+}
+
+function drawOrchestration(){document.querySelectorAll('.slide.active .orch-scene').forEach(scene=>{const box=scene.getBoundingClientRect();const svg=scene.querySelector('.orch-wires');if(!box.width||!svg)return;svg.setAttribute('viewBox',`0 0 ${box.width} ${box.height}`);svg.querySelectorAll('path[data-start]').forEach(path=>{const a=scene.querySelector(`[data-orch-node="${path.dataset.start}"]`).getBoundingClientRect(),b=scene.querySelector(`[data-orch-node="${path.dataset.end}"]`).getBoundingClientRect();let x1,y1,x2,y2,d,vertical=path.dataset.axis==='vertical';if(vertical){x1=a.x+a.width/2-box.x;y1=a.bottom-box.y+5;x2=b.x+b.width/2-box.x;y2=b.top-box.y-8;let mid=y1+(y2-y1)*.45;d=`M${x1} ${y1}V${mid}H${x2}V${y2}m-5 -7l5 7 5 -7`;}else if(path.dataset.axis==='sample'){x1=a.right-box.x+6;y1=a.y+a.height/2-box.y;x2=b.x+b.width/2-box.x;y2=b.bottom-box.y+7;d=`M${x1} ${y1}H${x2}V${y2}m-5 7l5 -7 5 7`;}else{x1=a.right-box.x+7;y1=a.y+a.height/2-box.y;x2=b.left-box.x-8;y2=b.y+b.height/2-box.y;d=`M${x1} ${y1}H${(x1+x2)/2}V${y2}H${x2}m-7 -5l7 5 -7 5`;}path.setAttribute('d',d);});});}
+
+function drawReferenceSerial(){
+ const map=document.querySelector('.slide.active .reference-serial-map');if(!map)return;
+ const r=map.getBoundingClientRect();if(!r.width||!r.height)return;
+ const svg=map.querySelector('.ref-wires');svg.setAttribute('viewBox',`0 0 ${r.width} ${r.height}`);
+ const box=cls=>{const icon=map.querySelector(cls+' .icon');if(!icon)return null;const b=icon.getBoundingClientRect();return {left:b.left-r.left,right:b.right-r.left,top:b.top-r.top,bottom:b.bottom-r.top,cx:(b.left+b.right)/2-r.left,cy:(b.top+b.bottom)/2-r.top}};
+ const human=box('.ref-person'),co=box('.ref-coordinator'),a=box('.ref-worker-a'),b=box('.ref-worker-b'),gap=innerHeight<850?16:24;
+ const set=(name,d)=>{const path=map.querySelector(`[data-route="${name}"]`);if(path)path.setAttribute('d',d)};
+ const head=(x,y,axis)=>axis==='right'?`M${x-7} ${y-5}L${x} ${y}L${x-7} ${y+5}`:axis==='left'?`M${x+7} ${y-5}L${x} ${y}L${x+7} ${y+5}`:axis==='up'?`M${x-5} ${y+7}L${x} ${y}L${x+5} ${y+7}`:`M${x-5} ${y-7}L${x} ${y}L${x+5} ${y-7}`;
+ const x1=human.right+gap,x2=co.left-gap,y=co.cy;
+ set('goal',`M${x1} ${y-20}H${x2}`+head(x2,y-20,'right'));
+ set('result',`M${x2} ${y+20}H${x1}`+head(x1,y+20,'left'));
+ const parallel=map.dataset.mode==='parallel';
+ const workers=parallel?[['a',a,-38],['b',b,0],['c',box('.ref-worker-c'),38]]:[['a',a,-26],['b',b,26]];
+ for(const[id,worker,lane]of workers){
+  if(!worker)continue;
+  const sx=co.cx+lane,sy=co.bottom+gap,ex=worker.cx-9,ey=worker.top-gap,mid=(sy+ey)/2;
+  set('assign-'+id,`M${sx} ${sy}C${sx} ${mid},${ex} ${mid},${ex} ${ey}`+head(ex,ey,'down'));
+  set('report-'+id,`M${ex+18} ${ey}C${ex+18} ${mid+16},${sx+18} ${mid+16},${sx+18} ${sy}`+head(sx+18,sy,'up'));
+ }
+ const labels=[['.ref-goal',(x1+x2)/2,y-45],['.ref-result-label',(x1+x2)/2,y+45]];
+ if(!parallel&&b){
+  const qx=a.right+gap,rx=b.left-gap,qy=a.cy;
+  set('sequence',`M${qx} ${qy}H${rx}`+head(rx,qy,'right'));
+  labels.push(['.ref-sequence-label',(qx+rx)/2,qy+32]);
+ }
+ for(const[cls,x,ly]of labels){const label=map.querySelector(cls);if(label){label.style.left=x+'px';label.style.top=ly+'px'}}
+}
+
+function drawDependencies(){
+ /* 산출물 의존 지도. 노드 순서는 DOM 순서이고, 선은 아래 규칙으로 그린다.
+    data-dependency-mode="serial"   앞 노드 → 다음 노드로 차례로 잇는다 (선 개수 = 노드 수 - 1)
+    data-dependency-mode="parallel" 첫 노드에서 줄기를 내리고 나머지 노드로 갈라진다 (선 = 줄기 1 + 대상 수) */
+ document.querySelectorAll('.slide.active .dependency-map').forEach(map=>{
+  const r=map.getBoundingClientRect();if(!r.width||!r.height)return;
+  const wires=map.querySelector('.dependency-wires');if(!wires)return;
+  wires.setAttribute('viewBox',`0 0 ${r.width} ${r.height}`);
+  const nodes=[...map.querySelectorAll('[data-dependency-node]')];
+  const paths=[...wires.querySelectorAll('path')];
+  if(nodes.length<2||!paths.length)return;
+  const box=node=>{const el=node.querySelector('.dependency-symbol svg')||node;const b=el.getBoundingClientRect();
+   return {x:(b.left+b.right)/2-r.left,y:(b.top+b.bottom)/2-r.top,left:b.left-r.left,right:b.right-r.left,top:b.top-r.top,bottom:b.bottom-r.top}};
+  const arrow=(x,y,dir)=>dir==='right'?`M${x-9} ${y-6}L${x} ${y}L${x-9} ${y+6}`:`M${x-6} ${y-9}L${x} ${y}L${x+6} ${y-9}`;
+  if(map.dataset.dependencyMode==='parallel'){
+   const source=box(nodes[0]),targets=nodes.slice(1).map(box);
+   const end=Math.min(...targets.map(t=>t.top))-16;
+   const caption=nodes[0].querySelector('figcaption');
+   const start=(caption?caption.getBoundingClientRect().bottom-r.top:source.bottom)+16;
+   const fork=start+(end-start)*0.45;
+   if(paths[0])paths[0].setAttribute('d',`M${source.x} ${start}V${fork}`);
+   targets.forEach((t,n)=>{const path=paths[n+1];if(path)path.setAttribute('d',`M${source.x} ${fork}H${t.x}V${end}`+arrow(t.x,end,'down'));});
+  }else{
+   for(let n=0;n<nodes.length-1;n++){
+    const path=paths[n];if(!path)continue;
+    const a=box(nodes[n]),b=box(nodes[n+1]),sx=a.right+12,ex=b.left-12,mid=(sx+ex)/2;
+    path.setAttribute('d',`M${sx} ${a.y}C${mid} ${a.y},${mid} ${b.y},${ex} ${b.y}`+arrow(ex,b.y,'right'));
+   }
+  }
+ });
+}
+
+function drawSeminarDiagrams(){ drawFlow(); drawOrchestration(); drawReferenceSerial(); drawDependencies(); }
+/* 등장 애니메이션 중에는 요소가 움직이므로, 각 항목의 애니메이션이 끝날 때마다 선을 다시 그린다. */
+document.addEventListener('animationend',event=>{
+ if(event.target.closest && event.target.closest('.slide.active')) requestAnimationFrame(drawSeminarDiagrams);
+},true);
+const seminarDeckRoot=document.querySelector('.slide-deck');
+if(seminarDeckRoot){
+ const seminarObserver=new ResizeObserver(()=>requestAnimationFrame(drawSeminarDiagrams));
+ seminarObserver.observe(seminarDeckRoot);
+ window.addEventListener('resize',drawSeminarDiagrams);
+ document.fonts.ready.then(drawSeminarDiagrams);
+}
+
 function resetPatternInteractions(slide){
  slide.querySelectorAll('.tx-time').forEach(e=>e.classList.remove('is-running'));
  slide.querySelectorAll('.tx-switch').forEach(e=>selectPatternPanel(e,e.dataset.defaultPanel));
  requestAnimationFrame(drawPatternConnections);
+ requestAnimationFrame(drawSeminarDiagrams);
 }
 
       class SlidePresentation {

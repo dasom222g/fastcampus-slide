@@ -1,6 +1,6 @@
-# 패턴 카탈로그 — 승인 구조 29종
+# 패턴 카탈로그 — 승인 구조 34종
 
-[base-template.html](../assets/base-template.html)은 제작용 중립 예제 모음이다. 실제 강의 대본·제품명·작업 캡처를 넣지 않는다. **기존 9종 유지 + 현재 승인본에서 20종 추가**. 같은 모양의 이름만 바꾼 변형은 별도 패턴으로 세지 않았다.
+[base-template.html](../assets/base-template.html)은 제작용 중립 예제 모음이다. 실제 강의 대본·제품명·작업 캡처를 넣지 않는다. **기존 9종 유지 + 승인본에서 20종 추가 + 무료 세미나 참고 덱에서 5종 이식(30~34)**. 같은 모양의 이름만 바꾼 변형은 별도 패턴으로 세지 않았다.
 
 ## 고르는 순서
 
@@ -41,6 +41,11 @@
 | 27 | [DELEGATION_HIERARCHY](../assets/base-template.html?slide=27) | 전체 협업의 마지막 정리와 첫 장 회수 | 상단 요청자·조율자와 하단 담당자의 위계로 수평 반복을 끊는다. |
 | 28 | [CAUSE_ROWS](../assets/base-template.html?slide=28) | 문제→원인→대응의 가운데 장 | 시각적으로 동일한 행의 번호가 앞의 현상과 뒤의 해결을 이어준다. |
 | 29 | [CLICK_TIMELINE](../assets/base-template.html?slide=29) | 한 번에 한 위치라는 제약을 비유로 설명 | 진입 때 관계·차량 등장, 클릭 때만 한 객체가 이동한다. |
+| 30 | [SEMINAR_IO_FLOW](../assets/base-template.html?slide=30) | 무엇을 넣으면 무엇이 나오는지 | Input·AI·Output 세 단을 같은 높이에 두고 실제 요소 위치로 선을 그린다. |
+| 31 | [SEMINAR_FANOUT_FLOW](../assets/base-template.html?slide=31) | 같은 입력을 여러 역할이 나눠 맡을 때 | 공통 입력 하나에서 역할들로 갈라지고 각자의 산출물로 내려간다. |
+| 32 | [SEMINAR_DEPENDENCY_COMPARE](../assets/base-template.html?slide=32) | 순차와 병렬의 판단 기준 | 같은 시각 구조의 두 패널에서 의존의 유무만 달라진다. |
+| 33 | [SEMINAR_ROLE_MAP_SERIAL](../assets/base-template.html?slide=33) | 사람·조율·워커의 배정과 보고 | 배정(노랑)·결과(초록)·앞 결과 전달을 한 지도에서 읽는다. |
+| 34 | [SEMINAR_ROLE_MAP_PARALLEL](../assets/base-template.html?slide=34) | 같은 기준을 여러 워커에 동시 배정 | 워커 셋으로 배정선이 갈라지고 보고선이 각각 돌아온다. |
 
 ## 복사 단위와 실행 계약
 
@@ -279,3 +284,13 @@
 - 추출 이유: 진입 때 관계·차량 등장, 클릭 때만 한 객체가 이동한다.
 - 피할 것: 페이지 진입과 이동을 묶지 않는다. 클릭 전 정지 구간을 이동 키프레임에 남기지 않는다.
 - 동작: `click-travel`
+
+## 30~34 · 무료 세미나 참고 덱 이식
+
+원본은 [reference-deck-free-seminar.html](reference-deck-free-seminar.html) — 강사가 디자인과 요소 크기를 기준으로 지정한 덱이다. 토큰과 `.slide` 골격은 공통 규격과 같고, 컴포넌트만 베이스 템플릿에 더했다.
+
+- **연결선은 JS가 실제 요소 위치를 재서 그린다.** `flow-canvas`(`drawFlow`), `reference-serial-map`(`drawReferenceSerial`), `dependency-map`(`drawDependencies`). 슬라이드 진입·리사이즈마다 다시 계산하므로 path의 `d`를 직접 쓰지 않는다.
+- `dependency-map`은 `data-dependency-mode="serial"`이면 DOM 순서대로 잇고, `parallel`이면 첫 노드에서 나머지로 갈라진다. `<path>` 개수를 노드 수에 맞춘다 (순차 = 노드-1, 병렬 = 1+대상 수).
+- `reference-serial-map`은 `.ref-person`·`.ref-coordinator`·`.ref-worker-a|b|c`의 위치를 `style="left:%;top:%"`로 정하고, `data-mode`가 `serial`이면 워커 둘 사이에 전달선이 하나 더 생긴다.
+- 역할 카드 이미지는 `/assets/character-*.png` 세 종이며 같은 대상은 덱을 넘어 같은 캐릭터를 쓴다.
+- 문서(산출물)는 `flow-artifact`(카드)와 `dependency-document`(글리프) 두 표현이 있다. 입력은 purple, 출력은 green 톤을 쓴다.
