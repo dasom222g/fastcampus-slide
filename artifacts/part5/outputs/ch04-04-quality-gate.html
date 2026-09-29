@@ -3,8 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>품질 게이트로 통과 기준 세우기 — Part 5 Ch04-04</title>
-
+    <title>품질 게이트로 통과 기준 세우기 | Part 5 · Ch04-04</title>
+    <!-- TEMPLATE ONLY: 실제 강의 내용·제품명·작업 캡처를 넣지 않는다.
+     사용법: 이 파일을 복사 → 필요한 article 선택 → 모든 data-slot/제목/부제 교체.
+     diagram의 공통 shape 정의를 유지하거나 사용한 도형만 각 SVG에 펼친다.
+     같은 역할은 공통 CSS를 공유한다. 강의 덱의 내용은 소스·스토리보드에서 가져온다. -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css"
@@ -613,182 +616,557 @@
 .tx-folder-scope{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.tx-agent-badge{position:absolute;right:-1.5rem;top:0;width:2.6rem;height:2.6rem}.tx-delegation [data-node="a"],.tx-delegation [data-node="b"],.tx-delegation [data-node="c"]{top:65%}
 .tx-delegation [data-node="center"] .heading{position:absolute;left:calc(100% + 1rem);top:.4rem}.tx-delegation [data-node="center"] .copy{position:absolute;left:calc(100% + 1rem);top:2.5rem}@media(max-height:650px){.tx-delegation [data-node="a"],.tx-delegation [data-node="b"],.tx-delegation [data-node="c"]{top:60%}.tx-delegation [data-node="center"] .copy{top:2rem}}
 
-/* ── 이번 덱 전용 변형: 프로젝트 문서·입력/출력·순차 배정 ── */
-.slide__body .anim-item.do-fadeinup{animation-name:scope-fade}
-.p5-note{font-size:var(--body);color:var(--text-dim);text-align:center;line-height:1.5;max-width:65rem}
-.p5-flow{display:flex;align-items:center;justify-content:center;gap:2rem;max-width:100%;width:fit-content}
-.p5-item{display:flex;flex-direction:column;align-items:center;gap:1rem;text-align:center;width:21rem;max-width:26vw}
-.p5-icon{width:9rem;height:9rem;display:block;flex-shrink:0}
-.p5-arrow{width:5rem;flex-shrink:0;color:var(--gray)}.p5-arrow svg{width:100%;height:2rem;overflow:visible}
-.p5-flow .heading{font-size:var(--heading)}.p5-flow .copy{max-width:19em}
-.p5-image{mix-blend-mode:lighten;object-fit:contain;max-width:100%;max-height:100%}
-.p5-project{width:min(100%,86rem);display:grid;grid-template-columns:1.1fr 1fr;gap:3rem;align-items:center}
-.p5-project figure{height:min(75cqh,35rem);display:flex;align-items:center;justify-content:center}
-.p5-project .statement{margin:.8rem 0 1.4rem}.p5-project .copy{margin-top:.5rem}
-.p5-link{display:inline-block;color:var(--text);font-size:var(--body);margin-top:1.7rem;text-underline-offset:.35em}
-.p5-kicker{font-size:var(--heading);font-weight:700;color:var(--accent,var(--brand))}
-.p5-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4rem;width:min(100%,82rem)}
-.p5-side{display:flex;flex-direction:column;align-items:center;gap:1.4rem;text-align:center;min-width:0}.p5-side>.heading{color:var(--accent)}
-.p5-root{display:flex;align-items:center;gap:.7rem;font-size:var(--body)}.p5-root .p5-icon{width:4rem;height:4rem}
-.p5-leaves{display:flex;justify-content:center;gap:1.5rem;width:100%;position:relative;padding-top:2rem}
-.p5-leaves:before{content:'';position:absolute;top:0;left:25%;right:25%;height:1.5rem;border-top:2px solid var(--accent);border-left:2px solid var(--accent);border-right:2px solid var(--accent)}
-.p5-leaf{flex:1;display:flex;align-items:center;flex-direction:column;gap:.7rem;font-size:var(--body)}.p5-leaf .p5-icon{width:5rem;height:5rem;color:var(--accent)}
-.p5-result{font-size:var(--heading);font-weight:800;color:var(--accent);margin-top:.4rem}
-.p5-rows{display:flex;flex-direction:column;gap:2.1rem;width:min(100%,82rem)}
-.p5-row{display:grid;grid-template-columns:minmax(0,1fr) 4rem minmax(0,1fr);gap:2rem;align-items:center}.p5-row .heading{font-size:var(--heading)}.p5-row .p5-arrow{width:4rem;color:var(--accent)}.p5-row .p5-answer{color:var(--accent);font-size:var(--heading);font-weight:700}
-.p5-badgood{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4rem;width:min(100%,82rem)}
-.p5-badgood .p5-side{align-items:stretch;text-align:left;gap:1.5rem}.p5-evidence{display:flex;align-items:center;gap:1.3rem;min-height:4.5rem;font-size:var(--body);line-height:1.5}.p5-evidence .p5-icon{width:4rem;height:4rem;color:var(--accent)}
-.p5-doc-layout{width:min(100%,82rem);display:grid;grid-template-columns:1.15fr 1fr;gap:4rem;align-items:center}
-.p5-paper{position:relative;border:1.5px solid var(--gray);border-radius:.5rem;background:var(--bg-card);padding:2.2rem;display:flex;flex-direction:column;gap:1.6rem}.p5-paper>.heading{color:var(--green)}
-.p5-field{display:grid;grid-template-columns:5rem 1fr;gap:1.5rem;font-size:var(--body);line-height:1.5}.p5-field dt{color:var(--text-dim)}.p5-field dd{margin:0}
-.p5-doc-layout .copy{margin-top:1.1rem}.p5-role{display:grid;grid-template-columns:1fr 4rem 1.35fr;gap:2rem;align-items:center;width:min(100%,85rem)}
-.p5-role-input{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1rem}.p5-role-input .p5-icon{width:8rem;height:8rem}.p5-role .p5-evidence{min-height:0}.p5-role .p5-paper{gap:1.1rem}
-.p5-team{width:min(100%,78rem);height:min(76cqh,34rem);position:relative}
-.p5-node{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%);display:flex;align-items:center;flex-direction:column;gap:.45rem;text-align:center;white-space:nowrap}
-.p5-node .p5-icon{width:6.3rem;height:6.3rem}.p5-node .heading{font-size:var(--body)}.p5-node .copy{font-size:var(--body)}
-.p5-team-wires{position:absolute;inset:0;width:100%;height:100%;overflow:visible}.p5-wirelabel{position:absolute;font-size:var(--body);color:var(--yellow);background:var(--bg);padding:0 .5rem;transform:translate(-50%,-50%)}
-.p5-state{font-size:var(--body);display:flex;gap:.4rem;align-items:center}.p5-node .p5-state .p5-icon{width:1.5rem;height:1.5rem;color:inherit}.p5-serial .p5-node .copy{font-size:1.12rem}
-.p5-stages{display:flex;flex-direction:column;gap:1.8rem;width:min(100%,82rem)}.p5-stage{display:grid;grid-template-columns:9rem 1fr;gap:2rem;align-items:start}.p5-stage .heading{color:var(--brand)}.p5-stage .p5-stage-line{font-size:var(--heading);font-weight:700}.p5-stage .copy{margin-top:.7rem}
-.p5-handoff{width:min(100%,88rem);display:flex;flex-direction:column;gap:1.7rem}.p5-handoff-head{display:grid;grid-template-columns:1fr 4rem 1fr;gap:2rem;align-items:center;margin-bottom:.6rem}.p5-handoff-head h2{display:flex;gap:1rem;align-items:center;color:var(--green)}.p5-handoff-head .p5-icon{width:4rem;height:4rem}
-.p5-handoff .p5-row{font-size:var(--body);line-height:1.5;gap:2rem}.p5-handoff .p5-answer{font-size:var(--body);color:var(--text)}
-.p5-review{width:min(100%,76rem);display:flex;align-items:center;flex-direction:column;gap:1rem}.p5-review .p5-item{width:16rem}.p5-loop:after{content:"";position:absolute;left:-7px;top:-5px;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:9px solid var(--orange)}.p5-review-row{display:flex;align-items:center;gap:2rem}.p5-review .p5-loop{width:70%;height:3rem;position:relative;border-bottom:2px solid var(--orange);border-left:2px solid var(--orange);border-right:2px solid var(--orange);color:var(--orange);text-align:center;font-size:var(--body)}.p5-loop span{background:var(--bg);padding:0 1rem;position:relative;top:1.9rem}
-.p5-gate .p5-review-row{width:100%;display:grid;grid-template-columns:1fr 3rem 1fr 3rem 1fr;gap:2rem}.p5-gate .p5-item{width:100%;max-width:none}.p5-gate .p5-arrow{width:3rem}.p5-gate .p5-loop{width:calc((100% + 7rem)/3);align-self:flex-start;margin-left:calc((100% - 14rem)/6);margin-bottom:2rem}.p5-gate .p5-loop span{position:absolute;top:3.5rem;left:0;width:max-content;padding:0;text-align:left}
-.p5-brief{width:min(100%,76rem);display:flex;flex-direction:column;gap:2.5rem}.p5-brief blockquote{font-size:var(--heading);line-height:1.55;font-weight:700;padding-left:1.6rem;border-left:4px solid var(--brand)}.p5-brief-fields{display:flex;justify-content:space-between;gap:2rem}.p5-brief-fields .copy{margin-bottom:.5rem}
-.scene .p5-team{height:min(76cqh,32rem)}.scene .p5-node .p5-icon{width:5rem;height:5rem}.scene .p5-node .heading,.scene .p5-node .copy{font-size:var(--body)}
-@media(max-width:1400px){.p5-item{width:18rem}.p5-icon{width:7rem;height:7rem}.p5-flow{gap:1.2rem}.p5-arrow{width:3rem}.p5-team{height:min(77cqh,30rem)}.p5-node .p5-icon{width:5.2rem;height:5.2rem}.p5-two,.p5-badgood{gap:2.5rem}.p5-paper{padding:1.5rem;gap:1.2rem}.p5-doc-layout{gap:2.5rem}.p5-role{gap:1.2rem;grid-template-columns:1fr 3rem 1.2fr}.p5-role .p5-paper{gap:.8rem}.p5-rows{gap:1.7rem}.p5-project{gap:2rem}.p5-project .statement{margin:.6rem 0 1rem}.p5-stage{gap:1rem}.p5-stages{gap:1.4rem}}
+      /* ──────────────────────────────────────────────────────────────
+         무료 세미나 참고 덱에서 이식한 컴포넌트 (패턴 29~35)
+         원본: references/reference-deck-free-seminar.html
+         Input → AI → Output 흐름 · 산출물(문서) 카드 · 산출물 의존 지도 ·
+         역할 카드 · 사람/Coordinator/Worker 배정 지도 · 병렬 레인 · 입출력 기계.
+         토큰(:root)과 .slide 골격은 위 공통 규격과 같다 — 이 블록은 컴포넌트만 더한다.
+         ────────────────────────────────────────────────────────────── */
+      .machine-scene {width:100%;height:100%;max-height:39rem;display:flex;align-items:center;justify-content:center}
+      .machine-svg {width:100%;max-height:100%;overflow:visible}
+      .machine-fill {fill:var(--bg-card)}
+      .machine-outline {stroke:var(--purple);stroke-width:3;fill:none;stroke-linejoin:round}
+      .machine-kind {fill:var(--text-dim);font-size:19px}
+      .machine-name {fill:var(--purple);font-size:68px;font-weight:750}
+      .machine-label {fill:var(--text-dim);font-size:18px}
+      .machine-value {fill:var(--text);font-size:35px;font-weight:750}
+      .entry-arrow {fill:var(--gray)}
+      .exit-arrow {fill:var(--green)}
+      .machine-output .machine-value {fill:var(--green)}
+      .machine-input,.machine-output {transition:opacity .24s ease}
+      .ai .machine-outline {stroke:var(--brand)}
+      .ai .machine-name {fill:var(--brand)}
+      .ai .machine-value {font-size:26px}
+      .ai .machine-kind {font-size:19px}
+      .ai-function[data-focus='0'] .machine-input {opacity:.55}
+      .ai-function[data-focus='0'] .machine-output .machine-value {fill:var(--brand)}
+      .ai-function[data-focus='1'] .machine-input .machine-value {fill:var(--brand)}
+      /* Side-by-side dependency proof. */
+.pattern-pair {display:grid;grid-template-columns:1fr 1.2fr;width:min(100%,95rem);gap:4rem}
+      .pattern-number {font-size:3.2rem;color:var(--text-muted);line-height:1;font-weight:750}
+      .flow-file {display:block;text-align:center;color:var(--text-dim);font-size:1.25rem;background:var(--bg);padding:.5rem 1.2rem;z-index:1;line-height:1.4;position:relative}
+      .flow-task {padding:.8rem 1.5rem;border:1px solid var(--brand);color:var(--text);background:var(--bg-card);font-size:1.3rem;z-index:1;text-align:center;position:relative;min-width:13rem}
+      .sequence-body .flow-task:before {content:'';position:absolute;left:calc(50% - 4px);top:-8px;border-left:4px solid transparent;border-right:4px solid transparent;border-top:6px solid var(--gray)}
+      .fork {fill:none;stroke:var(--gray);stroke-width:1.6;flex-shrink:0}
+      .parallel-body>.fork {width:100%;height:5.5rem;margin-top:.7rem}
+      .parallel-lanes .flow-task {min-width:0;padding:1rem .35rem;font-size:1.2rem}
+      .down-arrow {display:block;font-size:1.8rem;color:var(--gray);padding:.65rem 0}
+      .pattern-verdict {text-align:center;font-size:var(--body);margin-top:1rem;color:var(--text-dim)}
+      .pattern-verdict strong {color:var(--text)}
+      @media(max-width:1400px) {
+        .pattern-pair {gap:2rem}
+        .parallel-lanes .flow-task,.parallel-lanes p {font-size:1rem}
+        .flow-task {font-size:1.1rem;padding:.55rem 1rem;min-width:10rem}
+        .flow-file {font-size:1.1rem}
+      }
+      @media(max-height:900px) and (min-height:651px) {
+        .pattern-pair {max-height:calc(100% - 3.5rem)}
+        .pattern-verdict {font-size:1.15rem}
+      }
+      @media(max-height:650px) {
+        .pattern-pair {gap:1.5rem}
+        .pattern-number {font-size:2.2rem}
+        .flow-file {font-size:.85rem;padding:.3rem .7rem}
+        .flow-task {font-size:.9rem;padding:.45rem 1rem;min-width:9rem}
+        .parallel-body>.fork {height:3rem;margin-top:.4rem}
+        .parallel-lanes .flow-task {font-size:.8rem;padding:.6rem .2rem}
+        .down-arrow {font-size:1.4rem;padding:.4rem 0}
+        .pattern-verdict {font-size:.95rem;margin-top:.4rem}
+      }
+      @media(prefers-reduced-motion:reduce) {
+        .slide,.reveal,.machine-input,.machine-output {transition:none!important}
+      }
+      .concept-stage {width:min(100%,68rem);height:100%;max-height:42rem;display:flex;align-items:center;justify-content:center}
+      .concept-stage .machine-svg {width:100%;height:100%}
+      .concept-stage .machine-name {font-size:84px;fill:var(--text);font-weight:600}
+      .concept-stage .ai .machine-name {fill:var(--brand);font-size:72px;font-weight:750}
+      .concept-stage .machine-input {opacity:1!important}
+      .concept-stage .machine-value,.concept-stage .ai .machine-value {font-size:34px;font-weight:750}
+      .concept-stage .machine-input .machine-value,.concept-stage .ai .machine-input .machine-value {fill:var(--purple)}
+      .concept-stage .machine-output .machine-value,.concept-stage .ai .machine-output .machine-value {fill:var(--green)}
+      .concept-stage .entry-arrow {fill:var(--purple)}
+      .concept-stage .machine-label {font-size:20px}
+      .machine-input .machine-glyph {color:var(--purple)}
+      .machine-output .machine-glyph {color:var(--green)}
+      .machine-io-label {font-size:26px;font-weight:750}
+      .ai .machine-io-caption {font-size:24px;font-weight:600;fill:var(--text)}
+      .machine-input .machine-io-label {fill:var(--purple)}
+      .machine-output .machine-io-label {fill:var(--green)}
+      .machine-glyph {overflow:visible}
+      .glyph-solid {fill:currentColor;stroke:currentColor;stroke-width:2;stroke-linejoin:round}
+      .glyph-outline {stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+      .glyph-paper {fill:color-mix(in srgb,currentColor 12%,var(--bg-card))}
+      .glyph-ink,.glyph-fold,.glyph-heading {fill:none}
+      .glyph-heading {stroke-width:4}
+      .dependency-comparison {width:min(100%,108rem);height:min(100%,43rem);display:grid;grid-template-columns:1fr 1fr;gap:0}
+      .dependency-panel {--pattern-accent:var(--brand);display:flex;flex-direction:column;min-width:0;padding-right:4rem}
+      .dependency-panel:last-child {--pattern-accent:var(--yellow);padding:0 0 0 4rem;border-left:1px solid var(--border)}
+      .dependency-panel header h2 {color:var(--pattern-accent);font-size:3.2rem;font-weight:800;line-height:1.2;letter-spacing:-.03em}
+      .dependency-panel header p {color:var(--text-dim);font-size:1.45rem;line-height:1.5;margin-top:.65rem}
+      .dependency-map {position:relative;flex:1;min-height:0;margin-top:2rem}
+      .dependency-wires {position:absolute;inset:0;width:100%;height:100%;overflow:visible;fill:none;stroke:var(--pattern-accent);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+      .dependency-node {position:absolute;transform:translate(-50%,-50%);width:10rem;height:8rem;margin:0;text-align:center}
+      .dependency-symbol {height:100%;display:flex;align-items:center;justify-content:center}
+      .dependency-symbol .icon {display:block;width:7.5rem;height:7.8rem;color:var(--pattern-accent)}
+      .dependency-document {display:block;width:7.1rem;height:8rem;color:var(--purple);fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+      .document-page {fill:var(--bg-card)}
+      .document-fold {fill:var(--bg)}
+      .document-lines {stroke-width:3}
+      .dependency-node figcaption {position:absolute;top:calc(100% + .85rem);left:50%;transform:translateX(-50%);width:max-content;font-size:1.6rem;line-height:1.4;font-weight:700;white-space:nowrap}
+      .dependency-node.is-document figcaption {color:var(--purple)}
+      @media(max-height:900px) {
+        .dependency-comparison {height:min(100%,34rem)}
+        .dependency-panel {padding-right:3rem}
+        .dependency-panel:last-child {padding-left:3rem}
+        .dependency-panel header h2 {font-size:2.8rem}
+        .dependency-panel header p {font-size:1.25rem}
+        .dependency-node {height:6.8rem;width:8rem}
+        .dependency-symbol .icon {width:6.3rem;height:6.5rem}
+        .dependency-document {width:6rem;height:6.8rem}
+        .dependency-node figcaption {font-size:1.4rem}
+      }
+      @media(max-height:650px) {
+        .dependency-comparison {height:100%}
+        .dependency-panel {padding-right:2rem}
+        .dependency-panel:last-child {padding-left:2rem}
+        .dependency-panel header h2 {font-size:2rem}
+        .dependency-panel header p {font-size:1rem;margin-top:.35rem}
+        .dependency-map {margin-top:1.25rem}
+        .dependency-node {height:4.5rem;width:6rem}
+        .dependency-symbol .icon {width:4.2rem;height:4.35rem}
+        .dependency-document {width:4rem;height:4.5rem}
+        .dependency-node figcaption {font-size:1.1rem;top:calc(100% + .5rem)}
+      }
+      @media(max-height:650px) {
+        .concept-stage {max-height:24rem}
+      }
+      /* Artifact silhouettes carry format; paths carry relationships. */
+.flow-canvas {position:relative;width:min(100%,104rem);height:min(100%,37rem);isolation:isolate}
+      .flow-connections {position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:-1;overflow:visible}
+      .flow-connections path {fill:none;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}
+      .edge-input {stroke:var(--purple)}
+      .edge-output {stroke:var(--green)}
+      .flow-stage {min-width:0;min-height:0}
+      .flow-heading {font-size:2rem;line-height:1;font-weight:750;letter-spacing:-.025em}
+      .stage-input .flow-heading {color:var(--purple)}
+      .stage-output .flow-heading {color:var(--green)}
+      .stage-ai .flow-heading {color:var(--text-dim)}
+      .flow-heading small {font-size:.9rem;font-weight:450;letter-spacing:0;margin-left:.7rem;white-space:nowrap}
+      .flow-items {min-height:0;min-width:0}
+      .flow-artifact {--artifact-color:var(--purple);display:flex;flex-direction:column;position:relative;min-width:0;background:var(--bg-card);border:1px solid color-mix(in srgb,var(--artifact-color) 42%,var(--bg));color:var(--text);border-radius:.35rem;padding:1.3rem 1.6rem;box-shadow:0 .5rem 1.6rem rgba(0,0,0,.06);transition:border-color .15s,background .15s}
+      .flow-artifact.tone-output {--artifact-color:var(--green)}
+      .flow-artifact:hover {border-color:var(--artifact-color);background:color-mix(in srgb,var(--artifact-color) 7%,var(--bg-card))}
+      .artifact-chrome {display:flex;gap:.6rem;align-items:center;font-size:.8rem;color:var(--text-dim);line-height:1.2;white-space:nowrap}
+      .artifact-chrome>b {font-size:1.1rem;font-weight:450;margin-left:auto;color:var(--artifact-color)}
+      .artifact-mark {font-size:.65rem;letter-spacing:.07em;font-weight:650;color:var(--artifact-color);line-height:1.3}
+      .artifact-title {font-size:1.75rem;font-weight:720;line-height:1.25;letter-spacing:-.025em;color:var(--artifact-color);margin-top:.75rem}
+      .artifact-decoration {margin-top:1rem;color:var(--text-muted);opacity:.45;pointer-events:none}
+      .shape-paper {border-radius:.2rem;clip-path:polygon(0 0,calc(100% - 1.6rem) 0,100% 1.6rem,100% 100%,0 100%);padding-right:2rem}
+      .shape-paper .artifact-chrome>b {margin-right:.75rem}
+      .paper-fold {position:absolute;top:0;right:0;width:1.6rem;height:1.6rem;background:var(--artifact-color);border-radius:0 0 0 .15rem;opacity:.5}
+      .paper-rules {display:flex;flex-direction:column;gap:.4rem;width:75%}
+      .paper-rules i {display:block;height:2px;background:currentColor;border-radius:2px}
+      .paper-rules i:nth-child(2) {width:80%}
+      .paper-rules i:last-child {width:57%}
+      .shape-prompt {border-radius:.6rem;border-style:dashed}
+      .shape-prompt .artifact-mark {background:color-mix(in srgb,var(--purple) 13%,transparent);padding:.2rem .35rem;border-radius:.2rem}
+      .shape-screen {border-radius:.6rem .6rem .15rem .15rem;border-top:2px solid var(--artifact-color)}
+      .shape-screen .artifact-mark:before {content:'•••';letter-spacing:.2rem;margin-right:.5rem;color:var(--text-muted)}
+      .flow-worker {display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;min-width:0;padding:1.2rem;border:1.5px solid var(--brand);background:var(--bg-card);border-radius:.2rem;min-height:8rem;gap:.55rem}
+      .ai-symbol {font-size:2.6rem;line-height:1.1;font-weight:800;color:var(--brand)}
+      .ai-role {font-size:1.15rem;color:var(--text);font-weight:550;line-height:1.2;white-space:nowrap}
+      .ai-port {position:absolute;width:.7rem;height:1.9rem;background:var(--bg-card);border:1.5px solid var(--brand)}
+      .flow-horizontal .port-before {left:-.7rem;top:calc(50% - .95rem);border-right:0;border-radius:.25rem 0 0 .25rem}
+      .flow-horizontal .port-after {right:-.7rem;top:calc(50% - .95rem);border-left:0;border-radius:0 .25rem .25rem 0}
+      .flow-vertical .ai-port {width:1.9rem;height:.7rem;left:calc(50% - .95rem)}
+      .flow-vertical .port-before {top:-.7rem;border-bottom:0;border-radius:.25rem .25rem 0 0}
+      .flow-vertical .port-after {bottom:-.7rem;border-top:0;border-radius:0 0 .25rem .25rem}
+      .flow-horizontal {display:grid;grid-template-columns:1.12fr .55fr .8fr .45fr 1.1fr}
+      .flow-horizontal .stage-input {grid-column:1}
+      .flow-horizontal .stage-ai {grid-column:3}
+      .flow-horizontal .stage-output {grid-column:5}
+      .flow-horizontal .flow-stage {display:grid;grid-template-rows:2rem minmax(0,1fr);gap:2rem}
+      .flow-horizontal .flow-items {display:flex;flex-direction:column;justify-content:center;gap:1.3rem}
+      .flow-horizontal .flow-artifact {min-height:8.3rem}
+      .flow-horizontal.flow-single .stage-output .flow-artifact {min-height:17rem;padding:2rem}
+      .flow-horizontal.flow-single .stage-output .artifact-title {font-size:2.2rem;margin-top:2rem}
+      .flow-horizontal.flow-single .stage-output .artifact-decoration {margin-top:3rem}
+      .flow-horizontal.flow-single .stage-output .paper-rules {gap:.9rem}
+      .flow-horizontal.flow-single .flow-worker {min-height:12rem}
+      .flow-horizontal.flow-single .ai-symbol {font-size:clamp(1.9rem,2.5vw,2.6rem);white-space:nowrap}
+      .flow-horizontal.flow-fanout .stage-ai .flow-items,.flow-horizontal.flow-fanout .stage-output .flow-items {display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:repeat(3,minmax(0,1fr));justify-content:stretch;gap:1.2rem}
+      .flow-horizontal.flow-fanout .stage-input .flow-artifact {min-height:17rem;padding:2rem}
+      .flow-horizontal.flow-fanout .stage-input .artifact-title {font-size:2.2rem;margin-top:2rem}
+      .flow-horizontal.flow-fanout .stage-input .artifact-decoration {margin-top:3rem}
+      .flow-horizontal.flow-fanout .flow-artifact {justify-content:center}
+      .flow-horizontal.flow-fanout .artifact-title {font-size:1.8rem}
+      .flow-horizontal.flow-fanout .flow-worker {min-height:0}
+      .flow-vertical {display:grid;grid-template-rows:10rem 7.2rem 10rem;row-gap:4.1rem;width:min(100%,101rem)}
+      .flow-vertical .flow-stage {display:grid;grid-template-columns:8rem minmax(0,1fr);gap:2rem;align-items:center}
+      .flow-vertical .flow-heading {align-self:center}
+      .flow-vertical .flow-heading small {display:block;margin:.7rem 0 0}
+      .flow-vertical .flow-items {display:flex;justify-content:center;gap:2.5rem;height:100%}
+      .flow-vertical .flow-artifact {flex:1;justify-content:center}
+      .flow-vertical .flow-worker {flex:1;min-height:0;padding:.8rem 1.2rem}
+      .flow-vertical.flow-single .stage-ai .flow-worker {flex:none;width:19rem}
+      .flow-vertical.flow-single .stage-output .flow-artifact {flex:none;width:25rem}
+      .flow-vertical.flow-fanout .stage-input .flow-artifact {flex:none;width:25rem}
+      .flow-vertical .artifact-title {font-size:1.7rem}
+      .flow-vertical .stage-output .artifact-title {font-size:1.8rem}
+      @media(max-width:1400px) {
+        .flow-canvas {height:min(100%,32rem)}
+        .flow-heading {font-size:1.65rem}
+        .flow-heading small {font-size:.7rem}
+        .flow-horizontal {grid-template-columns:1.15fr .45fr .8fr .35fr 1.1fr}
+        .flow-horizontal .flow-stage {gap:1.5rem}
+        .flow-artifact {padding:1rem 1.2rem}
+        .artifact-title {font-size:1.45rem}
+        .artifact-chrome {font-size:.7rem;gap:.4rem}
+        .artifact-mark {font-size:.6rem}
+        .artifact-decoration {margin-top:.75rem}
+        .flow-horizontal .flow-artifact {min-height:7.1rem}
+        .flow-horizontal .flow-items {gap:1rem}
+        .flow-horizontal.flow-fanout .flow-artifact .artifact-title {font-size:1.4rem}
+        .flow-horizontal.flow-single .stage-output .flow-artifact,.flow-horizontal.flow-fanout .stage-input .flow-artifact {min-height:15rem;padding:1.4rem}
+        .flow-horizontal.flow-single .stage-output .artifact-title,.flow-horizontal.flow-fanout .stage-input .artifact-title {font-size:1.8rem}
+        .ai-symbol {font-size:2.3rem}
+        .ai-role {font-size:1rem}
+        .flow-horizontal.flow-single .flow-worker {min-height:10rem}
+        .flow-vertical {grid-template-rows:8.5rem 6.2rem 8.5rem;row-gap:3.5rem}
+        .flow-vertical .flow-stage {grid-template-columns:6.5rem 1fr;gap:1.5rem}
+        .flow-vertical .flow-items {gap:1.6rem}
+        .flow-vertical .artifact-title,.flow-vertical .stage-output .artifact-title {font-size:1.4rem}
+      }
+      @media(max-height:650px) {
+        .flow-canvas {height:min(100%,23rem)}
+        .flow-heading {font-size:1.3rem}
+        .flow-heading small {font-size:.55rem;margin-left:.35rem}
+        .flow-horizontal .flow-stage {grid-template-rows:1.3rem 1fr;gap:.8rem}
+        .flow-artifact {padding:.65rem .8rem}
+        .artifact-title {font-size:1.08rem;margin-top:.5rem}
+        .artifact-chrome {font-size:.53rem;gap:.3rem}
+        .artifact-mark {font-size:.5rem}
+        .artifact-chrome>b {font-size:.75rem}
+        .artifact-decoration {margin-top:.55rem}
+        .paper-rules {gap:.3rem}
+        .paper-rules i {height:1px}
+        .flow-horizontal .flow-artifact {min-height:5.5rem}
+        .flow-horizontal .flow-items {gap:.6rem}
+        .flow-horizontal.flow-fanout .stage-ai .flow-items,.flow-horizontal.flow-fanout .stage-output .flow-items {gap:.6rem}
+        .flow-horizontal.flow-single .stage-output .flow-artifact,.flow-horizontal.flow-fanout .stage-input .flow-artifact {min-height:12rem;padding:1rem}
+        .flow-horizontal.flow-single .stage-output .artifact-title,.flow-horizontal.flow-fanout .stage-input .artifact-title {font-size:1.4rem;margin-top:1rem}
+        .flow-horizontal.flow-single .stage-output .artifact-decoration,.flow-horizontal.flow-fanout .stage-input .artifact-decoration {margin-top:1.5rem}
+        .flow-horizontal.flow-fanout .flow-artifact .artifact-title {font-size:1.05rem}
+        .ai-symbol {font-size:1.65rem}
+        .ai-role {font-size:.78rem}
+        .flow-worker {padding:.5rem;gap:.35rem}
+        .flow-horizontal.flow-single .flow-worker {min-height:8rem}
+        .flow-horizontal.flow-single .ai-symbol {font-size:2.5rem}
+        .flow-vertical {grid-template-rows:6.3rem 4.7rem 6.3rem;row-gap:2.3rem}
+        .flow-vertical .flow-stage {grid-template-columns:5rem 1fr;gap:1rem}
+        .flow-vertical .flow-items {gap:1rem}
+        .flow-vertical .artifact-title,.flow-vertical .stage-output .artifact-title {font-size:1.1rem}
+        .flow-vertical.flow-single .stage-ai .flow-worker {width:14rem}
+        .flow-vertical.flow-single .stage-output .flow-artifact,.flow-vertical.flow-fanout .stage-input .flow-artifact {width:20rem}
+        .flow-vertical .artifact-decoration {margin-top:.45rem}
+        .flow-vertical .flow-heading small {font-size:.6rem}
+        .flow-vertical .ai-symbol {font-size:1.65rem}
+        .flow-vertical .ai-role {font-size:.8rem}
+        .shape-screen .artifact-mark:before {display:none}
+      }
+      /* Selected exercise 2: each role is a large transparent character with a label below. */
+.flow-vertical.flow-fanout {height:40rem;grid-template-rows:7.5rem 19rem 7.5rem;row-gap:3rem}
+      .flow-fanout .role-agent {margin:0;flex:1;min-width:0;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;position:relative}
+      .role-agent-image {display:block;height:16.5rem;width:100%;object-fit:contain;flex:none}
+      .role-agent-label {font-size:1.5rem;line-height:1.4;font-weight:700;color:var(--text);letter-spacing:-.025em}
+      .flow-fanout .stage-ai .flow-items {align-items:stretch}
+      .flow-fanout .stage-ai .flow-heading {color:var(--brand)}
+      .flow-fanout .stage-ai .flow-heading small {color:var(--text-dim)}
+      .flow-vertical.flow-fanout .artifact-decoration {display:none}
+      .flow-vertical.flow-fanout .artifact-title {margin-top:.7rem}
+      @media(max-width:1400px) {
+        .flow-vertical.flow-fanout {height:32.5rem;grid-template-rows:6.5rem 15rem 6.5rem;row-gap:2.25rem}
+        .role-agent-image {height:12.8rem}
+        .role-agent-label {font-size:1.25rem}
+      }
+      @media(max-height:650px) {
+        .flow-vertical.flow-fanout {height:23rem;grid-template-rows:4.5rem 10.5rem 4.5rem;row-gap:1.75rem}
+        .role-agent-image {height:8.8rem}
+        .role-agent-label {font-size:1rem}
+        .flow-fanout .role-agent {gap:.3rem}
+        .flow-vertical.flow-fanout .artifact-title {margin-top:.5rem}
+      }
+      .orchestration-concept .concept-name {font-size:31px;font-weight:750}
+      .orchestration-concept .concept-sub {font-size:21px;fill:var(--text-dim)}
+      .orchestration-concept .concept-label {font-size:23px;font-weight:600}
+      .concept-human svg,.concept-worker svg {fill:var(--bg-card);stroke:var(--gray);stroke-width:2}
+      .concept-coordinator svg {fill:var(--bg-card);stroke:var(--yellow);stroke-width:2}
+      .concept-assignment {fill:none;stroke:var(--yellow);stroke-width:2}
+      .concept-result {fill:none;stroke:var(--green);stroke-width:2;stroke-dasharray:7 7}
+      /* Reference slide 9, reduced to two workers. No artifact cards in this concept view. */
+.reference-serial-map {position:relative;width:min(100%,86rem);height:min(100cqh,40rem);flex:none}
+      .ref-wires {position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+      .ref-request {stroke:var(--yellow)}
+      .ref-result {stroke:var(--green)}
+      .ref-report-one {stroke:var(--brand);stroke-dasharray:7 7}
+      .ref-report-two {stroke:var(--purple);stroke-dasharray:7 7}
+      .ref-report-three {stroke:var(--gray);stroke-dasharray:7 7}
+      .ref-sequence {stroke:var(--text-dim)}
+      .ref-actor {position:absolute;transform:translate(-50%,-50%);width:12rem;height:7.25rem;text-align:center}
+      .ref-icon {position:relative;height:100%;display:flex;align-items:center;justify-content:center}
+      .ref-icon .icon {display:block;width:7rem;height:7.25rem;overflow:visible;flex:none}
+      .ref-person .icon {width:6rem;height:6rem;color:var(--gray)}
+      .ref-label {position:absolute;top:calc(100% + 1rem);left:50%;transform:translateX(-50%);display:grid;gap:.7rem;width:max-content}
+      .ref-label h2 {font-size:var(--heading);font-weight:800;line-height:1.35;white-space:nowrap}
+      .ref-label p {font-size:var(--body);line-height:1.7;color:var(--text-dim)}
+      .ref-coordinator .ref-label {top:50%;left:calc(50% + 5.25rem);transform:translateY(-50%);text-align:left;gap:.85rem}
+      .ref-worker {height:5.4rem}
+      .ref-worker .icon {width:5.2rem;height:5.4rem}
+      .ref-link-label {position:absolute;transform:translate(-50%,-50%);white-space:nowrap;font-size:var(--body);color:var(--text-dim)}
+      .ref-goal {color:var(--yellow)}
+      .ref-result-label {color:var(--green)}
+      .ref-completed-report {stroke:var(--green);stroke-dasharray:7 7}
+      .ref-past {opacity:.3}
+      .ref-done {color:var(--green);font-weight:650}
+      .ref-working {color:var(--text);font-weight:650}
+      .is-complete .ref-icon {opacity:.45}
+      .reference-serial-map[data-mode="serial"] .ref-sequence {stroke-dasharray:4 6}
+      @media(max-height:850px) {
+        .reference-serial-map {height:min(100cqh,28rem)}
+        .ref-coordinator {height:5.6rem}
+        .ref-coordinator .icon {height:5.6rem;width:5.4rem}
+        .ref-coordinator .ref-label {left:calc(50% + 4.2rem);gap:.6rem}
+        .ref-worker {height:4.2rem}
+        .ref-worker .icon {height:4.2rem;width:4rem}
+        .ref-worker .ref-label {top:calc(100% + .8rem);gap:.3rem}
+        .ref-person .icon {width:4.8rem;height:4.8rem}
+      }
+      /* Format scenes are scoped so approved slides keep their geometry. */
+.format-scene {width:min(100%,108rem);display:flex;flex-direction:column;justify-content:center;gap:4rem;height:100%;max-height:43rem}
+      .format-flow {display:grid;grid-template-columns:minmax(16rem,1.05fr) 3.5rem 10rem 3.5rem minmax(35rem,2fr);gap:1.8rem;align-items:center;width:100%}
+      .format-heading {font-size:2.5rem;font-weight:800;line-height:1.2;letter-spacing:-.03em;margin:0 0 2.3rem}
+      .format-input>.format-heading {color:var(--purple)}
+      .format-output .format-heading {color:var(--green)}
+      .format-output>header {display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-bottom:2.3rem}
+      .format-output>header .format-heading {margin:0}
+      .format-output>header p {font-size:1.2rem;color:var(--text-dim)}
+      .format-prompt {position:relative;padding:2rem;border:1.5px solid color-mix(in srgb,var(--purple) 50%,var(--border));background:var(--bg-card);border-radius:1rem 1rem .2rem 1rem;color:var(--text);min-height:24rem;display:flex;flex-direction:column;justify-content:center}
+      .format-quote {font-size:4.5rem;line-height:.7;color:var(--purple);font-weight:700;margin-bottom:1.25rem}
+      .format-prompt>p {font-size:2rem;font-weight:700;line-height:1.45;letter-spacing:-.025em}
+      .format-prompt>p strong {color:var(--purple)}
+      .format-inline-info {border-top:1px solid var(--border);padding-top:1.3rem;margin-top:2rem}
+      .format-inline-info>b {display:block;font-size:1.1rem;color:var(--text-dim);font-weight:500;margin-bottom:1rem}
+      .format-lines {display:flex;flex-direction:column;gap:.55rem;margin-bottom:1.5rem}
+      .format-lines:last-child {margin-bottom:0}
+      .format-lines i {display:block;height:.32rem;border-radius:2px;background:var(--text-muted);opacity:.42}
+      .format-arrow {padding-top:4.8rem;color:var(--purple)}
+      .format-arrow.tone-output {color:var(--green)}
+      .format-arrow svg {width:100%;height:auto;display:block;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+      .format-agent {padding-top:4.8rem;text-align:center;color:var(--brand)}
+      .format-agent-symbol>.icon {width:8rem;height:8.3rem;display:block;margin:auto;color:var(--brand)}
+      .format-agent h2 {font-size:1.8rem;font-weight:750;margin-top:1.3rem;color:var(--text);white-space:nowrap}
+      .format-examples {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.2rem}
+      .format-example {margin:0;min-width:0}
+      .format-run {font-family:Monaco,Pretendard,sans-serif;color:var(--text-dim);font-size:1rem;margin-bottom:1rem}
+      .format-paper {position:relative;background:var(--bg-card);border:1.5px solid var(--border);border-radius:.2rem;padding:2rem 1.35rem;min-width:0;overflow:hidden}
+      .format-fold {position:absolute;right:-1px;top:-1px;width:1.6rem;height:1.6rem;background:linear-gradient(45deg,color-mix(in srgb,var(--text-muted) 25%,var(--bg-card)) 49%,var(--bg) 50%);border-left:1px solid var(--border);border-bottom:1px solid var(--border)}
+      .format-example .format-paper {height:19rem}
+      .format-title-line {width:65%;height:.55rem;background:var(--green);opacity:.8;border-radius:2px;margin-bottom:1.7rem}
+      .format-example figcaption {font-size:1.5rem;line-height:1.35;font-weight:650;text-align:center;margin-top:1.1rem}
+      .format-table {border:1px solid color-mix(in srgb,var(--text-muted) 50%,var(--border));border-radius:.1rem;overflow:hidden}
+      .format-table>span {display:grid;grid-template-columns:35% 65%;height:2rem;border-bottom:1px solid var(--border)}
+      .format-table>span:last-child {border-bottom:0}
+      .format-table>span:first-child {background:color-mix(in srgb,var(--green) 12%,var(--bg-card))}
+      .format-table i {display:block;position:relative;min-width:0}
+      .format-table i:first-child {border-right:1px solid var(--border)}
+      .format-table i:after {content:'';position:absolute;left:20%;right:20%;top:48%;height:3px;background:var(--text-muted);opacity:.4}
+      .format-bullets {display:flex;flex-direction:column;gap:1.3rem}
+      .format-bullets>span {display:flex;align-items:center;gap:.65rem}
+      .format-bullets>span:before {content:'';display:block;width:.4rem;height:.4rem;border-radius:50%;background:var(--green);flex:none}
+      .format-bullets i {width:100%;height:.35rem;border-radius:2px;background:var(--text-muted);opacity:.4}
+      .format-bullets>span:nth-child(even) i {width:72%}
+      .format-takeaway {font-size:1.75rem;line-height:1.5;text-align:center;color:var(--text-dim);margin:0}
+      .format-takeaway strong {color:var(--text);font-weight:750}
+      .format-variation .format-takeaway strong {color:var(--orange)}
+      .format-sample .format-flow {grid-template-columns:minmax(35rem,2fr) 3.5rem 10rem 3.5rem minmax(16rem,1fr)}
+      .format-input-pair {display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+      .format-input-pair>figure,.format-final {margin:0}
+      .format-sample .format-final {margin-right:1rem}
+      .format-input-pair figcaption,.format-final>figcaption {font-size:1.3rem;color:var(--text-dim);line-height:1.4;margin-bottom:1rem}
+      .format-sample .format-prompt,.format-paper-structure {height:26rem;min-height:0}
+      .format-sample .format-prompt {padding:1.8rem}
+      .format-sample .format-prompt>p {font-size:1.7rem}
+      .format-sample .format-heading {margin-bottom:1.6rem}
+      .format-sample .format-agent,.format-sample .format-arrow {padding-top:7rem}
+      .format-paper-structure {padding:1.7rem;border-color:color-mix(in srgb,var(--purple) 50%,var(--border))}
+      .format-paper-structure.is-result {border-color:color-mix(in srgb,var(--green) 70%,var(--border))}
+      .format-paper-structure h3 {font-size:1.55rem;font-weight:750;line-height:1.3;color:var(--text);margin:0 0 1.5rem}
+      .format-part h4 {font-size:1.1rem;line-height:1.4;font-weight:650;margin:0 0 .7rem}
+      .format-part {margin-bottom:1.45rem;border-left:3px solid currentColor;padding-left:.9rem}
+      .format-summary {color:var(--purple)}
+      .format-review {color:var(--yellow)}
+      .format-schedule {color:var(--green);margin-bottom:0}
+      .format-paper-structure .format-table>span {height:1.55rem}
+      .format-paper-structure .format-table>span:first-child {background:color-mix(in srgb,var(--yellow) 12%,var(--bg-card))}
+      .format-paper-structure .format-bullets {gap:.75rem}
+      .format-paper-structure .format-lines {gap:.45rem}
+      .format-paper-structure.is-result .format-table i:after {right:30%}
+      .format-paper-structure.is-result .format-bullets>span:nth-child(even) i {width:87%}
+      .format-sample .format-takeaway strong {color:var(--green)}
+      .format-intro .format-flow {grid-template-columns:27rem 3.5rem 10rem 3.5rem 27rem;width:fit-content;max-width:100%;margin-inline:auto}
+      .format-intro .format-input-pair {display:block}
+      .format-intro .format-final {margin-right:0}
+      .format-intro .format-paper-overview {height:26rem;padding:1.7rem;border-color:color-mix(in srgb,var(--green) 70%,var(--border))}
+      .format-intro .format-paper-overview h3 {font-size:1.55rem;line-height:1.4;font-weight:750;margin:0 0 2rem;color:var(--text)}
+      .format-intro .format-paper-overview .format-lines {gap:.65rem;margin-bottom:2rem}
+      .format-intro .format-takeaway strong:first-child {color:var(--purple)}
+      @media(max-width:1600px) {
+        .format-scene {gap:3rem}
+        .format-flow {grid-template-columns:minmax(13rem,1fr) 2.8rem 7.5rem 2.8rem minmax(28rem,1.9fr);gap:1.3rem}
+        .format-sample .format-flow {grid-template-columns:minmax(28rem,2fr) 2.8rem 7.5rem 2.8rem minmax(13rem,1fr)}
+        .format-input-pair {gap:1.2rem}
+        .format-sample .format-final {margin-right:.6rem}
+        .format-prompt {padding:1.5rem}
+        .format-prompt>p {font-size:1.75rem}
+        .format-agent-symbol>.icon {width:6.8rem;height:7rem}
+        .format-agent h2 {font-size:1.5rem}
+        .format-sample .format-prompt {padding:1.3rem}
+        .format-sample .format-prompt>p {font-size:1.5rem}
+        .format-paper-structure {padding:1.4rem}
+        .format-paper {padding-left:1.1rem;padding-right:1.1rem}
+        .format-output>header p {font-size:1rem}
+        .format-example figcaption {font-size:1.25rem}
+        .format-examples {gap:.8rem}
+        .format-intro .format-flow {grid-template-columns:18rem 2.8rem 7.5rem 2.8rem 18rem}
+        .format-intro .format-final {margin-right:0}
+        .format-intro .format-paper-overview {padding:1.4rem}
+      }
+      @media(max-height:900px) {
+        .format-scene {gap:2rem;max-height:35rem}
+        .format-heading {font-size:2rem;margin-bottom:1.8rem}
+        .format-output>header {margin-bottom:1.8rem}
+        .format-prompt {min-height:21rem}
+        .format-sample .format-prompt,.format-paper-structure {height:23rem}
+        .format-paper-structure h3 {margin-bottom:1.1rem}
+        .format-part {margin-bottom:1.1rem}
+        .format-part h4 {margin-bottom:.5rem}
+        .format-example .format-paper {height:17rem}
+        .format-example .format-table>span {height:1.6rem}
+        .format-inline-info {margin-top:1.5rem}
+        .format-quote {margin-bottom:1rem}
+        .format-takeaway {font-size:1.5rem}
+        .format-intro .format-paper-overview {height:23rem}
+      }
+      .compact .slide__sub {min-height:1.5em}
+      .compact .slide__body {gap:0}
 
+      /* ── 이번 덱 전용 변형 ── */
+      /* 하단 보충 행 — 본문과 분리해 모든 장에서 같은 높이에 둔다 */
+      .slide__body{position:relative;padding-bottom:4.6rem}
+      .p5-note{position:absolute;left:0;right:0;bottom:0;margin:0 auto;max-width:88rem;font-size:var(--body);color:var(--text-dim);text-align:center;line-height:1.6}
+      .qg-glyph{display:block;flex:none}
+      .qg-arrow{display:block;width:4.4rem;flex:none}
+      .qg-arrow svg{display:block;width:100%;fill:none;stroke:var(--text-muted);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+      .tone-brand-text{color:var(--brand)}
+      .tone-yellow-text{color:var(--yellow)}
 
-/* 의미별 제목 강조는 장별 명시값. 끝 단어 자동 분리는 사용하지 않는다. */
-.slide__body{padding-block:1rem}
-.slide__body.p5-has-note{display:grid;grid-template-columns:minmax(0,1fr);justify-content:stretch;justify-items:stretch;grid-template-rows:minmax(0,1fr) auto;row-gap:clamp(2rem,3vh,2.5rem);padding-top:1rem;padding-bottom:.8rem}
-.p5-main-content{min-height:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--gap)}
-.p5-main-content>.p5-team{height:min(100%,34rem)}
-.p5-has-note>.p5-note{align-self:end;max-width:none;width:100%;margin:0;line-height:1.55}
-.p5-item{gap:1.2rem}
-.p5-serial .p5-node .copy{font-size:var(--body)}
-.p5-role-input{gap:1.25rem}.p5-role .p5-paper{gap:1.5rem;padding-block:2rem}
-.p5-role .p5-evidence{line-height:1.6}
-.p5-project .statement{margin:1rem 0 1.75rem}
-.p5-project .copy{margin-top:.65rem;line-height:1.55}
-.p5-project .p5-link{margin-top:2rem}
-.p5-review{gap:1.5rem}.p5-review>.heading{font-size:var(--body);color:var(--text-dim)}
-.p5-review .p5-item{gap:.9rem}.p5-review .p5-icon{height:6rem;width:6rem}
-.p5-gate .p5-loop{margin-bottom:2.5rem}
-.p5-pattern-criteria{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2rem;width:min(100%,86rem)}
-.p5-criterion{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.6rem}
-.p5-criterion>svg{width:100%;max-width:16rem;height:11rem}
-.p5-criterion .heading{font-size:var(--heading)}
-.p5-criterion .copy{line-height:1.5}
-.p5-failure-visual{width:100%;height:100%;max-height:30rem}
-@media(max-width:1400px){.p5-pattern-criteria{gap:1.2rem}.p5-role .p5-paper{gap:1rem;padding-block:1.5rem}.p5-project{grid-template-columns:1fr 1.15fr;gap:2rem}.p5-review{gap:1.1rem}}
+      /* 표지 */
+      .qg-cover{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:5rem;align-items:center;width:min(100%,92rem);margin:0 auto}
+      .qg-cover .statement strong{display:block;color:var(--brand)}
+      .qg-cover-graph{display:flex;align-items:center;gap:1.6rem}
+      .qg-cover-node{display:flex;flex-direction:column;align-items:center;gap:1rem;text-align:center}
+      .qg-cover-node .copy{white-space:nowrap;color:var(--text-dim)}
+      .qg-cover-branch{display:flex;flex-direction:column;gap:2.4rem}
+      .qg-branch-row{display:flex;align-items:center;gap:1.2rem}
+      .qg-arrow-back svg{stroke:var(--orange);transform:scaleX(-1)}
 
-/* 과정의 선은 본문 라벨이 아니라 실제 아이콘 중심에 연결한다. */
-.p5-flow{align-items:flex-start}.p5-flow>.p5-arrow{margin-top:3.5rem}
-.p5-review-row{align-items:flex-start}.p5-review-row>.p5-arrow{margin-top:2rem}
-.p5-gate .p5-review-row{align-items:start}
-@media(max-width:1400px){.p5-flow>.p5-arrow{margin-top:2.5rem}}
+      /* 2·3장 대비 패널 */
+      .qg-pair{display:grid;grid-template-columns:minmax(0,1fr) 6rem minmax(0,1fr);align-items:center;gap:1rem;width:min(100%,94rem);margin:0 auto}
+      .qg-pair-wide{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4rem}
+      .qg-panel{display:flex;flex-direction:column;gap:min(1.6rem,3.7cqh);background:var(--bg-card);border:1px solid var(--border);border-top:2px solid var(--accent);padding:min(2.4rem,5.6cqh) 2.6rem;min-width:0}
+      .qg-panel header h2{font-size:2.2rem;font-weight:800;color:var(--accent);letter-spacing:-.03em}
+      .qg-panel .copy{color:var(--text-dim);line-height:1.6}
+      .qg-panel-art{display:flex;align-items:center;gap:2rem;justify-content:center;padding:1rem 0}
+      .qg-panel-art .icon{width:7.2rem;height:7.4rem;flex:none}
+      .qg-panel-obj{width:13rem;flex:none}
+      .qg-panel-obj svg{display:block;width:100%;height:auto}
+      .qg-neq{display:block;text-align:center;font-size:3.4rem;font-weight:800;color:var(--text-muted)}
+      .qg-photo{height:min(24rem,56cqh);display:flex;align-items:center;justify-content:center}
+      .qg-photo img{max-width:100%;max-height:100%;object-fit:contain;mix-blend-mode:lighten}
+      .qg-meta{display:flex;gap:3rem;justify-content:center}
+      .qg-meta>div{display:flex;flex-direction:column;gap:.4rem;align-items:center}
+      .qg-meta dt{font-size:.95rem;color:var(--text-muted)}
+      .qg-meta dd{font-size:var(--body);font-weight:700;color:var(--accent)}
 
-/* 연속 실행 장: 담당 업무와 상태를 한 행에 두어 두 워커 사이의 여백을 확보한다. */
-.p5-serial .p5-node:has(.p5-state){display:grid;grid-template-columns:auto auto;column-gap:.85rem;row-gap:.65rem;align-items:center}
-.p5-serial .p5-node:has(.p5-state)>.p5-icon,.p5-serial .p5-node:has(.p5-state)>.heading{grid-column:1/-1;justify-self:center}
-.p5-serial .p5-node:has(.p5-state)>.copy{grid-column:1}
-.p5-serial .p5-node:has(.p5-state)>.p5-state{grid-column:2}
+      /* 4장 단계 스트립 */
+      .p5-steps{display:flex;align-items:stretch;justify-content:center;gap:min(2.4rem,3cqi);width:min(100%,94rem);margin:0 auto}
+      .p5-step{display:flex;flex-direction:column;align-items:center;gap:min(2rem,4.6cqh);text-align:center;background:var(--bg-card);border:1px solid var(--border);border-top:2px solid var(--accent);padding:min(3.2rem,7.5cqh) 2.4rem;min-width:0;flex:1 1 0;max-width:27rem;justify-content:flex-start}
+      .p5-step .heading{color:var(--accent)}
+      .p5-step .copy{margin-top:.6rem;color:var(--text-dim)}
+      .p5-step-arrow{display:flex;align-items:center;width:4.4rem;flex:none}
+      .p5-step-arrow svg{display:block;width:100%;fill:none;stroke:var(--text-muted);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+      .qg-quote{width:100%;background:var(--bg);border:1px solid var(--border);border-left:3px solid var(--green);padding:1.2rem 1.4rem;text-align:left;display:flex;flex-direction:column;gap:.6rem}
+      .qg-quote-mark{font-size:.85rem;letter-spacing:.06em;color:var(--text-muted)}
+      .qg-quote p{font-size:min(1.2rem,2.4cqi);line-height:1.5}
+      .qg-quote b{color:var(--green)}
 
-/* Ch04-04: 기준을 실제 문서에 연결하고, 판정에서 다음 행동이 갈라진다. */
-.qg-contrast{position:relative;gap:8rem;max-width:70rem}.qg-contrast .heading{color:var(--text)}
-.qg-not-equal{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:var(--statement);color:var(--gray)}
-.qg-checks{display:flex;flex-direction:column;gap:2.1rem}.qg-check{display:flex;align-items:center;gap:1.25rem}.qg-check .p5-icon{width:3.5rem;height:3.5rem}.qg-check .copy{margin-top:.6rem;line-height:1.55}
-.qg-fields{display:flex;flex-direction:column;gap:1.7rem;font-size:var(--body);line-height:1.55}.qg-fields>div{display:flex;flex-direction:column;gap:.45rem}.qg-fields dt{color:var(--text-dim)}.qg-fields dd{margin:0}
-.qg-sections{display:grid;grid-template-columns:1fr 1fr;gap:1.8rem 2rem;padding-left:1.5rem;font-size:var(--body);line-height:1.6}.qg-sections li::marker{color:var(--gray)}
-.qg-budget{border-collapse:collapse;font-size:var(--body);width:100%}.qg-budget th,.qg-budget td{padding:.8rem 0;text-align:left;font-weight:400}.qg-budget td{text-align:right}.qg-budget tr:last-child>*{border-top:1px solid var(--gray);padding-top:1.3rem;font-weight:700}.qg-fail{color:var(--orange)}
-.qg-calculation{display:flex;flex-direction:column;align-items:flex-start;gap:1.7rem}.qg-calculation .statement strong{color:var(--green)}.qg-verdict{display:flex;gap:1rem;align-items:center;font-size:var(--body)}.qg-verdict .p5-arrow{width:2.5rem}
-.qg-next{display:grid;grid-template-columns:1fr 3rem 1.2fr;gap:2.2rem;align-items:start}.qg-next>div:not(.p5-arrow){display:flex;flex-direction:column;gap:.75rem}.qg-next .p5-arrow{width:3rem;margin-top:3.5rem}
-.qg-stop{display:grid;grid-template-columns:1.4fr 4rem 1fr;gap:3rem;align-items:center;width:min(100%,78rem)}.qg-stop-causes{display:flex;flex-direction:column;gap:3rem}.qg-stop-cause{display:flex;gap:1.3rem;align-items:center}.qg-stop-cause .p5-icon{width:4.5rem;height:4.5rem}.qg-stop-cause .copy{margin-top:.7rem}.qg-person{display:flex;flex-direction:column;align-items:center;gap:1.3rem;text-align:center}
-.qg-cover-graph{position:relative;width:100%;max-width:44rem;aspect-ratio:600/330}.qg-cover-node{position:absolute;display:flex;flex-direction:column;align-items:center;gap:.75rem;transform:translateX(-50%);top:15%;z-index:1}.qg-cover-node .p5-icon{width:5.7rem;height:5.7rem}.qg-cover-node .copy{white-space:nowrap}.qg-cover-doc{left:11%}.qg-cover-check{left:50%}.qg-cover-pass{left:89%}.qg-cover-wires{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke-width:2}.qg-cover-return{position:absolute;top:83%;left:9%;color:var(--orange);text-align:left}
-@media(max-width:1400px){.qg-checks{gap:1.5rem}.qg-fields{gap:1.1rem}.qg-sections{gap:1.6rem}.qg-stop{gap:2rem;grid-template-columns:1.5fr 3rem 1fr}.qg-stop>.p5-arrow{width:3rem}.qg-stop-causes{gap:2rem}.qg-cover-node .p5-icon{width:4.8rem;height:4.8rem}.qg-cover-node{top:12%}.qg-next{gap:1.5rem}}
+      /* 5장 규칙 → 검사 항목 */
+      .qg-rows{display:flex;flex-direction:column;gap:2.4rem;width:min(100%,88rem);margin:0 auto}
+      .qg-rows-head{display:grid;grid-template-columns:minmax(0,1fr) 8rem minmax(0,1fr);gap:2rem;color:var(--text-muted);font-size:1rem;letter-spacing:.04em}
+      .qg-rows-head span:last-child{color:var(--yellow)}
+      .qg-rows-head span:first-child{color:var(--brand)}
+      .qg-row{display:grid;grid-template-columns:minmax(0,1fr) 8rem minmax(0,1fr);align-items:center;gap:2rem}
+      .qg-row-left{font-size:var(--heading);font-weight:700;color:var(--text)}
+      .qg-row-right{font-size:var(--heading);font-weight:700;color:var(--yellow)}
+      .qg-row-line i{display:block;height:1px;background:var(--accent);position:relative}
+      .qg-row-line i:after{content:'';position:absolute;right:0;top:-4px;width:9px;height:9px;border-right:1px solid var(--accent);border-top:1px solid var(--accent);transform:rotate(45deg)}
 
+      /* 6·7·8장 검사 흐름 */
+      .qg-inspect{height:100%;grid-template-columns:1.1fr .5fr .75fr .5fr 1.1fr}
+      .qg-inspect .flow-artifact{min-height:0}
+      .qg-inspector{display:flex;flex-direction:column;align-items:center;gap:.9rem;color:var(--yellow)}
+      .qg-inspector .icon{width:min(7.8rem,18cqh);height:min(8rem,18.6cqh)}
+      .qg-inspector .copy{color:var(--text-dim);white-space:nowrap}
+      .qg-verdict{list-style:none;display:flex;flex-direction:column;gap:1rem;background:var(--bg-card);border:1px solid var(--border);border-top:2px solid var(--yellow);padding:1.8rem 1.8rem}
+      .qg-verdict li{position:relative;padding-left:1.3rem;font-size:1.12rem;line-height:1.5}
+      .qg-verdict li:before{content:'';position:absolute;left:0;top:.66em;width:.45rem;height:.45rem;background:var(--yellow)}
 
-/* 2026-09-22: 대응하는 항목은 같은 grid row를 공유한다. */
-.qg-method{width:min(100%,88rem);display:flex;flex-direction:column;gap:2rem}.qg-method-request{display:flex;justify-content:center;align-items:baseline;gap:1.5rem}.qg-method-request>.copy{color:var(--text-dim)}
-.qg-method-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2.8rem;padding-block:1.3rem}.qg-method-steps section{display:grid;grid-template-rows:auto auto;gap:1.2rem}.qg-method-steps .heading{white-space:nowrap}.qg-step-no{font:var(--body) Monaco,monospace;color:var(--accent);margin-right:.8rem}.qg-method-steps .copy{line-height:1.6}
-.qg-method-verdict{display:grid;grid-template-columns:1fr 1fr;gap:2.8rem;border-top:1px solid var(--line);padding-top:1.8rem}.qg-method-verdict>div{display:flex;flex-direction:column;gap:.65rem}
-.qg-map{position:relative;isolation:isolate;width:min(100%,88rem);display:flex;flex-direction:column;gap:1.65rem;padding-block:1.8rem}
-.qg-map:before{content:'';position:absolute;z-index:-1;inset:0 auto 0 0;width:calc((100% - 4rem)/2);border:1.5px solid var(--gray);border-radius:.5rem;background:var(--bg-card)}
-.qg-map-head,.qg-map-row{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}.qg-map-head{padding-bottom:.2rem}.qg-map-head>*:first-child,.qg-map-field{padding-inline:2rem}.qg-map-head>*:first-child{color:var(--green)}.qg-map-head>*:last-child{color:var(--yellow)}
-.qg-map-row .copy{margin-top:.65rem;line-height:1.55}.qg-map-row .heading{font-size:var(--heading);line-height:1.35}.qg-map-check{padding-right:.5rem}
-.qg-budget-compare{position:relative;isolation:isolate;width:min(100%,82rem);display:grid;grid-template-columns:1.1fr 1fr;gap:2rem 4rem;padding-block:2rem;align-items:start}.qg-budget-compare:before{content:'';position:absolute;z-index:-1;inset:0 auto 0 0;width:calc((100% - 4rem)*1.1/2.1);background:var(--bg-card);border:1.5px solid var(--gray);border-radius:.5rem}
-.qg-budget-heading,.qg-budget-items,.qg-budget-total:nth-last-child(2){padding-inline:2rem}.qg-budget-heading{color:var(--green)}.qg-budget-items{display:flex;flex-direction:column;gap:1.2rem;font-size:var(--body);line-height:1.5}.qg-budget-items p{display:flex;justify-content:space-between;gap:2rem}.qg-budget-math{align-self:center;white-space:nowrap}.qg-budget-total{display:flex;flex-direction:column;gap:.5rem}.qg-budget-total .statement{line-height:1.3}
-.qg-next .heading{min-height:2.7em}
-@media(max-width:1400px){.qg-method{gap:1.3rem}.qg-method-steps{gap:2rem;padding-block:.8rem}.qg-method-steps section{gap:.8rem}.qg-step-no{margin-right:.4rem}.qg-method-verdict{padding-top:1.2rem}.qg-map{gap:1.2rem;padding-block:1.5rem}.qg-map-head,.qg-map-row{gap:3rem}.qg-map:before{width:calc((100% - 3rem)/2)}.qg-map-head>*:first-child,.qg-map-field{padding-inline:1.5rem}.qg-budget-compare{gap:1.5rem 3rem;padding-block:1.6rem}.qg-budget-compare:before{width:calc((100% - 3rem)*1.1/2.1)}.qg-budget-heading,.qg-budget-items,.qg-budget-total:nth-last-child(2){padding-inline:1.5rem}}
+      /* 9장 게이트 판정 */
+      .qg-gatecheck{display:flex;align-items:center;justify-content:center;gap:3rem;width:min(100%,88rem);margin:0 auto}
+      .qg-checklist{background:var(--bg-card);border:1px solid var(--border);border-top:2px solid var(--green);padding:min(3.2rem,7.5cqh) 3.4rem;min-width:0;flex:1}
+      .qg-checklist .heading{color:var(--green);margin-bottom:1.6rem}
+      .qg-checklist ul{list-style:none;display:flex;flex-direction:column;gap:1.1rem}
+      .qg-checklist li{display:flex;align-items:center;gap:1rem;font-size:var(--body);line-height:1.5}
+      .qg-checklist li.qg-fail{color:var(--orange)}
+      .qg-check{width:1.6rem;height:1.6rem;flex:none}
+      .qg-check svg{display:block;width:100%;height:100%}
+      .qg-result{display:flex;flex-direction:column;align-items:center;gap:1rem;text-align:center;flex:none}
+      .qg-result .heading{color:var(--orange)}
+      .qg-result .copy{color:var(--text-dim);white-space:nowrap}
 
+      /* 10장 반려 루프 */
+      .qg-loop{display:flex;flex-direction:column;align-items:center;gap:2.6rem;width:min(100%,88rem);margin:0 auto}
+      .qg-loop-row{display:flex;align-items:center;justify-content:center;gap:2.4rem}
+      .qg-loop-actor{display:flex;flex-direction:column;align-items:center;gap:1rem;text-align:center;color:var(--accent)}
+      .qg-loop-actor .icon{width:min(7.8rem,18cqh);height:min(8rem,18.6cqh)}
+      .qg-loop-actor .heading{color:var(--accent);white-space:nowrap}
+      .qg-loop-actor .copy{color:var(--text-dim);white-space:nowrap}
+      .qg-loop-return{width:100%;display:flex;flex-direction:column;align-items:center}
+      .qg-loop-return svg{display:block;width:100%;height:3.4rem;fill:none;stroke:var(--orange);stroke-width:2;stroke-dasharray:7 7;stroke-linecap:round;stroke-linejoin:round}
+      .qg-loop-return span{margin-top:.5rem;font-size:var(--body);color:var(--orange)}
 
-.qg-stop-flow{--qg-art:9rem;display:grid;grid-template-columns:1fr 3rem 1fr 4rem 1fr;gap:1.8rem;width:min(100%,88rem);align-items:start}.qg-stop-item{display:flex;align-items:center;flex-direction:column;text-align:center;gap:1.2rem}.qg-stop-item>.p5-icon{width:var(--qg-art);height:var(--qg-art)}.qg-stop-item>.heading{white-space:nowrap}.qg-stop-item>.copy{line-height:1.55}.qg-stop-flow>.qg-or{align-self:start;margin-top:calc(var(--qg-art)/2 - .75em);text-align:center;line-height:1.5}.qg-stop-flow>.p5-arrow{width:100%;height:2rem;line-height:0;margin-top:calc(var(--qg-art)/2 - 1rem)}
-@media(max-width:1400px){.qg-stop-flow{--qg-art:7rem;grid-template-columns:1fr 2rem 1fr 3rem 1fr;gap:1rem}}
+      /* 11장 문서 체인 */
+      .qg-chain{display:flex;align-items:center;justify-content:center;gap:2.4rem;width:min(100%,90rem);margin:0 auto}
+      .qg-chain-doc{display:flex;flex-direction:column;align-items:center;gap:1.2rem;text-align:center}
+      .qg-chain-doc .heading{color:var(--accent);white-space:nowrap}
+      .qg-chain-doc .copy{color:var(--text-dim)}
 
-
-.qg-method-example{display:grid;grid-template-columns:10rem 1fr;gap:2rem;align-items:start}.qg-method-example>.copy{font-size:var(--body);line-height:1.55}.qg-method-example>.copy:first-child{color:var(--text-dim)}.qg-method-result{padding-top:1.6rem;border-top:1px solid var(--gray)}.qg-method-result>.copy:first-child{color:var(--green)}
-.qg-conversions{width:min(100%,88rem);display:flex;flex-direction:column;gap:0}.qg-conversion-head,.qg-conversion-row{display:grid;grid-template-columns:1fr 2.2fr;gap:3rem;align-items:start}.qg-conversion-head{padding-bottom:1.6rem}.qg-conversion-head>.heading:last-child{color:var(--green)}.qg-conversion-row{padding-block:1.5rem;border-top:1px solid var(--gray)}.qg-conversion-row .copy{font-size:var(--body);line-height:1.55;color:var(--text)}.qg-conversion-row strong{color:var(--accent);font-weight:700}
-@media(max-width:1400px){.qg-method-example{grid-template-columns:9rem 1fr;gap:1.5rem}.qg-conversion-head,.qg-conversion-row{grid-template-columns:1fr 2.2fr;gap:2rem}.qg-conversion-head{padding-bottom:1.2rem}.qg-conversion-row{padding-block:1.15rem}}
-
-
-.qg-speech{position:relative;border:1.5px solid var(--accent,var(--gray));border-radius:1rem;padding:1.2rem 1.5rem;background:var(--bg)}.qg-speech>.copy{color:var(--text);white-space:nowrap;line-height:1.55}
-.qg-request-transforms{width:min(100%,91rem);display:flex;flex-direction:column;gap:2.2rem}.qg-request-transform{display:grid;grid-template-columns:max-content 4rem minmax(0,1fr);align-items:center;gap:2.4rem}.qg-request-transform>.qg-speech{width:23rem;text-align:center}.qg-request-transform>.p5-arrow{width:4rem;height:2rem;line-height:0}
-.qg-written-criterion{display:flex;align-items:center;gap:1.4rem;min-width:0}.qg-written-criterion>.p5-icon{width:4.5rem;height:4.5rem}.qg-written-criterion>.copy{line-height:1.65;color:var(--text)}
-.qg-method-origin{display:flex;align-items:center;gap:1.5rem}.qg-method-origin>.p5-icon{width:3.5rem;height:3.5rem}.qg-method-origin .qg-speech{padding:.8rem 1.3rem}.qg-method-derived{display:flex;gap:1.4rem;align-items:center}.qg-method-derived>.p5-icon{height:5rem;width:5rem}.qg-method-derived .heading{color:var(--green)}.qg-method-derived .copy{margin-top:.7rem;color:var(--text);line-height:1.55}
-.qg-v-scene{position:relative;width:min(100%,86rem)}.qg-v-inspection{display:grid;grid-template-columns:1.2fr .85fr;gap:10rem;align-items:center}
-.qg-v-doc{position:relative;isolation:isolate;z-index:1;display:flex;flex-direction:column;gap:1.8rem;padding:2rem}.qg-v-frame{position:absolute;z-index:-1;inset:0;border:1.5px solid var(--gray);border-radius:.5rem;background:var(--bg-card)}.qg-v-doc>.heading{color:var(--green)}.qg-v-field{display:flex;flex-direction:column;gap:.6rem}.qg-v-field>.copy{color:var(--text-dim)}.qg-v-problem{padding:1.1rem 1.2rem;border:1.5px solid var(--orange);border-radius:.35rem}.qg-v-problem>.heading{color:var(--orange)}
-.qg-v-inspector{display:flex;align-items:center;flex-direction:column;gap:2.7rem}.qg-v-actor{display:flex;align-items:center;flex-direction:column;gap:1rem;text-align:center;position:relative;z-index:1}.qg-v-actor .p5-icon{width:7rem;height:7rem}.qg-v-verdict{text-align:center}.qg-v-verdict>.copy{margin-top:.8rem}
-.qg-v-wires{position:absolute;inset:0;width:100%;height:100%;z-index:0;overflow:visible;pointer-events:none}
-.qg-v-comparison{width:min(100%,86rem);display:flex;flex-direction:column;align-items:stretch;gap:3rem}.qg-v-evidence-pair{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:7rem;align-items:stretch}.qg-v-mismatch{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:var(--statement);font-weight:800;color:var(--orange)}.qg-v-review-result{display:flex;align-items:center;justify-content:center;gap:1.5rem}.qg-v-review-result>.p5-icon{width:5rem;height:5rem}.qg-v-review-result .heading{margin-top:.5rem}
-.qg-v-review-loop{height:25rem;max-width:84rem}.qg-v-loop-node{position:absolute;top:0;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:1rem;white-space:nowrap;text-align:center;z-index:1}.qg-v-loop-node>.p5-icon{width:6rem;height:6rem}.qg-v-author{left:14%}.qg-v-coordinator{left:50%}.qg-v-next{left:86%}.qg-v-return-copy{position:absolute;top:calc(100% - 1.9rem);left:32%;transform:translateX(-50%);white-space:nowrap}
-.qg-v-final-request{display:grid;grid-template-columns:12rem minmax(0,1fr);gap:3rem;align-items:center}.qg-v-prompt{border-left:3px solid var(--brand);padding-left:2rem}.qg-v-prompt .heading{line-height:1.65}.qg-v-final-request .qg-v-actor>.p5-icon{width:5.5rem;height:5.5rem}
-.qg-budget-compare:before{display:none}.qg-budget-frame{position:absolute;z-index:-1;inset:0 auto 0 0;width:calc((100% - 4rem)*1.1/2.1);background:var(--bg-card);border:1.5px solid var(--gray);border-radius:.5rem}
-@media(max-width:1400px){.qg-request-transforms{gap:1.7rem}.qg-request-transform{grid-template-columns:max-content 3rem minmax(0,1fr);gap:1.8rem}.qg-request-transform>.qg-speech{width:19rem;padding:1rem .9rem}.qg-request-transform>.p5-arrow{width:3rem}.qg-written-criterion{gap:1rem}.qg-written-criterion>.p5-icon{width:3.5rem;height:3.5rem}.qg-v-inspection{gap:6rem}.qg-v-doc{padding:1.6rem;gap:1.4rem}.qg-v-evidence-pair{gap:5.5rem}.qg-v-comparison{gap:2rem}.qg-v-review-loop{height:22rem}.qg-v-loop-node{gap:.8rem}.qg-v-loop-node .heading{font-size:var(--heading)}.qg-v-final-request{grid-template-columns:10rem 1fr;gap:2rem}.qg-v-prompt{padding-left:1.5rem}.qg-budget-frame{width:calc((100% - 3rem)*1.1/2.1)}}
-
-
-.qg-timing{--timing-art:7rem;width:min(100%,90rem);display:grid;grid-template-columns:1.1fr 3rem .8fr 3rem 1.1fr;gap:2rem;align-items:start}.qg-timing-item{display:grid;grid-template-rows:auto auto var(--timing-art) auto auto;gap:1.1rem;justify-items:center;text-align:center}.qg-timing-item>.p5-icon{height:var(--timing-art);width:var(--timing-art)}.qg-timing-item>.heading{white-space:nowrap}.qg-timing-rule{line-height:1.55!important;margin-top:.4rem;color:var(--text)!important}.qg-timing>.p5-arrow{width:100%;height:2rem;line-height:0;margin-top:calc(1.6em + 1.1rem + var(--heading)*1.35 + 1.1rem + var(--timing-art)/2 - 1rem)}
-@media(max-width:1400px){.qg-timing{gap:1.2rem;grid-template-columns:1.1fr 2.6rem .9fr 2.6rem 1.1fr}}
-
-.option-compare{position:relative;width:min(100%,88rem);display:grid;grid-template-columns:1fr 1fr;gap:7rem}
-.option-side{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.4rem}.option-side>.heading{color:var(--text)}
-.option-scene{position:relative;width:100%;height:17rem}.option-node{position:absolute;display:flex;flex-direction:column;align-items:center;gap:.6rem;transform:translateX(-50%);top:35%}.option-node .p5-icon{width:7rem;height:7rem}.option-source{left:17%}.option-reviewer{left:83%}
-.option-evidence{position:absolute;top:2%;left:0;width:100%;color:var(--text-dim)}.option-scene>.option-arrow{position:absolute;top:52%;left:34%;width:32%;height:1.5rem}
-.option-neq{position:absolute;left:50%;top:49%;transform:translate(-50%,-50%);font-size:var(--statement);font-weight:800;color:var(--brand)}.option-question{line-height:1.5}
-.option-single{display:grid;grid-template-columns:1.1fr 4rem .8fr 4rem 1.45fr;gap:1.5rem;align-items:center;width:min(100%,102rem)}
-.option-report,.option-inspection{display:grid;grid-template-rows:auto minmax(0,1fr) auto;align-items:center;justify-items:center;gap:1.6rem;text-align:center;min-width:0;height:21rem}.option-report>.copy,.option-inspection>.copy{line-height:1.55}
-.option-coordinator{display:flex;flex-direction:column;align-items:center;gap:1.2rem;text-align:center}.option-coordinator .p5-icon{width:9rem;height:9rem}
-.option-bubble{position:relative;border:1.5px solid var(--gray);border-radius:.6rem;padding:1.8rem 1.4rem;width:100%;white-space:nowrap}.option-bubble:after{content:'';position:absolute;right:-.5rem;top:50%;width:1rem;height:1rem;background:var(--bg);border-top:1.5px solid var(--gray);border-right:1.5px solid var(--gray);transform:translateY(-50%) rotate(45deg)}
-.option-checksheet{border:1.5px solid var(--gray);border-radius:.5rem;padding:1.4rem;width:100%;background:var(--bg-card);display:flex;flex-direction:column;gap:1.1rem;text-align:left}.option-checksheet p{display:flex;justify-content:space-between;gap:1.2rem;font-size:var(--body);white-space:nowrap}.option-checksheet strong{color:var(--yellow);font-weight:600}
-.option-connection{position:relative;transform:translateY(-1.4rem)}.option-connection>.copy{position:absolute;left:50%;bottom:2.4rem;transform:translateX(-50%);white-space:nowrap;color:var(--text-dim)}.option-arrow{display:block;width:100%;height:1.5rem;overflow:visible}
-@media(max-width:1400px){.option-compare{gap:6rem}.option-scene{height:14rem}.option-side{gap:1rem}.option-single{grid-template-columns:1fr 2.8rem .9fr 2.8rem 1.5fr;gap:1.2rem}.option-bubble{padding:1.7rem .9rem;white-space:normal}.option-coordinator .p5-icon{width:7rem;height:7rem}.option-checksheet{padding:1.2rem .9rem}.option-checksheet p{gap:.75rem}}
-
-
-.option-scene{--contrast-art:7rem}.option-node .p5-icon{width:var(--contrast-art);height:var(--contrast-art)}.option-scene>.option-arrow{top:calc(35% + var(--contrast-art)/2 - .75rem)}
-
-
-/* Distinct actions, not a single production pipeline. */
-.qg-actions{width:min(100%,94rem);display:grid;grid-template-columns:1fr 4rem 1fr 4rem 1fr;gap:2rem;align-items:center}.qg-action-side{display:grid;grid-template-rows:auto 13rem auto;gap:2rem;text-align:center;justify-items:center}.qg-action-art{height:13rem;width:18rem}.qg-action-art>svg{width:100%;height:100%}.qg-action-coordinator{display:flex;flex-direction:column;align-items:center;gap:1.7rem;text-align:center}.qg-action-coordinator>.p5-icon{width:10rem;height:10rem}.qg-action-link{width:100%;margin-top:1rem}.qg-action-link>svg{width:100%;height:2rem}.qg-role-scenes{display:grid;grid-template-columns:1fr 1fr;gap:6rem;width:min(100%,104rem)}.qg-role-scene{display:grid;grid-template-rows:auto clamp(15rem,31vh,25rem) auto;gap:1.6rem;text-align:center;justify-items:center;min-width:0}.qg-role-head{display:flex;flex-direction:column;gap:.9rem}.qg-role-phase{color:var(--text-dim)}.qg-role-phase.tone-brand{color:var(--brand)}.qg-role-phase.tone-yellow{color:var(--yellow)}.qg-role-art{display:block;width:100%;height:100%;object-fit:contain;mix-blend-mode:lighten}.qg-role-scene>.copy{color:var(--text)}
-@media(max-width:1400px){.qg-actions{gap:1.2rem;grid-template-columns:1fr 2.4rem 1fr 2.4rem 1fr}.qg-action-side{grid-template-rows:auto 11rem auto;gap:1.6rem}.qg-action-art{height:11rem;width:15rem}.qg-action-coordinator>.p5-icon{width:8rem;height:8rem}.qg-role-scenes{gap:4rem}.qg-role-scene{gap:1.2rem;grid-template-rows:auto 15rem auto}}
-
-.qg-role-head>.heading.tone-brand{color:var(--brand)}.qg-role-head>.heading.tone-yellow{color:var(--yellow)}
-
-.qg-p-overview{width:min(100%,106rem);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3rem;text-align:center}.qg-p-overview-item{display:grid;grid-template-rows:7rem auto auto;gap:1.8rem;justify-items:center}.qg-p-overview-item .p5-icon{width:7rem;height:7rem}.qg-p-overview-item>.heading{white-space:nowrap}.qg-p-focus{display:flex;flex-direction:column;gap:1rem;margin-top:1rem}.qg-p-focus>.heading{color:var(--yellow)}
-.qg-p-conversions{width:min(100%,86rem);display:flex;flex-direction:column;gap:2.5rem}.qg-p-conversion{display:grid;grid-template-columns:1fr 5rem 1.3fr;gap:3rem;align-items:center}.qg-p-rule{display:flex;flex-direction:column;gap:.8rem}.qg-p-rule>.heading{color:var(--brand)}.qg-p-quality{display:flex;align-items:center;gap:1.5rem}.qg-p-quality>.heading{color:var(--yellow)}.qg-p-quality>.p5-icon{width:4rem;height:4rem;flex-shrink:0}.qg-p-arrow svg{width:100%;height:2rem}
-.qg-p-paper{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.8rem;min-width:0}.qg-p-paper>.heading{white-space:nowrap}.qg-p-paper-art{width:100%;display:flex;flex-direction:column;align-items:center;gap:1.2rem}.qg-p-paper-art>.p5-icon{width:9rem;height:9rem}.qg-p-paper-art>.heading{color:var(--green)}.qg-p-pair{width:min(100%,88rem);display:grid;grid-template-columns:1fr 14rem 1fr;gap:4rem;align-items:center}.qg-p-check{display:flex;flex-direction:column;align-items:center;gap:1rem;text-align:center}.qg-p-check>.p5-icon{width:6rem;height:6rem}.qg-p-check>.heading{color:var(--yellow);margin-top:.6rem}
-.qg-p-selection{width:min(100%,104rem);display:grid;grid-template-columns:1fr 7rem 1.5fr 7rem 1fr;gap:1.5rem;align-items:center}.qg-p-reference{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.3rem}.qg-p-reference>.p5-icon{width:6rem;height:6rem}.qg-p-reference>.copy{white-space:nowrap}.qg-p-relation{display:flex;flex-direction:column;gap:1rem;align-items:center;color:var(--yellow);font-size:var(--body);white-space:nowrap}.qg-p-relation>i{display:block;width:100%;height:1px;background:var(--yellow)}
-.qg-p-consistency{width:min(100%,92rem);display:grid;grid-template-columns:1.2fr 10rem 1.1fr;gap:2.5rem;align-items:center}.qg-p-upstream{display:flex;flex-direction:column;gap:2.8rem}.qg-p-upstream>.qg-p-paper{display:grid;grid-template-columns:1fr;gap:.65rem;text-align:left;align-items:start}.qg-p-upstream .qg-p-paper-art{flex-direction:row;gap:1rem}.qg-p-upstream .p5-icon{width:4rem;height:4rem}.qg-p-upstream>.qg-p-paper>.heading{font-size:var(--body);color:var(--text-dim);padding-left:5rem}.qg-p-transfer{position:relative;height:16rem}.qg-p-transfer>svg{width:100%;height:100%}.qg-p-transfer>.copy{position:absolute;top:-1.8rem;left:50%;transform:translateX(-50%);white-space:nowrap;color:var(--yellow)}
-.qg-p-verdicts{width:min(100%,80rem);display:grid;grid-template-columns:1fr 1fr;gap:10rem}.qg-p-verdict{display:flex;flex-direction:column;align-items:center;gap:2rem}.qg-p-checklist{width:100%;display:flex;flex-direction:column;gap:1.5rem;border-top:1px solid var(--gray);border-bottom:1px solid var(--gray);padding:1.6rem 1rem}.qg-p-checklist>p{display:flex;justify-content:space-between;align-items:center;gap:3rem;font-size:var(--body)}.qg-p-checklist svg{width:1.6rem;height:1.6rem}.qg-p-verdict>.statement{margin-top:.5rem}
-@media(max-width:1400px){.qg-p-overview{gap:2rem}.qg-p-overview-item{gap:1.3rem}.qg-p-focus{margin-top:.4rem}.qg-p-conversions{gap:2rem}.qg-p-conversion{grid-template-columns:1fr 3rem 1.4fr;gap:2rem}.qg-p-quality{gap:1rem}.qg-p-quality>.p5-icon{width:3rem;height:3rem}.qg-p-pair{grid-template-columns:1fr 10rem 1fr;gap:2rem}.qg-p-paper{gap:1.4rem}.qg-p-paper-art>.p5-icon{width:7rem;height:7rem}.qg-p-selection{grid-template-columns:1fr 4rem 1.6fr 4rem 1fr;gap:1rem}.qg-p-reference>.p5-icon{width:5rem;height:5rem}.qg-p-reference>.copy{white-space:normal}.qg-p-consistency{grid-template-columns:1.15fr 7rem 1.1fr;gap:2rem}.qg-p-upstream .qg-p-paper-art>.p5-icon{width:4rem;height:4rem}.qg-p-verdicts{gap:7rem}.qg-p-verdict{gap:1.5rem}.qg-p-checklist{gap:1.2rem;padding:1.3rem .6rem}}
-
-
-.qg-real-check{width:min(100%,100rem);display:flex;flex-direction:column;gap:3.5rem}.qg-real-pair{display:grid;grid-template-columns:1.2fr 1fr 1.1fr;gap:3rem;align-items:center}.qg-real-note{display:flex;flex-direction:column;gap:1.6rem;border-left:3px solid var(--green);padding:1rem 0 1rem 2rem}.qg-real-docname{display:flex;align-items:center;gap:1rem}.qg-real-docname>.p5-icon{width:3rem;height:3rem}.qg-real-note>.statement{font-size:var(--heading);line-height:1.4}.qg-real-note>.copy{padding-left:4rem}.qg-real-note>.statement{padding-left:4rem}.qg-real-inspector,.qg-real-evidence{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.3rem}.qg-real-inspector>.p5-icon{width:5rem;height:5rem}.qg-real-inspector>.heading{color:var(--yellow)}.qg-real-evidence>.p5-icon{width:7rem;height:7rem}.qg-real-verdicts{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-self:center;width:75%;text-align:center}.qg-real-verdicts>div{display:flex;flex-direction:column;gap:.9rem}.qg-real-verdicts .tone-green{color:var(--green)}.qg-real-verdicts .tone-orange{color:var(--orange)}
-@media(max-width:1400px){.qg-real-check{gap:2.7rem}.qg-real-pair{gap:1.8rem;grid-template-columns:1.2fr 1fr 1.15fr}.qg-real-note{padding-left:1rem;gap:1.2rem}.qg-real-note>.copy,.qg-real-note>.statement{padding-left:0}.qg-real-docname{gap:.6rem}.qg-real-docname>.p5-icon{width:2.3rem;height:2.3rem}.qg-real-docname>.heading{white-space:nowrap}.qg-real-inspector,.qg-real-evidence{gap:1rem}.qg-real-evidence>.p5-icon{width:6rem;height:6rem}.qg-real-verdicts{width:85%;gap:3rem}}
-
-.qg-real-note,.qg-real-evidence{display:grid;grid-template-rows:3rem 1.7rem 3rem;gap:1.4rem;align-content:center;align-items:center;text-align:left;padding:1rem 0 1rem 1rem}.qg-real-evidence{border-left:3px solid var(--gray)}.qg-real-note>.copy,.qg-real-note>.statement{padding-left:0}.qg-real-docname>.p5-icon{width:2.3rem;height:2.3rem}.qg-real-docname{gap:.6rem}.qg-real-evidence>.heading{white-space:nowrap;font-size:var(--heading)}
-.slide__title .qg-quality-key{color:var(--yellow)}
-
-.qg-map:before{display:none}.qg-restored-frame{position:absolute;z-index:-1;inset:0 auto 0 0;width:calc((100% - 4rem)/2);border:1.5px solid var(--gray);border-radius:.5rem;background:var(--bg-card)}
-@media(max-width:1400px){.qg-restored-frame{width:calc((100% - 3rem)/2)}}
+      /* 12장 멈추는 조건 */
+      .qg-stops{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2.6rem;width:min(100%,92rem);margin:0 auto}
+      .qg-stop{display:flex;flex-direction:column;align-items:center;gap:min(1.8rem,4.2cqh);text-align:center;background:var(--bg-card);border:1px solid var(--border);border-top:2px solid var(--orange);padding:min(3.4rem,8cqh) 2.4rem}
+      .qg-stop .heading{color:var(--orange)}
+      .qg-stop .copy{color:var(--text-dim);line-height:1.6}
 </style>
   </head>
   <body>
@@ -834,27 +1212,223 @@
     </button>
     <div class="dot-nav" id="dot-nav"></div>
     <div class="slide-counter">
-      <span id="cur">1</span> / <span id="tot">16</span>
+      <span id="cur">1</span> / <span id="tot">12</span>
     </div>
     <div class="slide-deck" id="deck">
-<article class="slide active" data-index="0" data-pattern="COVER_SCENE"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 4 · Ch04-04</span><h1 class="slide__title"><span class="hl">품질 게이트</span>로 통과 기준 세우기</h1><p class="slide__sub">문서가 다음 작업에 쓰여도 되는지 판단하는 절차입니다.</p></header><main class="slide__body"><div class="scene scene--cover"><div class="scene__copy anim-item" data-anim-step="0"><p class="statement">기준을 통과해야<strong>다음 작업으로</strong></p></div><figure class="scene__visual"><div class="qg-cover-graph"><div class="qg-cover-node qg-cover-doc anim-item" data-anim-step="1"><svg class="p5-icon tone-green" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><p class="copy">결과 문서</p></div><div class="qg-cover-node qg-cover-check anim-item" data-anim-step="2"><svg class="p5-icon tone-yellow" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-gate"/></svg><p class="copy">기준 검사</p></div><div class="qg-cover-node qg-cover-pass anim-item" data-anim-step="3"><svg class="p5-icon tone-green" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-done"/></svg><p class="copy">다음 작업</p></div><svg class="qg-cover-wires" viewBox="0 0 600 330" preserveAspectRatio="none" aria-hidden="true"><path class="anim-item" data-anim-step="3" d="M120 104H242" stroke="var(--gray)" marker-end="url(#tx-tip-gray)"/><path class="anim-item" data-anim-step="4" d="M360 104H478" stroke="var(--green)" marker-end="url(#tx-tip-green)"/><path class="anim-item" data-anim-step="5" d="M300 153V264H65V154" stroke="var(--orange)" marker-end="url(#tx-tip-orange)"/></svg><p class="copy qg-cover-return anim-item" data-anim-step="6">반려 · 수정 · 재검사</p></div></figure></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
-<article class="slide" data-index="1" data-pattern="TRANSITION_COMPARE"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 4 · Ch04-04</span><h1 class="slide__title">완료 확인 <span class="hl">≠</span> 품질 검토</h1></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="qg-actions"><section class="qg-action-side"><h2 class="heading anim-item" data-anim-step="1">완료 확인</h2><div class="qg-action-art anim-item" data-anim-step="1"><svg viewBox="0 0 200 150" fill="none" aria-hidden="true"><path d="M22 15H169Q185 15 185 31V101Q185 117 169 117H72L39 138V117H22Q6 117 6 101V31Q6 15 22 15Z" fill="var(--bg-card)" stroke="var(--gray)" stroke-width="2"/><path d="M73 63L89 79L122 45" stroke="var(--green)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></div><p class="copy anim-item" data-anim-step="2">완료 보고 접수</p></section><div class="qg-action-link anim-item" data-anim-step="2"><svg viewBox="0 0 100 24" aria-hidden="true"><path d="M2 12H94" fill="none" stroke="var(--gray)" stroke-width="2.4" marker-end="url(#tx-tip-gray)"/></svg></div><div class="qg-action-coordinator anim-item" data-anim-step="0"><svg class="p5-icon tone-yellow " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-agent"/></svg><h2 class="heading">코디네이터</h2></div><div class="qg-action-link anim-item" data-anim-step="4"><svg viewBox="0 0 100 24" aria-hidden="true"><path d="M2 12H94" fill="none" stroke="var(--gray)" stroke-width="2.4" marker-end="url(#tx-tip-gray)"/></svg></div><section class="qg-action-side"><h2 class="heading anim-item" data-anim-step="3">품질 검토</h2><div class="qg-action-art anim-item" data-anim-step="3"><svg viewBox="0 0 200 150" fill="none" aria-hidden="true"><path d="M48 5H112L143 36V133H48Z" fill="var(--bg-card)" stroke="var(--green)" stroke-width="2.8"/><path d="M112 5V36H143M64 48H117M64 66H112M64 84H100M64 103H95" stroke="var(--green)" stroke-width="2.8"/><circle cx="138" cy="94" r="29" fill="var(--bg)" stroke="var(--yellow)" stroke-width="5"/><path d="M159 116L179 138M125 94H152M125 85H146M125 103H146" stroke="var(--yellow)" stroke-width="4" stroke-linecap="round"/></svg></div><p class="copy anim-item" data-anim-step="4">문서 내용·근거 검토</p></section></div></div><p class="p5-note anim-item" data-anim-step="5">완료 보고만으로 품질 검토가 보장되지는 않습니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
-<article class="slide" data-index="2" data-pattern="TRANSITION_COMPARE"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 4 · Ch04-04</span><h1 class="slide__title"><span class="hl">작업</span> 기준과 <span class="hl qg-quality-key">품질</span> 기준의 구분</h1></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="qg-role-scenes"><section class="qg-role-scene"><div class="qg-role-head anim-item" data-anim-step="0"><p class="qg-role-phase copy">작업 중</p><h2 class="heading"><span class="tone-brand">작업</span> 기준</h2></div><img class="qg-role-art anim-item" data-anim-step="1" src="/artifacts/part5/_images/ch04-04-quality-gate--creation.png" alt="규칙을 보며 문서를 작성하는 워커"><p class="copy anim-item" data-anim-step="1">워커 · 결과물 작성</p></section><section class="qg-role-scene"><div class="qg-role-head anim-item" data-anim-step="2"><p class="qg-role-phase copy">작업 후</p><h2 class="heading"><span class="tone-yellow">품질</span> 기준</h2></div><img class="qg-role-art anim-item" data-anim-step="3" src="/artifacts/part5/_images/ch04-04-quality-gate--verification.png" alt="완료 문서와 검사표를 대조하는 코디네이터"><p class="copy anim-item" data-anim-step="3">코디네이터 · 통과·반려 판단</p></section></div></div><p class="p5-note anim-item" data-anim-step="5">각 단계의 결과가 나온 뒤, 다음 작업을 배정하기 전에 검사합니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
-<article class="slide" data-index="3" data-pattern="RECORD_ANATOMY"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 4 · Ch04-04</span><h1 class="slide__title">시장 조사 노트의 <span class="hl">통과 기준</span></h1></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="qg-real-check"><div class="qg-real-pair"><section class="qg-real-note anim-item" data-anim-step="0"><div class="qg-real-docname"><svg class="p5-icon tone-green" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><h2 class="heading">시장 조사 노트</h2></div><p class="copy">반려동물 소모품</p><blockquote class="statement">“트렌드: 상승”</blockquote></section><div class="qg-real-inspector anim-item" data-anim-step="2"><svg class="p5-icon tone-yellow" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-agent"/></svg><p class="copy">코디네이터</p><h2 class="heading tone-yellow">주장과 자료 대조</h2></div><section class="qg-real-evidence anim-item" data-anim-step="1"><div class="qg-real-docname"><svg class="p5-icon tone-gray" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><h2 class="heading">출처 자료</h2></div><p class="copy">같은 대상의 조사 자료</p><p class="heading">주장을 뒷받침할 근거</p></section></div><div class="qg-real-verdicts"><div class="anim-item" data-anim-step="3"><p class="copy">자료가 주장을 뒷받침</p><h3 class="heading tone-green">통과</h3></div><div class="anim-item" data-anim-step="4"><p class="copy">근거 없음 · 내용 불일치</p><h3 class="heading tone-orange">보완</h3></div></div></div></div><p class="p5-note anim-item" data-anim-step="5">검사할 문장과 대조할 자료를 정하고, 이 항목의 통과·보완 조건을 씁니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
-<article class="slide" data-index="4" data-pattern="RECORD_ANATOMY"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 4 · Ch04-04</span><h1 class="slide__title">작업 기준을 <span class="hl">품질 기준</span>으로</h1></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="qg-p-conversions"><section class="qg-p-conversion"><div class="qg-p-rule anim-item" data-anim-step="0"><p class="copy">시장 조사 노트</p><h2 class="heading tone-brand">출처를 기록</h2></div><div class="qg-p-arrow anim-item" data-anim-step="1" aria-hidden="true"><svg viewBox="0 0 100 24"><path d="M5 12H94" fill="none" stroke="var(--gray)" stroke-width="2.3" marker-end="url(#tx-tip-gray)"/></svg></div><div class="qg-p-quality anim-item" data-anim-step="1"><svg class="p5-icon tone-yellow " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><h2 class="heading tone-yellow">주장과 출처 대조</h2></div></section><section class="qg-p-conversion"><div class="qg-p-rule anim-item" data-anim-step="2"><p class="copy">아이템 후보 비교표</p><h2 class="heading tone-brand">선정 기준으로 후보 비교</h2></div><div class="qg-p-arrow anim-item" data-anim-step="3" aria-hidden="true"><svg viewBox="0 0 100 24"><path d="M5 12H94" fill="none" stroke="var(--gray)" stroke-width="2.3" marker-end="url(#tx-tip-gray)"/></svg></div><div class="qg-p-quality anim-item" data-anim-step="3"><svg class="p5-icon tone-yellow " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><h2 class="heading tone-yellow">추천과 선정 기준 대조</h2></div></section><section class="qg-p-conversion"><div class="qg-p-rule anim-item" data-anim-step="4"><p class="copy">판매 아이템 기획서</p><h2 class="heading tone-brand">앞 문서를 반영해 작성</h2></div><div class="qg-p-arrow anim-item" data-anim-step="5" aria-hidden="true"><svg viewBox="0 0 100 24"><path d="M5 12H94" fill="none" stroke="var(--gray)" stroke-width="2.3" marker-end="url(#tx-tip-gray)"/></svg></div><div class="qg-p-quality anim-item" data-anim-step="5"><svg class="p5-icon tone-yellow " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><h2 class="heading tone-yellow">원문과 기획서 대조</h2></div></section></div></div><p class="p5-note anim-item" data-anim-step="6">작업할 때 지킬 규칙을, 결과에서 확인할 항목으로 바꿉니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
-<article class="slide" data-index="5" data-pattern="RECORD_ANATOMY"><header class="slide__header"><span class="slide__label">Part 5 · Ch04-04 · 시장 조사 · 비교 A</span><h1 class="slide__title"><span class="hl">근거</span>를 확인하는 검사</h1><p class="slide__sub">다음 판단에 사용할 근거인지 확인합니다.</p></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="qg-map"><div class="qg-restored-frame anim-item" data-anim-step="0"></div><div class="qg-map-head anim-item" data-anim-step="1"><h2 class="heading">시장 조사 노트</h2><h2 class="heading">통과를 판단할 질문</h2></div><div class="qg-map-row anim-item" data-anim-step="2"><section class="qg-map-field"><h3 class="heading">조사 범위</h3><p class="copy">스마트스토어 판매 아이템</p></section><section class="qg-map-check"><h3 class="heading">사업 조건과 맞는가?</h3><p class="copy">사업 조건에 맞는 조사 대상</p></section></div><div class="qg-map-row anim-item" data-anim-step="3"><section class="qg-map-field"><h3 class="heading">주장·수치의 출처</h3><p class="copy">판매가 · 공급가 · 수요 근거</p></section><section class="qg-map-check"><h3 class="heading">주장을 뒷받침하는가?</h3><p class="copy">주요 주장·수치와 출처의 내용 대조</p></section></div><div class="qg-map-row anim-item" data-anim-step="4"><section class="qg-map-field"><h3 class="heading">확인 상태</h3><p class="copy">사실 / 추정 / 미확인</p></section><section class="qg-map-check"><h3 class="heading">추정을 구분했는가?</h3><p class="copy">미확인을 사실로 사용하지 않기</p></section></div></div></div><p class="p5-note anim-item" data-anim-step="5">선정을 좌우하는 공급가가 미확인이라면 보완 후 후보를 판단합니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
-<article class="slide" data-index="6" data-pattern="RECORD_ANATOMY"><header class="slide__header"><span class="slide__label">Part 5 · Ch04-04 · 시장 조사 · 비교 B</span><h1 class="slide__title"><span class="hl">근거</span>를 확인하는 검사</h1><p class="slide__sub">다음 판단에 사용할 근거인지 확인합니다.</p></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="qg-v-scene qg-v-inspection"><svg class="qg-v-wires" aria-hidden="true"><path class="anim-item" data-anim-step="4" data-v-from="source" data-v-to="review" fill="none" stroke="var(--orange)" stroke-width="2.5" marker-end="url(#tx-tip-orange)"/></svg><section class="qg-v-doc "><div class="qg-v-frame anim-item" data-anim-step="0" aria-hidden="true"></div><h2 class="heading anim-item" data-anim-step="1">시장 조사 노트</h2><div class="qg-v-field anim-item" data-anim-step="1"><p class="copy">핵심 주장</p><p class="heading">수요가 늘고 있다</p></div><div class="qg-v-field qg-v-problem anim-item" data-anim-step="2" data-v-anchor="source"><p class="copy">출처</p><p class="heading">확인할 근거 없음</p></div></section><div class="qg-v-inspector"><div class="qg-v-actor anim-item" data-anim-step="3" data-v-anchor="review"><svg class="p5-icon tone-yellow " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-agent"/></svg><h2 class="heading">코디네이터</h2></div><div class="qg-v-verdict anim-item" data-anim-step="5"><h2 class="heading tone-orange">근거 보완</h2><p class="copy">출처 확인 후 다시 검사</p></div></div></div></div><p class="p5-note anim-item" data-anim-step="6">주요 주장을 출처가 뒷받침하는지 확인합니다. 링크 개수만 세지 않습니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
-<article class="slide" data-index="7" data-pattern="RECORD_ANATOMY"><header class="slide__header"><span class="slide__label">Part 5 · Ch04-04 · 시장 조사 · 비교 C</span><h1 class="slide__title">시장 조사 노트의 <span class="hl">근거</span></h1></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="qg-p-pair"><section class="qg-p-paper anim-item" data-anim-step="0"><h2 class="heading">시장 조사 노트</h2><div class="qg-p-paper-art tone-green"><svg class="p5-icon tone-green " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><p class="heading">주장·수치</p></div><p class="copy">조사 결과에 적힌 내용</p></section><div class="qg-p-check anim-item" data-anim-step="2"><svg class="p5-icon tone-yellow " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-agent"/></svg><p class="copy">코디네이터</p><h3 class="heading tone-yellow">내용 대조</h3></div><section class="qg-p-paper anim-item" data-anim-step="1"><h2 class="heading">출처 자료</h2><div class="qg-p-paper-art tone-green"><svg class="p5-icon tone-green " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><p class="heading">뒷받침할 자료</p></div><p class="copy">직접 확인할 수 있는 근거</p></section></div></div><p class="p5-note anim-item" data-anim-step="6">출처가 있다는 것과, 출처가 주장을 뒷받침한다는 것은 다릅니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
-<article class="slide" data-index="8" data-pattern="RECORD_ANATOMY"><header class="slide__header"><span class="slide__label">Part 5 · Ch04-04 · 후보 선정 · 비교 A</span><h1 class="slide__title"><span class="hl">점수와 추천</span>의 연결</h1><p class="slide__sub">점수의 합계뿐 아니라 그 추천이 나온 이유를 검사합니다.</p></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="qg-map"><div class="qg-restored-frame anim-item" data-anim-step="0"></div><div class="qg-map-head anim-item" data-anim-step="1"><h2 class="heading">아이템 후보 비교표</h2><h2 class="heading">통과를 판단할 질문</h2></div><div class="qg-map-row anim-item" data-anim-step="2"><section class="qg-map-field"><h3 class="heading">품목별 근거</h3><p class="copy">시장 조사 노트의 세부 품목</p></section><section class="qg-map-check"><h3 class="heading">품목이 일치하는가?</h3><p class="copy">조사 대상과 비교 대상 대조</p></section></div><div class="qg-map-row anim-item" data-anim-step="3"><section class="qg-map-field"><h3 class="heading">평가 점수</h3><p class="copy">마진율 · 경쟁강도 · 트렌드</p></section><section class="qg-map-check"><h3 class="heading">계산이 맞는가?</h3><p class="copy">항목별 점수와 총점 대조</p></section></div><div class="qg-map-row anim-item" data-anim-step="4"><section class="qg-map-field"><h3 class="heading">최종 추천</h3><p class="copy">제외 조건 · 동점 처리 · 선정 이유</p></section><section class="qg-map-check"><h3 class="heading">추천이 규칙에 맞는가?</h3><p class="copy">사업 조건·제외·동점 규칙 확인</p></section></div></div></div><p class="p5-note anim-item" data-anim-step="5">점수가 높아도 사업 조건의 제외 대상이면 그대로 추천하지 않습니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
-<article class="slide" data-index="9" data-pattern="RECORD_ANATOMY"><header class="slide__header"><span class="slide__label">Part 5 · Ch04-04 · 후보 선정 · 비교 B</span><h1 class="slide__title"><span class="hl">사업 조건</span>에 맞는 추천인가?</h1><p class="slide__sub">점수의 합계뿐 아니라 그 추천이 나온 이유를 검사합니다.</p></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="qg-v-comparison"><div class="qg-v-evidence-pair"><section class="qg-v-doc "><div class="qg-v-frame anim-item" data-anim-step="0" aria-hidden="true"></div><h2 class="heading anim-item" data-anim-step="1">사업 조건</h2><div class="qg-v-field anim-item" data-anim-step="2"><p class="copy">운영 방식</p><p class="heading tone-green">재고를 보유하지 않음</p></div></section><span class="qg-v-mismatch anim-item" data-anim-step="4">≠</span><section class="qg-v-doc "><div class="qg-v-frame anim-item" data-anim-step="0" aria-hidden="true"></div><h2 class="heading anim-item" data-anim-step="1">아이템 후보 비교표</h2><div class="qg-v-field anim-item" data-anim-step="3"><p class="copy">추천 품목의 판매 조건</p><p class="heading tone-orange">대량 매입 필요</p></div></section></div><div class="qg-v-review-result anim-item" data-anim-step="5"><svg class="p5-icon tone-yellow " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-agent"/></svg><div><p class="copy">코디네이터 검사</p><h2 class="heading tone-orange">조건 위반 · 다시 선정</h2></div></div></div></div><p class="p5-note anim-item" data-anim-step="6">높은 점수라도 사업 조건에 어긋나면 그대로 추천하지 않습니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
-<article class="slide" data-index="10" data-pattern="RECORD_ANATOMY"><header class="slide__header"><span class="slide__label">Part 5 · Ch04-04 · 후보 선정 · 비교 C</span><h1 class="slide__title">아이템 후보 비교표의 <span class="hl">선정 근거</span></h1></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="qg-p-selection"><section class="qg-p-reference anim-item" data-anim-step="1"><svg class="p5-icon tone-gray " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><h2 class="heading">사업 조건</h2><p class="copy">예산 · 운영 여건</p></section><div class="qg-p-relation anim-item" data-anim-step="3"><span>조건 충족</span><i></i></div><section class="qg-p-paper anim-item" data-anim-step="0"><h2 class="heading">아이템 후보 비교표</h2><div class="qg-p-paper-art tone-green"><svg class="p5-icon tone-green " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><p class="heading">최종 추천</p></div><p class="copy">선택한 이유</p></section><div class="qg-p-relation anim-item" data-anim-step="4"><span>기준 적용</span><i></i></div><section class="qg-p-reference anim-item" data-anim-step="2"><svg class="p5-icon tone-gray " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><h2 class="heading">선정 기준</h2><p class="copy">비교 항목 · 선정 규칙</p></section></div></div><p class="p5-note anim-item" data-anim-step="6">추천 결과를 사업 조건과 선정 기준에 함께 대조합니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
-<article class="slide" data-index="11" data-pattern="RECORD_ANATOMY"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 4 · Ch04-04</span><h1 class="slide__title">판매 아이템 기획서의 <span class="hl">일관성</span></h1></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="qg-p-consistency"><div class="qg-p-upstream"><section class="qg-p-paper anim-item" data-anim-step="0"><h2 class="heading">시장 조사 노트</h2><div class="qg-p-paper-art tone-green"><svg class="p5-icon tone-green " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><p class="heading">조사 근거</p></div></section><section class="qg-p-paper anim-item" data-anim-step="1"><h2 class="heading">아이템 후보 비교표</h2><div class="qg-p-paper-art tone-green"><svg class="p5-icon tone-green " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><p class="heading">선정 결론</p></div></section></div><div class="qg-p-transfer anim-item" data-anim-step="3"><span class="copy">원문 대조</span><svg viewBox="0 0 120 200" aria-hidden="true"><path d="M2 175H38V100" fill="none" stroke="var(--yellow)" stroke-width="2.3"/><path d="M2 25H38V100H110" fill="none" stroke="var(--yellow)" stroke-width="2.3" marker-end="url(#tx-tip-yellow)"/></svg></div><section class="qg-p-paper anim-item" data-anim-step="2"><h2 class="heading">판매 아이템 기획서</h2><div class="qg-p-paper-art tone-green"><svg class="p5-icon tone-green " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><p class="heading">근거 · 선정 · 계획</p></div><p class="copy">앞 문서와 같은 내용으로 반영</p></section></div></div><p class="p5-note anim-item" data-anim-step="6">앞 문서의 결론이 기획서에서 바뀌거나 빠지지 않았는지 확인합니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
-<article class="slide" data-index="12" data-pattern="RECORD_ANATOMY"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 4 · Ch04-04</span><h1 class="slide__title">일부 충족 <span class="hl">≠</span> 전체 통과</h1><p class="slide__sub">판매 아이템 기획서 · 예산 검토</p></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="qg-p-verdicts"><section class="qg-p-verdict"><h2 class="heading anim-item" data-anim-step="0">모든 항목 충족</h2><div class="qg-p-checklist anim-item" data-anim-step="1"><p><span>금액의 근거</span><svg viewBox="0 0 24 24" aria-label="충족"><path d="M3 12L9 18L21 5" fill="none" stroke="var(--green)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></p><p><span>합계의 정확성</span><svg viewBox="0 0 24 24" aria-label="충족"><path d="M3 12L9 18L21 5" fill="none" stroke="var(--green)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></p><p><span>예산 한도</span><svg viewBox="0 0 24 24" aria-label="충족"><path d="M3 12L9 18L21 5" fill="none" stroke="var(--green)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></p></div><h3 class="statement tone-green anim-item" data-anim-step="3">통과</h3></section><section class="qg-p-verdict"><h2 class="heading anim-item" data-anim-step="1">한 항목 미충족</h2><div class="qg-p-checklist anim-item" data-anim-step="2"><p><span>금액의 근거</span><svg viewBox="0 0 24 24" aria-label="충족"><path d="M3 12L9 18L21 5" fill="none" stroke="var(--green)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></p><p><span>합계의 정확성</span><svg viewBox="0 0 24 24" aria-label="충족"><path d="M3 12L9 18L21 5" fill="none" stroke="var(--green)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></p><p><span>예산 한도</span><svg viewBox="0 0 24 24" aria-label="미충족"><path d="M5 5L19 19M19 5L5 19" fill="none" stroke="var(--orange)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></p></div><h3 class="statement tone-orange anim-item" data-anim-step="4">반려</h3></section></div></div><p class="p5-note anim-item" data-anim-step="6">한 항목을 고친 뒤에도 전체 필수 항목을 다시 검사합니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
-<article class="slide" data-index="13" data-pattern="REVIEW_LOOP"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 4 · Ch04-04</span><h1 class="slide__title"><span class="hl">반려 뒤에도</span> 규칙이 필요</h1><p class="slide__sub">반려 뒤의 수정·재검사와 통과 뒤의 배정까지 함께 요청합니다.</p></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="qg-v-review-loop qg-v-scene"><div class="qg-v-loop-node qg-v-author anim-item" data-anim-step="0" data-v-anchor="author"><svg class="p5-icon tone-brand " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-agent"/></svg><h2 class="heading">시장조사 담당</h2><p class="copy">문서 제출 · 반려 시 수정</p></div><div class="qg-v-loop-node qg-v-coordinator anim-item" data-anim-step="1" data-v-anchor="coordinator"><svg class="p5-icon tone-yellow " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-agent"/></svg><h2 class="heading">코디네이터</h2><p class="copy">전체 기준 검사·재검사</p></div><div class="qg-v-loop-node qg-v-next anim-item" data-anim-step="3" data-v-anchor="next"><svg class="p5-icon tone-purple " viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-agent"/></svg><h2 class="heading">후보 도출 담당</h2><p class="copy">통과한 경우에만 배정</p></div><svg class="qg-v-wires" aria-hidden="true"><path class="anim-item" data-anim-step="2" data-v-from="author" data-v-to="coordinator" fill="none" stroke="var(--gray)" stroke-width="2.5" marker-end="url(#tx-tip-gray)"/><path class="anim-item" data-anim-step="4" data-v-from="coordinator" data-v-to="next" fill="none" stroke="var(--green)" stroke-width="2.5" marker-end="url(#tx-tip-green)"/><path class="anim-item" data-anim-step="5" data-v-return="true" fill="none" stroke="var(--orange)" stroke-width="2.5" marker-end="url(#tx-tip-orange)"/></svg><p class="qg-v-return-copy copy tone-orange anim-item" data-anim-step="6">반려 항목·근거 전달 → 담당 워커 수정</p></div></div><p class="p5-note anim-item" data-anim-step="7">수정한 문서를 다시 제출하면, 코디네이터가 전체 기준을 재검사합니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
-<article class="slide" data-index="14" data-pattern="PROCESS_STRIP"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 4 · Ch04-04</span><h1 class="slide__title"><span class="hl">바뀐 근거</span>는 다시 연결</h1><p class="slide__sub">앞 문서가 바뀌면, 그 근거를 사용한 후속 문서도 다시 확인합니다.</p></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="p5-flow"><div class="p5-item anim-item" data-anim-step="0"><svg class="p5-icon tone-green" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><h2 class="heading">시장 조사 노트</h2><p class="copy">조사 내용 변경</p></div><div class="p5-arrow tone-orange anim-item" data-anim-step="3" aria-hidden="true"><svg viewBox="0 0 100 20"><path d="M2 10H94" fill="none" stroke="currentColor" stroke-width="2.5" marker-end="url(#tx-tip-orange)"/></svg></div><div class="p5-item anim-item" data-anim-step="2"><svg class="p5-icon tone-green" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><h2 class="heading">아이템 후보 비교표</h2><p class="copy">선정 결론 재검토</p></div><div class="p5-arrow tone-orange anim-item" data-anim-step="5" aria-hidden="true"><svg viewBox="0 0 100 20"><path d="M2 10H94" fill="none" stroke="currentColor" stroke-width="2.5" marker-end="url(#tx-tip-orange)"/></svg></div><div class="p5-item anim-item" data-anim-step="4"><svg class="p5-icon tone-green" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><h2 class="heading">판매 아이템 기획서</h2><p class="copy">선정 근거·예산 재검토</p></div></div></div><p class="p5-note anim-item" data-anim-step="6">영향받는 후속 문서의 통과 상태를 해제하고, 순서대로 수정·재검사합니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
-<article class="slide" data-index="15" data-pattern="GOAL_ACCEPTANCE"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 4 · Ch04-04</span><h1 class="slide__title"><span class="hl">사람의 판단</span>이 필요할 때</h1><p class="slide__sub">수정만으로 해결할 수 없는 문제는 사람이 판단합니다.</p></header><main class="slide__body p5-has-note"><div class="p5-main-content"><div class="qg-stop-flow"><section class="qg-stop-item anim-item" data-anim-step="0"><svg class="p5-icon tone-orange" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-working"/></svg><h2 class="heading">수정 한도에 도달</h2><p class="copy">정한 횟수만큼 고쳐도<br>기준을 충족하지 못함</p></section><span class="qg-or copy anim-item" data-anim-step="1">또는</span><section class="qg-stop-item anim-item" data-anim-step="1"><svg class="p5-icon tone-orange" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><h2 class="heading">조건·자료가 필요</h2><p class="copy">예산 변경<br>확인되지 않은 공급가</p></section><div class="p5-arrow tone-orange anim-item" aria-hidden="true" data-anim-step="3"><svg viewBox="0 0 100 20"><path d="M2 10H94" fill="none" stroke="currentColor" stroke-width="2.5" marker-end="url(#tx-tip-orange)"/></svg></div><section class="qg-stop-item anim-item" data-anim-step="2"><svg class="p5-icon tone-gray" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-person"/></svg><h2 class="heading">중단하고 질문</h2><p class="copy">미해결 항목 · 시도한 수정<br>필요한 결정</p></section></div></div><p class="p5-note anim-item" data-anim-step="4">자동 수정의 횟수와 중단 조건도 작업 전에 정합니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
-
+<article class="slide active" data-index="0" data-pattern="COVER_SCENE">
+<header class="slide__header"><span class="slide__label">Part 5 · Chapter 4 · Ch04-04</span><h1 class="slide__title"><span class="hl">품질 게이트</span>로 통과 기준 세우기</h1><p class="slide__sub">문서가 다음 작업에 쓰여도 되는지 판단하는 절차입니다.</p></header>
+<main class="slide__body">
+<div class="qg-cover">
+<div class="qg-cover-copy anim-item" data-anim-step="0">
+<p class="statement">기준을 통과해야<strong>다음 작업으로</strong></p>
 </div>
+<div class="qg-cover-graph">
+<figure class="qg-cover-node anim-item" data-anim-step="1"><svg class="qg-glyph" style="--accent:var(--green);width:7.4rem;height:7.4rem" viewBox="0 0 100 100" fill="none" stroke="var(--green)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><figcaption class="copy">결과 문서</figcaption></figure>
+<span class="qg-arrow anim-item" data-anim-step="2" aria-hidden="true"><svg viewBox="0 0 64 24"><path d="M2 12H56M46 3L57 12L46 21"/></svg></span>
+<figure class="qg-cover-node anim-item" data-anim-step="2"><svg class="qg-glyph" style="--accent:var(--yellow);width:7.4rem;height:7.4rem" viewBox="0 0 100 100" fill="none" stroke="var(--yellow)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-gate"/></svg><figcaption class="copy">기준 검사</figcaption></figure>
+<div class="qg-cover-branch">
+<div class="qg-branch-row anim-item" data-anim-step="3"><span class="qg-arrow" aria-hidden="true"><svg viewBox="0 0 64 24"><path d="M2 12H56M46 3L57 12L46 21"/></svg></span>
+<figure class="qg-cover-node"><svg class="qg-glyph" style="--accent:var(--green);width:5.8rem;height:5.8rem" viewBox="0 0 100 100" fill="none" stroke="var(--green)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-done"/></svg><figcaption class="copy">다음 작업</figcaption></figure></div>
+<div class="qg-branch-row anim-item" data-anim-step="4"><span class="qg-arrow qg-arrow-back" aria-hidden="true"><svg viewBox="0 0 64 24"><path d="M2 12H56M46 3L57 12L46 21"/></svg></span>
+<figure class="qg-cover-node"><svg class="qg-glyph" style="--accent:var(--orange);width:5.8rem;height:5.8rem" viewBox="0 0 100 100" fill="none" stroke="var(--orange)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-waiting"/></svg><figcaption class="copy">반려·수정</figcaption></figure></div>
+</div>
+</div>
+</div>
+</main>
+<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
+</article>
+<article class="slide compact" data-index="1" data-pattern="TRANSITION_COMPARE">
+<header class="slide__header"><span class="slide__label">Part 5 · Chapter 4 · Ch04-04</span><h1 class="slide__title">완료 확인 <span class="hl">≠</span> 품질 검토</h1><p class="slide__sub">보고를 받는 일과 문서를 기준으로 검사하는 일은 다릅니다.</p></header>
+<main class="slide__body">
+<div class="qg-pair">
+<section class="qg-panel anim-item" data-anim-step="0" style="--accent:var(--gray)">
+<header><h2>완료 확인</h2></header>
+<div class="qg-panel-art"><svg class="icon icon--robot tone-yellow" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><div class="qg-panel-obj"><svg viewBox="0 0 120 80" fill="none" stroke="var(--gray)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 8H110C114 8 116 12 116 16V50C116 54 114 58 110 58H40L22 74V58H10C6 58 4 54 4 50V16C4 12 6 8 10 8Z"/><path d="M26 28H94M26 42H70"/></svg></div></div>
+<p class="copy">워커의 “끝났습니다”를 접수한다</p>
+</section>
+<span class="qg-neq anim-item" data-anim-step="1" aria-hidden="true">≠</span>
+<section class="qg-panel anim-item" data-anim-step="2" style="--accent:var(--yellow)">
+<header><h2>품질 검토</h2></header>
+<div class="qg-panel-art"><svg class="icon icon--robot tone-yellow" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><div class="qg-panel-obj"><svg viewBox="0 0 120 80" fill="none" stroke="var(--yellow)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6H62L80 24V74H18Z" stroke="var(--green)"/><path d="M62 6V24H80" stroke="var(--green)"/><path d="M30 38H56M30 50H48" stroke="var(--green)"/><circle cx="82" cy="50" r="17"/><path d="M95 63L110 76"/></svg></div></div>
+<p class="copy">문서를 열어 내용과 근거를 검사한다</p>
+</section>
+</div>
+<p class="p5-note anim-item" data-anim-step="3">코디네이터는 문서를 검토할 수 있습니다. 다만 매번 정해진 기준으로 검사하도록 요청해야 절차가 됩니다.</p>
+</main>
+<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
+</article>
+<article class="slide compact" data-index="2" data-pattern="TRANSITION_COMPARE">
+<header class="slide__header"><span class="slide__label">Part 5 · Chapter 4 · Ch04-04</span><h1 class="slide__title"><span class="hl tone-brand-text">작업</span> 기준과 <span class="hl tone-yellow-text">품질</span> 기준의 구분</h1><p class="slide__sub">누가 언제 보는 기준인지가 다릅니다.</p></header>
+<main class="slide__body">
+<div class="qg-pair qg-pair-wide">
+<section class="qg-panel anim-item" data-anim-step="0" style="--accent:var(--brand)">
+<header><h2>작업 기준</h2></header>
+<figure class="qg-photo"><img src="/artifacts/part5/_images/ch04-04-quality-gate--creation.png" alt="규칙을 보며 문서를 작성하는 에이전트"></figure>
+<dl class="qg-meta"><div><dt>적용 시점</dt><dd>작업 중</dd></div><div><dt>담당</dt><dd>워커</dd></div></dl>
+</section>
+<section class="qg-panel anim-item" data-anim-step="1" style="--accent:var(--yellow)">
+<header><h2>품질 기준</h2></header>
+<figure class="qg-photo"><img src="/artifacts/part5/_images/ch04-04-quality-gate--verification.png" alt="완성된 문서를 검사표와 대조하는 에이전트"></figure>
+<dl class="qg-meta"><div><dt>적용 시점</dt><dd>작업 후</dd></div><div><dt>담당</dt><dd>코디네이터</dd></div></dl>
+</section>
+</div>
+<p class="p5-note anim-item" data-anim-step="2">각 단계의 결과가 나온 뒤, 다음 작업을 배정하기 전에 검사합니다.</p>
+</main>
+<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
+</article>
+<article class="slide compact" data-index="3" data-pattern="PROCESS_STRIP">
+<header class="slide__header"><span class="slide__label">Part 5 · Chapter 4 · Ch04-04</span><h1 class="slide__title">시장 조사 노트의 <span class="hl">통과 기준</span></h1><p class="slide__sub">문서에 적힌 판단을 출처와 대조할 수 있어야 통과입니다.</p></header>
+<main class="slide__body">
+<div class="p5-steps "><figure class="p5-step anim-item" data-anim-step="0" style="--accent:var(--green)"><div class="qg-quote"><span class="qg-quote-mark">시장 조사 노트</span><p>반려동물 소모품 · <b>트렌드: 상승</b></p></div><figcaption><h2 class="heading">문서에 적힌 판단</h2><p class="copy">검사 대상은 문서의 기재 내용</p></figcaption></figure><span class="p5-step-arrow anim-item" data-anim-step="1" aria-hidden="true"><svg viewBox="0 0 64 24"><path d="M2 12H56M46 3L57 12L46 21"/></svg></span><figure class="p5-step anim-item" data-anim-step="1" style="--accent:var(--purple)"><svg class="qg-glyph" style="--accent:var(--purple);width:7rem;height:7rem" viewBox="0 0 100 100" fill="none" stroke="var(--purple)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-folder"/></svg><figcaption><h2 class="heading">출처 대조</h2><p class="copy">어떤 자료에서 왔는지 확인</p></figcaption></figure><span class="p5-step-arrow anim-item" data-anim-step="2" aria-hidden="true"><svg viewBox="0 0 64 24"><path d="M2 12H56M46 3L57 12L46 21"/></svg></span><figure class="p5-step anim-item" data-anim-step="2" style="--accent:var(--yellow)"><svg class="qg-glyph" style="--accent:var(--yellow);width:7rem;height:7rem" viewBox="0 0 100 100" fill="none" stroke="var(--yellow)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-gate"/></svg><figcaption><h2 class="heading">통과·보완 조건</h2><p class="copy">출처가 있으면 통과, 없으면 보완</p></figcaption></figure></div><p class="p5-note anim-item" data-anim-step="4">시장 판단이 맞다고 검증한 것이 아니라, 문서에 근거가 남아 있는지를 검사합니다.</p>
+</main>
+<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
+</article>
+<article class="slide compact" data-index="4" data-pattern="CAUSE_ROWS">
+<header class="slide__header"><span class="slide__label">Part 5 · Chapter 4 · Ch04-04</span><h1 class="slide__title">작업 기준을 <span class="hl">품질 기준</span>으로</h1><p class="slide__sub">작성할 때 지킨 규칙이 그대로 검사 항목이 됩니다.</p></header>
+<main class="slide__body">
+<div class="qg-rows">
+<div class="qg-rows-head anim-item" data-anim-step="0"><span>작성 규칙</span><span>결과에서 대조할 내용</span></div>
+<div class="qg-row anim-item" data-anim-step="1" style="--accent:var(--brand)"><p class="qg-row-left">출처를 기록한다</p><span class="qg-row-line" aria-hidden="true"><i></i></span><p class="qg-row-right">주장과 출처가 이어지는가</p></div>
+<div class="qg-row anim-item" data-anim-step="2" style="--accent:var(--brand)"><p class="qg-row-left">선정 기준으로 비교한다</p><span class="qg-row-line" aria-hidden="true"><i></i></span><p class="qg-row-right">추천이 기준을 따랐는가</p></div>
+<div class="qg-row anim-item" data-anim-step="3" style="--accent:var(--brand)"><p class="qg-row-left">앞 문서의 원문을 반영한다</p><span class="qg-row-line" aria-hidden="true"><i></i></span><p class="qg-row-right">기획서가 앞 결론과 같은가</p></div>
+</div>
+</main>
+<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
+</article>
+<article class="slide compact" data-index="5" data-pattern="SEMINAR_IO_FLOW">
+<header class="slide__header"><span class="slide__label">Part 5 · Chapter 4 · Ch04-04</span><h1 class="slide__title">시장 조사 노트의 <span class="hl">근거</span></h1><p class="slide__sub">문서의 주장과 수치를 출처 자료와 나란히 놓습니다.</p></header>
+<main class="slide__body">
+<div class="flow-canvas flow-horizontal qg-inspect" data-direction="horizontal">
+<svg class="flow-connections" aria-hidden="true">
+<path data-from="in0" data-to="co" class="edge-input"/><path data-from="in1" data-to="co" class="edge-input"/>
+<path data-from="co" data-to="out" class="edge-output"/>
+</svg>
+<section class="flow-stage stage-input"><h2 class="flow-heading">대조할 것</h2><div class="flow-items"><div class="flow-artifact shape-paper tone-input anim-item" data-anim-step="0" data-node="in0"><div class="artifact-chrome"><span class="artifact-mark">문서</span><span>검사 대상</span></div><h2 class="artifact-title">시장 조사 노트</h2><div class="artifact-decoration" aria-hidden="true"><span class="paper-fold"></span><div class="paper-rules"><i></i><i></i><i></i></div></div></div><div class="flow-artifact shape-paper tone-input anim-item" data-anim-step="0" data-node="in1"><div class="artifact-chrome"><span class="artifact-mark">자료</span><span>대조 자료</span></div><h2 class="artifact-title">출처 원문</h2><div class="artifact-decoration" aria-hidden="true"><span class="paper-fold"></span><div class="paper-rules"><i></i><i></i><i></i></div></div></div></div></section>
+<section class="flow-stage stage-ai"><h2 class="flow-heading">코디네이터</h2><div class="flow-items">
+<figure class="qg-inspector anim-item" data-anim-step="1" data-node="co"><svg class="icon icon--robot tone-yellow" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg>
+<figcaption class="copy">기준으로 검사</figcaption></figure>
+</div></section>
+<section class="flow-stage stage-output"><h2 class="flow-heading">확인 항목</h2><div class="flow-items">
+<ul class="qg-verdict anim-item" data-anim-step="2" data-node="out"><li>주장에 출처가 달려 있는가</li><li>판매가·비용에 근거가 있는가</li><li>추정과 확인된 사실을 구분했는가</li></ul>
+</div></section>
+</div>
+<p class="p5-note anim-item" data-anim-step="3">근거가 없으면 그 항목을 보완하게 하고, 조사를 처음부터 다시 시키지 않습니다.</p>
+</main>
+<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
+</article>
+<article class="slide compact" data-index="6" data-pattern="SEMINAR_IO_FLOW">
+<header class="slide__header"><span class="slide__label">Part 5 · Chapter 4 · Ch04-04</span><h1 class="slide__title">아이템 후보 비교표의 <span class="hl">선정 근거</span></h1><p class="slide__sub">추천 품목이 사업 조건과 선정 기준을 따랐는지 봅니다.</p></header>
+<main class="slide__body">
+<div class="flow-canvas flow-horizontal qg-inspect" data-direction="horizontal">
+<svg class="flow-connections" aria-hidden="true">
+<path data-from="in0" data-to="co" class="edge-input"/><path data-from="in1" data-to="co" class="edge-input"/>
+<path data-from="co" data-to="out" class="edge-output"/>
+</svg>
+<section class="flow-stage stage-input"><h2 class="flow-heading">대조할 것</h2><div class="flow-items"><div class="flow-artifact shape-paper tone-input anim-item" data-anim-step="0" data-node="in0"><div class="artifact-chrome"><span class="artifact-mark">문서</span><span>검사 대상</span></div><h2 class="artifact-title">아이템 후보 비교표</h2><div class="artifact-decoration" aria-hidden="true"><span class="paper-fold"></span><div class="paper-rules"><i></i><i></i><i></i></div></div></div><div class="flow-artifact shape-paper tone-input anim-item" data-anim-step="0" data-node="in1"><div class="artifact-chrome"><span class="artifact-mark">기준</span><span>대조 자료</span></div><h2 class="artifact-title">사업 조건 · 선정 기준</h2><div class="artifact-decoration" aria-hidden="true"><span class="paper-fold"></span><div class="paper-rules"><i></i><i></i><i></i></div></div></div></div></section>
+<section class="flow-stage stage-ai"><h2 class="flow-heading">코디네이터</h2><div class="flow-items">
+<figure class="qg-inspector anim-item" data-anim-step="1" data-node="co"><svg class="icon icon--robot tone-yellow" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg>
+<figcaption class="copy">기준으로 검사</figcaption></figure>
+</div></section>
+<section class="flow-stage stage-output"><h2 class="flow-heading">확인 항목</h2><div class="flow-items">
+<ul class="qg-verdict anim-item" data-anim-step="2" data-node="out"><li>점수마다 근거가 있는가</li><li>총점 계산이 맞는가</li><li>제외 조건을 지켰는가</li></ul>
+</div></section>
+</div>
+<p class="p5-note anim-item" data-anim-step="3">점수가 높다고 통과가 아니라, 기준을 따랐는지가 통과 조건입니다.</p>
+</main>
+<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
+</article>
+<article class="slide compact" data-index="7" data-pattern="SEMINAR_IO_FLOW">
+<header class="slide__header"><span class="slide__label">Part 5 · Chapter 4 · Ch04-04</span><h1 class="slide__title">판매 아이템 기획서의 <span class="hl">일관성</span></h1><p class="slide__sub">앞 문서의 결론이 기획서에서 그대로 이어지는지 봅니다.</p></header>
+<main class="slide__body">
+<div class="flow-canvas flow-horizontal qg-inspect" data-direction="horizontal">
+<svg class="flow-connections" aria-hidden="true">
+<path data-from="in0" data-to="co" class="edge-input"/><path data-from="in1" data-to="co" class="edge-input"/>
+<path data-from="co" data-to="out" class="edge-output"/>
+</svg>
+<section class="flow-stage stage-input"><h2 class="flow-heading">대조할 것</h2><div class="flow-items"><div class="flow-artifact shape-paper tone-input anim-item" data-anim-step="0" data-node="in0"><div class="artifact-chrome"><span class="artifact-mark">문서</span><span>검사 대상</span></div><h2 class="artifact-title">판매 아이템 기획서</h2><div class="artifact-decoration" aria-hidden="true"><span class="paper-fold"></span><div class="paper-rules"><i></i><i></i><i></i></div></div></div><div class="flow-artifact shape-paper tone-input anim-item" data-anim-step="0" data-node="in1"><div class="artifact-chrome"><span class="artifact-mark">자료</span><span>대조 자료</span></div><h2 class="artifact-title">앞 두 문서</h2><div class="artifact-decoration" aria-hidden="true"><span class="paper-fold"></span><div class="paper-rules"><i></i><i></i><i></i></div></div></div></div></section>
+<section class="flow-stage stage-ai"><h2 class="flow-heading">코디네이터</h2><div class="flow-items">
+<figure class="qg-inspector anim-item" data-anim-step="1" data-node="co"><svg class="icon icon--robot tone-yellow" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg>
+<figcaption class="copy">기준으로 검사</figcaption></figure>
+</div></section>
+<section class="flow-stage stage-output"><h2 class="flow-heading">확인 항목</h2><div class="flow-items">
+<ul class="qg-verdict anim-item" data-anim-step="2" data-node="out"><li>추천 품목이 비교표와 같은가</li><li>점수와 근거가 같은가</li><li>예산 합계가 사업 조건 이하인가</li></ul>
+</div></section>
+</div>
+<p class="p5-note anim-item" data-anim-step="3">앞 문서와 다른 결론이 나왔다면 근거가 어디서 바뀌었는지부터 확인합니다.</p>
+</main>
+<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
+</article>
+<article class="slide compact" data-index="8" data-pattern="GOAL_ACCEPTANCE">
+<header class="slide__header"><span class="slide__label">Part 5 · Chapter 4 · Ch04-04</span><h1 class="slide__title">일부 충족 <span class="hl">≠</span> 전체 통과</h1><p class="slide__sub">항목 하나가 기준에 못 미치면 문서는 반려됩니다.</p></header>
+<main class="slide__body">
+<div class="qg-gatecheck">
+<div class="qg-checklist">
+<h2 class="heading">판매 아이템 기획서 · 예산</h2>
+<ul>
+<li class="anim-item" data-anim-step="0"><span class="qg-check"><svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13L10 19L20 5"/></svg></span>항목마다 근거가 있다</li>
+<li class="anim-item" data-anim-step="1"><span class="qg-check"><svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13L10 19L20 5"/></svg></span>합계 계산이 맞다</li>
+<li class="anim-item" data-anim-step="2"><span class="qg-check"><svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13L10 19L20 5"/></svg></span>항목 이름이 양식과 같다</li>
+<li class="anim-item qg-fail" data-anim-step="3"><span class="qg-check"><svg viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5L19 19M19 5L5 19"/></svg></span>합계가 사업 조건의 예산 한도 이하다</li>
+</ul>
+</div>
+<span class="qg-arrow anim-item" data-anim-step="4" aria-hidden="true"><svg viewBox="0 0 64 24"><path d="M2 12H56M46 3L57 12L46 21"/></svg></span>
+<figure class="qg-result anim-item" data-anim-step="4"><svg class="qg-glyph" style="--accent:var(--orange);width:7rem;height:7rem" viewBox="0 0 100 100" fill="none" stroke="var(--orange)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-waiting"/></svg>
+<figcaption><h2 class="heading">반려</h2><p class="copy">담당 워커에게 수정 요청</p></figcaption></figure>
+</div>
+<p class="p5-note anim-item" data-anim-step="5">세 항목이 통과해도 한 항목이 남으면 다음 작업으로 넘기지 않습니다.</p>
+</main>
+<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
+</article>
+<article class="slide compact" data-index="9" data-pattern="REVIEW_LOOP">
+<header class="slide__header"><span class="slide__label">Part 5 · Chapter 4 · Ch04-04</span><h1 class="slide__title">반려 뒤에도 <span class="hl">규칙</span>이 필요</h1><p class="slide__sub">누가 고치고 무엇을 다시 검사할지까지 정해둡니다.</p></header>
+<main class="slide__body">
+<div class="qg-loop">
+<div class="qg-loop-row">
+<figure class="qg-loop-actor anim-item" data-anim-step="0" style="--accent:var(--brand)"><svg class="icon icon--robot tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg>
+<figcaption><h2 class="heading">시장조사 담당</h2></figcaption></figure>
+<span class="qg-arrow anim-item" data-anim-step="1" aria-hidden="true"><svg viewBox="0 0 64 24"><path d="M2 12H56M46 3L57 12L46 21"/></svg></span>
+<figure class="qg-loop-actor anim-item" data-anim-step="1" style="--accent:var(--yellow)"><svg class="icon icon--robot tone-yellow" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg>
+<figcaption><h2 class="heading">코디네이터 검사</h2></figcaption></figure>
+<span class="qg-arrow anim-item" data-anim-step="2" aria-hidden="true"><svg viewBox="0 0 64 24"><path d="M2 12H56M46 3L57 12L46 21"/></svg></span>
+<figure class="qg-loop-actor anim-item" data-anim-step="2" style="--accent:var(--green)"><svg class="qg-glyph" style="--accent:var(--green);width:6rem;height:6rem" viewBox="0 0 100 100" fill="none" stroke="var(--green)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-done"/></svg>
+<figcaption><h2 class="heading">통과</h2><p class="copy">후보 도출 담당 배정</p></figcaption></figure>
+</div>
+<div class="qg-loop-return anim-item" data-anim-step="3">
+<svg viewBox="0 0 900 60" aria-hidden="true"><path d="M560 6V40H60V28M48 40L60 24L72 40"/></svg>
+<span>반려 항목·근거 전달 → 담당 워커 수정 → 전체 기준 재검사</span>
+</div>
+</div>
+<p class="p5-note anim-item" data-anim-step="4">통과한 경우에만 다음 작업을 배정합니다.</p>
+</main>
+<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
+</article>
+<article class="slide compact" data-index="10" data-pattern="SEMINAR_DEPENDENCY_CHAIN">
+<header class="slide__header"><span class="slide__label">Part 5 · Chapter 4 · Ch04-04</span><h1 class="slide__title">바뀐 근거는 <span class="hl">다시 연결</span></h1><p class="slide__sub">앞 문서가 바뀌면 영향받는 뒤 문서를 다시 검사합니다.</p></header>
+<main class="slide__body">
+<div class="qg-chain">
+<figure class="qg-chain-doc anim-item" data-anim-step="0" style="--accent:var(--orange)"><svg class="qg-glyph" style="--accent:var(--orange);width:7.6rem;height:7.6rem" viewBox="0 0 100 100" fill="none" stroke="var(--orange)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><figcaption><h2 class="heading">시장 조사 노트</h2><p class="copy">조사 내용 변경</p></figcaption></figure>
+<span class="qg-arrow anim-item" data-anim-step="1" aria-hidden="true"><svg viewBox="0 0 64 24"><path d="M2 12H56M46 3L57 12L46 21"/></svg></span>
+<figure class="qg-chain-doc anim-item" data-anim-step="1" style="--accent:var(--yellow)"><svg class="qg-glyph" style="--accent:var(--yellow);width:7.6rem;height:7.6rem" viewBox="0 0 100 100" fill="none" stroke="var(--yellow)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><figcaption><h2 class="heading">아이템 후보 비교표</h2><p class="copy">선정 결론 재검토</p></figcaption></figure>
+<span class="qg-arrow anim-item" data-anim-step="2" aria-hidden="true"><svg viewBox="0 0 64 24"><path d="M2 12H56M46 3L57 12L46 21"/></svg></span>
+<figure class="qg-chain-doc anim-item" data-anim-step="2" style="--accent:var(--yellow)"><svg class="qg-glyph" style="--accent:var(--yellow);width:7.6rem;height:7.6rem" viewBox="0 0 100 100" fill="none" stroke="var(--yellow)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><figcaption><h2 class="heading">판매 아이템 기획서</h2><p class="copy">영향 확인</p></figcaption></figure>
+</div>
+<p class="p5-note anim-item" data-anim-step="3">영향받는 문서를 순서대로 수정하고 다시 검사합니다.</p>
+</main>
+<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
+</article>
+<article class="slide compact" data-index="11" data-pattern="OPEN_TRIPTYCH">
+<header class="slide__header"><span class="slide__label">Part 5 · Chapter 4 · Ch04-04</span><h1 class="slide__title">사람의 판단이 <span class="hl">필요할 때</span></h1><p class="slide__sub">에이전트가 정할 수 없는 조건은 멈추고 물어보게 합니다.</p></header>
+<main class="slide__body">
+<div class="qg-stops">
+<figure class="qg-stop anim-item" data-anim-step="0"><svg class="qg-glyph" style="--accent:var(--orange);width:5.4rem;height:5.4rem" viewBox="0 0 100 100" fill="none" stroke="var(--orange)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-waiting"/></svg><figcaption><h2 class="heading">수정 한도 도달</h2><p class="copy">같은 항목을 고쳐도 통과하지 못할 때</p></figcaption></figure>
+<figure class="qg-stop anim-item" data-anim-step="1"><svg class="qg-glyph" style="--accent:var(--orange);width:5.4rem;height:5.4rem" viewBox="0 0 100 100" fill="none" stroke="var(--orange)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-waiting"/></svg><figcaption><h2 class="heading">조건이 필요할 때</h2><p class="copy">예산·운영 방식 같은 사업 조건을 바꿔야 할 때</p></figcaption></figure>
+<figure class="qg-stop anim-item" data-anim-step="2"><svg class="qg-glyph" style="--accent:var(--orange);width:5.4rem;height:5.4rem" viewBox="0 0 100 100" fill="none" stroke="var(--orange)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-waiting"/></svg><figcaption><h2 class="heading">자료가 없을 때</h2><p class="copy">확인할 출처를 사람이 줘야 할 때</p></figcaption></figure>
+</div>
+<p class="p5-note anim-item" data-anim-step="3">멈추고 질문하는 것도 규칙으로 함께 요청합니다.</p>
+</main>
+<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
+</article>
+    </div>
     <script>
       // file:// 로 열었을 때만 경로를 보정한다. 정식 덱과 같은 코드다 —
       // 이 템플릿을 복사해 만든 덱이 그대로 동작해야 한다. HTTP 경로에는 개입하지 않는다.
@@ -927,10 +1501,103 @@ document.querySelectorAll('.tx-time-car').forEach(car=>{
  const root=car.closest('.tx-time');const run=e=>{e.preventDefault();e.stopPropagation();root.classList.remove('is-running');void root.offsetWidth;root.classList.add('is-running');};
  car.addEventListener('pointerdown',e=>e.preventDefault());car.addEventListener('click',run);car.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')run(e);});
 });
+
+/* ── 무료 세미나 참고 덱에서 이식한 도식 계산 (패턴 29~35) ──
+   flow-canvas · orch-scene · reference-serial-map · dependency-map 의 연결선은
+   실제 요소 위치를 재서 SVG path 로 그린다. 슬라이드 진입·리사이즈마다 다시 계산한다. */
+function drawFlow(){
+ const canvas=document.querySelector('.slide.active .flow-canvas');if(!canvas)return;
+ const area=canvas.getBoundingClientRect(),vertical=canvas.dataset.direction==='vertical';
+ const svg=canvas.querySelector('.flow-connections');svg.setAttribute('viewBox',`0 0 ${area.width} ${area.height}`);
+ for(const path of svg.querySelectorAll('[data-from]')){
+  const a=canvas.querySelector(`[data-node="${path.dataset.from}"]`).getBoundingClientRect(),b=canvas.querySelector(`[data-node="${path.dataset.to}"]`).getBoundingClientRect();
+  let x1,y1,x2,y2,route,head;const gap=vertical?Math.min(10,Math.max(3,(b.top-a.bottom)/5)):10,wing=Math.min(5,Math.max(3,gap));
+  if(vertical){x1=(a.left+a.right)/2-area.left;y1=a.bottom-area.top+gap;x2=(b.left+b.right)/2-area.left;y2=b.top-area.top-gap;const mid=(y1+y2)/2;route=`M${x1} ${y1}V${mid}H${x2}V${y2}`;head=`M${x2-wing} ${y2-wing}L${x2} ${y2}L${x2+wing} ${y2-wing}`}
+  else{x1=a.right-area.left+gap;y1=(a.top+a.bottom)/2-area.top;x2=b.left-area.left-gap;y2=(b.top+b.bottom)/2-area.top;const mid=(x1+x2)/2;route=`M${x1} ${y1}H${mid}V${y2}H${x2}`;head=`M${x2-wing} ${y2-wing}L${x2} ${y2}L${x2-wing} ${y2+wing}`}
+  path.setAttribute('d',route+head);path.dataset.start=`${x1},${y1}`;path.dataset.end=`${x2},${y2}`;
+ }
+}
+
+function drawOrchestration(){document.querySelectorAll('.slide.active .orch-scene').forEach(scene=>{const box=scene.getBoundingClientRect();const svg=scene.querySelector('.orch-wires');if(!box.width||!svg)return;svg.setAttribute('viewBox',`0 0 ${box.width} ${box.height}`);svg.querySelectorAll('path[data-start]').forEach(path=>{const a=scene.querySelector(`[data-orch-node="${path.dataset.start}"]`).getBoundingClientRect(),b=scene.querySelector(`[data-orch-node="${path.dataset.end}"]`).getBoundingClientRect();let x1,y1,x2,y2,d,vertical=path.dataset.axis==='vertical';if(vertical){x1=a.x+a.width/2-box.x;y1=a.bottom-box.y+5;x2=b.x+b.width/2-box.x;y2=b.top-box.y-8;let mid=y1+(y2-y1)*.45;d=`M${x1} ${y1}V${mid}H${x2}V${y2}m-5 -7l5 7 5 -7`;}else if(path.dataset.axis==='sample'){x1=a.right-box.x+6;y1=a.y+a.height/2-box.y;x2=b.x+b.width/2-box.x;y2=b.bottom-box.y+7;d=`M${x1} ${y1}H${x2}V${y2}m-5 7l5 -7 5 7`;}else{x1=a.right-box.x+7;y1=a.y+a.height/2-box.y;x2=b.left-box.x-8;y2=b.y+b.height/2-box.y;d=`M${x1} ${y1}H${(x1+x2)/2}V${y2}H${x2}m-7 -5l7 5 -7 5`;}path.setAttribute('d',d);});});}
+
+function drawReferenceSerial(){
+ const map=document.querySelector('.slide.active .reference-serial-map');if(!map)return;
+ const r=map.getBoundingClientRect();if(!r.width||!r.height)return;
+ const svg=map.querySelector('.ref-wires');svg.setAttribute('viewBox',`0 0 ${r.width} ${r.height}`);
+ const box=cls=>{const icon=map.querySelector(cls+' .icon');if(!icon)return null;const b=icon.getBoundingClientRect();return {left:b.left-r.left,right:b.right-r.left,top:b.top-r.top,bottom:b.bottom-r.top,cx:(b.left+b.right)/2-r.left,cy:(b.top+b.bottom)/2-r.top}};
+ const human=box('.ref-person'),co=box('.ref-coordinator'),a=box('.ref-worker-a'),b=box('.ref-worker-b'),gap=innerHeight<850?16:24;
+ const set=(name,d)=>{const path=map.querySelector(`[data-route="${name}"]`);if(path)path.setAttribute('d',d)};
+ const head=(x,y,axis)=>axis==='right'?`M${x-7} ${y-5}L${x} ${y}L${x-7} ${y+5}`:axis==='left'?`M${x+7} ${y-5}L${x} ${y}L${x+7} ${y+5}`:axis==='up'?`M${x-5} ${y+7}L${x} ${y}L${x+5} ${y+7}`:`M${x-5} ${y-7}L${x} ${y}L${x+5} ${y-7}`;
+ const x1=human.right+gap,x2=co.left-gap,y=co.cy;
+ set('goal',`M${x1} ${y-20}H${x2}`+head(x2,y-20,'right'));
+ set('result',`M${x2} ${y+20}H${x1}`+head(x1,y+20,'left'));
+ const parallel=map.dataset.mode==='parallel';
+ const workers=parallel?[['a',a,-38],['b',b,0],['c',box('.ref-worker-c'),38]]:[['a',a,-26],['b',b,26]];
+ for(const[id,worker,lane]of workers){
+  if(!worker)continue;
+  const sx=co.cx+lane,sy=co.bottom+gap,ex=worker.cx-9,ey=worker.top-gap,mid=(sy+ey)/2;
+  set('assign-'+id,`M${sx} ${sy}C${sx} ${mid},${ex} ${mid},${ex} ${ey}`+head(ex,ey,'down'));
+  set('report-'+id,`M${ex+18} ${ey}C${ex+18} ${mid+16},${sx+18} ${mid+16},${sx+18} ${sy}`+head(sx+18,sy,'up'));
+ }
+ const labels=[['.ref-goal',(x1+x2)/2,y-45],['.ref-result-label',(x1+x2)/2,y+45]];
+ if(!parallel&&b){
+  const qx=a.right+gap,rx=b.left-gap,qy=a.cy;
+  set('sequence',`M${qx} ${qy}H${rx}`+head(rx,qy,'right'));
+  labels.push(['.ref-sequence-label',(qx+rx)/2,qy+32]);
+ }
+ for(const[cls,x,ly]of labels){const label=map.querySelector(cls);if(label){label.style.left=x+'px';label.style.top=ly+'px'}}
+}
+
+function drawDependencies(){
+ /* 산출물 의존 지도. 노드 순서는 DOM 순서이고, 선은 아래 규칙으로 그린다.
+    data-dependency-mode="serial"   앞 노드 → 다음 노드로 차례로 잇는다 (선 개수 = 노드 수 - 1)
+    data-dependency-mode="parallel" 첫 노드에서 줄기를 내리고 나머지 노드로 갈라진다 (선 = 줄기 1 + 대상 수) */
+ document.querySelectorAll('.slide.active .dependency-map').forEach(map=>{
+  const r=map.getBoundingClientRect();if(!r.width||!r.height)return;
+  const wires=map.querySelector('.dependency-wires');if(!wires)return;
+  wires.setAttribute('viewBox',`0 0 ${r.width} ${r.height}`);
+  const nodes=[...map.querySelectorAll('[data-dependency-node]')];
+  const paths=[...wires.querySelectorAll('path')];
+  if(nodes.length<2||!paths.length)return;
+  const box=node=>{const el=node.querySelector('.dependency-symbol svg')||node;const b=el.getBoundingClientRect();
+   return {x:(b.left+b.right)/2-r.left,y:(b.top+b.bottom)/2-r.top,left:b.left-r.left,right:b.right-r.left,top:b.top-r.top,bottom:b.bottom-r.top}};
+  const arrow=(x,y,dir)=>dir==='right'?`M${x-9} ${y-6}L${x} ${y}L${x-9} ${y+6}`:`M${x-6} ${y-9}L${x} ${y}L${x+6} ${y-9}`;
+  if(map.dataset.dependencyMode==='parallel'){
+   const source=box(nodes[0]),targets=nodes.slice(1).map(box);
+   const end=Math.min(...targets.map(t=>t.top))-16;
+   const caption=nodes[0].querySelector('figcaption');
+   const start=(caption?caption.getBoundingClientRect().bottom-r.top:source.bottom)+16;
+   const fork=start+(end-start)*0.45;
+   if(paths[0])paths[0].setAttribute('d',`M${source.x} ${start}V${fork}`);
+   targets.forEach((t,n)=>{const path=paths[n+1];if(path)path.setAttribute('d',`M${source.x} ${fork}H${t.x}V${end}`+arrow(t.x,end,'down'));});
+  }else{
+   for(let n=0;n<nodes.length-1;n++){
+    const path=paths[n];if(!path)continue;
+    const a=box(nodes[n]),b=box(nodes[n+1]),sx=a.right+12,ex=b.left-12,mid=(sx+ex)/2;
+    path.setAttribute('d',`M${sx} ${a.y}C${mid} ${a.y},${mid} ${b.y},${ex} ${b.y}`+arrow(ex,b.y,'right'));
+   }
+  }
+ });
+}
+
+function drawSeminarDiagrams(){ drawFlow(); drawOrchestration(); drawReferenceSerial(); drawDependencies(); }
+/* 등장 애니메이션 중에는 요소가 움직이므로, 각 항목의 애니메이션이 끝날 때마다 선을 다시 그린다. */
+document.addEventListener('animationend',event=>{
+ if(event.target.closest && event.target.closest('.slide.active')) requestAnimationFrame(drawSeminarDiagrams);
+},true);
+const seminarDeckRoot=document.querySelector('.slide-deck');
+if(seminarDeckRoot){
+ const seminarObserver=new ResizeObserver(()=>requestAnimationFrame(drawSeminarDiagrams));
+ seminarObserver.observe(seminarDeckRoot);
+ window.addEventListener('resize',drawSeminarDiagrams);
+ document.fonts.ready.then(drawSeminarDiagrams);
+}
+
 function resetPatternInteractions(slide){
  slide.querySelectorAll('.tx-time').forEach(e=>e.classList.remove('is-running'));
  slide.querySelectorAll('.tx-switch').forEach(e=>selectPatternPanel(e,e.dataset.defaultPanel));
  requestAnimationFrame(drawPatternConnections);
+ requestAnimationFrame(drawSeminarDiagrams);
 }
 
       class SlidePresentation {
@@ -1053,31 +1720,6 @@ function resetPatternInteractions(slide){
           });
         }
       }
-
-      function drawQualityCover(){
-        const g=document.querySelector('.qg-cover-graph');if(!g)return;
-        const r=g.getBoundingClientRect();if(!r.width)return;
-        const svg=g.querySelector('.qg-cover-wires');svg.setAttribute('viewBox',`0 0 ${r.width} ${r.height}`);
-        const get=c=>{const n=g.querySelector(c),a=n.querySelector('svg').getBoundingClientRect(),b=n.getBoundingClientRect();return {x:a.x-r.x+a.width/2,y:a.y-r.y+a.height/2,w:a.width,b:b.bottom-r.top}};
-        const a=get('.qg-cover-doc'),b=get('.qg-cover-check'),c=get('.qg-cover-pass'),p=svg.querySelectorAll('path');
-        p[0].setAttribute('d',`M${a.x+a.w*.35+8} ${a.y}H${b.x-b.w*.45-10}`);
-        p[1].setAttribute('d',`M${b.x+b.w*.45+10} ${b.y}H${c.x-c.w*.4-10}`);
-        p[2].setAttribute('d',`M${b.x} ${b.b+10}V${r.height*.80}H${a.x}V${a.b+10}`);
-      }
-      document.fonts.ready.then(drawQualityCover);new ResizeObserver(drawQualityCover).observe(document.querySelector('.qg-cover-graph'));
-
-      function drawP5(){document.querySelectorAll('.p5-team').forEach(g=>{let rect=g.getBoundingClientRect(),svg=g.querySelector('svg.p5-team-wires');if(!rect.width||!svg)return;svg.setAttribute('viewBox',`0 0 ${rect.width} ${rect.height}`);const a=id=>{const r=g.querySelector(`[data-node="${id}"] .p5-icon`).getBoundingClientRect();return {x:r.x-rect.x+r.width/2,y:r.y-rect.y+r.height*.46,w:r.width,h:r.height}};svg.querySelectorAll('path[data-from]').forEach(p=>{const f=a(p.dataset.from),t=a(p.dataset.to),o=+(p.dataset.offset||0),sg=t.x>=f.x?1:-1;let d;if(p.dataset.route==='tree'){const x=f.x,y=g.querySelector(`[data-node="${p.dataset.from}"]`).getBoundingClientRect().bottom-rect.top+10,tx=t.x,ty=t.y-t.h*.4-10,my=(y+ty)/2;d=`M${x} ${y}V${my}H${tx}V${ty}`}else{const x=f.x+sg*(f.w*.4+12),y=f.y+o,tx=t.x-sg*(t.w*.4+12),ty=t.y+o;d=`M${x} ${y}C${(x+tx)/2} ${y} ${(x+tx)/2} ${ty} ${tx} ${ty}`}p.setAttribute('d',d)});});}
-      const p5Observer=new ResizeObserver(()=>requestAnimationFrame(drawP5));document.querySelectorAll('.p5-team').forEach(g=>p5Observer.observe(g));document.fonts.ready.then(drawP5);window.addEventListener('resize',drawP5);requestAnimationFrame(drawP5);
-
-      function drawQualityVisuals(){document.querySelectorAll('.qg-v-scene').forEach(g=>{
-        const r=g.getBoundingClientRect(),svg=g.querySelector('.qg-v-wires');if(!r.width||!svg)return;
-        svg.setAttribute('viewBox',`0 0 ${r.width} ${r.height}`);
-        const anchor=id=>{const n=g.querySelector(`[data-v-anchor="${id}"]`),art=n.querySelector('.p5-icon')||n,a=art.getBoundingClientRect(),nr=n.getBoundingClientRect();return {x:a.x-r.x+a.width/2,y:a.y-r.y+a.height/2,w:a.width,b:nr.bottom-r.top}};
-        svg.querySelectorAll('[data-v-from]').forEach(p=>{let a=anchor(p.dataset.vFrom),b=anchor(p.dataset.vTo),x=a.x+a.w/2+16,tx=b.x-b.w/2-16,m=(x+tx)/2;p.setAttribute('d',`M${x} ${a.y}C${m} ${a.y} ${m} ${b.y} ${tx} ${b.y}`)});
-        let back=svg.querySelector('[data-v-return]');if(back){let a=anchor('coordinator'),b=anchor('author'),bottom=r.height-65;back.setAttribute('d',`M${a.x} ${a.b+28}V${bottom}H${b.x}V${b.b+28}`)}
-      });}
-      document.fonts.ready.then(drawQualityVisuals);document.querySelectorAll('.qg-v-scene').forEach(g=>new ResizeObserver(drawQualityVisuals).observe(g));window.addEventListener('resize',drawQualityVisuals);
-
       new SlidePresentation();
     </script>
   </body>

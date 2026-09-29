@@ -30,4 +30,4 @@
 
 ## Part 5 확정
 
-- [4가지 협업 패턴과 프로젝트 미리보기](part5/outputs/ch01-01-collaboration-patterns.html) — 14장. 슬라이드·대본 사용자 승인 완료.
+- [4가지 협업 패턴과 프로젝트 미리보기](part5/outputs/ch01-01-collaboration-patterns.html) — 13장. 슬라이드·대본 사용자 승인 완료.

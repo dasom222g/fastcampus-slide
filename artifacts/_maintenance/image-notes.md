@@ -128,3 +128,41 @@ VERIFICATION ROLE: taller white robot with a distinctly squarer head, yellow #f7
 ## 육안 확인
 
 작성 장면에는 규칙책·연필·작성 중 문서, 검증 장면에는 돋보기·검사표·완성 문서가 식별된다. 두 역할의 도구·자세·색이 다르며 이미지에 한글 라벨이나 단계 연결이 없다. 라벨은 HTML로 표시한다.
+
+
+## artifacts/part5/_images/ — 2026-09-25 생성 (codex, orca-cli 요청)
+
+기준 스타일은 `ch01-01-collaboration-patterns--cover-team-transparent.png`다 — 흰 둥근 로봇(검은 바이저·빨간 라이트), 갈색 머리에 흰 셔츠를 입은 사람, 검은 윤곽선, 절제된 2.5D 셰이딩, 배경 `#0d1117`, 1536×1024, 글자·화살표·로고 없음.
+
+| 파일 | 장면 | 쓰는 곳 |
+|---|---|---|
+| `ch01-02--context-loss.png` | 사람이 조건이 적힌 문서를 두고 자리를 뜨고, 에이전트는 그 문서를 보지 못한 채 다른 서류로 작업한다. 빠진 조건은 바닥에 떨어져 있다 | Ch01-02 3장 왼쪽(문제) |
+| `ch01-02--ghost-delegation.png` | 에이전트가 완료를 보고하는데 옆 서류함이 비어 있다 | Ch01-02 5장 왼쪽(문제) |
+| `ch01-02--verification-error.png` | 두 에이전트가 같은 문서를 보며 수긍하지만 숫자가 어긋나 있다 | Ch01-02 6장 왼쪽(문제) |
+| `ch02-01--planning-team-cover.png` | 사람이 기준 보드를 가리키고 에이전트 셋이 문서를 차례로 넘긴다 | Ch02-01 표지 |
+
+문제 장면은 생성 이미지, 기준·구조는 SVG로 그린다는 시각 정책에 따라 비교 패널의 왼쪽에만 장면 이미지를 쓴다.
+
+
+## artifacts/part7/_images/ — 2026-09-25
+
+| 파일 | 종류 | 장면·출처 | 쓰는 곳 |
+|---|---|---|---|
+| `ch01-01--parallel-desks.png` | 생성 (codex) | 사람이 의뢰서를 들고, 좌우로 분리된 두 책상에서 에이전트 둘이 각자 화면을 만든다 | Ch01-01 표지 |
+| `ch02-01--two-drafts.png` | 생성 (codex) | 에이전트 둘이 구성이 다른 시안 보드를 들어 보이고 사람이 비교한다 | Ch02-01 표지 |
+| `ch02-01--draft-claude.png` | 화면 캡처 | `project3-blackfriday-landing/final/landing-claude.html`, 1440×900·100% | Ch02-01 2장 / Ch01-01 9장 |
+| `ch02-01--draft-codex.png` | 화면 캡처 | `project3-blackfriday-landing/final/landing-codex.html`, 1440×900·100% | Ch02-01 2장 |
+
+생성 이미지는 Part 5와 같은 스타일 기준(흰 둥근 로봇·갈색 머리 사람·#0d1117·글자 없음)으로 요청했다. 두 캡처는 실제 실행 결과이며 어느 하네스가 낫다는 판단에 쓰지 않는다.
+
+
+## artifacts/part6/_images/ — 2026-09-25
+
+| 파일 | 종류 | 장면·출처 | 쓰는 곳 |
+|---|---|---|---|
+| `ch01-01--generator-evaluator.png` | 생성 (codex) | 왼쪽 로봇은 제안서를 쓰고, 오른쪽 로봇은 체크리스트·돋보기·계산기로 검사한다 | Ch01-01 표지 |
+| `ch01-02--sales-team.png` | 생성 (codex) | 광고주가 의뢰서를 건네고 대행사 담당자를 거쳐 작성·검사 로봇으로 이어진다 | Ch01-02 표지 |
+| `ch01-02--proposal-quote-final.png` | 화면 캡처 | `project2-ads-proposal/final/proposal-quote-final.html`, 1440×900 | Ch01-02 8장 |
+| `ch01-02--cross-review-report.png` | 화면 캡처 | `project2-ads-proposal/final/cross-review-report.html`, 1440×900 | Ch01-01 8장 / Ch01-02 8장 |
+
+캡처의 라운드 수·항목 수는 실제 실행 기록이며 목표치로 제시하지 않는다.
