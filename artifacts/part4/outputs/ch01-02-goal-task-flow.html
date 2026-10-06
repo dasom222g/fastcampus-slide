@@ -271,35 +271,6 @@
         background: var(--brand);
         transition: width 0.3s ease;
       }
-      .nav-btn {
-        position: fixed;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 150;
-        width: clamp(1.9rem, 2.8vw, 2.5rem);
-        height: clamp(1.9rem, 2.8vw, 2.5rem);
-        display: grid;
-        place-items: center;
-        border: 1px solid var(--border);
-        border-radius: 3px;
-        background: rgba(255, 255, 255, 0.03);
-        color: var(--text-dim);
-        cursor: pointer;
-      }
-      .nav-btn:hover:not(:disabled) {
-        color: var(--text);
-        background: rgba(255, 255, 255, 0.08);
-      }
-      .nav-btn:disabled {
-        opacity: 0.1;
-        cursor: default;
-      }
-      #btn-prev {
-        left: clamp(0.4rem, 1.2vw, 1.1rem);
-      }
-      #btn-next {
-        right: clamp(0.4rem, 1.2vw, 1.1rem);
-      }
       .dot-nav {
         position: fixed;
         bottom: 1.3rem;
@@ -675,7 +646,7 @@
 @keyframes scope-fade{from{opacity:0}to{opacity:1}}
 @media(prefers-reduced-motion:reduce){.motion-scope>.scope-frame.anim-item,.scope-caption.anim-item{opacity:1;animation:none!important;transform:none}}
 @media(max-height:650px){.goal-sheet .goal-request{font-size:2rem;line-height:1.3}.goal-sheet .goal-acceptance{margin-top:.7rem}.goal-sheet .brief-lines{margin-top:1rem;gap:.65rem}.goal-sheet .brief-line .copy{font-size:var(--body)}}
-</style></head><body><svg class="symbols" aria-hidden="true"><defs><marker id="arrow-gray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="var(--gray)" stroke-width="1.5"/></marker><marker id="arrow-yellow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="var(--yellow)" stroke-width="1.5"/></marker><marker id="arrow-brand" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="var(--brand)" stroke-width="1.5"/></marker><marker id="arrow-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="var(--purple)" stroke-width="1.5"/></marker><marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="var(--green)" stroke-width="1.5"/></marker><marker id="arrow-orange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="var(--orange)" stroke-width="1.5"/></marker></defs></svg><div class="progress-bar"><div class="progress-fill" id="progress"></div></div><button class="nav-btn" id="btn-prev" aria-label="이전 슬라이드">←</button><button class="nav-btn" id="btn-next" aria-label="다음 슬라이드">→</button><nav class="dot-nav" id="dot-nav" aria-label="슬라이드 선택"></nav><div class="slide-counter"><span id="cur">1</span> / <span id="tot">0</span></div><div class="slide-deck" id="deck"><!-- 발표 노트: 앞에서는 누가 협업을 조율하는지 봤습니다. 이번에는 목표 하나가 어떤 단계를 거쳐 결과가 되는지 따라가겠습니다. -->
+</style></head><body><svg class="symbols" aria-hidden="true"><defs><marker id="arrow-gray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="var(--gray)" stroke-width="1.5"/></marker><marker id="arrow-yellow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="var(--yellow)" stroke-width="1.5"/></marker><marker id="arrow-brand" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="var(--brand)" stroke-width="1.5"/></marker><marker id="arrow-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="var(--purple)" stroke-width="1.5"/></marker><marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="var(--green)" stroke-width="1.5"/></marker><marker id="arrow-orange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="var(--orange)" stroke-width="1.5"/></marker></defs></svg><div class="progress-bar"><div class="progress-fill" id="progress"></div></div><nav class="dot-nav" id="dot-nav" aria-label="슬라이드 선택"></nav><div class="slide-counter"><span id="cur">1</span> / <span id="tot">0</span></div><div class="slide-deck" id="deck"><!-- 발표 노트: 앞에서는 누가 협업을 조율하는지 봤습니다. 이번에는 목표 하나가 어떤 단계를 거쳐 결과가 되는지 따라가겠습니다. -->
 <article class="slide active" data-index="0" data-visual="goal-task-flow-1"><header class="slide__header"><span class="slide__label">Part 4 · ch01-02 · 목표와 작업, 실행의 흐름</span><h1 class="slide__title">목표와 작업, <span class="hl">실행의 흐름</span></h1><p class="slide__sub">목표 하나가 작업으로 나뉘고, 실행과 검토를 거쳐 결과로 모입니다.</p></header><main class="slide__body"><div class="scene scene--cover"><div class="anim-item scene__copy" data-anim-step="0"><p class=statement>하나의 목표가<strong>결과가 되기까지</strong></p></div><div class="map map--cover"><svg class="wires" viewBox="0 0 1000 420" preserveAspectRatio="none" aria-hidden="true"><path class="anim-item draw tone-gray" data-anim-step="1" d="M145 210H325Q350 210 350 130H445" pathLength="1" marker-end="url(#arrow-gray)"/><path class="anim-item draw tone-gray" data-anim-step="1" d="M325 210Q350 210 350 302H445" pathLength="1" marker-end="url(#arrow-gray)"/><path class="anim-item draw tone-green" data-anim-step="5" d="M595 130H625Q650 130 650 210H830" pathLength="1" marker-end="url(#arrow-green)"/><path class="anim-item draw tone-green" data-anim-step="5" d="M595 302H625Q650 302 650 210" pathLength="1" /></svg><div class="pin " style="left:10%;top:50%;width:18%"><div class="anim-item " data-anim-step="0"><svg class="icon icon--file  tone-gray" viewBox="0 0 56 68" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3H35L50 18V63H7ZM35 3V18H50M17 29H38M17 39H36M17 49H31"/></svg><p class="copy">목표</p></div></div><div class="pin " style="left:52%;top:29%;width:20%"><div class="anim-item " data-anim-step="3"><svg class="icon icon--file  tone-brand" viewBox="0 0 56 68" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3H35L50 18V63H7ZM35 3V18H50M17 29H38M17 39H36M17 49H31"/></svg></div></div><div class="pin " style="left:52%;top:72%;width:20%"><div class="anim-item " data-anim-step="4"><svg class="icon icon--file  tone-purple" viewBox="0 0 56 68" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3H35L50 18V63H7ZM35 3V18H50M17 29H38M17 39H36M17 49H31"/></svg></div></div><div class="pin " style="left:90%;top:50%;width:18%"><div class="anim-item " data-anim-step="7"><svg class="icon icon--file  tone-green" viewBox="0 0 56 68" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3H35L50 18V63H7ZM35 3V18H50M17 29H38M17 39H36M17 49H31"/></svg><p class="copy">결과</p></div></div></div></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article>
 <!-- 발표 노트: 이번에는 회사 소개 콘텐츠를 만든다는 예시를 끝까지 사용합니다. 결과물뿐 아니라 어떤 자료와 말투를 따라야 하는지도 함께 줍니다. -->
 <article class="slide" data-index="1" data-visual="goal-task-flow-2"><header class="slide__header"><span class="slide__label">Part 4 · ch01-02 · 목표와 작업, 실행의 흐름</span><h1 class="slide__title">목표와 <span class="hl">완료 기준</span></h1><p class="slide__sub">무엇을 만들지와 어떤 결과면 되는지를 함께 전달합니다.</p></header><main class="slide__body"><div class="goal-sheet"><svg class="icon icon--human  " viewBox="0 0 60 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="30" cy="16" r="11"/><path d="M10 58V43C10 21 50 21 50 43V58"/></svg><div><div class="anim-item " data-anim-step="0"><p class="goal-request">회사 소개 자료로<br><strong><span class="hl">블로그와 카드뉴스 초안</span>을 만들어줘</strong></p><p class="goal-acceptance">자료와 사실이 일치하는지 확인하고, 각각 파일로 저장해줘.</p><div class="brief-lines"><div class="anim-item brief-line" data-anim-step="2"><h2 class="heading">입력</h2><p class="copy">회사 소개 자료</p></div><div class="anim-item brief-line" data-anim-step="3"><h2 class="heading">결과물</h2><p class="copy">블로그 · 카드뉴스 초안</p></div><div class="anim-item brief-line" data-anim-step="4"><h2 class="heading">완료 기준</h2><p class="copy">자료와 사실 일치 · 초안 2개 저장</p></div></div></div></div></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="FastCampus"></footer></article>
@@ -715,7 +686,7 @@
       }
 
       /* 조작 규칙 (성공 기준):
-         페이지 이동은 좌우 nav-btn · 하단 dot · 키보드(←/→/스페이스)로만.
+         페이지 이동은 하단 dot · 키보드(←/→/스페이스)로만.
          #deck/body/.slide에 이동용 click 리스너를 절대 달지 않는다 —
          강의 중 화면을 가리키며 클릭해도 슬라이드가 넘어가면 안 된다. */
       class SlidePresentation {
@@ -742,7 +713,6 @@
           document.getElementById("tot").textContent = this.total;
           this._buildDots();
           this._bindKeys();
-          this._bindButtons();
           this._update();
           this._runSlide(this.current);
         }
@@ -791,9 +761,6 @@
           const pct = ((this.current + 1) / this.total) * 100;
           document.getElementById("progress").style.width = pct + "%";
           document.getElementById("cur").textContent = this.current + 1;
-          document.getElementById("btn-prev").disabled = this.current === 0;
-          document.getElementById("btn-next").disabled =
-            this.current === this.total - 1;
           document
             .querySelectorAll(".dot")
             .forEach((d, i) =>
@@ -809,14 +776,6 @@
             b.addEventListener("click", () => this._go(i));
             nav.appendChild(b);
           });
-        }
-        _bindButtons() {
-          document
-            .getElementById("btn-prev")
-            .addEventListener("click", () => this.prev());
-          document
-            .getElementById("btn-next")
-            .addEventListener("click", () => this.next());
         }
         _bindKeys() {
           document.addEventListener("keydown", (e) => {

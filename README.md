@@ -39,7 +39,7 @@ HTML 안의 에셋 경로는 **루트 절대경로**(`/assets/...`)만 씁니다
 
 ## 새 슬라이드 만들기
 
-`.claude/skills/fastcampus-slide` 스킬이 소스 분석 → 스토리보드 → HTML → 피드백·발표 대본까지 처리합니다. `.agents/skills/fastcampus-slide`는 이 스킬 원본을 가리키는 심볼릭 링크입니다.
+`.claude/skills/fastcampus-slide` 스킬이 소스 분석 → 스토리보드 → HTML → 피드백 파일까지 처리합니다. 발표 대본은 HTML 덱 전체를 사용자가 최종 승인한 뒤 `fastcampus-script`로 작성하며, 슬라이드 수정 중에는 자동 갱신하지 않습니다. `.agents/skills/fastcampus-slide`는 이 스킬 원본을 가리키는 심볼릭 링크입니다.
 Claude Code에서 클립을 지목하면 됩니다 — 예: `Part 1 Ch01-01 슬라이드 만들어줘`
 
 ## 로컬 미리보기

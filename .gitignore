@@ -28,5 +28,10 @@ storageState*.json
 artifacts/_maintenance/pattern-library-*/*.png
 artifacts/_maintenance/pattern-library-*/inspector-smoke.json
 
+# 로컬 검수 캡처·실행 기록·대본 작업 백업
+artifacts/_maintenance/*-qa/
+artifacts/_maintenance/navigation-qa.json
+artifacts/_maintenance/script-review-2nd-delivery/
+
 # 납품용 PDF — 촬영 후 생성물, 저장소에 담지 않는다
 슬라이드-pdf/
