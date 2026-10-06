@@ -214,6 +214,7 @@ def build_rows() -> tuple[list[dict], list[str], str]:
         e = entries.get(key, {})
         row = dict(meta)
         row["슬라이드"] = bool(e.get("슬라이드"))
+        row["도입슬라이드"] = bool(e.get("도입슬라이드"))
         row["비고"] = e.get("비고", "")
         row["차수"] = assigned.get(part, 0)
         row["_미착수"] = False
@@ -465,12 +466,17 @@ def render_parts(rows: list[dict], due_note: dict[int, str]) -> str:
                         f"{title_markup(chapter, changed_chapters.get(chapter, ''), chapter=True)}</th></tr>"
                     )
             cls = "" if r["슬라이드"] else ' class="row--practice"'
+            material_label = "슬라이드" if r["슬라이드"] else "실습자료"
+            material_class = "stage-stack"
+            if r.get("도입슬라이드"):
+                material_label += "<br>도입 슬라이드"
+                material_class += " stage-stack--intro"
             out.append(f"""<tr{cls} data-key="{no}-{r['클립']}" data-clip>
               <td class="c-clip"><code>{esc(r["클립"])}</code></td>
               <td class="c-title">{title_markup(r["제목"], changed_public_title(r, "클립"))}</td>
               <td class="c-len">{esc(r["길이"])} / {esc(r["실제분량"])}</td>
               <td class="c-count">{kind_label(r["슬라이드"])}</td>
-              <td class="c-stage"><div class="stage-stack"><small>{'슬라이드' if r['슬라이드'] else '실습자료'}</small>{chip(r["제작"], "자료 제작", r.get("제작_표시"))}</div></td>
+              <td class="c-stage"><div class="{material_class}"><small>{material_label}</small>{chip(r["제작"], "자료 제작", r.get("제작_표시"))}</div></td>
               <td class="c-stage"><div class="stage-stack">{chip(r["대본"], "대본")}</div></td>
               <td class="c-stage"><div class="stage-stack">{chip(r["촬영"], "촬영")}</div></td>
               <td class="c-stage"><div class="stage-stack">{chip(r["편집"], "편집", r.get("편집_표시"))}</div></td>

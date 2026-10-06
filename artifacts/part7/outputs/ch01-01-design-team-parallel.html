@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>디자인팀 구조 살펴보기 | Part 7 · Ch01-01</title>
+    <title>디자인팀 구조 살펴보기 (병렬 실행)</title>
     <!-- TEMPLATE ONLY: 실제 강의 내용·제품명·작업 캡처를 넣지 않는다.
      사용법: 이 파일을 복사 → 필요한 article 선택 → 모든 data-slot/제목/부제 교체.
      diagram의 공통 shape 정의를 유지하거나 사용한 도형만 각 SVG에 펼친다.
@@ -285,35 +285,6 @@
         height: 100%;
         background: var(--brand);
         transition: width 0.3s ease;
-      }
-      .nav-btn {
-        position: fixed;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 150;
-        width: clamp(1.9rem, 2.8vw, 2.5rem);
-        height: clamp(1.9rem, 2.8vw, 2.5rem);
-        display: grid;
-        place-items: center;
-        border: 1px solid var(--border);
-        border-radius: 3px;
-        background: rgba(255, 255, 255, 0.03);
-        color: var(--text-dim);
-        cursor: pointer;
-      }
-      .nav-btn:hover:not(:disabled) {
-        color: var(--text);
-        background: rgba(255, 255, 255, 0.08);
-      }
-      .nav-btn:disabled {
-        opacity: 0.1;
-        cursor: default;
-      }
-      #btn-prev {
-        left: clamp(0.4rem, 1.2vw, 1.1rem);
-      }
-      #btn-next {
-        right: clamp(0.4rem, 1.2vw, 1.1rem);
       }
       .dot-nav {
         position: fixed;
@@ -1174,6 +1145,142 @@
       .p7-closing-list{list-style:none;display:flex;flex-direction:column;gap:1.2rem}
       .p7-closing-list li{position:relative;padding-left:1.4rem;font-size:var(--body);line-height:1.6;color:var(--text-dim)}
       .p7-closing-list li:before{content:'';position:absolute;left:0;top:.72em;width:.5rem;height:.5rem;background:var(--brand)}
+
+.design-review .anim-item.do-fadeinup{animation-name:scope-fade;animation-fill-mode:both}
+.design-product{display:grid;grid-template-columns:1fr 1.15fr;align-items:center;gap:min(5rem,6cqi);width:min(100%,88rem);margin:auto}
+.design-product .statement strong{display:block;color:var(--brand)}
+.design-product .copy{margin-top:min(2rem,4cqh);color:var(--text-dim);line-height:1.8}
+.design-browser{border:1px solid var(--border);border-radius:.7rem;overflow:hidden;background:var(--bg-card);width:min(100%,38rem);justify-self:center}
+.design-browser-bar{display:flex;align-items:center;gap:.4rem;border-bottom:1px solid var(--border);padding:min(.9rem,2cqh) 1.2rem;color:var(--text-dim)}
+.design-browser-bar span{width:.35rem;height:.35rem;background:var(--gray);border-radius:50%}.design-browser-bar b{font: .8rem Monaco,monospace;margin-left:.8rem;font-weight:400}
+.design-browser-page{padding:min(2rem,4cqh) min(3rem,4cqi)}.design-brand{font-size:min(1.4rem,3.2cqh);font-weight:800;color:var(--text)}
+.design-kicker{color:var(--brand);font-size:var(--body);margin-top:min(1.5rem,3cqh)}.design-browser-page h2{font-size:min(2.5rem,5.8cqh);line-height:1.25;margin:min(.8rem,1.8cqh) 0}
+.design-browser-page>strong{font-size:min(1.6rem,3.7cqh);color:var(--brand)}
+.design-products{display:flex;align-items:center;gap:1.5rem;margin:min(1.2rem,2.8cqh) 0;color:var(--text-dim)}.design-products svg{width:min(9rem,20cqh);height:min(6rem,14cqh);color:var(--gray)}.design-products p{font-size:var(--body);line-height:1.6}.design-products span{font-size:min(1rem,2.3cqh)}
+.design-buy{background:var(--brand);color:var(--text);text-align:center;padding:min(.8rem,1.8cqh);font-size:var(--body);font-weight:750;border-radius:.2rem}
+.design-review .p7-collision{gap:min(2.6rem,3cqi)}.design-review .p7-folder{padding:min(2.7rem,6cqh) min(2.6rem,3cqi)}.design-review .p7-folder .copy{white-space:normal;text-align:center}
+.design-review .p7-collision-actor{position:relative;flex-shrink:0}.design-review .p7-collision-actor figcaption{position:absolute;top:calc(100% + min(1.2rem,2.8cqh));left:50%;transform:translateX(-50%)}
+.design-review .p7-split{position:relative;gap:min(5.5rem,12cqh)}.design-split-wires{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke:var(--gray);stroke-width:2}
+.design-review .p7-leaves{position:relative;gap:min(6rem,8cqi)}.design-review .p7-leaf{padding:0;background:none;border:0;gap:min(.6rem,1.4cqh)}
+.design-review .p7-leaf .p7-glyph{width:min(16rem,35cqh);height:min(16rem,35cqh)}
+.design-review .p7-root .copy{margin-top:.5rem}
+.design-review .p7-step{background:none;border:none;padding:min(2rem,4.6cqh) .5rem;max-width:27rem}.design-review .p7-steps>.p7-arrow{align-self:center;transform:translateY(calc(-1 * min(2.5rem,5.8cqh)))}
+.design-review .p7-step .copy{font-size:min(1.3rem,3cqh)}
+.design-review [data-dependency-node="w1"]{color:var(--brand)}.design-review [data-dependency-node="w2"]{color:var(--purple)}
+.design-merge{position:relative;display:grid;grid-template-columns:minmax(0,1fr) min(17rem,21cqi) minmax(0,1fr);align-items:start;width:min(100%,82rem);margin:auto}
+.design-merge-sources{display:flex;flex-direction:column;gap:min(2rem,4.6cqh)}.design-page{--accent:var(--green);position:relative;background:var(--bg-card);border:1px solid color-mix(in srgb,var(--accent) 45%,var(--bg));border-top:2px solid var(--accent);padding:min(2rem,4.6cqh);border-radius:.3rem}
+.design-page-tag{font-size:var(--body);color:var(--text-dim)}.design-page h2{font-size:var(--heading);color:var(--accent);margin:min(.8rem,1.8cqh) 0}.design-page p{font-size:var(--body);color:var(--text-dim)}
+.design-page-lines{display:flex;flex-direction:column;gap:.4rem;margin-top:min(1.2rem,2.8cqh)}.design-page-lines i{height:2px;background:var(--border);width:85%}.design-page-lines i:last-child{width:65%}
+.design-merge-main{grid-column:3;align-self:center}.design-merge-wire{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke:var(--green);stroke-width:2}.design-merge-label{position:absolute;transform:translate(-50%,-100%);color:var(--green);font-size:clamp(.95rem,1.1vw,1.2rem);white-space:nowrap}
+
+
+.design-team-map .ref-worker-a h2{color:var(--brand)}
+.design-team-map .ref-worker-b h2{color:var(--purple)}
+.design-team-map .ref-coordinator h2{color:var(--yellow)}
+.design-team-map .team-route-label{font-size:clamp(.75rem,1.1vw,1rem);background:var(--bg);padding:0 .35rem}
+
+.design-review [data-dependency-node="w1"] .icon{color:var(--brand)}
+.design-review [data-dependency-node="w2"] .icon{color:var(--purple)}
+.design-review .design-page{padding-top:min(3.3rem,7.7cqh)}
+.design-review .design-page:before{content:'';position:absolute;top:0;left:0;right:0;height:min(1.5rem,3.5cqh);border-bottom:1px solid var(--border);background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 12%,var(--bg-card)),var(--bg-card))}
+.design-review .design-page:after{content:'';position:absolute;top:min(.6rem,1.4cqh);left:1rem;width:.25rem;height:.25rem;border-radius:50%;background:var(--gray);box-shadow:.5rem 0 var(--gray),1rem 0 var(--gray)}
+
+.design-review .dependency-node{height:min(8rem,18cqh)}
+.design-review .dependency-symbol .icon{height:min(7.8rem,17.6cqh);width:min(7.5rem,17cqh)}
+.design-review .dependency-document{height:min(8rem,18cqh);width:min(7.1rem,16cqh)}
+.design-review .dependency-node figcaption{top:calc(100% + min(.85rem,1.9cqh));font-size:var(--body)}
+.design-review .p7-step .copy{font-size:var(--body);line-height:1.6}
+
+/* Shared project collaboration-pattern page; introduction diagrams reused. */
+.team-pattern-layout{display:grid;grid-template-columns:1fr 1.5fr;gap:min(4rem,5cqi);width:100%;height:100%;align-items:center}
+.team-pattern-copy{padding-left:min(2rem,3cqi)}
+.team-pattern-copy .pattern-name{font-size:var(--body);color:var(--purple);font-weight:750;margin-bottom:min(1.5rem,3cqh)}
+.team-pattern-copy .statement{font-size:min(3rem,7cqh);line-height:1.45}
+.team-pattern-copy .pattern-detail{color:var(--text-dim);font-size:var(--body);margin-top:min(2rem,4cqh);line-height:1.6}
+.team-pattern-map{position:relative;height:min(36rem,83cqh);width:100%;--pattern-accent:var(--purple)}
+.team-pattern-map .dependency-wires{position:absolute;inset:0;width:100%;height:100%;overflow:visible;fill:none;stroke:var(--pattern-accent);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.team-pattern-map .dependency-node{position:absolute;transform:translate(-50%,-50%);height:min(7rem,15cqh);width:min(10rem,14cqi);margin:0;text-align:center}
+.team-pattern-map .dependency-symbol{height:100%;display:flex;align-items:center;justify-content:center}
+.team-pattern-map .icon{height:100%;width:min(7rem,15cqh);color:var(--brand)}
+.team-pattern-map [data-dependency-node="b"] .icon{color:var(--purple)}
+.team-pattern-map .dependency-document{height:100%;width:auto;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;color:var(--green)}
+.team-pattern-map .document-page{fill:var(--bg-card)}
+.team-pattern-map .document-fold{fill:var(--bg)}
+.team-pattern-map .document-lines{stroke-width:3}
+.team-pattern-map figcaption{position:absolute;top:calc(100% + min(.8rem,1.8cqh));left:50%;transform:translateX(-50%);width:max-content;font-size:var(--body);line-height:1.4;font-weight:700;white-space:nowrap}
+.team-pattern-map .is-document figcaption{color:var(--green)}
+.team-pattern-map .is-input,.team-pattern-map .is-person{height:min(5rem,11cqh)}
+.team-pattern-map .is-input .dependency-document,.team-pattern-map .is-input figcaption{color:var(--purple)}
+.team-pattern-map .is-input figcaption,.team-pattern-map .is-person figcaption{left:calc(50% + min(3.2rem,7cqh));top:50%;transform:translateY(-50%)}
+.team-pattern-map .p5-person{height:100%;width:auto;fill:var(--bg-card);stroke:var(--gray);stroke-width:2.5}
+.team-pattern-map .p5-review-return{position:absolute;inset:0;pointer-events:none}
+.team-pattern-map .p5-review-label{position:absolute;left:50%;top:78%;transform:translate(-50%,-50%);font-size:var(--body);color:var(--orange);background:var(--bg);padding:.3rem 1rem;white-space:nowrap}
+.team-pattern-map [data-route^="return"]{stroke:var(--orange)}
+.team-pattern-map [data-route="return"]{stroke-dasharray:7 7}
+.team-pattern-map .p5-edge-caption{position:absolute;top:71%;transform:translate(-50%,-50%);background:var(--bg);padding:.2rem .6rem;font-size:var(--body);color:var(--text-dim)}
+.team-pattern-map .p5-edge-caption--a{left:20%}.team-pattern-map .p5-edge-caption--b{left:80%}
+@keyframes team-pattern-reveal{from{opacity:0}to{opacity:1}}
+.team-pattern-slide .anim-item.do-fadeinup{animation:team-pattern-reveal .45s ease-out both}
+
+.bw-folder{position:relative;width:min(100%,21rem);aspect-ratio:260/180;color:var(--folder-color,var(--gray))}
+.bw-folder>.diagram{color:inherit}
+.bw-folder-branch{position:absolute;left:10%;right:10%;top:39%;display:flex;gap:.55rem;justify-content:center;align-items:center;color:inherit;font-size:clamp(1rem,1.45vw,1.3rem);font-weight:650;line-height:1.4}
+.bw-folder-branch>.diagram{height:1.2em;width:1.2em;color:inherit}
+.slide[data-visual="bw-origin-alternative"]>.slide__body{display:flex;flex-direction:column;gap:1rem;justify-content:center;align-items:center;align-self:center;width:100%;height:100%;max-height:40rem}
+.bw-origin{--origin-main-size:11rem;position:relative;width:min(100%,60rem);height:auto;min-height:0;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto;row-gap:3rem;align-items:stretch;flex:0 0 auto}
+.bw-origin-source{display:grid;grid-template-columns:minmax(0,1fr) var(--origin-main-size) minmax(0,1fr);align-items:center;gap:1.4rem}
+.bw-origin-source>.bw-folder{grid-column:2;width:var(--origin-main-size)}
+.bw-origin-source-caption{display:flex;flex-direction:column;gap:.3rem;align-items:flex-start}
+.bw-origin .heading{white-space:nowrap}
+.bw-origin-link{position:absolute;inset:0;pointer-events:none}
+.bw-origin-connections{display:block;width:100%;height:100%;overflow:visible}
+.bw-origin-connection--a{stroke:var(--brand)}
+.bw-origin-connection--b{stroke:var(--purple)}
+.bw-origin-link.do-fadeinup{animation-name:bw-appear}
+.bw-origin-targets{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch;min-height:0}
+.bw-origin-target{display:grid;grid-template-rows:auto auto;align-items:stretch;gap:.7rem;min-width:0;min-height:0}
+.bw-origin-workspace-art{min-width:0;min-height:0;display:flex;align-items:center;justify-content:center}
+.bw-origin-workspace-art>.bw-folder{width:min(21rem,calc((min(100cqw,86rem) - 2 * clamp(1.5rem,4vw,4rem)) / 3));flex-shrink:0}
+.bw-origin-caption{display:flex;flex-direction:column;align-items:center;gap:.25rem;min-width:0}
+.bw-origin-caption>.heading{color:var(--folder-color)}
+.bw-origin-caption>.copy{white-space:nowrap}
+.bw-origin-note{text-align:center}
+.bw-origin .diagram{display:block;width:100%;height:auto}
+.bw-origin .bw-folder-branch>.diagram{width:1.2em;height:1.2em}
+.bw-origin .bw-origin-source-caption .eyebrow{font-size:var(--body);color:var(--text-dim);white-space:nowrap}
+.bw-origin .bw-origin-caption .copy{font-size:var(--body);color:var(--text-dim)}
+.bw-origin-note{font-size:var(--body);color:var(--text-dim);margin-top:min(2rem,4cqh)}
+.bw-origin{--origin-main-size:min(11rem,24cqh);row-gap:min(3rem,6cqh)}
+.bw-origin-workspace-art>.bw-folder{width:min(21rem,44cqh);max-width:100%}
+@keyframes bw-appear{from{opacity:0}to{opacity:1}}
+.slide[data-visual="bw-origin-alternative"] .anim-item.do-fadeinup{animation:bw-appear .45s ease-out both}
+
+
+.p7-leaf>.bw-folder{width:min(21rem,44cqh);max-width:100%}
+.p7-leaf>.bw-folder>.diagram{display:block;width:100%;height:auto}
+.p7-leaf .bw-folder-branch>.diagram{width:1.2em;height:1.2em}
+
+/* Pattern itself is the main content; match introduction slide 8. */
+.team-pattern-centered .team-pattern-layout{display:flex;justify-content:center;align-items:center;gap:0}
+.team-pattern-centered .team-pattern-map{width:min(62rem,100%);height:min(40rem,88cqh);--pattern-accent:var(--yellow)}
+.team-pattern-centered .team-pattern-map .dependency-node{height:min(8rem,17cqh);width:min(10rem,12cqi)}
+.team-pattern-centered .team-pattern-map .dependency-symbol .icon{height:100%;width:min(7.5rem,15cqh);color:var(--yellow)}
+.team-pattern-centered .team-pattern-map .is-input{height:min(5.5rem,12cqh)}
+.team-pattern-centered .team-pattern-map .is-person{height:min(5.2rem,11cqh)}
+.team-pattern-centered .team-pattern-map figcaption{font-size:clamp(1.1rem,1.5vw,1.6rem)}
+.team-pattern-centered .team-pattern-map .p5-edge-caption{font-size:var(--body);top:71%}
+
+.team-pattern-centered .slide__body{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto;padding-bottom:0;gap:min(2rem,4cqh)}
+.team-pattern-centered .team-pattern-layout{height:100%;min-height:0}
+.team-pattern-centered .team-pattern-map{height:100%;width:min(70rem,100%)}
+.team-pattern-definition{text-align:center;font-size:var(--body);line-height:1.5;color:var(--text-dim);margin:0}
+.team-pattern-centered .team-pattern-map .p5-edge-caption{transform:translate(-50%,-100%);padding:0 .5rem;background:var(--bg)}
+
+.design-selected-badge{position:absolute;z-index:2;top:0;right:min(1.2rem,2cqi);transform:translateY(-65%);display:flex;align-items:center;gap:.45rem;padding:min(.45rem,1cqh) min(.9rem,2cqi);border-radius:999px;background:var(--green);color:var(--bg);font-size:var(--body);font-weight:800;line-height:1.2;box-shadow:0 0 0 5px var(--bg)}
+.design-selected-badge svg{width:1.1em;height:1.1em}
+
+.design-merge-main .design-page-lines{flex:none}
+.design-merge-main{display:flex;flex-direction:column}
 </style>
   </head>
   <body>
@@ -1211,19 +1318,13 @@
     <div class="progress-bar">
       <div class="progress-fill" id="progress"></div>
     </div>
-    <button class="nav-btn" id="btn-prev" aria-label="이전 슬라이드">
-      &#8592;
-    </button>
-    <button class="nav-btn" id="btn-next" aria-label="다음 슬라이드">
-      &#8594;
-    </button>
     <div class="dot-nav" id="dot-nav"></div>
     <div class="slide-counter">
       <span id="cur">1</span> / <span id="tot">9</span>
     </div>
     <div class="slide-deck" id="deck">
 <article class="slide active p5-reference-cover" data-index="0" data-pattern="COVER_SCENE">
-<header class="slide__header"><span class="slide__label">Part 7 · Chapter 1 · Ch01-01</span><h1 class="slide__title">디자인팀 구조 살펴보기</h1><p class="slide__sub">같은 의뢰를 두 에이전트에게 동시에 맡기고, 나온 시안 중에서 하나를 고릅니다.</p></header>
+<header class="slide__header"><span class="slide__label">Part 7 · Chapter 1 · Ch01-01</span><h1 class="slide__title"><span class="hl">디자인팀 구조</span> 살펴보기 (병렬 실행)</h1><p class="slide__sub">같은 의뢰를 두 에이전트에게 동시에 맡기고 나온 시안 중에서 하나를 고릅니다.</p></header>
 <main class="slide__body">
 <div class="scene scene--cover">
 <div class="scene__copy anim-item"><p class="statement">같은 의뢰<strong>서로 다른 시안</strong></p></div>
@@ -1232,75 +1333,10 @@
 </main>
 <footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
 </article>
-<article class="slide compact" data-index="1" data-pattern="SCENE_COMPARE">
-<header class="slide__header"><span class="slide__label">Part 7 · Chapter 1 · Ch01-01</span><h1 class="slide__title">한 폴더에서 <span class="hl">동시에</span></h1><p class="slide__sub">같은 폴더에서 두 에이전트가 같은 파일을 고치면 한쪽 결과가 덮입니다.</p></header>
-<main class="slide__body">
-<div class="p7-collision">
-<figure class="p7-collision-actor anim-item" data-anim-step="0" style="--accent:var(--brand)">
-<svg class="icon icon--robot tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><figcaption><h2 class="heading">워커 A</h2></figcaption></figure>
-<span class="p7-arrow anim-item" data-anim-step="1" aria-hidden="true"><svg viewBox="0 0 64 24"><path d="M2 12H56M46 3L57 12L46 21"/></svg></span>
-<div class="p7-folder anim-item" data-anim-step="1"><span class="p7-clash" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="3" stroke-linecap="round"><path d="M5 5L19 19M19 5L5 19"/></svg></span>
-<svg class="p7-glyph" style="width:min(7.4rem,17.2cqh);height:min(7.4rem,17.2cqh)" viewBox="0 0 100 100" fill="none" stroke="var(--orange)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-folder"/></svg>
-<p class="p7-folder-file">index.html</p>
-<p class="copy">두 에이전트가 같은 파일을 연다</p>
-</div>
-<span class="p7-arrow p7-arrow--back anim-item" data-anim-step="2" aria-hidden="true"><svg viewBox="0 0 64 24"><path d="M2 12H56M46 3L57 12L46 21"/></svg></span>
-<figure class="p7-collision-actor anim-item" data-anim-step="2" style="--accent:var(--purple)">
-<svg class="icon icon--robot tone-purple" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><figcaption><h2 class="heading">워커 B</h2></figcaption></figure>
-</div>
-<p class="p5-note anim-item" data-anim-step="3">워크트리가 무엇인지는 앞에서 봤고, 이번에는 그것을 실제로 씁니다.</p>
-</main>
-<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
-</article>
-<article class="slide compact" data-index="2" data-pattern="STRUCTURE_BRANCH">
-<header class="slide__header"><span class="slide__label">Part 7 · Chapter 1 · Ch01-01</span><h1 class="slide__title">작업 공간을 <span class="hl">나눈다</span></h1><p class="slide__sub">같은 시작 커밋에서 워크트리를 하나씩 만들어 각자의 폴더에서 작업하게 합니다.</p></header>
-<main class="slide__body">
-<div class="p7-split">
-<figure class="p7-root anim-item" data-anim-step="0"><svg class="p7-commit" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="13" fill="var(--bg-card)" stroke="var(--brand)" stroke-width="3.5"/></svg>
-<figcaption><h2 class="heading">시작 커밋 하나</h2><p class="copy">같은 지점에서 출발한다</p></figcaption></figure>
-<div class="p7-fork anim-item" data-anim-step="1" aria-hidden="true">
-<svg viewBox="0 0 700 80" preserveAspectRatio="none"><path d="M350 0V30H90V74M350 30H610V74"/></svg>
-</div>
-<div class="p7-leaves">
-<figure class="p7-leaf anim-item" data-anim-step="2" style="--accent:var(--brand)"><svg class="p7-glyph" style="width:min(6.6rem,15.4cqh);height:min(6.6rem,15.4cqh)" viewBox="0 0 100 100" fill="none" stroke="var(--brand)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-workspace"/></svg>
-<figcaption><h2 class="heading">워크트리 A</h2><p class="copy">Claude Code 하네스</p></figcaption></figure>
-<figure class="p7-leaf anim-item" data-anim-step="3" style="--accent:var(--purple)"><svg class="p7-glyph" style="width:min(6.6rem,15.4cqh);height:min(6.6rem,15.4cqh)" viewBox="0 0 100 100" fill="none" stroke="var(--purple)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-workspace"/></svg>
-<figcaption><h2 class="heading">워크트리 B</h2><p class="copy">Codex 하네스</p></figcaption></figure>
-</div>
-</div>
-<p class="p5-note anim-item" data-anim-step="4">서로의 폴더를 보지 않으니 결과가 섞이지 않습니다.</p>
-</main>
-<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
-</article>
-<article class="slide compact" data-index="3" data-pattern="SEMINAR_ROLE_MAP_PARALLEL">
-<header class="slide__header"><span class="slide__label">Part 7 · Chapter 1 · Ch01-01</span><h1 class="slide__title">디자인팀의 <span class="hl">구조</span></h1><p class="slide__sub">코디네이터가 같은 요청을 두 워커에게 동시에 배정합니다.</p></header>
-<main class="slide__body">
-<div class="reference-serial-map p7-team-map" data-mode="parallel">
-<svg class="ref-wires" aria-hidden="true">
-<path data-route="goal" class="ref-request"/><path data-route="result" class="ref-result"/>
-<path data-route="assign-a" class="ref-request"/><path data-route="report-a" class="ref-report-one"/>
-<path data-route="assign-b" class="ref-request"/><path data-route="report-b" class="ref-report-two"/>
-</svg>
-<div class="ref-actor ref-person anim-item" data-anim-step="0" style="left:12%;top:20%"><div class="ref-icon"><svg class="icon icon--human" viewBox="0 0 60 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="30" cy="16" r="11"/><path d="M10 58V43C10 21 50 21 50 43V58"/></svg></div><div class="ref-label"><h2>사람</h2><p>의뢰와 조건을 준다</p></div></div>
-<div class="ref-actor ref-coordinator anim-item" data-anim-step="1" style="left:58%;top:20%"><div class="ref-icon"><svg class="icon icon--robot tone-yellow" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><div class="ref-label"><h2>Coordinator</h2><p>같은 요청을 동시에 배정</p></div></div>
-<div class="ref-actor ref-worker ref-worker-a anim-item" data-anim-step="2" style="left:28%;top:68%"><div class="ref-icon"><svg class="icon icon--robot tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><div class="ref-label"><h2>워커 A</h2><p>Claude Code · 워크트리 A</p></div></div>
-<div class="ref-actor ref-worker ref-worker-b anim-item" data-anim-step="3" style="left:78%;top:68%"><div class="ref-icon"><svg class="icon icon--robot tone-purple" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><div class="ref-label"><h2>워커 B</h2><p>Codex · 워크트리 B</p></div></div>
-<span class="ref-link-label ref-goal">의뢰·조건</span>
-<span class="ref-link-label ref-result-label">시안·주소</span>
-</div>
-<p class="p5-note anim-item" data-anim-step="4">두 워커는 서로의 시안을 참고하지 않습니다.</p>
-</main>
-<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
-</article>
-<article class="slide compact" data-index="4" data-pattern="TRANSITION_COMPARE">
-<header class="slide__header"><span class="slide__label">Part 7 · Chapter 1 · Ch01-01</span><h1 class="slide__title">같아야 하는 것과 <span class="hl">달라도 되는 것</span></h1><p class="slide__sub">행사 조건은 고정하고 디자인은 각자 정하게 해야 비교할 수 있습니다.</p></header>
-<main class="slide__body">
-<div class="p7-panels"><section class="p7-panel anim-item" data-anim-step="0" style="--accent:var(--brand)"><header><h2>고정한다</h2></header><ul><li>기간·할인율·중복 적용 규칙</li><li>담을 정보와 결과물 형식</li><li>반응형과 잘림 없는 화면</li></ul></section><section class="p7-panel anim-item" data-anim-step="1" style="--accent:var(--yellow)"><header><h2>열어 둔다</h2></header><ul><li>색상과 레이아웃</li><li>카피와 이미지</li><li>구성 순서</li></ul></section></div><p class="p5-note anim-item" data-anim-step="2">조건이 서로 다르면 무엇 때문에 결과가 갈렸는지 알 수 없습니다.</p>
-</main>
-<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
-</article>
-<article class="slide compact" data-index="5" data-pattern="SEMINAR_DEPENDENCY_COMPARE">
-<header class="slide__header"><span class="slide__label">Part 7 · Chapter 1 · Ch01-01</span><h1 class="slide__title"><span class="hl">병렬 실행</span>이란</h1><p class="slide__sub">같은 요청을 여러 에이전트에 동시 배분하는 구조입니다.</p></header>
+<article class="slide compact design-review " data-index="1" data-pattern="SCENE_IMAGE"><header class="slide__header"><span class="slide__label">Part 7 · Chapter 1 · Ch01-01</span><h1 class="slide__title">블랙프라이데이 <span class="hl">상세페이지</span></h1><p class="slide__sub">같은 의뢰로 시안 두 개를 만들고 선택한 시안을 최종 상세페이지로 완성합니다.</p></header><main class="slide__body"><div class="design-product"><div class="anim-item" data-anim-step="0"><p class="statement">두 시안에서 고른<strong>최종 상세페이지</strong></p><p class="copy">행사 정보 · 상품 소개 · 할인 혜택 · 구매 버튼</p></div><figure class="design-browser anim-item" data-anim-step="1"><div class="design-browser-bar"><span></span><span></span><span></span><b>index.html</b></div><div class="design-browser-page"><p class="design-brand">MOODON</p><p class="design-kicker">블랙프라이데이</p><h2>편안한 일상,<br>더 가벼운 가격</h2><strong>최대 60% 할인</strong><div class="design-products"><svg viewBox="0 0 180 120" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M52 16L28 35L12 67L39 81L51 56V109H129V56L141 81L168 67L152 35L128 16L111 26H69Z"/><path d="M69 16Q90 42 111 16M54 93H126"/></svg><p>라운지웨어<br><span>상품 소개 · 행사 혜택</span></p></div><div class="design-buy">상품 보러 가기</div></div></figure></div><p class="p5-note anim-item" data-anim-step="4">구매 버튼은 페이지 안의 상품 영역으로 연결합니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<article class="slide team-pattern-slide team-pattern-centered" data-index="2"><header class="slide__header"><span class="slide__label">Part 7 · Chapter 1 · Ch01-01</span><h1 class="slide__title">디자인팀 <span class="hl">협업 패턴</span></h1><p class="slide__sub">같은 의뢰로 두 시안을 동시에 만들고 비교해 하나를 선택합니다.</p></header><main class="slide__body"><div class="team-pattern-layout"><div class="team-pattern-map" data-overview="choice"><svg class="dependency-wires anim-item" data-anim-step="2" aria-hidden="true"></svg><figure data-anim-step="1" class="dependency-node anim-item is-input" data-dependency-node="input" style="left:50%;top:10%"><div class="dependency-symbol"><svg class="dependency-document" viewBox="0 0 88 100" aria-hidden="true"><path class="document-page" d="M16 4H56L76 24V96H16Z"/><path class="document-fold" d="M56 4V24H76"/><path class="document-lines" d="M30 43H61M30 57H61M30 71H51"/></svg></div><figcaption>같은 요청</figcaption></figure><figure data-anim-step="2" class="dependency-node anim-item is-agent" data-dependency-node="a" style="left:20%;top:43%"><div class="dependency-symbol"><svg class="icon icon--robot" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><figcaption>에이전트 A</figcaption></figure><figure data-anim-step="2" class="dependency-node anim-item is-agent" data-dependency-node="b" style="left:80%;top:43%"><div class="dependency-symbol"><svg class="icon icon--robot" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><figcaption>에이전트 B</figcaption></figure><figure data-anim-step="3" class="dependency-node anim-item is-person" data-dependency-node="select" style="left:50%;top:88%"><div class="dependency-symbol"><svg class="p5-person" viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="22" r="14"/><path d="M13 74V64C13 36 67 36 67 64V74Z"/></svg></div><figcaption>사람이 선택</figcaption></figure><span class="p5-edge-caption p5-edge-caption--a anim-item" data-anim-step="3">결과 A</span><span class="p5-edge-caption p5-edge-caption--b anim-item" data-anim-step="3">결과 B</span></div></div><p class="team-pattern-definition anim-item" data-anim-step="4">같은 작업을 여러 에이전트가 병렬로 수행하고, 결과를 비교해 하나를 선택합니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<article class="slide compact design-review" data-index="3" data-pattern="SEMINAR_DEPENDENCY_COMPARE">
+<header class="slide__header"><span class="slide__label">Part 7 · Chapter 1 · Ch01-01</span><h1 class="slide__title">순차와 <span class="hl">병렬</span></h1><p class="slide__sub">같은 요청을 여러 에이전트에 동시 배분하는 구조입니다.</p></header>
 <main class="slide__body">
 <div class="dependency-comparison p7-compare">
 <section class="dependency-panel p7-panel-serial anim-item" data-anim-step="0">
@@ -1308,7 +1344,7 @@
 <div class="dependency-map" data-dependency-mode="serial">
 <svg class="dependency-wires" aria-hidden="true"><path/><path/></svg>
 <figure class="dependency-node is-agent" data-dependency-node="s1" style="left:16%;top:18%"><div class="dependency-symbol"><svg class="icon icon--robot " viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><figcaption>앞 작업</figcaption></figure>
-<figure class="dependency-node is-document" data-dependency-node="s2" style="left:50%;top:47%"><div class="dependency-symbol"><svg class="dependency-document" viewBox="0 0 88 100" aria-hidden="true"><path class="document-page" d="M16 4H56L76 24V96H16Z"/><path class="document-fold" d="M56 4V24H76"/><path class="document-lines" d="M30 43H61M30 57H61M30 71H51"/></svg></div><figcaption>중간 산출물</figcaption></figure>
+<figure class="dependency-node is-document" data-dependency-node="s2" style="left:50%;top:47%"><div class="dependency-symbol"><svg class="dependency-document" viewBox="0 0 88 100" aria-hidden="true"><path class="document-page" d="M16 4H56L76 24V96H16Z"/><path class="document-fold" d="M56 4V24H76"/><path class="document-lines" d="M30 43H61M30 57H61M30 71H51"/></svg></div><figcaption>중간 결과물</figcaption></figure>
 <figure class="dependency-node is-agent" data-dependency-node="s3" style="left:84%;top:76%"><div class="dependency-symbol"><svg class="icon icon--robot " viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><figcaption>다음 작업</figcaption></figure>
 </div>
 </section>
@@ -1317,8 +1353,8 @@
 <div class="dependency-map" data-dependency-mode="parallel">
 <svg class="dependency-wires" aria-hidden="true"><path/><path/><path/></svg>
 <figure class="dependency-node is-document" data-dependency-node="src" style="left:50%;top:18%"><div class="dependency-symbol"><svg class="dependency-document" viewBox="0 0 88 100" aria-hidden="true"><path class="document-page" d="M16 4H56L76 24V96H16Z"/><path class="document-fold" d="M56 4V24H76"/><path class="document-lines" d="M30 43H61M30 57H61M30 71H51"/></svg></div><figcaption>같은 의뢰</figcaption></figure>
-<figure class="dependency-node is-agent" data-dependency-node="w1" style="left:26%;top:76%"><div class="dependency-symbol"><svg class="icon icon--robot " viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><figcaption>시안 A</figcaption></figure>
-<figure class="dependency-node is-agent" data-dependency-node="w2" style="left:74%;top:76%"><div class="dependency-symbol"><svg class="icon icon--robot " viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><figcaption>시안 B</figcaption></figure>
+<figure class="dependency-node is-agent" data-dependency-node="w1" style="left:26%;top:76%"><div class="dependency-symbol"><svg class="icon icon--robot " viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><figcaption>Worker A</figcaption></figure>
+<figure class="dependency-node is-agent" data-dependency-node="w2" style="left:74%;top:76%"><div class="dependency-symbol"><svg class="icon icon--robot " viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><figcaption>Worker B</figcaption></figure>
 </div>
 </section>
 </div>
@@ -1326,49 +1362,56 @@
 </main>
 <footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
 </article>
-<article class="slide compact" data-index="6" data-pattern="PROCESS_STRIP">
-<header class="slide__header"><span class="slide__label">Part 7 · Chapter 1 · Ch01-01</span><h1 class="slide__title">사람이 <span class="hl">고른다</span></h1><p class="slide__sub">두 시안을 비교해 추천까지는 에이전트가 하고, 결정은 사람이 합니다.</p></header>
+<article class="slide compact design-review" data-index="4" data-pattern="SCENE_COMPARE">
+<header class="slide__header"><span class="slide__label">Part 7 · Chapter 1 · Ch01-01</span><h1 class="slide__title">같은 파일의 <span class="hl">충돌</span></h1><p class="slide__sub">같은 파일을 동시에 수정하면 한쪽 변경이 덮이거나 두 결과가 섞일 수 있습니다.</p></header>
 <main class="slide__body">
-<div class="p7-steps"><figure class="p7-step anim-item" data-anim-step="0" style="--accent:var(--yellow)"><svg class="p7-glyph" style="width:min(8.6rem,20.0cqh);height:min(8.6rem,20.0cqh)" viewBox="0 0 100 100" fill="none" stroke="var(--yellow)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-workspace"/></svg><figcaption><h2 class="heading">두 시안</h2><p class="copy">같은 조건, 다른 결과</p></figcaption></figure><span class="p7-arrow anim-item" data-anim-step="1" aria-hidden="true"><svg viewBox="0 0 64 24"><path d="M2 12H56M46 3L57 12L46 21"/></svg></span><figure class="p7-step anim-item" data-anim-step="1" style="--accent:var(--purple)"><svg class="p7-glyph" style="width:min(8.6rem,20.0cqh);height:min(8.6rem,20.0cqh)" viewBox="0 0 100 100" fill="none" stroke="var(--purple)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><figcaption><h2 class="heading">비교</h2><p class="copy">기준별 차이를 표로</p></figcaption></figure><span class="p7-arrow anim-item" data-anim-step="2" aria-hidden="true"><svg viewBox="0 0 64 24"><path d="M2 12H56M46 3L57 12L46 21"/></svg></span><figure class="p7-step anim-item" data-anim-step="2" style="--accent:var(--gray)"><svg class="p7-glyph" style="width:min(8.6rem,20.0cqh);height:min(8.6rem,20.0cqh)" viewBox="0 0 100 100" fill="none" stroke="var(--gray)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-person"/></svg><figcaption><h2 class="heading">선택</h2><p class="copy">쓸 시안을 사람이 결정</p></figcaption></figure></div><p class="p5-note anim-item" data-anim-step="4">내가 선택하기 전에는 머지하지 말라고 함께 요청합니다.</p>
+<div class="p7-collision">
+<figure class="p7-collision-actor anim-item" data-anim-step="0" style="--accent:var(--brand)">
+<svg class="icon icon--robot tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><figcaption><h2 class="heading">Worker A</h2></figcaption></figure>
+<span class="p7-arrow anim-item" data-anim-step="1" aria-hidden="true"><svg viewBox="0 0 64 24"><path d="M2 12H56M46 3L57 12L46 21"/></svg></span>
+<div class="p7-folder anim-item" data-anim-step="1"><span class="p7-clash" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="3" stroke-linecap="round"><path d="M5 5L19 19M19 5L5 19"/></svg></span>
+<svg class="p7-glyph" style="width:min(7.4rem,17.2cqh);height:min(7.4rem,17.2cqh)" viewBox="0 0 100 100" fill="none" stroke="var(--orange)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg>
+<p class="p7-folder-file">index.html</p>
+<p class="copy">같은 파일을 동시에 수정</p>
+</div>
+<span class="p7-arrow p7-arrow--back anim-item" data-anim-step="2" aria-hidden="true"><svg viewBox="0 0 64 24"><path d="M2 12H56M46 3L57 12L46 21"/></svg></span>
+<figure class="p7-collision-actor anim-item" data-anim-step="2" style="--accent:var(--purple)">
+<svg class="icon icon--robot tone-purple" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><figcaption><h2 class="heading">Worker B</h2></figcaption></figure>
+</div>
+<p class="p5-note anim-item" data-anim-step="3">같은 일을 동시에 맡기려면 파일을 수정할 작업 공간부터 나눠야 합니다.</p>
 </main>
 <footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
 </article>
-<article class="slide compact" data-index="7" data-pattern="STRUCTURE_EXCHANGE">
-<header class="slide__header"><span class="slide__label">Part 7 · Chapter 1 · Ch01-01</span><h1 class="slide__title">선택한 시안만 <span class="hl">메인으로</span></h1><p class="slide__sub">고른 시안만 메인에 머지하고 나머지는 브랜치에 남겨 둡니다.</p></header>
+<article class="slide compact design-review" data-index="5" data-pattern="STRUCTURE_BRANCH">
+<header class="slide__header"><span class="slide__label">Part 7 · Chapter 1 · Ch01-01</span><h1 class="slide__title">독립된 <span class="hl">작업 공간</span></h1><p class="slide__sub">같은 시작 커밋에서 워크트리를 하나씩 만들어 각자의 폴더에서 작업하게 합니다.</p></header>
+<main class="slide__body"><div class="p7-split"><figure class="p7-root anim-item" data-anim-step="0"><svg class="p7-commit" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="13" fill="var(--bg-card)" stroke="var(--brand)" stroke-width="3.5"/></svg><figcaption><h2 class="heading">시작 커밋 하나</h2><p class="copy">같은 지점에서 출발한다</p></figcaption></figure><svg class="design-split-wires anim-item" data-anim-step="1" aria-hidden="true"><path/><path/></svg><div class="p7-leaves"><figure class="p7-leaf anim-item" data-anim-step="2" style="--accent:var(--brand)"><div class="bw-folder" style="--folder-color:var(--brand)"><svg class="diagram" viewBox="0 0 260 180" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M10 42V15H94L118 42H250V168H10ZM10 60H250"/><g stroke="var(--gray)" stroke-width="2"><path d="M80 111H95L103 119V151H80ZM95 111V119H103M86 130H97M86 139H97"/><path d="M119 111H134L142 119V151H119ZM134 111V119H142M125 130H136M125 139H136"/><path d="M158 111H173L181 119V151H158ZM173 111V119H181M164 130H175M164 139H175" stroke="var(--brand)"/></g></svg><span class="bw-folder-branch"><svg class="diagram" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="stroke-width:1.8"><circle cx="6" cy="4" r="2"/><circle cx="6" cy="20" r="2"/><circle cx="18" cy="4" r="2"/><path d="M6 6V18M18 6V9Q18 13 13 13H6"/></svg>작업 A</span></div><figcaption><h2 class="heading">워크트리 A</h2><p class="copy">Claude Code</p></figcaption></figure><figure class="p7-leaf anim-item" data-anim-step="3" style="--accent:var(--purple)"><div class="bw-folder" style="--folder-color:var(--purple)"><svg class="diagram" viewBox="0 0 260 180" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><path d="M10 42V15H94L118 42H250V168H10ZM10 60H250"/><g stroke="var(--gray)" stroke-width="2"><path d="M80 111H95L103 119V151H80ZM95 111V119H103M86 130H97M86 139H97"/><path d="M119 111H134L142 119V151H119ZM134 111V119H142M125 130H136M125 139H136"/><path d="M158 111H173L181 119V151H158ZM173 111V119H181M164 130H175M164 139H175" stroke="var(--purple)"/></g></svg><span class="bw-folder-branch"><svg class="diagram" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="stroke-width:1.8"><circle cx="6" cy="4" r="2"/><circle cx="6" cy="20" r="2"/><circle cx="18" cy="4" r="2"/><path d="M6 6V18M18 6V9Q18 13 13 13H6"/></svg>작업 B</span></div><figcaption><h2 class="heading">워크트리 B</h2><p class="copy">Codex</p></figcaption></figure></div></div><p class="p5-note anim-item" data-anim-step="4">각자 자기 워크트리의 파일을 수정하므로 작업 결과가 섞이지 않습니다.</p></main>
+<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
+</article>
+<article class="slide compact design-review" data-index="6" data-pattern="PROCESS_STRIP">
+<header class="slide__header"><span class="slide__label">Part 7 · Chapter 1 · Ch01-01</span><h1 class="slide__title">시안 비교와 <span class="hl">선택</span></h1><p class="slide__sub">두 시안을 비교하고 사람이 선택하면 선택한 시안을 main에 머지합니다.</p></header>
 <main class="slide__body">
-<div class="p7-merge">
-<div class="p7-merge-col">
-<div class="p7-branch anim-item" data-anim-step="0" style="--accent:var(--brand)">
-<svg class="p7-glyph" style="width:min(3rem,7.0cqh);height:min(3rem,7.0cqh)" viewBox="0 0 100 100" fill="none" stroke="var(--brand)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-workspace"/></svg><span class="heading">시안 A</span><span class="copy">선택</span></div>
-<div class="p7-branch anim-item" data-anim-step="1" style="--accent:var(--gray)">
-<svg class="p7-glyph" style="width:min(3rem,7.0cqh);height:min(3rem,7.0cqh)" viewBox="0 0 100 100" fill="none" stroke="var(--gray)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-workspace"/></svg><span class="heading">시안 B</span><span class="copy">브랜치에 남김</span></div>
-</div>
-<div class="p7-merge-arrow anim-item" data-anim-step="2" aria-hidden="true">
-<svg viewBox="0 0 90 28"><path d="M2 14H74M64 4L78 14L64 24"/></svg><span>머지</span>
-</div>
-<figure class="p7-main anim-item" data-anim-step="3"><svg class="p7-glyph" style="width:min(6.6rem,15.4cqh);height:min(6.6rem,15.4cqh)" viewBox="0 0 100 100" fill="none" stroke="var(--green)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-done"/></svg>
-<figcaption><h2 class="heading">메인</h2><p class="copy">화면과 버튼 동작을 다시 확인한다</p></figcaption></figure>
-</div>
-<p class="p5-note anim-item" data-anim-step="4">두 시안을 섞지 않습니다. 머지한 작업 공간은 정리합니다.</p>
+<div class="p7-steps"><figure class="p7-step anim-item" data-anim-step="0" style="--accent:var(--yellow)"><svg class="p7-glyph" style="width:min(8.6rem,20.0cqh);height:min(8.6rem,20.0cqh)" viewBox="0 0 100 100" fill="none" stroke="var(--yellow)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g stroke="var(--brand)"><rect x="5" y="18" width="62" height="52" rx="3"/><path d="M5 30H67M14 42H43M14 52H35"/></g><g stroke="var(--purple)" fill="var(--bg)"><rect x="34" y="39" width="62" height="52" rx="3"/><path d="M34 51H96M45 64H81M45 75H69"/></g></svg><figcaption><h2 class="heading">시안 비교</h2><p class="copy">행사 정보·가독성·버튼 비교</p></figcaption></figure><span class="p7-arrow anim-item" data-anim-step="1" aria-hidden="true"><svg viewBox="0 0 64 24"><path d="M2 12H56M46 3L57 12L46 21"/></svg></span><figure class="p7-step anim-item" data-anim-step="1" style="--accent:var(--gray)"><svg class="p7-glyph" style="width:min(8.6rem,20.0cqh);height:min(8.6rem,20.0cqh)" viewBox="0 0 100 100" fill="none" stroke="var(--gray)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-person"/></svg><figcaption><h2 class="heading">사람이 선택</h2><p class="copy">쓸 시안을 최종 결정</p></figcaption></figure><span class="p7-arrow anim-item" data-anim-step="2" aria-hidden="true"><svg viewBox="0 0 64 24"><path d="M2 12H56M46 3L57 12L46 21"/></svg></span><figure class="p7-step anim-item" data-anim-step="2" style="--accent:var(--green)"><svg class="p7-glyph" style="width:min(8.6rem,20.0cqh);height:min(8.6rem,20.0cqh)" viewBox="0 0 100 100" fill="none" stroke="var(--green)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="25" cy="18" r="7"/><circle cx="25" cy="82" r="7"/><circle cx="77" cy="18" r="7"/><path d="M25 25V75M77 25V36C77 54 25 43 25 64M17 56L25 64L33 56"/></svg><figcaption><h2 class="heading">머지</h2><p class="copy">선택한 시안을 main에 반영</p></figcaption></figure></div><p class="p5-note anim-item" data-anim-step="4">두 시안 중 사람이 선택한 결과만 main에 머지합니다.</p>
 </main>
 <footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
 </article>
-<article class="slide compact" data-index="8" data-pattern="SCENE_IMAGE">
-<header class="slide__header"><span class="slide__label">Part 7 · Chapter 1 · Ch01-01</span><h1 class="slide__title">만들 <span class="hl">것</span></h1><p class="slide__sub">무드온 블랙프라이데이 상세페이지를 두 시안으로 받아 하나를 고릅니다.</p></header>
+<article class="slide compact design-review " data-index="7" data-pattern="STRUCTURE_EXCHANGE"><header class="slide__header"><span class="slide__label">Part 7 · Chapter 1 · Ch01-01</span><h1 class="slide__title">선택한 시안의 <span class="hl">머지</span></h1><p class="slide__sub">선택한 시안만 메인에 반영하고 다른 시안은 브랜치와 작업공간에 보관합니다.</p></header><main class="slide__body"><div class="design-merge"><svg class="design-merge-wire anim-item" data-anim-step="2" aria-hidden="true"><path/></svg><div class="design-merge-sources"><div class="design-page anim-item" data-anim-step="0" data-merge="selected" style="--accent:var(--brand)"><span class="design-selected-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12L10 17L20 6"/></svg>선택</span><h2>Claude 시안</h2><p>메인에 반영</p><div class="design-page-lines"><i></i><i></i></div></div><div class="design-page anim-item" data-anim-step="1" style="--accent:var(--purple)"><h2>Codex 시안</h2><p>브랜치·작업공간 유지</p><div class="design-page-lines"><i></i><i></i></div></div></div><span class="design-merge-label anim-item" data-anim-step="2">선택한 시안만 머지</span><div class="design-page design-merge-main anim-item" data-anim-step="3" data-merge="main" style="--accent:var(--green)"><h2>최종 상세페이지</h2><p>main · 화면·버튼 동작 확인</p><div class="design-page-lines"><i></i><i></i></div></div></div><p class="p5-note anim-item" data-anim-step="4">메인 반영을 확인한 뒤 선택한 워크트리의 에이전트·서버를 종료하고 해당 워크트리만 정리합니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<article class="slide compact design-review" data-index="8" data-pattern="DELEGATION_HIERARCHY">
+<header class="slide__header"><span class="slide__label">Part 7 · Chapter 1 · Ch01-01</span><h1 class="slide__title">디자인팀의 <span class="hl">구조</span></h1><p class="slide__sub">Coordinator가 같은 요청을 두 워커에게 동시에 배정하고 각자의 시안을 받습니다.</p></header>
 <main class="slide__body">
-<div class="p7-closing">
-<figure class="p7-single anim-item" data-anim-step="0">
-<div class="p7-shot"><img src="/artifacts/part7/_images/ch02-01--draft-claude.png" alt="무드온 블랙프라이데이 상세페이지 시안"></div>
-</figure>
-<div class="anim-item" data-anim-step="1">
-<p class="statement">같은 의뢰,<strong>두 개의 시안</strong></p>
-<ul class="p7-closing-list">
-<li>행사 혜택과 구매 버튼을 담은 상세페이지</li>
-<li>워크트리 둘에서 동시에 제작</li>
-<li>비교하고 고른 시안만 메인으로</li>
-</ul>
-</div>
-</div>
+<div class="reference-serial-map design-team-map" data-mode="team">
+<svg class="ref-wires" aria-hidden="true">
+<path data-route="goal" data-anim-step="1" class="ref-request anim-item"/><path data-route="result" data-anim-step="3" class="ref-result anim-item"/>
+<path data-route="assign-a" data-anim-step="2" class="ref-request anim-item"/><path data-route="report-a" data-anim-step="3" class="ref-report-one anim-item"/>
+<path data-route="assign-b" data-anim-step="2" class="ref-request anim-item"/><path data-route="report-b" data-anim-step="3" class="ref-report-two anim-item"/>
+</svg>
+<div class="ref-actor ref-person anim-item" data-anim-step="0" style="left:12%;top:16%"><div class="ref-icon"><svg class="icon icon--human" viewBox="0 0 60 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="30" cy="16" r="11"/><path d="M10 58V43C10 21 50 21 50 43V58"/></svg></div><div class="ref-label"><h2>사람</h2><p>행사 조건과 디자인 요청을 한다</p></div></div>
+<div class="ref-actor ref-coordinator anim-item" data-anim-step="1" style="left:53%;top:16%"><div class="ref-icon"><svg class="icon icon--robot tone-yellow" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><div class="ref-label"><h2>Coordinator</h2><p>작업 전달 · 결과 확인</p></div></div>
+<div class="ref-actor ref-worker ref-worker-a anim-item" data-anim-step="2" style="left:24%;top:71%"><div class="ref-icon"><svg class="icon icon--robot tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><div class="ref-label"><h2>Worker A</h2><p>Claude Code · 워크트리 A</p></div></div>
+<div class="ref-actor ref-worker ref-worker-b anim-item" data-anim-step="2" style="left:80%;top:71%"><div class="ref-icon"><svg class="icon icon--robot tone-purple" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><div class="ref-label"><h2>Worker B</h2><p>Codex · 워크트리 B</p></div></div>
+<span class="ref-link-label ref-goal anim-item" data-anim-step="1">의뢰·기준</span>
+<span class="ref-link-label ref-result-label anim-item" data-anim-step="3">디자인 시안</span>
+<span class="ref-link-label team-route-label anim-item" data-team-label="assign-a" data-anim-step="2" style="color:var(--yellow)">같은 제작 요청</span><span class="ref-link-label team-route-label anim-item" data-team-label="report-a" data-anim-step="3" style="color:var(--brand)">디자인 시안</span><span class="ref-link-label team-route-label anim-item" data-team-label="assign-b" data-anim-step="2" style="color:var(--yellow)">같은 제작 요청</span><span class="ref-link-label team-route-label anim-item" data-team-label="report-b" data-anim-step="3" style="color:var(--purple)">디자인 시안</span></div>
+<p class="p5-note anim-item" data-anim-step="5">각 워커는 별도 워크트리에서 제작하며 서로의 시안은 보지 않습니다.</p>
 </main>
 <footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
 </article>
@@ -1405,7 +1448,7 @@
         }
       })();
       /* 조작 규칙 (성공 기준):
-         페이지 이동은 좌우 nav-btn · 하단 dot · 키보드(←/→/스페이스)로만.
+         페이지 이동은 하단 dot · 키보드(←/→/스페이스)로만.
          #deck/body/.slide에 이동용 click 리스너를 절대 달지 않는다 —
          강의 중 화면을 가리키며 클릭해도 슬라이드가 넘어가면 안 된다. */
 // A connector uses visible icon bounds; labels are not endpoint anchors.
@@ -1482,9 +1525,10 @@ function drawReferenceSerial(){
   const sx=co.cx+lane,sy=co.bottom+gap,ex=worker.cx-9,ey=worker.top-gap,mid=(sy+ey)/2;
   set('assign-'+id,`M${sx} ${sy}C${sx} ${mid},${ex} ${mid},${ex} ${ey}`+head(ex,ey,'down'));
   set('report-'+id,`M${ex+18} ${ey}C${ex+18} ${mid+16},${sx+18} ${mid+16},${sx+18} ${sy}`+head(sx+18,sy,'up'));
+  for(const kind of ['assign','report']){const label=map.querySelector(`[data-team-label="${kind}-${id}"]`);if(label){label.style.left=((sx+ex)/2+(kind==='report'?22:-20))+'px';label.style.top=(mid+(kind==='report'?35:-30))+'px';}}
  }
  const labels=[['.ref-goal',(x1+x2)/2,y-45],['.ref-result-label',(x1+x2)/2,y+45]];
- if(!parallel&&b){
+ if(!parallel&&map.dataset.mode!=='team'&&b){
   const qx=a.right+gap,rx=b.left-gap,qy=a.cy;
   set('sequence',`M${qx} ${qy}H${rx}`+head(rx,qy,'right'));
   labels.push(['.ref-sequence-label',(qx+rx)/2,qy+32]);
@@ -1524,7 +1568,15 @@ function drawDependencies(){
  });
 }
 
-function drawSeminarDiagrams(){ drawFlow(); drawOrchestration(); drawReferenceSerial(); drawDependencies(); }
+
+function drawDesignReview(){
+ const active=document.querySelector('.slide.active');if(!active)return;
+ const split=active.querySelector('.p7-split');
+ if(split){const r=split.getBoundingClientRect(),root=split.querySelector('.p7-root').getBoundingClientRect(),svg=split.querySelector('.design-split-wires');svg.setAttribute('viewBox',`0 0 ${r.width} ${r.height}`);const x=(root.left+root.right)/2-r.left,y=root.bottom-r.top+14;split.querySelectorAll('.p7-leaf').forEach((leaf,i)=>{const b=leaf.getBoundingClientRect(),ex=(b.left+b.right)/2-r.left,ey=b.top-r.top-14,mid=(y+ey)/2;svg.children[i].setAttribute('d',`M${x} ${y}C${x} ${mid} ${ex} ${mid} ${ex} ${ey}M${ex-5} ${ey-7}L${ex} ${ey}L${ex+5} ${ey-7}`)})}
+ const merge=active.querySelector('.design-merge');if(merge){const r=merge.getBoundingClientRect(),a=merge.querySelector('[data-merge="selected"]').getBoundingClientRect(),b=merge.querySelector('[data-merge="main"]').getBoundingClientRect(),svg=merge.querySelector('svg'),x1=a.right-r.left+20,x2=b.left-r.left-20,y=(a.top+a.bottom)/2-r.top,ey=(b.top+b.bottom)/2-r.top,mx=(x1+x2)/2;svg.setAttribute('viewBox',`0 0 ${r.width} ${r.height}`);svg.querySelector('path').setAttribute('d',`M${x1} ${y}C${mx} ${y} ${mx} ${ey} ${x2} ${ey}M${x2-7} ${ey-5}L${x2} ${ey}L${x2-7} ${ey+5}`);const label=merge.querySelector('.design-merge-label');label.style.left=mx+'px';label.style.top=Math.min(y,ey)-20+'px'}
+}
+
+function drawSeminarDiagrams(){ drawDesignReview(); drawFlow(); drawOrchestration(); drawReferenceSerial(); drawDependencies(); }
 /* 등장 애니메이션 중에는 요소가 움직이므로, 각 항목의 애니메이션이 끝날 때마다 선을 다시 그린다. */
 document.addEventListener('animationend',event=>{
  if(event.target.closest && event.target.closest('.slide.active')) requestAnimationFrame(drawSeminarDiagrams);
@@ -1568,7 +1620,6 @@ function resetPatternInteractions(slide){
           document.getElementById("tot").textContent = this.total;
           this._buildDots();
           this._bindKeys();
-          this._bindButtons();
           this._update();
           this._runSlide(this.current);
         }
@@ -1622,9 +1673,6 @@ function resetPatternInteractions(slide){
           const pct = ((this.current + 1) / this.total) * 100;
           document.getElementById("progress").style.width = pct + "%";
           document.getElementById("cur").textContent = this.current + 1;
-          document.getElementById("btn-prev").disabled = this.current === 0;
-          document.getElementById("btn-next").disabled =
-            this.current === this.total - 1;
           document
             .querySelectorAll(".dot")
             .forEach((d, i) =>
@@ -1640,14 +1688,6 @@ function resetPatternInteractions(slide){
             b.addEventListener("click", () => this._go(i));
             nav.appendChild(b);
           });
-        }
-        _bindButtons() {
-          document
-            .getElementById("btn-prev")
-            .addEventListener("click", () => this.prev());
-          document
-            .getElementById("btn-next")
-            .addEventListener("click", () => this.next());
         }
         _bindKeys() {
           document.addEventListener("keydown", (e) => {
@@ -1665,6 +1705,81 @@ function resetPatternInteractions(slide){
         }
       }
       new SlidePresentation();
+      function connectWorktreeFolders() {
+        const root = document.querySelector('.bw-origin');
+        if (!root) return;
+        const overlay = root.querySelector('.bw-origin-connections');
+        const source = root.querySelector('.bw-origin-source > .bw-folder > svg');
+        const targets = [...root.querySelectorAll('.bw-origin-workspace-art > .bw-folder > svg')];
+        const trunk = overlay.querySelector('.bw-origin-trunk');
+        const branches = [overlay.querySelector('.bw-origin-connection--a'), overlay.querySelector('.bw-origin-connection--b')];
+        let frame = 0;
+        const schedule = () => { if (!frame) frame = requestAnimationFrame(draw); };
+        const draw = () => {
+          frame = 0;
+          const bounds = root.getBoundingClientRect();
+          if (!bounds.width || !bounds.height) return;
+          overlay.setAttribute('viewBox', `0 0 ${bounds.width} ${bounds.height}`);
+          const anchor = (svg, x, y) => {
+            const point = new DOMPoint(x, y).matrixTransform(svg.getScreenCTM());
+            return { x: point.x - bounds.left, y: point.y - bounds.top };
+          };
+          // Folder art uses viewBox 0 0 260 180: lower edge y=168, upper edge at its center y=42.
+          const from = anchor(source, 130, 168);
+          const to = targets.map(svg => anchor(svg, 130, 42));
+          from.y += 8;
+          to.forEach(point => { point.y -= 12; });
+          const available = Math.max(0, Math.min(...to.map(point => point.y)) - from.y);
+          const railY = from.y + Math.min(24, available * 0.35);
+          const f = n => Number(n.toFixed(2));
+          trunk.setAttribute('d', `M${f(from.x)} ${f(from.y)}V${f(railY)}M${f(to[0].x)} ${f(railY)}H${f(to[1].x)}`);
+          to.forEach((point, i) => {
+            branches[i].setAttribute('d', `M${f(point.x)} ${f(railY)}V${f(point.y)}M${f(point.x - 6)} ${f(point.y - 7)}L${f(point.x)} ${f(point.y)}L${f(point.x + 6)} ${f(point.y - 7)}`);
+          });
+          if (root.getAnimations({subtree: true}).some(animation => animation.playState === 'running')) schedule();
+        };
+        const observer = new ResizeObserver(schedule);
+        [root, source, ...targets].forEach(element => observer.observe(element));
+        root.addEventListener('animationstart', schedule);
+        root.addEventListener('animationend', schedule);
+        window.addEventListener('resize', schedule);
+        document.fonts.ready.then(schedule);
+        schedule();
+      }
+
+connectWorktreeFolders();
+function drawTeamPattern(map){
+ const r=map.getBoundingClientRect(),svg=map.querySelector('.dependency-wires');if(!r.width||!r.height)return;
+ svg.setAttribute('viewBox',`0 0 ${r.width} ${r.height}`);
+ const box=id=>{const node=map.querySelector(`[data-dependency-node="${id}"]`),el=node.querySelector('svg'),b=el.getBoundingClientRect(),cap=node.querySelector('figcaption').getBoundingClientRect();return {x:(b.left+b.right)/2-r.left,y:(b.top+b.bottom)/2-r.top,l:b.left-r.left,rt:b.right-r.left,t:b.top-r.top,b:b.bottom-r.top,cb:Math.max(cap.bottom,b.bottom)-r.top}};
+ const arrow=(x,y,dir)=>dir==='right'?`M${x-8} ${y-5}L${x} ${y}L${x-8} ${y+5}`:dir==='up'?`M${x-5} ${y+8}L${x} ${y}L${x+5} ${y+8}`:`M${x-5} ${y-8}L${x} ${y}L${x+5} ${y-8}`;
+ const paths=[],returnPaths=[];const add=(d,route='')=>(route.startsWith('return')?returnPaths:paths).push(`<path data-route="${route}" d="${d}"/>`);
+ const across=(a,b)=>{const sx=a.rt+16,ex=b.l-16,m=(sx+ex)/2;add(`M${sx} ${a.y}C${m} ${a.y},${m} ${b.y},${ex} ${b.y}`+arrow(ex,b.y,'right'))};
+ const mode=map.dataset.overview,a=box('a'),b=box('b');
+ if(mode==='serial'||mode==='review'){
+  const result=box('result');across(a,result);across(result,b);
+  if(mode==='review'){const y=r.height*.78,sy=b.cb+18,ey=a.cb+18;add(`M${b.x} ${sy}V${y}H${a.x}V${ey}`,'return');add(arrow(a.x,ey,'up'),'return-head')}
+ }else{
+  const input=box('input'),sy=input.cb+14,ey=Math.min(a.t,b.t)-15,fy=(sy+ey)/2;
+  add(`M${input.x} ${sy}V${fy}`);
+  [a,b].forEach(t=>add(`M${input.x} ${fy}H${t.x}V${ey}`+arrow(t.x,ey,'down')));
+  if(mode==='roles'){
+   [[a,box('oa')],[b,box('ob')]].forEach(([from,to])=>add(`M${from.x} ${from.cb+13}V${to.t-14}`+arrow(to.x,to.t-14,'down')));
+  }else{
+   const to=box('select'),ey2=to.t-14,fork=(Math.max(a.cb,b.cb)+13+ey2)/2;
+   [a,b].forEach((from,i)=>{add(`M${from.x} ${from.cb+20}V${fork}H${to.x}`);const label=map.querySelector(i===0?'.p5-edge-caption--a':'.p5-edge-caption--b');if(label){label.style.left=((from.x+to.x)/2)+'px';label.style.top=(fork-14)+'px';}});add(`M${to.x} ${fork}V${ey2}`+arrow(to.x,ey2,'down'));
+  }
+ }
+ svg.innerHTML=paths.join('');
+ const returnSvg=map.querySelector('.p5-review-return .dependency-wires');
+ if(returnSvg){returnSvg.setAttribute('viewBox',`0 0 ${r.width} ${r.height}`);returnSvg.innerHTML=returnPaths.join('')}
+}
+
+function refreshTeamPatterns(){document.querySelectorAll('.slide.active .team-pattern-map').forEach(drawTeamPattern)}
+new MutationObserver(()=>requestAnimationFrame(refreshTeamPatterns)).observe(document.getElementById('deck'),{subtree:true,attributes:true,attributeFilter:['class']});
+window.addEventListener('resize',refreshTeamPatterns);
+document.fonts.ready.then(refreshTeamPatterns);
+
     </script>
   </body>
 </html>

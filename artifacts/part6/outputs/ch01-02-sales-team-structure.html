@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>영업팀 구조 살펴보기 (교차 검증) | Part 6 · Ch01-02</title>
+    <title>영업팀 구조 살펴보기 (교차 검증)</title>
     <!-- TEMPLATE ONLY: 실제 강의 내용·제품명·작업 캡처를 넣지 않는다.
      사용법: 이 파일을 복사 → 필요한 article 선택 → 모든 data-slot/제목/부제 교체.
      diagram의 공통 shape 정의를 유지하거나 사용한 도형만 각 SVG에 펼친다.
@@ -285,35 +285,6 @@
         height: 100%;
         background: var(--brand);
         transition: width 0.3s ease;
-      }
-      .nav-btn {
-        position: fixed;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 150;
-        width: clamp(1.9rem, 2.8vw, 2.5rem);
-        height: clamp(1.9rem, 2.8vw, 2.5rem);
-        display: grid;
-        place-items: center;
-        border: 1px solid var(--border);
-        border-radius: 3px;
-        background: rgba(255, 255, 255, 0.03);
-        color: var(--text-dim);
-        cursor: pointer;
-      }
-      .nav-btn:hover:not(:disabled) {
-        color: var(--text);
-        background: rgba(255, 255, 255, 0.08);
-      }
-      .nav-btn:disabled {
-        opacity: 0.1;
-        cursor: default;
-      }
-      #btn-prev {
-        left: clamp(0.4rem, 1.2vw, 1.1rem);
-      }
-      #btn-next {
-        right: clamp(0.4rem, 1.2vw, 1.1rem);
       }
       .dot-nav {
         position: fixed;
@@ -1157,6 +1128,100 @@
       .p6-pane li{position:relative;padding-left:1.3rem;font-size:var(--body);line-height:1.6}
       .p6-pane li:before{content:'';position:absolute;left:0;top:.72em;width:.45rem;height:.45rem;background:var(--accent)}
       .p6-vs{text-align:center;font-size:2.6rem;font-weight:800;color:var(--text-muted)}
+
+/* Latest approved Part 6 role, document and spacing rules. */
+.sales-slide .anim-item.do-fadeinup{animation-name:sales-fade}
+@keyframes sales-fade{from{opacity:0}to{opacity:1}}
+.sales-slide .slide__body{padding-bottom:min(4.6rem,10.7cqh)}
+.sales-flow{position:relative;display:grid;grid-template-columns:1.2fr .9fr 1.2fr;align-items:center;gap:min(7rem,7cqi);width:min(100%,88rem)}
+.sales-agent{color:var(--accent);display:flex;flex-direction:column;align-items:center;gap:1rem;width:max-content;justify-self:center;text-align:center}
+.sales-agent .icon{width:min(8.4rem,19.5cqh);height:min(8.6rem,20cqh)}
+.sales-agent .heading{color:var(--accent);white-space:nowrap}
+.sales-agent .copy{margin-top:.5rem;white-space:nowrap}
+.sales-doc{background:var(--bg-card);border:1px solid color-mix(in srgb,var(--accent) 45%,var(--bg));border-radius:.35rem;padding:min(2rem,4.6cqh) min(1.7rem,2cqi);color:var(--accent);min-width:0}
+.sales-doc-head{display:flex;gap:.7rem;align-items:center;margin-bottom:1.3rem}
+.sales-doc-head .heading{font-size:var(--body);color:var(--accent)}
+.sales-doc .copy{line-height:1.8;font-size:var(--body)}
+.sales-symbol{width:min(8rem,18cqh);height:min(8rem,18cqh);flex:none}
+.sales-doc .sales-symbol{width:min(3rem,6cqi);height:min(3.4rem,8cqh)}
+.sales-wires{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.sales-edge path{fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.sales-edge-label{position:absolute;transform:translate(-50%,-100%);font-size:clamp(.8rem,1.1vw,1.1rem);font-weight:750;white-space:nowrap;background:var(--bg);padding:0 .3rem}
+.sales-evidence{display:grid;grid-template-columns:1fr 1fr;gap:min(8rem,8cqi);width:min(100%,80rem)}
+.sales-evidence-side{display:flex;flex-direction:column;align-items:center;gap:min(1.6rem,3.7cqh);text-align:center}
+.sales-evidence-side .heading{color:var(--purple)}
+.sales-evidence-side .tone-yellow{color:var(--yellow)}
+.sales-evidence-side .copy{line-height:1.8}
+.sales-conditions{display:grid;grid-template-columns:repeat(3,1fr);gap:min(5rem,5cqi);width:min(100%,86rem)}
+.sales-conditions section{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.4rem}
+.sales-conditions .heading{color:var(--accent);font-size:var(--heading);white-space:nowrap}
+.sales-conditions .copy{line-height:1.8}
+.sales-closing-input{display:flex;flex-direction:column;gap:1.4rem}
+.sales-closing-input .heading{color:var(--purple)}
+.sales-closing-input .copy{line-height:1.8}
+.p6-team-map .ref-worker-a h2{color:var(--brand)}
+.p6-team-map .ref-worker-b h2{color:var(--purple)}
+.p6-team-map .ref-coordinator h2{color:var(--yellow)}
+.team-route-label{font-size:clamp(.75rem,1.1vw,1rem);background:var(--bg);padding:0 .35rem}
+.p6-shot figcaption{flex-direction:column;align-items:flex-start;gap:.5rem}
+
+.sales-deliverables{display:grid;grid-template-columns:1fr 1fr;gap:min(5rem,5cqi);width:min(100%,84rem)}
+.sales-deliverable{position:relative;--artifact-color:var(--accent);padding:min(3rem,6cqh) min(2.7rem,3cqi)}
+.sales-deliverable>.heading{color:var(--accent);margin-bottom:min(2.5rem,5cqh)}
+.sales-deliverable dl{display:flex;flex-direction:column;gap:1.3rem}
+.sales-deliverable dl>div{display:grid;grid-template-columns:3rem 1fr;gap:1.2rem;font-size:var(--body)}
+.sales-deliverable dt{color:var(--accent)}
+.sales-deliverable dd{margin:0;color:var(--text-dim)}
+
+.p6-steps .p6-step{background:none;border:0;padding:0}
+.p6-steps>.p6-arrow{align-self:flex-start;margin-top:calc(min(8.6rem,20cqh)/2 - .825rem)}
+
+.sales-closing-flow{grid-template-columns:repeat(3,1fr);gap:min(10rem,10cqi);width:min(100%,84rem);height:min(29rem,76cqh);padding-bottom:min(6rem,14cqh)}
+.sales-closing-flow [data-return="true"]>path:first-child{stroke-dasharray:8 7}
+
+/* Shared project collaboration-pattern page; introduction diagrams reused. */
+.team-pattern-layout{display:grid;grid-template-columns:1fr 1.5fr;gap:min(4rem,5cqi);width:100%;height:100%;align-items:center}
+.team-pattern-copy{padding-left:min(2rem,3cqi)}
+.team-pattern-copy .pattern-name{font-size:var(--body);color:var(--purple);font-weight:750;margin-bottom:min(1.5rem,3cqh)}
+.team-pattern-copy .statement{font-size:min(3rem,7cqh);line-height:1.45}
+.team-pattern-copy .pattern-detail{color:var(--text-dim);font-size:var(--body);margin-top:min(2rem,4cqh);line-height:1.6}
+.team-pattern-map{position:relative;height:min(36rem,83cqh);width:100%;--pattern-accent:var(--purple)}
+.team-pattern-map .dependency-wires{position:absolute;inset:0;width:100%;height:100%;overflow:visible;fill:none;stroke:var(--pattern-accent);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.team-pattern-map .dependency-node{position:absolute;transform:translate(-50%,-50%);height:min(7rem,15cqh);width:min(10rem,14cqi);margin:0;text-align:center}
+.team-pattern-map .dependency-symbol{height:100%;display:flex;align-items:center;justify-content:center}
+.team-pattern-map .icon{height:100%;width:min(7rem,15cqh);color:var(--brand)}
+.team-pattern-map [data-dependency-node="b"] .icon{color:var(--purple)}
+.team-pattern-map .dependency-document{height:100%;width:auto;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;color:var(--green)}
+.team-pattern-map .document-page{fill:var(--bg-card)}
+.team-pattern-map .document-fold{fill:var(--bg)}
+.team-pattern-map .document-lines{stroke-width:3}
+.team-pattern-map figcaption{position:absolute;top:calc(100% + min(.8rem,1.8cqh));left:50%;transform:translateX(-50%);width:max-content;font-size:var(--body);line-height:1.4;font-weight:700;white-space:nowrap}
+.team-pattern-map .is-document figcaption{color:var(--green)}
+.team-pattern-map .is-input,.team-pattern-map .is-person{height:min(5rem,11cqh)}
+.team-pattern-map .is-input .dependency-document,.team-pattern-map .is-input figcaption{color:var(--purple)}
+.team-pattern-map .is-input figcaption,.team-pattern-map .is-person figcaption{left:calc(50% + min(3.2rem,7cqh));top:50%;transform:translateY(-50%)}
+.team-pattern-map .p5-person{height:100%;width:auto;fill:var(--bg-card);stroke:var(--gray);stroke-width:2.5}
+.team-pattern-map .p5-review-return{position:absolute;inset:0;pointer-events:none}
+.team-pattern-map .p5-review-label{position:absolute;left:50%;top:78%;transform:translate(-50%,-50%);font-size:var(--body);color:var(--orange);background:var(--bg);padding:.3rem 1rem;white-space:nowrap}
+.team-pattern-map [data-route^="return"]{stroke:var(--orange)}
+.team-pattern-map [data-route="return"]{stroke-dasharray:7 7}
+.team-pattern-map .p5-edge-caption{position:absolute;top:71%;transform:translate(-50%,-50%);background:var(--bg);padding:.2rem .6rem;font-size:var(--body);color:var(--text-dim)}
+.team-pattern-map .p5-edge-caption--a{left:20%}.team-pattern-map .p5-edge-caption--b{left:80%}
+@keyframes team-pattern-reveal{from{opacity:0}to{opacity:1}}
+.team-pattern-slide .anim-item.do-fadeinup{animation:team-pattern-reveal .45s ease-out both}
+
+
+/* Central pattern diagram; dimensions shared by all three projects. */
+.team-pattern-centered .team-pattern-layout{display:flex;justify-content:center;align-items:center;gap:0}
+.team-pattern-centered .team-pattern-map{width:min(62rem,100%);height:min(40rem,88cqh);--pattern-accent:var(--purple)}
+.team-pattern-centered .team-pattern-map .dependency-node{height:min(8rem,17cqh);width:min(10rem,12cqi)}
+.team-pattern-centered .team-pattern-map .dependency-symbol .icon{height:100%;width:min(7.5rem,15cqh);color:var(--purple)}
+.team-pattern-centered .team-pattern-map figcaption{font-size:clamp(1.1rem,1.5vw,1.6rem)}
+
+.team-pattern-centered .slide__body{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto;padding-bottom:0;gap:min(2rem,4cqh)}
+.team-pattern-centered .team-pattern-layout{height:100%;min-height:0}
+.team-pattern-centered .team-pattern-map{height:100%;width:min(70rem,100%)}
+.team-pattern-definition{text-align:center;font-size:var(--body);line-height:1.5;color:var(--text-dim);margin:0}
 </style>
   </head>
   <body>
@@ -1194,19 +1259,13 @@
     <div class="progress-bar">
       <div class="progress-fill" id="progress"></div>
     </div>
-    <button class="nav-btn" id="btn-prev" aria-label="이전 슬라이드">
-      &#8592;
-    </button>
-    <button class="nav-btn" id="btn-next" aria-label="다음 슬라이드">
-      &#8594;
-    </button>
     <div class="dot-nav" id="dot-nav"></div>
     <div class="slide-counter">
-      <span id="cur">1</span> / <span id="tot">9</span>
+      <span id="cur">1</span> / <span id="tot">10</span>
     </div>
     <div class="slide-deck" id="deck">
 <article class="slide active p5-reference-cover" data-index="0" data-pattern="COVER_SCENE">
-<header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-02</span><h1 class="slide__title">영업팀 구조 살펴보기</h1><p class="slide__sub">의뢰가 들어오면 작성자와 평가자가 나눠 맡아 고객에게 낼 문서를 만듭니다.</p></header>
+<header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-02</span><h1 class="slide__title"><span class="hl">영업팀 구조</span> 살펴보기 (교차 검증)</h1><p class="slide__sub">의뢰가 들어오면 Generator와 Evaluator가 나눠 맡아 고객에게 낼 문서를 만듭니다.</p></header>
 <main class="slide__body">
 <div class="scene scene--cover">
 <div class="scene__copy anim-item"><p class="statement">광고 의뢰<strong>제안과 견적</strong></p></div>
@@ -1215,146 +1274,60 @@
 </main>
 <footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
 </article>
-<article class="slide compact" data-index="1" data-pattern="PROCESS_STRIP">
-<header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-02</span><h1 class="slide__title">누가 누구에게 <span class="hl">내는가</span></h1><p class="slide__sub">광고주의 의뢰를 대행사가 받아 제안서와 견적서로 답합니다.</p></header>
+<article class="slide compact sales-slide" data-index="1" data-pattern="SCENE_COMPARE">
+<header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-02</span><h1 class="slide__title">최종 결과물 <span class="hl">두 가지</span></h1><p class="slide__sub">교차 검증을 마친 제안서·견적서와 검토 과정을 담은 보고서를 만듭니다.</p></header>
+<main class="slide__body"><div class="sales-deliverables"><section class="sales-doc sales-deliverable anim-item" data-anim-step="0" style="--accent:var(--green)"><span class="paper-fold" aria-hidden="true"></span><h2 class="heading">최종 제안서·견적서</h2><dl><div><dt>제안</dt><dd>광고 전략 · 예상 성과</dd></div><div><dt>견적</dt><dd>광고비 · 수수료 · 부가세</dd></div><div><dt>범위</dt><dd>포함 업무 · 제외 업무</dd></div></dl></section><section class="sales-doc sales-deliverable anim-item" data-anim-step="1" style="--accent:var(--purple)"><span class="paper-fold" aria-hidden="true"></span><h2 class="heading">교차 검토 보고서</h2><dl><div><dt>평가</dt><dd>라운드별 판정</dd></div><div><dt>수정</dt><dd>반려 사유 · 반영 결과</dd></div><div><dt>비교</dt><dd>첫 초안과 최종본</dd></div></dl></section></div><p class="p5-note anim-item" data-anim-step="2">제안서·견적서는 고객 제출용, 교차 검토 보고서는 검증 과정 확인용입니다.</p></main>
+<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
+</article>
+<article class="slide team-pattern-slide team-pattern-centered" data-index="2"><header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-02</span><h1 class="slide__title">영업팀 <span class="hl">협업 패턴</span></h1><p class="slide__sub">다른 모델이 초안을 평가하고, 피드백을 반영해 반복 개선합니다.</p></header><main class="slide__body"><div class="team-pattern-layout"><div class="team-pattern-map" data-overview="review"><svg class="dependency-wires anim-item" data-anim-step="2" aria-hidden="true"></svg><figure data-anim-step="1" class="dependency-node anim-item is-agent" data-dependency-node="a" style="left:16%;top:30%"><div class="dependency-symbol"><svg class="icon icon--robot" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><figcaption>Generator</figcaption></figure><figure data-anim-step="2" class="dependency-node anim-item is-document" data-dependency-node="result" style="left:50%;top:30%"><div class="dependency-symbol"><svg class="dependency-document" viewBox="0 0 88 100" aria-hidden="true"><path class="document-page" d="M16 4H56L76 24V96H16Z"/><path class="document-fold" d="M56 4V24H76"/><path class="document-lines" d="M30 43H61M30 57H61M30 71H51"/></svg></div><figcaption>초안</figcaption></figure><figure data-anim-step="3" class="dependency-node anim-item is-agent" data-dependency-node="b" style="left:84%;top:30%"><div class="dependency-symbol"><svg class="icon icon--robot" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><figcaption>Evaluator</figcaption></figure><div class="p5-review-return anim-item" data-anim-step="4"><svg class="dependency-wires" aria-hidden="true"></svg><span class="p5-review-label">반려·재작업</span></div></div></div><p class="team-pattern-definition anim-item" data-anim-step="5">서로 다른 모델이 작성과 평가를 나누고, 피드백을 반영해 결과를 반복 개선합니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<article class="slide compact sales-slide" data-index="3" data-pattern="PROCESS_STRIP">
+<header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-02</span><h1 class="slide__title">광고 의뢰 <span class="hl">구조</span></h1><p class="slide__sub">광고주의 의뢰를 대행사가 받아 제안서와 견적서로 답합니다.</p></header>
 <main class="slide__body">
-<div class="p6-steps"><figure class="p6-step anim-item" data-anim-step="0" style="--accent:var(--gray)"><svg class="p6-glyph" style="width:min(8.6rem,20.0cqh);height:min(8.6rem,20.0cqh)" viewBox="0 0 100 100" fill="none" stroke="var(--gray)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-person"/></svg><figcaption><h2 class="heading">무브펫</h2><p class="copy">광고주 · 의뢰</p></figcaption></figure><span class="p6-arrow anim-item" data-anim-step="1" aria-hidden="true"><svg viewBox="0 0 64 24"><path d="M2 12H56M46 3L57 12L46 21"/></svg></span><figure class="p6-step anim-item" data-anim-step="1" style="--accent:var(--brand)"><svg class="p6-glyph" style="width:min(8.6rem,20.0cqh);height:min(8.6rem,20.0cqh)" viewBox="0 0 100 100" fill="none" stroke="var(--brand)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-workspace"/></svg><figcaption><h2 class="heading">포커스온</h2><p class="copy">광고대행사 · 우리</p></figcaption></figure><span class="p6-arrow anim-item" data-anim-step="2" aria-hidden="true"><svg viewBox="0 0 64 24"><path d="M2 12H56M46 3L57 12L46 21"/></svg></span><figure class="p6-step anim-item" data-anim-step="2" style="--accent:var(--green)"><svg class="p6-glyph" style="width:min(8.6rem,20.0cqh);height:min(8.6rem,20.0cqh)" viewBox="0 0 100 100" fill="none" stroke="var(--green)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><figcaption><h2 class="heading">제안서·견적서</h2><p class="copy">고객에게 내는 문서</p></figcaption></figure></div><p class="p5-note anim-item" data-anim-step="4">회사 문서는 앞에서 만든 내 회사 문서로 바꿔도 됩니다.</p>
+<div class="p6-steps"><figure class="p6-step anim-item" data-anim-step="0" style="--accent:var(--gray)"><svg class="p6-glyph" style="width:min(8.6rem,20.0cqh);height:min(8.6rem,20.0cqh)" viewBox="0 0 100 100" fill="none" stroke="var(--gray)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-person"/></svg><figcaption><h2 class="heading">무브펫</h2><p class="copy">광고주 · 의뢰</p></figcaption></figure><span class="p6-arrow anim-item" data-anim-step="1" aria-hidden="true"><svg viewBox="0 0 64 24"><path d="M2 12H56M46 3L57 12L46 21"/></svg></span><figure class="p6-step anim-item" data-anim-step="1" style="--accent:var(--brand)"><svg class="p6-glyph" style="width:min(8.6rem,20.0cqh);height:min(8.6rem,20.0cqh)" viewBox="0 0 100 100" fill="none" stroke="var(--brand)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 88V15H70V88 M70 40H86V88 M12 88H94 M40 88V68H53V88 M33 29H39 M53 29H59 M33 43H39 M53 43H59 M33 57H39 M53 57H59 M77 53H80 M77 67H80"/></svg><figcaption><h2 class="heading">포커스온</h2><p class="copy">광고대행사 · 우리</p></figcaption></figure><span class="p6-arrow anim-item" data-anim-step="2" aria-hidden="true"><svg viewBox="0 0 64 24"><path d="M2 12H56M46 3L57 12L46 21"/></svg></span><figure class="p6-step anim-item" data-anim-step="2" style="--accent:var(--green)"><svg class="p6-glyph" style="width:min(8.6rem,20.0cqh);height:min(8.6rem,20.0cqh)" viewBox="0 0 100 100" fill="none" stroke="var(--green)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><figcaption><h2 class="heading">제안서·견적서</h2><p class="copy">고객에게 내는 문서</p></figcaption></figure></div><p class="p5-note anim-item" data-anim-step="4">우리는 광고대행사 입장에서 고객에게 제안할 문서를 만듭니다.</p>
 </main>
 <footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
 </article>
-<article class="slide compact" data-index="2" data-pattern="SEMINAR_ROLE_MAP_PARALLEL">
-<header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-02</span><h1 class="slide__title">영업팀의 <span class="hl">구조</span></h1><p class="slide__sub">같은 입력을 보고 한쪽은 쓰고 한쪽은 판정합니다.</p></header>
+<article class="slide compact sales-slide" data-index="4" data-pattern="DELEGATION_HIERARCHY">
+<header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-02</span><h1 class="slide__title">영업팀의 <span class="hl">구조</span></h1><p class="slide__sub">Coordinator가 역할별 자료를 전달하고, 작성·평가·수정을 연결합니다.</p></header>
 <main class="slide__body">
-<div class="reference-serial-map p6-team-map" data-mode="parallel">
+<div class="reference-serial-map p6-team-map" data-mode="team">
 <svg class="ref-wires" aria-hidden="true">
-<path data-route="goal" class="ref-request"/><path data-route="result" class="ref-result"/>
-<path data-route="assign-a" class="ref-request"/><path data-route="report-a" class="ref-report-one"/>
-<path data-route="assign-b" class="ref-request"/><path data-route="report-b" class="ref-report-two"/>
+<path data-route="goal" data-anim-step="1" class="ref-request anim-item"/><path data-route="result" data-anim-step="4" class="ref-result anim-item"/>
+<path data-route="assign-a" data-anim-step="2" class="ref-request anim-item"/><path data-route="report-a" data-anim-step="3" class="ref-report-one anim-item"/>
+<path data-route="assign-b" data-anim-step="3" class="ref-request anim-item"/><path data-route="report-b" data-anim-step="4" class="ref-report-two anim-item"/>
 </svg>
-<div class="ref-actor ref-person anim-item" data-anim-step="0" style="left:12%;top:20%"><div class="ref-icon"><svg class="icon icon--human" viewBox="0 0 60 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="30" cy="16" r="11"/><path d="M10 58V43C10 21 50 21 50 43V58"/></svg></div><div class="ref-label"><h2>사람</h2><p>브리프와 회사 문서를 준다</p></div></div>
-<div class="ref-actor ref-coordinator anim-item" data-anim-step="1" style="left:58%;top:20%"><div class="ref-icon"><svg class="icon icon--robot tone-yellow" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><div class="ref-label"><h2>Coordinator</h2><p>라운드 진행 · 결과 확인</p></div></div>
-<div class="ref-actor ref-worker ref-worker-a anim-item" data-anim-step="2" style="left:28%;top:68%"><div class="ref-icon"><svg class="icon icon--robot tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><div class="ref-label"><h2>작성자</h2><p>Codex · 초안과 수정본</p></div></div>
-<div class="ref-actor ref-worker ref-worker-b anim-item" data-anim-step="3" style="left:78%;top:68%"><div class="ref-icon"><svg class="icon icon--robot tone-purple" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><div class="ref-label"><h2>평가자</h2><p>Claude Code · 판정과 사유</p></div></div>
-<span class="ref-link-label ref-goal">의뢰·기준</span>
-<span class="ref-link-label ref-result-label">판정·최종본</span>
-</div>
-<p class="p5-note anim-item" data-anim-step="4">초안은 작성자에서 평가자로 가고, 반려 사유는 평가자에서 작성자로 돌아옵니다.</p>
+<div class="ref-actor ref-person anim-item" data-anim-step="0" style="left:12%;top:16%"><div class="ref-icon"><svg class="icon icon--human" viewBox="0 0 60 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="30" cy="16" r="11"/><path d="M10 58V43C10 21 50 21 50 43V58"/></svg></div><div class="ref-label"><h2>사람</h2><p>브리프와 회사 문서를 준다</p></div></div>
+<div class="ref-actor ref-coordinator anim-item" data-anim-step="1" style="left:53%;top:16%"><div class="ref-icon"><svg class="icon icon--robot tone-yellow" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><div class="ref-label"><h2>Coordinator</h2><p>작업 전달 · 결과 확인</p></div></div>
+<div class="ref-actor ref-worker ref-worker-a anim-item" data-anim-step="2" style="left:24%;top:71%"><div class="ref-icon"><svg class="icon icon--robot tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><div class="ref-label"><h2>Generator</h2><p>Codex · 초안과 수정본</p></div></div>
+<div class="ref-actor ref-worker ref-worker-b anim-item" data-anim-step="3" style="left:80%;top:71%"><div class="ref-icon"><svg class="icon icon--robot tone-purple" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><div class="ref-label"><h2>Evaluator</h2><p>Claude Code · 판정과 사유</p></div></div>
+<span class="ref-link-label ref-goal anim-item" data-anim-step="1">의뢰·기준</span>
+<span class="ref-link-label ref-result-label anim-item" data-anim-step="4">판정·최종본</span>
+<span class="ref-link-label team-route-label anim-item" data-team-label="assign-a" data-anim-step="2" style="color:var(--yellow)">작성·수정 요청</span><span class="ref-link-label team-route-label anim-item" data-team-label="report-a" data-anim-step="3" style="color:var(--brand)">초안·수정본</span><span class="ref-link-label team-route-label anim-item" data-team-label="assign-b" data-anim-step="3" style="color:var(--yellow)">초안·평가 요청</span><span class="ref-link-label team-route-label anim-item" data-team-label="report-b" data-anim-step="4" style="color:var(--purple)">평가·수정 요청서</span></div>
+<p class="p5-note anim-item" data-anim-step="4">초안과 수정 요청서는 Coordinator를 거쳐 다음 담당에게 전달됩니다.</p>
 </main>
 <footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
 </article>
-<article class="slide compact" data-index="3" data-pattern="SEMINAR_IO_FLOW">
-<header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-02</span><h1 class="slide__title">작성자가 <span class="hl">읽는 것</span></h1><p class="slide__sub">브리프와 회사 문서를 읽고 요구사항 정의서부터 만듭니다.</p></header>
+<article class="slide compact sales-slide" data-index="5" data-pattern="SPACE_TRANSFER"><header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-02</span><h1 class="slide__title">Generator의 <span class="hl">작업</span></h1><p class="slide__sub">요구사항을 먼저 정리하고, 제안서와 견적서의 초안을 작성합니다.</p></header><main class="slide__body"><div class="sales-flow"><svg class="sales-wires" aria-hidden="true"><g class="sales-edge anim-item" data-from="input" data-to="agent" data-anim-step="1" style="color:var(--purple)"><path/><path class="tip"/></g><g class="sales-edge anim-item" data-from="agent" data-to="output" data-anim-step="2" style="color:var(--green)"><path/><path class="tip"/></g></svg><section class="sales-doc anim-item" data-sales-node="input" data-anim-step="0" style="--accent:var(--purple)"><div class="sales-doc-head"><svg class="sales-symbol" viewBox="0 0 100 100" fill="none" stroke="var(--purple)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M24 12H59L77 30V88H24ZM59 12V30H77M35 45H64M35 58H64M35 71H55"/></svg><h2 class="heading">작성 자료</h2></div><p class="copy">클라이언트 브리프<br>회사 문서<br>제안·견적 양식과 샘플</p></section><figure class="sales-agent anim-item" data-sales-node="agent" data-anim-step="1" style="--accent:var(--brand)"><svg class="icon review-anchor" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><figcaption><h2 class="heading">Generator</h2><p class="copy">Codex · 작성·수정</p></figcaption></figure><section class="sales-doc anim-item" data-sales-node="output" data-anim-step="2" style="--accent:var(--green)"><div class="sales-doc-head"><svg class="sales-symbol" viewBox="0 0 100 100" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M24 12H59L77 30V88H24ZM59 12V30H77M35 45H64M35 58H64M35 71H55"/></svg><h2 class="heading">요구사항과 초안</h2></div><p class="copy">요구사항 정의서<br>제안서·견적서 초안</p></section><span class="sales-edge-label anim-item" data-from="input" data-to="agent" data-anim-step="1" style="color:var(--purple)">참고</span><span class="sales-edge-label anim-item" data-from="agent" data-to="output" data-anim-step="2" style="color:var(--green)">결과물</span></div><p class="p5-note anim-item" data-anim-step="4">회사 문서는 앞에서 만든 내 회사 문서로 바꿔도 됩니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<article class="slide compact sales-slide" data-index="6" data-pattern="SPACE_TRANSFER"><header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-02</span><h1 class="slide__title">Evaluator의 <span class="hl">작업</span></h1><p class="slide__sub">기준에 따라 초안을 평가하고, 판정 근거와 수정할 내용을 파일로 남깁니다.</p></header><main class="slide__body"><div class="sales-flow"><svg class="sales-wires" aria-hidden="true"><g class="sales-edge anim-item" data-from="input" data-to="agent" data-anim-step="1" style="color:var(--purple)"><path/><path class="tip"/></g><g class="sales-edge anim-item" data-from="agent" data-to="output" data-anim-step="2" style="color:var(--green)"><path/><path class="tip"/></g></svg><section class="sales-doc anim-item" data-sales-node="input" data-anim-step="0" style="--accent:var(--purple)"><div class="sales-doc-head"><svg class="sales-symbol" viewBox="0 0 100 100" fill="none" stroke="var(--purple)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M24 12H59L77 30V88H24ZM59 12V30H77M35 45H64M35 58H64M35 71H55"/></svg><h2 class="heading">검사 자료</h2></div><p class="copy">제안서·견적서 초안<br>고정된 체크리스트<br>요구사항 정의서와 원문</p></section><figure class="sales-agent anim-item" data-sales-node="agent" data-anim-step="1" style="--accent:var(--purple)"><svg class="icon review-anchor" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><figcaption><h2 class="heading">Evaluator</h2><p class="copy">Claude Code · 평가</p></figcaption></figure><section class="sales-doc anim-item" data-sales-node="output" data-anim-step="2" style="--accent:var(--green)"><div class="sales-doc-head"><svg class="sales-symbol" viewBox="0 0 100 100" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M24 12H59L77 30V88H24ZM59 12V30H77M35 45H64M35 58H64M35 71H55"/></svg><h2 class="heading">평가와 수정 요청</h2></div><p class="copy">평가 기록<br>반려 시 수정 요청서</p></section><span class="sales-edge-label anim-item" data-from="input" data-to="agent" data-anim-step="1" style="color:var(--purple)">대조</span><span class="sales-edge-label anim-item" data-from="agent" data-to="output" data-anim-step="2" style="color:var(--green)">결과물</span></div><p class="p5-note anim-item" data-anim-step="4">Generator에게는 반려 사유와 수정 요청을 전달합니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<article class="slide compact sales-slide" data-index="7" data-pattern="SCENE_COMPARE"><header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-02</span><h1 class="slide__title">원문 대조와 <span class="hl">독립 검산</span></h1><p class="slide__sub">Evaluator는 내용을 원문과 대조하고, 계산은 스크립트로 다시 확인합니다.</p></header><main class="slide__body"><div class="sales-evidence"><section class="sales-evidence-side anim-item" data-anim-step="0"><svg class="sales-symbol" viewBox="0 0 100 100" fill="none" stroke="var(--purple)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M24 12H59L77 30V88H24ZM59 12V30H77M35 45H64M35 58H64M35 71H55"/></svg><h2 class="heading">원문 대조</h2><p class="copy">브리프 · 회사 문서<br>요구사항과 제안 내용 비교</p></section><section class="sales-evidence-side anim-item" data-anim-step="1"><svg class="sales-symbol" viewBox="0 0 100 100" fill="none" stroke="var(--yellow)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="22" y="8" width="56" height="84" rx="7"/><path d="M32 22H68V38H32Z M34 53H40 M60 53H66 M34 68H40 M60 68H66 M34 82H40 M60 82H66"/></svg><h2 class="heading tone-yellow">독립 검산</h2><p class="copy">금액 · 예상 성과<br>스크립트로 재계산해 비교</p></section></div><p class="p5-note anim-item" data-anim-step="4">대조한 원문 위치와 검산 결과를 평가 기록에 함께 남깁니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<article class="slide compact sales-slide" data-index="8" data-pattern="SCENE_COMPARE"><header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-02</span><h1 class="slide__title">반복 <span class="hl">종료 조건</span></h1><p class="slide__sub">전체 루프는 최대 3라운드까지 진행하며, 통과하면 반복을 끝냅니다.</p></header><main class="slide__body"><div class="sales-conditions"><section class="anim-item" data-anim-step="0" style="--accent:var(--green)"><svg class="sales-symbol" viewBox="0 0 100 100" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="50" cy="50" r="36"/><path d="M30 50L44 64L72 35"/></svg><h2 class="heading">통과</h2><p class="copy">전 항목 통과 · 검산 완료<br>최종본 생성</p></section><section class="anim-item" data-anim-step="1" style="--accent:var(--orange)"><svg class="sales-symbol" viewBox="0 0 100 100" fill="none" stroke="var(--orange)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M25 30H62C91 30 91 73 62 73H27 M25 30L41 14 M25 30L41 46"/></svg><h2 class="heading">반려</h2><p class="copy">수정 요청 전달<br>같은 기준으로 재평가</p></section><section class="anim-item" data-anim-step="2" style="--accent:var(--gray)"><svg class="sales-symbol" viewBox="0 0 100 100" fill="none" stroke="var(--gray)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="50" cy="50" r="36"/><path d="M35 35L65 65 M65 35L35 65"/></svg><h2 class="heading">3라운드 후 반려</h2><p class="copy">미해결 항목 보고<br>최종본 생성 없이 종료</p></section></div><p class="p5-note anim-item" data-anim-step="4">수정본은 다음 라운드에 저장하고, 이전 초안과 평가는 보존합니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<article class="slide compact sales-slide" data-index="9" data-pattern="DELEGATION_HIERARCHY">
+<header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-02</span><h1 class="slide__title">영업팀의 <span class="hl">구조</span></h1><p class="slide__sub">Coordinator가 역할별 자료를 전달하고, 작성·평가·수정을 연결합니다.</p></header>
 <main class="slide__body">
-<div class="flow-canvas flow-horizontal p6-flow" data-direction="horizontal">
-<svg class="flow-connections" aria-hidden="true">
-<path data-from="in0" data-to="who" class="edge-input"/><path data-from="in1" data-to="who" class="edge-input"/><path data-from="in2" data-to="who" class="edge-input"/>
-<path data-from="who" data-to="out" class="edge-output"/>
+<div class="reference-serial-map p6-team-map" data-mode="team">
+<svg class="ref-wires" aria-hidden="true">
+<path data-route="goal" data-anim-step="1" class="ref-request anim-item"/><path data-route="result" data-anim-step="4" class="ref-result anim-item"/>
+<path data-route="assign-a" data-anim-step="2" class="ref-request anim-item"/><path data-route="report-a" data-anim-step="3" class="ref-report-one anim-item"/>
+<path data-route="assign-b" data-anim-step="3" class="ref-request anim-item"/><path data-route="report-b" data-anim-step="4" class="ref-report-two anim-item"/>
 </svg>
-<section class="flow-stage stage-input"><h2 class="flow-heading">읽는 것</h2><div class="flow-items"><div class="flow-artifact shape-paper tone-input anim-item" data-anim-step="0" data-node="in0"><div class="artifact-chrome"><span class="artifact-mark">입력</span><span>작업에 필요한 것</span></div><h2 class="artifact-title">클라이언트 브리프</h2><div class="artifact-decoration" aria-hidden="true"><span class="paper-fold"></span><div class="paper-rules"><i></i><i></i><i></i></div></div></div><div class="flow-artifact shape-paper tone-input anim-item" data-anim-step="0" data-node="in1"><div class="artifact-chrome"><span class="artifact-mark">입력</span><span>작업에 필요한 것</span></div><h2 class="artifact-title">회사 소개서 · 업무 사규 · 작업 지침</h2><div class="artifact-decoration" aria-hidden="true"><span class="paper-fold"></span><div class="paper-rules"><i></i><i></i><i></i></div></div></div><div class="flow-artifact shape-paper tone-input anim-item" data-anim-step="0" data-node="in2"><div class="artifact-chrome"><span class="artifact-mark">입력</span><span>작업에 필요한 것</span></div><h2 class="artifact-title">제안·견적 양식과 샘플</h2><div class="artifact-decoration" aria-hidden="true"><span class="paper-fold"></span><div class="paper-rules"><i></i><i></i><i></i></div></div></div></div></section>
-<section class="flow-stage stage-ai"><h2 class="flow-heading">작성자</h2><div class="flow-items">
-<figure class="p6-actor anim-item" data-anim-step="1" data-node="who" style="--accent:var(--brand)">
-<svg class="icon icon--robot tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></figure>
-</div></section>
-<section class="flow-stage stage-output"><h2 class="flow-heading">남기는 것</h2><div class="flow-items">
-<div class="flow-artifact shape-paper tone-output anim-item" data-anim-step="2" data-node="out"><div class="artifact-chrome"><span class="artifact-mark">MD</span><span>작성자의 결과</span></div><h2 class="artifact-title">요구사항 정의서 · 제안서·견적서 초안</h2><div class="artifact-decoration" aria-hidden="true"><span class="paper-fold"></span><div class="paper-rules"><i></i><i></i><i></i></div></div></div>
-</div></section>
-</div>
-<p class="p5-note anim-item" data-anim-step="3">무엇을 요구받았는지부터 문서로 정리한 뒤 초안을 씁니다.</p>
-</main>
-<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
-</article>
-<article class="slide compact" data-index="4" data-pattern="SEMINAR_IO_FLOW">
-<header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-02</span><h1 class="slide__title">평가자가 <span class="hl">보는 것</span></h1><p class="slide__sub">초안을 체크리스트와 요구사항에 대조해 판정합니다.</p></header>
-<main class="slide__body">
-<div class="flow-canvas flow-horizontal p6-flow" data-direction="horizontal">
-<svg class="flow-connections" aria-hidden="true">
-<path data-from="in0" data-to="who" class="edge-input"/><path data-from="in1" data-to="who" class="edge-input"/><path data-from="in2" data-to="who" class="edge-input"/>
-<path data-from="who" data-to="out" class="edge-output"/>
-</svg>
-<section class="flow-stage stage-input"><h2 class="flow-heading">읽는 것</h2><div class="flow-items"><div class="flow-artifact shape-paper tone-input anim-item" data-anim-step="0" data-node="in0"><div class="artifact-chrome"><span class="artifact-mark">입력</span><span>작업에 필요한 것</span></div><h2 class="artifact-title">제안서·견적서 초안</h2><div class="artifact-decoration" aria-hidden="true"><span class="paper-fold"></span><div class="paper-rules"><i></i><i></i><i></i></div></div></div><div class="flow-artifact shape-paper tone-input anim-item" data-anim-step="0" data-node="in1"><div class="artifact-chrome"><span class="artifact-mark">입력</span><span>작업에 필요한 것</span></div><h2 class="artifact-title">체크리스트</h2><div class="artifact-decoration" aria-hidden="true"><span class="paper-fold"></span><div class="paper-rules"><i></i><i></i><i></i></div></div></div><div class="flow-artifact shape-paper tone-input anim-item" data-anim-step="0" data-node="in2"><div class="artifact-chrome"><span class="artifact-mark">입력</span><span>작업에 필요한 것</span></div><h2 class="artifact-title">요구사항 정의서와 원문</h2><div class="artifact-decoration" aria-hidden="true"><span class="paper-fold"></span><div class="paper-rules"><i></i><i></i><i></i></div></div></div></div></section>
-<section class="flow-stage stage-ai"><h2 class="flow-heading">평가자</h2><div class="flow-items">
-<figure class="p6-actor anim-item" data-anim-step="1" data-node="who" style="--accent:var(--purple)">
-<svg class="icon icon--robot tone-purple" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></figure>
-</div></section>
-<section class="flow-stage stage-output"><h2 class="flow-heading">남기는 것</h2><div class="flow-items">
-<div class="flow-artifact shape-paper tone-output anim-item" data-anim-step="2" data-node="out"><div class="artifact-chrome"><span class="artifact-mark">MD</span><span>평가자의 결과</span></div><h2 class="artifact-title">판정과 이유가 적힌 평가 기록</h2><div class="artifact-decoration" aria-hidden="true"><span class="paper-fold"></span><div class="paper-rules"><i></i><i></i><i></i></div></div></div>
-</div></section>
-</div>
-<p class="p5-note anim-item" data-anim-step="3">판정마다 초안과 요구사항의 어느 부분을 봤는지 함께 적습니다.</p>
-</main>
-<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
-</article>
-<article class="slide compact" data-index="5" data-pattern="SCENE_COMPARE">
-<header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-02</span><h1 class="slide__title">숫자는 <span class="hl">다시 계산한다</span></h1><p class="slide__sub">금액과 성과는 평가자가 검산 스크립트로 다시 계산해 문서의 값과 맞춰 봅니다.</p></header>
-<main class="slide__body">
-<div class="p6-pair">
-<section class="p6-pane anim-item" data-anim-step="0" style="--accent:var(--purple)">
-<h2>읽어서 판단할 것</h2>
-<ul><li>요구가 제안 범위에 들어왔는가</li><li>표현이 업무 범위를 넘지 않는가</li><li>목표와 예상치를 구분했는가</li></ul>
-</section>
-<span class="p6-vs anim-item" data-anim-step="1" aria-hidden="true">+</span>
-<section class="p6-pane anim-item" data-anim-step="2" style="--accent:var(--yellow)">
-<h2>계산해서 확인할 것</h2>
-<ul><li>순매체비·수수료·부가세·총액</li><li>클릭·전환·매출과 CPA·ROAS</li><li>문서에 적힌 값과 재계산 값의 일치</li></ul>
-</section>
-</div>
-<p class="p5-note anim-item" data-anim-step="3">스크립트가 오류 없이 끝난 것을 문서 전체 통과로 보지 않습니다.</p>
-</main>
-<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
-</article>
-<article class="slide compact" data-index="6" data-pattern="REVIEW_LOOP">
-<header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-02</span><h1 class="slide__title">한 라운드의 <span class="hl">모양</span></h1><p class="slide__sub">초안 또는 수정본 → 평가·검산 → 판정까지가 한 라운드입니다.</p></header>
-<main class="slide__body">
-<div class="p6-loop">
-<div class="p6-loop-row">
-<figure class="p6-loop-node anim-item" data-anim-step="0" style="--accent:var(--brand)"><svg class="p6-glyph" style="width:min(5.6rem,13.0cqh);height:min(5.6rem,13.0cqh)" viewBox="0 0 100 100" fill="none" stroke="var(--brand)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg>
-<figcaption><h2 class="heading">초안</h2><p class="copy">작성자</p></figcaption></figure>
-<span class="p6-arrow anim-item" data-anim-step="1" aria-hidden="true"><svg viewBox="0 0 64 24"><path d="M2 12H56M46 3L57 12L46 21"/></svg></span>
-<figure class="p6-loop-node anim-item" data-anim-step="1" style="--accent:var(--purple)"><svg class="p6-glyph" style="width:min(5.6rem,13.0cqh);height:min(5.6rem,13.0cqh)" viewBox="0 0 100 100" fill="none" stroke="var(--purple)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-gate"/></svg>
-<figcaption><h2 class="heading">평가·검산</h2><p class="copy">평가자</p></figcaption></figure>
-<span class="p6-arrow anim-item" data-anim-step="2" aria-hidden="true"><svg viewBox="0 0 64 24"><path d="M2 12H56M46 3L57 12L46 21"/></svg></span>
-<figure class="p6-loop-node anim-item" data-anim-step="2" style="--accent:var(--green)"><svg class="p6-glyph" style="width:min(5.6rem,13.0cqh);height:min(5.6rem,13.0cqh)" viewBox="0 0 100 100" fill="none" stroke="var(--green)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-done"/></svg>
-<figcaption><h2 class="heading">판정</h2><p class="copy">통과 또는 반려</p></figcaption></figure>
-</div>
-<div class="p6-loop-return anim-item" data-anim-step="3">
-<svg viewBox="0 0 900 60" aria-hidden="true"><path d="M560 6V40H60V28M48 40L60 24L72 40"/></svg>
-<span>반려면 수정 요청서를 거쳐 다음 라운드로</span>
-</div>
-</div>
-<p class="p5-note anim-item" data-anim-step="4">라운드 번호를 올려 기록하고 앞 라운드의 초안은 지우지 않습니다.</p>
-</main>
-<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
-</article>
-<article class="slide compact" data-index="7" data-pattern="SCENE_COMPARE">
-<header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-02</span><h1 class="slide__title">남는 <span class="hl">기록</span></h1><p class="slide__sub">라운드별 초안·평가·수정 요청과 최종 문서가 파일로 남습니다.</p></header>
-<main class="slide__body">
-<div class="p6-shots">
-<figure class="p6-shot anim-item" data-anim-step="0" style="--accent:var(--green)">
-<div class="frame"><img src="/artifacts/part6/_images/ch01-02--proposal-quote-final.png" alt="최종 제안서와 견적 화면"></div>
-<figcaption><h2>최종 제안서·견적서</h2><p>고객에게 내는 문서</p></figcaption>
-</figure>
-<figure class="p6-shot anim-item" data-anim-step="1" style="--accent:var(--purple)">
-<div class="frame"><img src="/artifacts/part6/_images/ch01-02--cross-review-report.png" alt="라운드별 판정이 기록된 교차 검토 보고서 화면"></div>
-<figcaption><h2>교차 검토 보고서</h2><p>무엇이 반려되고 고쳐졌는지</p></figcaption>
-</figure>
-</div>
-<p class="p5-note anim-item" data-anim-step="2">통과한 결과만이 아니라 통과까지의 과정이 함께 남습니다.</p>
-</main>
-<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
-</article>
-<article class="slide compact" data-index="8" data-pattern="SCENE_PAIR">
-<header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-02</span><h1 class="slide__title">루프는 <span class="hl">한 번에</span> 돈다</h1><p class="slide__sub">작성부터 평가·수정까지를 코디네이터가 하나의 실행으로 돌립니다.</p></header>
-<main class="slide__body">
-<div class="p6-closing">
-<div class="anim-item" data-anim-step="0">
-<p class="statement">한 단계씩 해본 뒤<strong>한 번에 돌립니다</strong></p>
-</div>
-<ul class="p6-list anim-item" data-anim-step="1">
-<li>처음에는 요구사항·초안·기준·평가를 직접 요청한다</li>
-<li>마지막에는 준비된 실행 프롬프트 하나로 전체를 돌린다</li>
-<li>통과하면 최종 제안서와 교차 검토 보고서가 함께 나온다</li>
-</ul>
-</div>
+<div class="ref-actor ref-person anim-item" data-anim-step="0" style="left:12%;top:16%"><div class="ref-icon"><svg class="icon icon--human" viewBox="0 0 60 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="30" cy="16" r="11"/><path d="M10 58V43C10 21 50 21 50 43V58"/></svg></div><div class="ref-label"><h2>사람</h2><p>브리프와 회사 문서를 준다</p></div></div>
+<div class="ref-actor ref-coordinator anim-item" data-anim-step="1" style="left:53%;top:16%"><div class="ref-icon"><svg class="icon icon--robot tone-yellow" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><div class="ref-label"><h2>Coordinator</h2><p>작업 전달 · 결과 확인</p></div></div>
+<div class="ref-actor ref-worker ref-worker-a anim-item" data-anim-step="2" style="left:24%;top:71%"><div class="ref-icon"><svg class="icon icon--robot tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><div class="ref-label"><h2>Generator</h2><p>Codex · 초안과 수정본</p></div></div>
+<div class="ref-actor ref-worker ref-worker-b anim-item" data-anim-step="3" style="left:80%;top:71%"><div class="ref-icon"><svg class="icon icon--robot tone-purple" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></div><div class="ref-label"><h2>Evaluator</h2><p>Claude Code · 판정과 사유</p></div></div>
+<span class="ref-link-label ref-goal anim-item" data-anim-step="1">의뢰·기준</span>
+<span class="ref-link-label ref-result-label anim-item" data-anim-step="4">판정·최종본</span>
+<span class="ref-link-label team-route-label anim-item" data-team-label="assign-a" data-anim-step="2" style="color:var(--yellow)">작성·수정 요청</span><span class="ref-link-label team-route-label anim-item" data-team-label="report-a" data-anim-step="3" style="color:var(--brand)">초안·수정본</span><span class="ref-link-label team-route-label anim-item" data-team-label="assign-b" data-anim-step="3" style="color:var(--yellow)">초안·평가 요청</span><span class="ref-link-label team-route-label anim-item" data-team-label="report-b" data-anim-step="4" style="color:var(--purple)">평가·수정 요청서</span></div>
+<p class="p5-note anim-item" data-anim-step="4">초안과 수정 요청서는 Coordinator를 거쳐 다음 담당에게 전달됩니다.</p>
 </main>
 <footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
 </article>
@@ -1391,7 +1364,7 @@
         }
       })();
       /* 조작 규칙 (성공 기준):
-         페이지 이동은 좌우 nav-btn · 하단 dot · 키보드(←/→/스페이스)로만.
+         페이지 이동은 하단 dot · 키보드(←/→/스페이스)로만.
          #deck/body/.slide에 이동용 click 리스너를 절대 달지 않는다 —
          강의 중 화면을 가리키며 클릭해도 슬라이드가 넘어가면 안 된다. */
 // A connector uses visible icon bounds; labels are not endpoint anchors.
@@ -1468,9 +1441,10 @@ function drawReferenceSerial(){
   const sx=co.cx+lane,sy=co.bottom+gap,ex=worker.cx-9,ey=worker.top-gap,mid=(sy+ey)/2;
   set('assign-'+id,`M${sx} ${sy}C${sx} ${mid},${ex} ${mid},${ex} ${ey}`+head(ex,ey,'down'));
   set('report-'+id,`M${ex+18} ${ey}C${ex+18} ${mid+16},${sx+18} ${mid+16},${sx+18} ${sy}`+head(sx+18,sy,'up'));
+  for(const kind of ['assign','report']){const label=map.querySelector(`[data-team-label="${kind}-${id}"]`);if(label){label.style.left=((sx+ex)/2+(kind==='report'?22:-20))+'px';label.style.top=(mid+(kind==='report'?35:-30))+'px';}}
  }
  const labels=[['.ref-goal',(x1+x2)/2,y-45],['.ref-result-label',(x1+x2)/2,y+45]];
- if(!parallel&&b){
+ if(!parallel&&map.dataset.mode!=='team'&&b){
   const qx=a.right+gap,rx=b.left-gap,qy=a.cy;
   set('sequence',`M${qx} ${qy}H${rx}`+head(rx,qy,'right'));
   labels.push(['.ref-sequence-label',(qx+rx)/2,qy+32]);
@@ -1510,7 +1484,26 @@ function drawDependencies(){
  });
 }
 
-function drawSeminarDiagrams(){ drawFlow(); drawOrchestration(); drawReferenceSerial(); drawDependencies(); }
+
+function drawSalesFlow(){document.querySelectorAll('.slide.active .sales-flow').forEach(map=>{
+ const r=map.getBoundingClientRect();map.querySelector('svg').setAttribute('viewBox',`0 0 ${r.width} ${r.height}`);
+ map.querySelectorAll('.sales-edge').forEach(edge=>{
+ const from=map.querySelector(`[data-sales-node="${edge.dataset.from}"]`),to=map.querySelector(`[data-sales-node="${edge.dataset.to}"]`),closing=map.classList.contains('sales-closing-flow');
+ const a=(closing?from.querySelector('.icon'):from).getBoundingClientRect(),b=(closing?to.querySelector('.icon'):to).getBoundingClientRect(),gap=innerWidth<1400?16:24;
+ let d,tip,lx,ly;
+ if(edge.dataset.return==='true'){
+  const fa=from.getBoundingClientRect(),fb=to.getBoundingClientRect(),x1=a.left+a.width/2-r.left,x2=b.left+b.width/2-r.left,y1=fa.bottom-r.top+20,y2=fb.bottom-r.top+20,rail=Math.max(y1,y2)+42;
+  d=`M${x1} ${y1}V${rail-18}Q${x1} ${rail} ${x1-18} ${rail}H${x2+18}Q${x2} ${rail} ${x2} ${rail-18}V${y2}`;
+  tip=`M${x2-6} ${y2+8}L${x2} ${y2}L${x2+6} ${y2+8}`;lx=(x1+x2)/2;ly=rail-14;
+ }else{
+  const x1=a.right-r.left+gap,x2=b.left-r.left-gap,y1=a.top-r.top+a.height/2,y2=b.top-r.top+b.height/2;
+  d=`M${x1} ${y1}L${x2} ${y2}`;tip=`M${x2-8} ${y2-6}L${x2} ${y2}L${x2-8} ${y2+6}`;lx=(x1+x2)/2;ly=(y1+y2)/2-14;
+ }
+ edge.querySelector('path').setAttribute('d',d);edge.querySelector('.tip').setAttribute('d',tip);
+ const label=map.querySelector(`.sales-edge-label[data-from="${edge.dataset.from}"][data-to="${edge.dataset.to}"]`);label.style.left=lx+'px';label.style.top=ly+'px';
+ });});}
+
+function drawSeminarDiagrams(){ drawSalesFlow(); drawFlow(); drawOrchestration(); drawReferenceSerial(); drawDependencies(); }
 /* 등장 애니메이션 중에는 요소가 움직이므로, 각 항목의 애니메이션이 끝날 때마다 선을 다시 그린다. */
 document.addEventListener('animationend',event=>{
  if(event.target.closest && event.target.closest('.slide.active')) requestAnimationFrame(drawSeminarDiagrams);
@@ -1554,7 +1547,6 @@ function resetPatternInteractions(slide){
           document.getElementById("tot").textContent = this.total;
           this._buildDots();
           this._bindKeys();
-          this._bindButtons();
           this._update();
           this._runSlide(this.current);
         }
@@ -1608,9 +1600,6 @@ function resetPatternInteractions(slide){
           const pct = ((this.current + 1) / this.total) * 100;
           document.getElementById("progress").style.width = pct + "%";
           document.getElementById("cur").textContent = this.current + 1;
-          document.getElementById("btn-prev").disabled = this.current === 0;
-          document.getElementById("btn-next").disabled =
-            this.current === this.total - 1;
           document
             .querySelectorAll(".dot")
             .forEach((d, i) =>
@@ -1626,14 +1615,6 @@ function resetPatternInteractions(slide){
             b.addEventListener("click", () => this._go(i));
             nav.appendChild(b);
           });
-        }
-        _bindButtons() {
-          document
-            .getElementById("btn-prev")
-            .addEventListener("click", () => this.prev());
-          document
-            .getElementById("btn-next")
-            .addEventListener("click", () => this.next());
         }
         _bindKeys() {
           document.addEventListener("keydown", (e) => {
@@ -1651,6 +1632,38 @@ function resetPatternInteractions(slide){
         }
       }
       new SlidePresentation();
+function drawTeamPattern(map){
+ const r=map.getBoundingClientRect(),svg=map.querySelector('.dependency-wires');if(!r.width||!r.height)return;
+ svg.setAttribute('viewBox',`0 0 ${r.width} ${r.height}`);
+ const box=id=>{const node=map.querySelector(`[data-dependency-node="${id}"]`),el=node.querySelector('svg'),b=el.getBoundingClientRect(),cap=node.querySelector('figcaption').getBoundingClientRect();return {x:(b.left+b.right)/2-r.left,y:(b.top+b.bottom)/2-r.top,l:b.left-r.left,rt:b.right-r.left,t:b.top-r.top,b:b.bottom-r.top,cb:Math.max(cap.bottom,b.bottom)-r.top}};
+ const arrow=(x,y,dir)=>dir==='right'?`M${x-8} ${y-5}L${x} ${y}L${x-8} ${y+5}`:dir==='up'?`M${x-5} ${y+8}L${x} ${y}L${x+5} ${y+8}`:`M${x-5} ${y-8}L${x} ${y}L${x+5} ${y-8}`;
+ const paths=[],returnPaths=[];const add=(d,route='')=>(route.startsWith('return')?returnPaths:paths).push(`<path data-route="${route}" d="${d}"/>`);
+ const across=(a,b)=>{const sx=a.rt+16,ex=b.l-16,m=(sx+ex)/2;add(`M${sx} ${a.y}C${m} ${a.y},${m} ${b.y},${ex} ${b.y}`+arrow(ex,b.y,'right'))};
+ const mode=map.dataset.overview,a=box('a'),b=box('b');
+ if(mode==='serial'||mode==='review'){
+  const result=box('result');across(a,result);across(result,b);
+  if(mode==='review'){const y=r.height*.78,sy=b.cb+18,ey=a.cb+18;add(`M${b.x} ${sy}V${y}H${a.x}V${ey}`,'return');add(arrow(a.x,ey,'up'),'return-head')}
+ }else{
+  const input=box('input'),sy=input.cb+14,ey=Math.min(a.t,b.t)-15,fy=(sy+ey)/2;
+  add(`M${input.x} ${sy}V${fy}`);
+  [a,b].forEach(t=>add(`M${input.x} ${fy}H${t.x}V${ey}`+arrow(t.x,ey,'down')));
+  if(mode==='roles'){
+   [[a,box('oa')],[b,box('ob')]].forEach(([from,to])=>add(`M${from.x} ${from.cb+13}V${to.t-14}`+arrow(to.x,to.t-14,'down')));
+  }else{
+   const to=box('select'),ey2=to.t-14,fork=(Math.max(a.cb,b.cb)+13+ey2)/2;
+   [a,b].forEach(from=>add(`M${from.x} ${from.cb+13}V${fork}H${to.x}`));add(`M${to.x} ${fork}V${ey2}`+arrow(to.x,ey2,'down'));
+  }
+ }
+ svg.innerHTML=paths.join('');
+ const returnSvg=map.querySelector('.p5-review-return .dependency-wires');
+ if(returnSvg){returnSvg.setAttribute('viewBox',`0 0 ${r.width} ${r.height}`);returnSvg.innerHTML=returnPaths.join('')}
+}
+
+function refreshTeamPatterns(){document.querySelectorAll('.slide.active .team-pattern-map').forEach(drawTeamPattern)}
+new MutationObserver(()=>requestAnimationFrame(refreshTeamPatterns)).observe(document.getElementById('deck'),{subtree:true,attributes:true,attributeFilter:['class']});
+window.addEventListener('resize',refreshTeamPatterns);
+document.fonts.ready.then(refreshTeamPatterns);
+
     </script>
   </body>
 </html>

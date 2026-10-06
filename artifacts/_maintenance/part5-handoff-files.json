@@ -1,0 +1,22 @@
+[
+  {
+    "file": "artifacts/part5/outputs/ch01-01-collaboration-patterns.html",
+    "slides": 13,
+    "sha256": "f6cd27added443f721d0cff647c61efd5ec0cdf3985c67268098ebeb323e61ba"
+  },
+  {
+    "file": "artifacts/part5/outputs/ch01-02-multi-agent-failures.html",
+    "slides": 9,
+    "sha256": "5b1f4fe6e17313be47a853ceed93d050022f8873937868337953428206315a71"
+  },
+  {
+    "file": "artifacts/part5/outputs/ch02-01-planning-team.html",
+    "slides": 9,
+    "sha256": "bea7ebaf47f3304512d6ff190ad39c4eedf39064b5762448d23acce8c8f58c60"
+  },
+  {
+    "file": "artifacts/part5/outputs/ch04-04-quality-gate.html",
+    "slides": 9,
+    "sha256": "d5d392e4a4c5d09796222a81b7d091500859e0e7d55482712c489cff982eb51c"
+  }
+]

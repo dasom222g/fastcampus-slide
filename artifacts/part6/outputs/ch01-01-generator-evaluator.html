@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Generator–Evaluator 패턴이란 | Part 6 · Ch01-01</title>
+    <title>Generator–Evaluator 패턴이란</title>
     <!-- TEMPLATE ONLY: 실제 강의 내용·제품명·작업 캡처를 넣지 않는다.
      사용법: 이 파일을 복사 → 필요한 article 선택 → 모든 data-slot/제목/부제 교체.
      diagram의 공통 shape 정의를 유지하거나 사용한 도형만 각 SVG에 펼친다.
@@ -285,35 +285,6 @@
         height: 100%;
         background: var(--brand);
         transition: width 0.3s ease;
-      }
-      .nav-btn {
-        position: fixed;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 150;
-        width: clamp(1.9rem, 2.8vw, 2.5rem);
-        height: clamp(1.9rem, 2.8vw, 2.5rem);
-        display: grid;
-        place-items: center;
-        border: 1px solid var(--border);
-        border-radius: 3px;
-        background: rgba(255, 255, 255, 0.03);
-        color: var(--text-dim);
-        cursor: pointer;
-      }
-      .nav-btn:hover:not(:disabled) {
-        color: var(--text);
-        background: rgba(255, 255, 255, 0.08);
-      }
-      .nav-btn:disabled {
-        opacity: 0.1;
-        cursor: default;
-      }
-      #btn-prev {
-        left: clamp(0.4rem, 1.2vw, 1.1rem);
-      }
-      #btn-next {
-        right: clamp(0.4rem, 1.2vw, 1.1rem);
       }
       .dot-nav {
         position: fixed;
@@ -1100,7 +1071,7 @@
       .p6-col .heading{color:var(--purple)}
       .p6-col .copy{color:var(--text-dim);line-height:1.6}
 
-      /* 체크리스트 판정 */
+      /* 체크리스트 평가 */
       .p6-check{display:flex;align-items:center;justify-content:center;gap:3rem;width:min(100%,88rem);margin:0 auto}
       .p6-checklist{flex:1;background:var(--bg-card);border:1px solid var(--border);border-top:2px solid var(--purple);padding:min(3.2rem,7.5cqh) 3.4rem;min-width:0}
       .p6-checklist .heading{color:var(--purple);margin-bottom:1.6rem}
@@ -1157,6 +1128,95 @@
       .p6-pane li{position:relative;padding-left:1.3rem;font-size:var(--body);line-height:1.6}
       .p6-pane li:before{content:'';position:absolute;left:0;top:.72em;width:.45rem;height:.45rem;background:var(--accent)}
       .p6-vs{text-align:center;font-size:2.6rem;font-weight:800;color:var(--text-muted)}
+
+/* Part 6 review: approved worker / paper / relationship vocabulary. */
+.review-slide .anim-item.do-fadeinup{animation-name:scope-fade}
+.review-slide .slide__body{padding-bottom:min(4.6rem,10.7cqh)}
+.review-map{position:relative;display:grid;grid-template-columns:1fr 1.1fr 1fr;align-items:center;gap:min(7rem,7cqi);width:min(100%,82rem);height:min(29rem,78cqh);padding-bottom:min(5.5rem,12.8cqh);flex-shrink:0}
+.review-map--two{grid-template-columns:1.15fr 1fr;gap:min(13rem,16cqi);width:min(100%,59rem);padding-bottom:0}
+.review-map--request{grid-template-columns:1fr 1.3fr 1fr;gap:min(7rem,7cqi);padding-bottom:0}
+.review-map--loop{grid-template-columns:repeat(3,1fr);gap:min(13rem,13cqi);width:min(100%,80rem)}
+.review-worker{display:flex;flex-direction:column;align-items:center;gap:min(1.1rem,2.6cqh);text-align:center;min-width:0;color:var(--accent);z-index:1}
+.review-map .review-worker{position:relative}
+.review-map .review-worker figcaption{position:absolute;top:calc(100% + min(1.1rem,2.6cqh));left:50%;transform:translateX(-50%);width:max-content}
+.review-worker .icon{display:block;width:min(8.4rem,19.5cqh);height:min(8.6rem,20cqh);flex:none}
+.review-worker .heading{color:var(--accent);white-space:nowrap}
+.review-worker .copy{margin-top:.4rem;white-space:nowrap}
+.review-doc{position:relative;background:var(--bg-card);border:1px solid color-mix(in srgb,var(--accent) 45%,var(--bg));border-radius:.35rem;padding:min(2rem,4.6cqh) min(2rem,2.4cqi);--artifact-color:var(--accent);min-width:0;z-index:1}
+.review-doc .heading{color:var(--accent);margin:.55rem 0 .8rem;font-size:min(1.9rem,4.4cqh)}
+.review-doc .paper-rules{color:var(--text-muted);margin-top:min(1.5rem,3.5cqh);height:2rem}
+.review-kicker{font-size:clamp(.8rem,1vw,1rem);font-weight:700;color:var(--accent)}
+.review-doc-foot{font-size:var(--body);color:var(--text-dim);border-top:1px solid var(--border);margin-top:min(1.6rem,3.7cqh);padding-top:min(1.2rem,2.8cqh)}
+.review-wires{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.review-edge path{fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.review-edge[data-return="true"]>path:first-child{stroke-dasharray:8 7}
+.review-edge-label{position:absolute;transform:translate(-50%,-100%);white-space:nowrap;font-size:clamp(.88rem,1.15vw,1.2rem);font-weight:750;line-height:1.5;z-index:2;background:var(--bg);padding:0 .5rem;pointer-events:none}
+.review-compare{gap:min(5rem,6cqi);width:min(100%,84rem)}
+.review-model-row{display:flex;align-items:center;justify-content:center;gap:min(2rem,2.3cqi);margin:min(1.7rem,4cqh) 0}
+.review-model-row .icon{width:min(7rem,16.3cqh);height:min(7.2rem,16.8cqh)}
+.review-model-row .heading{font-size:var(--body)}
+.review-small-arrow{width:min(4rem,5cqi);height:1.5rem;fill:none;stroke:var(--gray);stroke-width:2.3;align-self:flex-start;margin-top:min(3rem,7cqh)}
+.review-record{display:grid;grid-template-columns:1.1fr 1fr;align-items:center;gap:min(6rem,7cqi);width:min(100%,82rem)}
+.review-fields{display:flex;flex-direction:column;gap:min(1.2rem,2.8cqh);margin-top:min(1.7rem,4cqh)}
+.review-fields>div{display:grid;grid-template-columns:3rem 1fr;gap:1.6rem;font-size:var(--body);line-height:1.6}
+.review-fields dt{color:var(--text-dim)}
+.review-fields dd{margin:0}
+.review-evidence{display:flex;flex-direction:column;gap:min(4rem,9.3cqh)}
+.review-evidence>section{display:flex;align-items:center;gap:min(1.6rem,2cqi)}
+.review-evidence .heading{font-size:var(--heading);margin-bottom:.7rem}
+.review-evidence-icon{width:min(5rem,11.6cqh);height:min(5rem,11.6cqh);flex:none;fill:none;stroke:var(--purple);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.review-doc-list{list-style:none;display:flex;flex-direction:column;gap:.55rem;font-size:var(--body);color:var(--text-dim);margin-top:1.1rem}
+.review-closing{display:grid;grid-template-columns:1.1fr 1fr;align-items:center;gap:min(6rem,7cqi);width:min(100%,82rem)}
+.review-final-docs{display:flex;flex-direction:column;gap:min(2rem,4.6cqh)}
+.review-slide .p5-note{font-size:var(--body);max-width:100%;padding:0 .5rem}
+
+
+/* One worker owns all three steps; the boundary denotes that scope. */
+.self-review-scope{position:relative;width:min(100%,76rem);padding:min(2.8rem,6.5cqh) min(3.5rem,4cqi);display:flex;flex-direction:column;gap:min(3rem,7cqh)}
+.self-review-frame{position:absolute;inset:0;border:1px solid var(--border);border-top:2px solid var(--brand);border-radius:.4rem;pointer-events:none}
+.self-review-owner{display:flex;align-items:center;gap:min(1.5rem,3.5cqh);color:var(--brand)}
+.self-review-owner .icon{width:min(6rem,14cqh);height:min(6.2rem,14.4cqh)}
+.self-review-owner .copy{margin-top:.4rem}
+.self-review-steps{display:grid;grid-template-columns:1fr min(5rem,6cqi) 1fr min(5rem,6cqi) 1fr;align-items:start;gap:min(2rem,2.5cqi)}
+.self-review-step{display:flex;flex-direction:column;align-items:center;gap:min(1.5rem,3.5cqh);text-align:center;color:var(--text-dim)}
+.self-review-step>svg{width:min(7rem,16.3cqh);height:min(7rem,16.3cqh);fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.self-review-step .heading{color:var(--text)}
+.self-review-pass,.self-review-pass .heading{color:var(--orange)}
+.self-review-arrow{align-self:start;margin-top:min(2.8rem,6.5cqh)}
+.self-review-arrow svg{width:100%;fill:none;stroke:var(--gray);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+
+/* Candidate only: Coordinator above two delegated workers. */
+.candidate-map{position:relative;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr;width:min(100%,82rem);height:min(35rem,82cqh);align-items:center;flex-shrink:0}
+.candidate-co{grid-column:2;grid-row:1;align-self:start}
+.candidate-a{grid-column:1;grid-row:2}
+.candidate-b{grid-column:3;grid-row:2}
+.candidate-map .review-worker{gap:min(.9rem,2.1cqh)}
+.candidate-wires{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.candidate-wires path{fill:none;stroke:currentColor;stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+.candidate-wires [data-candidate-link^="report"]>path:first-child{stroke-dasharray:8 7}
+.candidate-label{position:absolute;transform:translate(-50%,-50%);font-size:clamp(.95rem,1.25vw,1.25rem);font-weight:750;background:var(--bg);padding:.3rem .5rem;white-space:nowrap;pointer-events:none}
+
+.review-map--verdict{grid-template-columns:1.05fr .7fr 1.1fr;gap:min(5rem,5cqi);padding-bottom:0;height:min(30rem,76cqh);width:min(100%,84rem)}
+.verdict-outcomes{display:flex;flex-direction:column;gap:min(3rem,7cqh)}
+.verdict-outcomes .review-doc{padding:min(1.6rem,3.7cqh) min(2rem,2.4cqi)}
+.verdict-outcomes .heading{margin:0 0 .6rem}
+.review-map--request .review-edge>path:first-child{stroke-dasharray:8 7}
+
+
+.review-map--feedback-cycle{display:block;height:min(32rem,83cqh);padding:0}
+.review-map--feedback-cycle .review-worker{position:absolute;top:6%;transform:translateX(-50%)}
+.review-map--feedback-cycle [data-review-node="a"]{left:18%}
+.review-map--feedback-cycle [data-review-node="b"]{left:82%}
+.review-map--feedback-cycle [data-review-node="final"]{left:96%}
+.review-map--feedback-cycle .review-doc{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:min(26rem,40cqi);display:flex;align-items:center;gap:1.2rem;padding:min(1.5rem,3.5cqh)}
+.feedback-file-icon{width:min(3.8rem,7cqi);height:min(4.5rem,11cqh);flex:none;color:var(--orange)}
+.review-map--feedback-cycle .review-doc .copy{font-size:var(--body);white-space:nowrap}
+.review-map--feedback-cycle [data-route="save"]>path:first-child,.review-map--feedback-cycle [data-route="feedback"]>path:first-child{stroke-dasharray:8 7}
+
+/* Center the full evaluator group, including its caption and note. */
+[data-layout="fixed-criteria"] .review-worker figcaption{position:static;transform:none;width:max-content}
+
+.review-map--separation{grid-template-columns:1fr 1.2fr 1fr .9fr;gap:min(4rem,4.3cqi);width:min(100%,92rem)}
 </style>
   </head>
   <body>
@@ -1194,170 +1254,56 @@
     <div class="progress-bar">
       <div class="progress-fill" id="progress"></div>
     </div>
-    <button class="nav-btn" id="btn-prev" aria-label="이전 슬라이드">
-      &#8592;
-    </button>
-    <button class="nav-btn" id="btn-next" aria-label="다음 슬라이드">
-      &#8594;
-    </button>
     <div class="dot-nav" id="dot-nav"></div>
     <div class="slide-counter">
-      <span id="cur">1</span> / <span id="tot">9</span>
+      <span id="cur">1</span> / <span id="tot">7</span>
     </div>
     <div class="slide-deck" id="deck">
 <article class="slide active p5-reference-cover" data-index="0" data-pattern="COVER_SCENE">
-<header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-01</span><h1 class="slide__title">Generator–Evaluator 패턴이란</h1><p class="slide__sub">만드는 에이전트와 판정하는 에이전트를 나눠, 통과할 때까지 돌립니다.</p></header>
+<header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-01</span><h1 class="slide__title"><span class="hl">Generator–Evaluator</span> 패턴이란</h1><p class="slide__sub">만드는 에이전트와 평가하는 에이전트를 나눠, 결과물을 반복 개선하는 워크플로우입니다.</p></header>
 <main class="slide__body">
 <div class="scene scene--cover">
-<div class="scene__copy anim-item"><p class="statement">작성과 평가<strong>서로 다른 담당</strong></p></div>
+<div class="scene__copy anim-item"><p class="statement">서로 다른 모델로<strong>작성과 평가</strong></p></div>
 <figure class="scene__visual anim-item"><img src="/artifacts/part6/_images/ch01-01--generator-evaluator-transparent.png" alt="한 에이전트는 문서를 작성하고 다른 에이전트는 체크리스트와 돋보기로 검사하는 장면"></figure>
 </div>
 </main>
 <footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
 </article>
-<article class="slide compact" data-index="1" data-pattern="SCENE_COMPARE">
-<header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-01</span><h1 class="slide__title">자기 결과는 자기가 <span class="hl">통과시킨다</span></h1><p class="slide__sub">만든 쪽에게 다시 물으면 대개 문제없다는 답이 돌아옵니다.</p></header>
-<main class="slide__body">
-<div class="p6-pair">
-<section class="p6-pane anim-item" data-anim-step="0" style="--accent:var(--orange)">
-<h2>같은 에이전트에게 다시 묻기</h2>
-<ul><li>“이 제안서 문제없지?”</li><li>자기가 쓴 근거를 다시 설명한다</li><li>통과·반려의 기준이 그때그때 달라진다</li></ul>
-</section>
-<span class="p6-vs anim-item" data-anim-step="1" aria-hidden="true">≠</span>
-<section class="p6-pane anim-item" data-anim-step="2" style="--accent:var(--purple)">
-<h2>판정하는 쪽을 따로 두기</h2>
-<ul><li>초안을 받아 기준으로 검사한다</li><li>항목마다 통과·반려와 이유를 남긴다</li><li>고치는 일은 작성한 쪽이 한다</li></ul>
-</section>
-</div>
-<p class="p5-note anim-item" data-anim-step="3">앞에서 본 검증 오류가 생기는 자리입니다.</p>
-</main>
-<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
-</article>
-<article class="slide compact" data-index="2" data-pattern="STRUCTURE_EXCHANGE">
-<header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-01</span><h1 class="slide__title">만드는 쪽과 <span class="hl">판정하는 쪽</span></h1><p class="slide__sub">Generator는 작성하고 Evaluator는 판정합니다. 서로의 역할을 넘지 않습니다.</p></header>
-<main class="slide__body">
-<div class="p6-roles">
-<section class="p6-role anim-item" data-anim-step="0" style="--accent:var(--brand)">
-<div class="p6-role-head"><h2>Generator</h2><span>작성자</span></div>
-<svg class="icon icon--robot tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg>
-<p class="copy">브리프와 회사 문서를 읽고 제안서·견적서 초안을 씁니다. 반려 사유를 받으면 고쳐서 다시 냅니다.</p>
-</section>
-<div class="p6-role-swap anim-item" data-anim-step="1" aria-hidden="true">
-<svg viewBox="0 0 80 46"><path d="M6 14H68M58 6L72 14L58 22"/><path d="M74 34H12M22 26L8 34L22 42"/></svg>
-<span>초안 · 반려</span>
-</div>
-<section class="p6-role anim-item" data-anim-step="2" style="--accent:var(--purple)">
-<div class="p6-role-head"><h2>Evaluator</h2><span>평가자</span></div>
-<svg class="icon icon--robot tone-purple" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg>
-<p class="copy">고정한 기준으로 검사하고 판정과 이유를 남깁니다. 초안을 직접 고치지 않습니다.</p>
-</section>
-</div>
-<p class="p5-note anim-item" data-anim-step="3">평가자가 문서를 고치기 시작하면 다시 자기 결과를 자기가 판정하게 됩니다.</p>
-</main>
-<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
-</article>
-<article class="slide compact" data-index="3" data-pattern="OPEN_TRIPTYCH">
-<header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-01</span><h1 class="slide__title">다른 모델로 <span class="hl">평가하는 이유</span></h1><p class="slide__sub">같은 모델은 같은 자리에서 같은 방식으로 놓칩니다.</p></header>
-<main class="slide__body">
-<div class="p6-triptych">
-<figure class="p6-col anim-item" data-anim-step="0"><h2 class="heading">같은 판단 습관</h2>
-<p class="copy">만들 때 쓴 근거를 검사할 때도 그대로 씁니다.</p></figure>
-<figure class="p6-col anim-item" data-anim-step="1"><h2 class="heading">다른 하네스</h2>
-<p class="copy">작성은 Codex, 평가는 Claude Code로 나눠 맡깁니다.</p></figure>
-<figure class="p6-col anim-item" data-anim-step="2"><h2 class="heading">보장은 아니다</h2>
-<p class="copy">다른 모델도 놓칠 수 있어 기준과 판정 근거를 함께 남깁니다.</p></figure>
-</div>
-<p class="p5-note anim-item" data-anim-step="3">다른 모델을 썼다는 사실이 통과의 근거가 되지는 않습니다.</p>
-</main>
-<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
-</article>
-<article class="slide compact" data-index="4" data-pattern="PROCESS_STRIP">
-<header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-01</span><h1 class="slide__title">기준은 <span class="hl">먼저, 따로</span></h1><p class="slide__sub">체크리스트를 첫 평가 전에 정하고 작성자에게는 전달하지 않습니다.</p></header>
-<main class="slide__body">
-<div class="p6-steps"><figure class="p6-step anim-item" data-anim-step="0" style="--accent:var(--purple)"><svg class="p6-glyph" style="width:min(8.6rem,20.0cqh);height:min(8.6rem,20.0cqh)" viewBox="0 0 100 100" fill="none" stroke="var(--purple)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg><figcaption><h2 class="heading">기준 작성</h2><p class="copy">첫 평가 전에 저장</p></figcaption></figure><span class="p6-arrow anim-item" data-anim-step="1" aria-hidden="true"><svg viewBox="0 0 64 24"><path d="M2 12H56M46 3L57 12L46 21"/></svg></span><figure class="p6-step anim-item" data-anim-step="1" style="--accent:var(--yellow)"><svg class="p6-glyph" style="width:min(8.6rem,20.0cqh);height:min(8.6rem,20.0cqh)" viewBox="0 0 100 100" fill="none" stroke="var(--yellow)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-gate"/></svg><figcaption><h2 class="heading">매 라운드 동일 적용</h2><p class="copy">같은 기준으로 다시 검사</p></figcaption></figure><span class="p6-arrow anim-item" data-anim-step="2" aria-hidden="true"><svg viewBox="0 0 64 24"><path d="M2 12H56M46 3L57 12L46 21"/></svg></span><figure class="p6-step anim-item" data-anim-step="2" style="--accent:var(--gray)"><svg class="p6-glyph" style="width:min(8.6rem,20.0cqh);height:min(8.6rem,20.0cqh)" viewBox="0 0 100 100" fill="none" stroke="var(--gray)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-person"/></svg><figcaption><h2 class="heading">작성자에게 비공개</h2><p class="copy">기준에 맞춘 글쓰기를 막는다</p></figcaption></figure></div><p class="p5-note anim-item" data-anim-step="4">기준을 미리 주면 문서가 아니라 체크리스트를 통과하는 글이 됩니다.</p>
-</main>
-<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
-</article>
-<article class="slide compact" data-index="5" data-pattern="GOAL_ACCEPTANCE">
-<header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-01</span><h1 class="slide__title">판정은 <span class="hl">항목별로</span></h1><p class="slide__sub">항목마다 통과·반려와 이유를 남기고, 한 오류를 여러 항목에 중복으로 세지 않습니다.</p></header>
-<main class="slide__body">
-<div class="p6-check">
-<div class="p6-checklist">
-<h2 class="heading">체크리스트</h2>
-<ul>
-<li class="anim-item" data-anim-step="0"><b>C01</b><span>요구사항이 제안 범위에 모두 반영됐는가</span><span class="p6-verdict p6-verdict--y">Y · 통과</span></li>
-<li class="anim-item" data-anim-step="1"><b>C02</b><span>견적 항목이 제안 내용과 일치하는가</span><span class="p6-verdict p6-verdict--y">Y · 통과</span></li>
-<li class="anim-item" data-anim-step="2"><b>C03</b><span>금액 합계와 부가세 계산이 맞는가</span><span class="p6-verdict p6-verdict--n">N · 반려</span></li>
-<li class="anim-item" data-anim-step="3"><b>C04</b><span>성과 목표와 예상치를 구분했는가</span><span class="p6-verdict p6-verdict--y">Y · 통과</span></li>
-</ul>
-</div>
-<figure class="p6-count anim-item" data-anim-step="4"><svg class="p6-glyph" style="width:min(5rem,11.7cqh);height:min(5rem,11.7cqh)" viewBox="0 0 100 100" fill="none" stroke="var(--orange)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-waiting"/></svg>
-<b>반려</b><span>전 항목 통과라야 통과입니다</span></figure>
-</div>
-<p class="p5-note anim-item" data-anim-step="5">항목 번호와 이유가 남아야 무엇을 고쳐야 할지 정해집니다.</p>
-</main>
-<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
-</article>
-<article class="slide compact" data-index="6" data-pattern="SEMINAR_IO_FLOW">
-<header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-01</span><h1 class="slide__title">반려는 <span class="hl">사유와 함께</span></h1><p class="slide__sub">반려된 항목과 고칠 내용을 문서로 남겨 작성자에게 넘깁니다.</p></header>
-<main class="slide__body">
-<div class="flow-canvas flow-horizontal p6-flow" data-direction="horizontal">
-<svg class="flow-connections" aria-hidden="true">
-<path data-from="in0" data-to="who" class="edge-input"/><path data-from="in1" data-to="who" class="edge-input"/>
-<path data-from="who" data-to="out" class="edge-output"/>
-</svg>
-<section class="flow-stage stage-input"><h2 class="flow-heading">읽는 것</h2><div class="flow-items"><div class="flow-artifact shape-paper tone-input anim-item" data-anim-step="0" data-node="in0"><div class="artifact-chrome"><span class="artifact-mark">입력</span><span>작업에 필요한 것</span></div><h2 class="artifact-title">평가 기록의 N 항목</h2><div class="artifact-decoration" aria-hidden="true"><span class="paper-fold"></span><div class="paper-rules"><i></i><i></i><i></i></div></div></div><div class="flow-artifact shape-paper tone-input anim-item" data-anim-step="0" data-node="in1"><div class="artifact-chrome"><span class="artifact-mark">입력</span><span>작업에 필요한 것</span></div><h2 class="artifact-title">고칠 내용과 원문 위치</h2><div class="artifact-decoration" aria-hidden="true"><span class="paper-fold"></span><div class="paper-rules"><i></i><i></i><i></i></div></div></div></div></section>
-<section class="flow-stage stage-ai"><h2 class="flow-heading">평가자</h2><div class="flow-items">
-<figure class="p6-actor anim-item" data-anim-step="1" data-node="who" style="--accent:var(--purple)">
-<svg class="icon icon--robot tone-purple" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg></figure>
+<article class="slide compact review-slide" data-index="1" data-pattern="CONTAINED_STRUCTURE"><header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-01</span><h1 class="slide__title">자기 결과는 자기가 <span class="hl">통과시킨다</span></h1><p class="slide__sub">만든 쪽에게 다시 물으면 대개 문제없다는 답이 돌아옵니다.</p></header><main class="slide__body"><section class="self-review-scope">
+<div class="self-review-frame anim-item" data-anim-step="0" aria-hidden="true"></div>
+<div class="self-review-owner anim-item" data-anim-step="0" style="--accent:var(--brand)"><svg class="icon review-anchor" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><div><h2 class="heading tone-brand">Generator</h2><p class="copy">작성자 · 작성과 평가를 모두 담당</p></div></div>
+<div class="self-review-steps">
+<figure class="self-review-step anim-item" data-anim-step="1"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#shape-document"/></svg><figcaption><h2 class="heading">초안 작성</h2></figcaption></figure>
+<span class="self-review-arrow anim-item" data-anim-step="2"><svg viewBox="0 0 64 24" aria-hidden="true"><path d="M4 12H56M47 4L56 12L47 20"/></svg></span>
+<figure class="self-review-step anim-item" data-anim-step="2"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#shape-gate"/></svg><figcaption><h2 class="heading">스스로 평가</h2></figcaption></figure>
+<span class="self-review-arrow anim-item" data-anim-step="3"><svg viewBox="0 0 64 24" aria-hidden="true"><path d="M4 12H56M47 4L56 12L47 20"/></svg></span>
+<figure class="self-review-step self-review-pass anim-item" data-anim-step="3"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#shape-done"/></svg><figcaption><h2 class="heading">통과 처리</h2></figcaption></figure>
 </div></section>
-<section class="flow-stage stage-output"><h2 class="flow-heading">남기는 것</h2><div class="flow-items">
-<div class="flow-artifact shape-paper tone-output anim-item" data-anim-step="2" data-node="out"><div class="artifact-chrome"><span class="artifact-mark">요청</span><span>작성자에게 전달</span></div><h2 class="artifact-title">수정 요청서</h2><div class="artifact-decoration" aria-hidden="true"><span class="paper-fold"></span><div class="paper-rules"><i></i><i></i><i></i></div></div></div>
-</div></section>
-</div>
-<p class="p5-note anim-item" data-anim-step="3">평가 전체와 체크리스트는 전달하지 않습니다. 반려 사유만 넘깁니다.</p>
-</main>
-<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
-</article>
-<article class="slide compact" data-index="7" data-pattern="REVIEW_LOOP">
-<header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-01</span><h1 class="slide__title">통과할 때까지 도는 <span class="hl">루프</span></h1><p class="slide__sub">한 라운드는 작성·수정 → 평가·검산 → 판정입니다.</p></header>
-<main class="slide__body">
-<div class="p6-loop">
-<div class="p6-loop-row">
-<figure class="p6-loop-node anim-item" data-anim-step="0" style="--accent:var(--brand)"><svg class="p6-glyph" style="width:min(5.6rem,13.0cqh);height:min(5.6rem,13.0cqh)" viewBox="0 0 100 100" fill="none" stroke="var(--brand)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-document"/></svg>
-<figcaption><h2 class="heading">초안·수정본</h2><p class="copy">작성자</p></figcaption></figure>
-<span class="p6-arrow anim-item" data-anim-step="1" aria-hidden="true"><svg viewBox="0 0 64 24"><path d="M2 12H56M46 3L57 12L46 21"/></svg></span>
-<figure class="p6-loop-node anim-item" data-anim-step="1" style="--accent:var(--purple)"><svg class="p6-glyph" style="width:min(5.6rem,13.0cqh);height:min(5.6rem,13.0cqh)" viewBox="0 0 100 100" fill="none" stroke="var(--purple)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-gate"/></svg>
-<figcaption><h2 class="heading">평가·검산</h2><p class="copy">평가자</p></figcaption></figure>
-<span class="p6-arrow anim-item" data-anim-step="2" aria-hidden="true"><svg viewBox="0 0 64 24"><path d="M2 12H56M46 3L57 12L46 21"/></svg></span>
-<figure class="p6-loop-node anim-item" data-anim-step="2" style="--accent:var(--green)"><svg class="p6-glyph" style="width:min(5.6rem,13.0cqh);height:min(5.6rem,13.0cqh)" viewBox="0 0 100 100" fill="none" stroke="var(--green)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#shape-done"/></svg>
-<figcaption><h2 class="heading">통과</h2><p class="copy">최종본으로</p></figcaption></figure>
-</div>
-<div class="p6-loop-return anim-item" data-anim-step="3">
-<svg viewBox="0 0 900 60" aria-hidden="true"><path d="M560 6V40H60V28M48 40L60 24L72 40"/></svg>
-<span>반려 → 수정 요청 → 다음 라운드</span>
-</div>
-</div>
-<p class="p5-note anim-item" data-anim-step="4">라운드마다 무엇이 반려됐고 무엇이 고쳐졌는지 기록으로 남습니다.</p>
-</main>
-<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
-</article>
-<article class="slide compact" data-index="8" data-pattern="SCENE_PAIR">
-<header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-01</span><h1 class="slide__title">어디에 <span class="hl">쓰나</span></h1><p class="slide__sub">숫자와 약속이 들어가는 문서일수록 만든 쪽과 판정하는 쪽을 나눕니다.</p></header>
-<main class="slide__body">
-<div class="p6-closing">
-<div class="anim-item" data-anim-step="0">
-<p class="statement">고객에게 그대로 나가는<strong>문서라면</strong></p>
-</div>
-<ul class="p6-list anim-item" data-anim-step="1">
-<li>금액과 기한이 들어간 제안서·견적서</li>
-<li>약속한 성과와 계산이 함께 적힌 문서</li>
-<li>다음 영상에서 이 구조를 영업팀으로 세웁니다</li>
-</ul>
-</div>
-</main>
-<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
-</article>
+<p class="p5-note anim-item" data-anim-step="4">Generator의 완료 판단만으로 검증을 끝내는 구조입니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<article class="slide compact review-slide" data-index="2" data-pattern="STRUCTURE_EXCHANGE">
+<header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-01</span><h1 class="slide__title">작성과 평가의 <span class="hl">분리</span></h1><p class="slide__sub">Generator는 만들고 고치며, Evaluator는 검사하고 피드백합니다.</p></header>
+<main class="slide__body"><div class="review-map review-map--separation"><svg class="review-wires" aria-hidden="true"><g class="review-edge anim-item" data-from="a" data-to="draft" data-return="false" data-anim-step="1" style="color:var(--green)"><path/><path class="review-tip"/></g><g class="review-edge anim-item" data-from="draft" data-to="b" data-return="false" data-anim-step="2" style="color:var(--purple)"><path/><path class="review-tip"/></g><g class="review-edge anim-item" data-from="b" data-to="a" data-return="true" data-anim-step="3" style="color:var(--orange)"><path/><path class="review-tip"/></g><g class="review-edge anim-item" data-from="b" data-to="final" data-return="false" data-anim-step="3" style="color:var(--green)"><path/><path class="review-tip"/></g></svg><figure class="review-worker anim-item" data-review-node="a" data-anim-step="0" style="--accent:var(--brand)"><svg class="icon review-anchor" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><figcaption><h2 class="heading">Generator</h2><p class="copy">작성·수정</p></figcaption></figure><section class="review-doc review-anchor anim-item" data-review-node="draft" data-anim-step="1" style="--accent:var(--green)"><span class="paper-fold" aria-hidden="true"></span><span class="review-kicker">문서</span><h2 class="heading">초안·수정본</h2><div class="paper-rules"><i></i><i></i><i></i></div></section><figure class="review-worker anim-item" data-review-node="b" data-anim-step="2" style="--accent:var(--purple)"><svg class="icon review-anchor" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><figcaption><h2 class="heading">Evaluator</h2><p class="copy">평가·피드백</p></figcaption></figure><figure class="review-worker anim-item" data-review-node="final" data-anim-step="3" style="--accent:var(--green)"><svg class="icon review-anchor" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><circle cx="50" cy="50" r="37"/><path d="M30 50L44 64L72 35"/></svg><figcaption><h2 class="heading">최종본</h2><p class="copy">통과 후 완료</p></figcaption></figure><span class="review-edge-label anim-item" data-label-from="a" data-label-to="draft" data-anim-step="1" style="color:var(--green)">작성</span><span class="review-edge-label anim-item" data-label-from="draft" data-label-to="b" data-anim-step="2" style="color:var(--purple)">평가 요청</span><span class="review-edge-label anim-item" data-label-from="b" data-label-to="a" data-anim-step="3" style="color:var(--orange)">피드백 · 수정 요청</span><span class="review-edge-label anim-item" data-label-from="b" data-label-to="final" data-anim-step="3" style="color:var(--green)">통과</span></div><p class="p5-note anim-item" data-anim-step="4">Evaluator는 초안을 직접 고치지 않습니다.</p></main>
+<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+
+<article class="slide compact review-slide" data-index="3" data-pattern="OPERATING_DEFAULT_COMPARE">
+<header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-01</span><h1 class="slide__title">다른 모델로 <span class="hl">평가하는 이유</span></h1><p class="slide__sub">작성 때의 판단을 다른 모델의 관점으로 다시 살펴봅니다.</p></header>
+<main class="slide__body"><div class="tx-compare review-compare"><section class="tx-compare-side anim-item" data-anim-step="0"><h2 class="heading tone-gray">같은 모델로 평가</h2><div class="review-model-row"><figure class="review-worker" data-review-node="" data-anim-step="0" style="--accent:var(--brand)"><svg class="icon review-anchor" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><figcaption><h2 class="heading">모델 A</h2><p class="copy">작성</p></figcaption></figure><svg class="review-small-arrow" viewBox="0 0 64 24" aria-hidden="true"><path d="M4 12H57M48 4L57 12L48 20"/></svg><figure class="review-worker" data-review-node="" data-anim-step="0" style="--accent:var(--brand)"><svg class="icon review-anchor" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><figcaption><h2 class="heading">모델 A</h2><p class="copy">평가</p></figcaption></figure></div><p class="copy">작성 때의 판단이 반복될 수 있음</p></section><section class="tx-compare-side anim-item" data-anim-step="1"><h2 class="heading tone-purple">다른 모델로 평가</h2><div class="review-model-row"><figure class="review-worker" data-review-node="" data-anim-step="1" style="--accent:var(--brand)"><svg class="icon review-anchor" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><figcaption><h2 class="heading">모델 A</h2><p class="copy">작성</p></figcaption></figure><svg class="review-small-arrow" viewBox="0 0 64 24" aria-hidden="true"><path d="M4 12H57M48 4L57 12L48 20"/></svg><figure class="review-worker" data-review-node="" data-anim-step="1" style="--accent:var(--purple)"><svg class="icon review-anchor" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><figcaption><h2 class="heading">모델 B</h2><p class="copy">평가</p></figcaption></figure></div><p class="copy">다른 관점으로 오류·누락 재검토</p></section></div><p class="p5-note anim-item" data-anim-step="2">다른 모델로 평가해도, 원문 대조와 검산은 필요합니다.</p></main>
+<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<article class="slide compact review-slide" data-index="4" data-pattern="SPACE_TRANSFER" data-layout="fixed-criteria">
+<header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-01</span><h1 class="slide__title">고정된 <span class="hl">평가 기준</span></h1><p class="slide__sub">반복해서 개선하려면, 매번 같은 기준으로 평가해야 합니다.</p></header>
+<main class="slide__body"><div class="review-map review-map--two"><svg class="review-wires" aria-hidden="true"><g class="review-edge anim-item" data-from="rules" data-to="b" data-return="false" data-anim-step="1" style="color:var(--purple)"><path/><path class="review-tip"/></g></svg><section class="review-doc review-anchor anim-item" data-review-node="rules" data-anim-step="0" style="--accent:var(--purple)"><span class="paper-fold" aria-hidden="true"></span><span class="review-kicker">평가 기준</span><h2 class="heading">평가 체크리스트</h2><p class="copy">검사 항목 · 통과 조건<br>요구사항의 원문 위치</p><p class="review-doc-foot">첫 평가 전에 저장</p></section><figure class="review-worker anim-item" data-review-node="b" data-anim-step="1" style="--accent:var(--purple)"><svg class="icon review-anchor" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><figcaption><h2 class="heading">Evaluator</h2><p class="copy">평가 · 재평가</p><p class="review-doc-foot">매 라운드 같은 기준</p></figcaption></figure><span class="review-edge-label anim-item" data-label-from="rules" data-label-to="b" data-anim-step="1" style="color:var(--purple)">동일 기준 적용</span></div><p class="p5-note anim-item" data-anim-step="2">이 실습에서는 체크리스트와 전체 평가를 Evaluator만 사용합니다.</p></main>
+<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+
+<article class="slide compact review-slide" data-index="5" data-pattern="SPACE_TRANSFER">
+<header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-01</span><h1 class="slide__title">평가 기록과 <span class="hl">피드백</span></h1><p class="slide__sub">평가 결과를 파일로 저장하고, 반려 시 Generator에게 피드백으로 전달합니다.</p></header>
+<main class="slide__body"><div class="review-map review-map--feedback-cycle"><svg class="review-wires" aria-hidden="true"><g class="review-edge anim-item" data-from="a" data-to="b" data-route="" data-return="false" data-anim-step="1" style="color:var(--green)"><path/><path class="review-tip"/></g><g class="review-edge anim-item" data-from="b" data-to="request" data-route="save" data-return="false" data-anim-step="2" style="color:var(--orange)"><path/><path class="review-tip"/></g><g class="review-edge anim-item" data-from="request" data-to="a" data-route="feedback" data-return="false" data-anim-step="3" style="color:var(--orange)"><path/><path class="review-tip"/></g></svg><figure class="review-worker anim-item" data-review-node="a" data-anim-step="0" style="--accent:var(--brand)"><svg class="icon review-anchor" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><figcaption><h2 class="heading">Generator</h2><p class="copy">초안 작성 · 수정</p></figcaption></figure><figure class="review-worker anim-item" data-review-node="b" data-anim-step="1" style="--accent:var(--purple)"><svg class="icon review-anchor" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><figcaption><h2 class="heading">Evaluator</h2><p class="copy">평가·피드백</p></figcaption></figure><section class="review-doc review-anchor anim-item" data-review-node="request" data-anim-step="2" style="--accent:var(--orange)"><svg class="feedback-file-icon" viewBox="0 0 64 76" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" aria-hidden="true"><path d="M10 3H39L55 19V73H10Z M39 3V20H55 M20 33H44 M20 44H44 M20 55H36"/></svg><div><span class="review-kicker">파일 · 통과·반려 모두 기록</span><h2 class="heading">평가 기록</h2><p class="copy">통과 · 반려 · 판단 근거<br>반려 사유 · 고칠 내용</p></div></section><span class="review-edge-label anim-item" data-label-from="a" data-label-to="b" data-anim-step="1" style="color:var(--green)">초안 전달</span><span class="review-edge-label anim-item" data-label-from="b" data-label-to="request" data-anim-step="2" style="color:var(--orange)">파일로 저장</span><span class="review-edge-label anim-item" data-label-from="request" data-label-to="a" data-anim-step="3" style="color:var(--orange)">반려 · 피드백</span></div><p class="p5-note anim-item" data-anim-step="4">Generator는 기록된 피드백을 바탕으로 초안을 수정합니다.</p></main>
+<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+
+
+<article class="slide compact review-slide" data-index="6" data-pattern="SCENE_PAIR">
+<header class="slide__header"><span class="slide__label">Part 6 · Chapter 1 · Ch01-01</span><h1 class="slide__title"><span class="hl">영업팀</span>에 적용</h1><p class="slide__sub">제안서·견적서와 교차 검토 보고서까지 완성합니다.</p></header>
+<main class="slide__body"><div class="review-closing"><div class="anim-item" data-anim-step="0"><p class="statement">고객 제출 전<strong>작성과 교차 검증</strong></p></div><div class="review-final-docs"><section class="review-doc review-anchor anim-item" data-review-node="proposal" data-anim-step="1" style="--accent:var(--green)"><span class="paper-fold" aria-hidden="true"></span><span class="review-kicker">최종 결과물</span><h2 class="heading">제안서·견적서</h2><p class="copy">고객에게 전달할 통과본</p></section><section class="review-doc review-anchor anim-item" data-review-node="report" data-anim-step="2" style="--accent:var(--purple)"><span class="paper-fold" aria-hidden="true"></span><span class="review-kicker">검토 과정</span><h2 class="heading">교차 검토 보고서</h2><p class="copy">반려 사유 · 수정 결과 · 최종 평가</p></section></div></div></main>
+<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
     </div>
     <script>
       // file:// 로 열었을 때만 경로를 보정한다. 정식 덱과 같은 코드다 —
@@ -1391,7 +1337,7 @@
         }
       })();
       /* 조작 규칙 (성공 기준):
-         페이지 이동은 좌우 nav-btn · 하단 dot · 키보드(←/→/스페이스)로만.
+         페이지 이동은 하단 dot · 키보드(←/→/스페이스)로만.
          #deck/body/.slide에 이동용 click 리스너를 절대 달지 않는다 —
          강의 중 화면을 가리키며 클릭해도 슬라이드가 넘어가면 안 된다. */
 // A connector uses visible icon bounds; labels are not endpoint anchors.
@@ -1554,7 +1500,6 @@ function resetPatternInteractions(slide){
           document.getElementById("tot").textContent = this.total;
           this._buildDots();
           this._bindKeys();
-          this._bindButtons();
           this._update();
           this._runSlide(this.current);
         }
@@ -1563,6 +1508,8 @@ function resetPatternInteractions(slide){
         _runSlide(i) {
           const slide = this.slides[i];
           resetPatternInteractions(slide);
+          requestAnimationFrame(drawReviewConnections);
+          requestAnimationFrame(drawCandidateConnections);
           const items = [...slide.querySelectorAll('.anim-item')];
           items.forEach(el => el.classList.remove('do-fadeinup'));
           void slide.offsetWidth;
@@ -1608,9 +1555,6 @@ function resetPatternInteractions(slide){
           const pct = ((this.current + 1) / this.total) * 100;
           document.getElementById("progress").style.width = pct + "%";
           document.getElementById("cur").textContent = this.current + 1;
-          document.getElementById("btn-prev").disabled = this.current === 0;
-          document.getElementById("btn-next").disabled =
-            this.current === this.total - 1;
           document
             .querySelectorAll(".dot")
             .forEach((d, i) =>
@@ -1627,14 +1571,6 @@ function resetPatternInteractions(slide){
             nav.appendChild(b);
           });
         }
-        _bindButtons() {
-          document
-            .getElementById("btn-prev")
-            .addEventListener("click", () => this.prev());
-          document
-            .getElementById("btn-next")
-            .addEventListener("click", () => this.next());
-        }
         _bindKeys() {
           document.addEventListener("keydown", (e) => {
             if (e.target.closest(".tx-switch, .tx-time-car")) return;
@@ -1650,6 +1586,73 @@ function resetPatternInteractions(slide){
           });
         }
       }
+
+function drawReviewConnections(){
+ document.querySelectorAll('.review-map').forEach(map=>{
+  const r=map.getBoundingClientRect(); if(!r.width||!r.height)return;
+  const svg=map.querySelector('.review-wires');svg.setAttribute('viewBox',`0 0 ${r.width} ${r.height}`);
+  const box=(el)=>{const b=el.getBoundingClientRect();return{x:b.left-r.left,y:b.top-r.top,w:b.width,h:b.height,cx:b.left-r.left+b.width/2,cy:b.top-r.top+b.height/2}};
+  map.querySelectorAll('.review-edge').forEach(edge=>{
+   const from=map.querySelector(`[data-review-node="${edge.dataset.from}"]`),to=map.querySelector(`[data-review-node="${edge.dataset.to}"]`);
+   const centeredGroup=map.closest('[data-layout="fixed-criteria"]');
+   const a=box(from.querySelector('.review-anchor')||from),b=box(centeredGroup?(to.querySelector('figcaption')||to):(to.querySelector('.review-anchor')||to));
+   if(centeredGroup){const group=box(to);b.cy=group.cy;}
+   const label=map.querySelector(`[data-label-from="${edge.dataset.from}"][data-label-to="${edge.dataset.to}"]`);
+   const gap=innerWidth<1400?18:24;let d,x,y,lx,ly,tip;
+   if(edge.dataset.route==='save'){
+    const caption=box(from.querySelector('figcaption'));const y0=caption.y+caption.h+gap;x=b.x+b.w+gap;y=b.cy;
+    d=`M${a.cx} ${y0}V${y-18}Q${a.cx} ${y} ${a.cx-18} ${y}H${x}`;
+    tip=`M${x+9} ${y-7}L${x} ${y}L${x+9} ${y+7}`;lx=(a.cx+x)/2;ly=y-14;
+   }else if(edge.dataset.route==='feedback'){
+    const caption=box(to.querySelector('figcaption'));x=b.cx;y=caption.y+caption.h+gap;const start=a.x-gap;
+    d=`M${start} ${a.cy}H${x+18}Q${x} ${a.cy} ${x} ${a.cy-18}V${y}`;
+    tip=`M${x-7} ${y+9}L${x} ${y}L${x+7} ${y+9}`;lx=(start+x)/2;ly=a.cy-14;
+   }else if(edge.dataset.return==='true'){
+    const af=box(from.querySelector('figcaption')||from),bf=box(to.querySelector('figcaption')||to),y0=af.y+af.h+18,y1=bf.y+bf.h+18;
+    const rail=Math.max(y0,y1)+Math.min(56,r.height*.14),radius=22;
+    x=b.cx;y=y1;
+    d=`M${a.cx} ${y0}V${rail-radius}Q${a.cx} ${rail} ${a.cx-radius} ${rail}H${x+radius}Q${x} ${rail} ${x} ${rail-radius}V${y}`;
+    tip=`M${x-7} ${y+9}L${x} ${y}L${x+7} ${y+9}`;lx=(a.cx+b.cx)/2;ly=rail-13;
+   }else{
+    const sign=b.cx>a.cx?1:-1;const x0=sign>0?a.x+a.w+gap:a.x-gap; x=sign>0?b.x-gap:b.x+b.w+gap;y=b.cy;const mid=(x0+x)/2;
+    d=`M${x0} ${a.cy}C${mid} ${a.cy} ${mid} ${y} ${x} ${y}`;
+    tip=`M${x-sign*9} ${y-7}L${x} ${y}L${x-sign*9} ${y+7}`;lx=mid;ly=(map.classList.contains("review-map--verdict")?(a.cy+b.cy)/2:Math.min(a.cy,b.cy))-17;
+   }
+   edge.querySelector('path').setAttribute('d',d);edge.querySelector('.review-tip').setAttribute('d',tip);
+   label.style.left=lx+'px';label.style.top=ly+'px';
+  });
+ });
+}
+const reviewObserver=new ResizeObserver(()=>requestAnimationFrame(drawReviewConnections));
+document.querySelectorAll('.review-map').forEach(map=>reviewObserver.observe(map));
+document.fonts.ready.then(drawReviewConnections);
+window.addEventListener('resize',drawReviewConnections);
+
+
+function drawCandidateConnections(){
+ document.querySelectorAll('.candidate-map').forEach(map=>{
+  const r=map.getBoundingClientRect();if(!r.width||!r.height)return;
+  map.querySelector('svg').setAttribute('viewBox',`0 0 ${r.width} ${r.height}`);
+  const anchor=id=>{const b=map.querySelector(`[data-candidate-node="${id}"] .icon`).getBoundingClientRect();return{x:b.x-r.x+b.width/2,y:b.y-r.y+b.height/2,w:b.width,h:b.height}};
+  const co=anchor('co');const gap=innerWidth<1400?18:24;
+  for(const id of ['a','b']){
+   const w=anchor(id),sign=id==='a'?-1:1;
+   for(const mode of ['assign','report']){
+    const report=mode==='report',sx=co.x+sign*(co.w/2+gap),sy=co.y+(report?-20:20),ex=w.x+(report?sign:-sign)*30,ey=w.y-w.h/2-gap;
+    const cx=sx+sign*(report?Math.abs(ex-sx)*.7:Math.abs(ex-sx)*.35),cy=ey-(report?95:60);
+    const path=report?`M${ex} ${ey}C${ex} ${cy} ${cx} ${sy} ${sx} ${sy}`:`M${sx} ${sy}C${cx} ${sy} ${ex} ${cy} ${ex} ${ey}`;
+    const key=mode+'-'+id,g=map.querySelector(`[data-candidate-link="${key}"]`);g.querySelector('path').setAttribute('d',path);
+    g.querySelector('.tip').setAttribute('d',report?`M${sx+sign*9} ${sy-7}L${sx} ${sy}L${sx+sign*9} ${sy+7}`:`M${ex-7} ${ey-9}L${ex} ${ey}L${ex+7} ${ey-9}`);
+    const label=map.querySelector(`[data-candidate-label="${key}"]`);const t=report?.48:.52;const mx=(1-t)**3*sx+3*(1-t)**2*t*cx+3*(1-t)*t*t*ex+t**3*ex;const my=(1-t)**3*sy+3*(1-t)**2*t*sy+3*(1-t)*t*t*cy+t**3*ey;
+    label.style.left=(mx+(report?sign*55:-sign*40))+'px';label.style.top=(my+(report?-20:18))+'px';
+   }
+  }
+ });
+}
+const candidateObserver=new ResizeObserver(()=>requestAnimationFrame(drawCandidateConnections));document.querySelectorAll('.candidate-map').forEach(m=>candidateObserver.observe(m));document.fonts.ready.then(drawCandidateConnections);window.addEventListener('resize',drawCandidateConnections);
+
+
+
       new SlidePresentation();
     </script>
   </body>

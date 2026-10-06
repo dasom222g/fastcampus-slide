@@ -28,6 +28,27 @@
 - 슬라이드 제작 완료. 대본은 초안이며 촬영 때 강사 검수를 거친다. 촬영은 예정.
 
 
-## Part 5 확정
+## Part 5 확정 — 2026-10-06 사용자 검수 완료
 
-- [4가지 협업 패턴과 프로젝트 미리보기](part5/outputs/ch01-01-collaboration-patterns.html) — 13장. 슬라이드·대본 사용자 승인 완료.
+- [4가지 협업 패턴과 프로젝트 미리보기](part5/outputs/ch01-01-collaboration-patterns.html) — 13장. 슬라이드 검수 완료.
+- [멀티 에이전트가 오히려 나빠지는 3가지 이유](part5/outputs/ch01-02-multi-agent-failures.html) — 9장. 슬라이드 검수 완료.
+- [기획팀 구조와 업무 흐름](part5/outputs/ch02-01-planning-team.html) — 9장. 슬라이드 검수 완료.
+- [품질 게이트로 통과 기준 세우기](part5/outputs/ch04-04-quality-gate.html) — 9장. 슬라이드 검수 완료.
+
+- 총 4개 덱·40장 확정. 대본은 검수 미완료이며 이번 작업에서 수정하지 않는다.
+- 이전 Ch01-01의 대본 승인 기록은 이번 사용자 지시(“대본은 아직”)에 따라 현재 검수 미완료로 정정한다. 촬영·편집 상태는 유지한다.
+
+## Part 6 확정 — 2026-10-06 사용자 검수 완료
+
+- [Generator–Evaluator 패턴이란](part6/outputs/ch01-01-generator-evaluator.html) — 7장.
+- [영업팀 구조 살펴보기](part6/outputs/ch01-02-sales-team-structure.html) — 9장.
+- Part 6 전체 슬라이드 완료 승인. Part 5의 후속 수정도 현재 HTML 기준으로 대본 반영 요청됨(기획팀 현재 10장).
+- 대본은 기존 Claude 담당에게 최종 HTML에 맞춘 갱신·누락 작성 요청. 아직 완료 보고 전이며 사용자 대본 검수 승인과 구분한다.
+
+
+## Part 7 확정 — 2026-10-06 사용자 제작 완료 승인
+
+- [디자인팀 구조 살펴보기 (병렬 실행)](part7/outputs/ch01-01-design-team-parallel.html) — 9장.
+- [같은 작업도 에이전트에 따라 결과가 갈린다](part7/outputs/ch02-01-agent-differences.html) — 7장.
+
+두 덱 총 16장 슬라이드 제작 완료. 대본·촬영·편집 완료와는 별도이며 대본은 이번 작업에서 수정하지 않음.

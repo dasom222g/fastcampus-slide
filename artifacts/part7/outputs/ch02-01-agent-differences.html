@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>같은 작업도 에이전트에 따라 결과가 갈린다 | Part 7 · Ch02-01</title>
+    <title>같은 작업도 에이전트에 따라 결과가 갈린다</title>
     <!-- TEMPLATE ONLY: 실제 강의 내용·제품명·작업 캡처를 넣지 않는다.
      사용법: 이 파일을 복사 → 필요한 article 선택 → 모든 data-slot/제목/부제 교체.
      diagram의 공통 shape 정의를 유지하거나 사용한 도형만 각 SVG에 펼친다.
@@ -285,35 +285,6 @@
         height: 100%;
         background: var(--brand);
         transition: width 0.3s ease;
-      }
-      .nav-btn {
-        position: fixed;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 150;
-        width: clamp(1.9rem, 2.8vw, 2.5rem);
-        height: clamp(1.9rem, 2.8vw, 2.5rem);
-        display: grid;
-        place-items: center;
-        border: 1px solid var(--border);
-        border-radius: 3px;
-        background: rgba(255, 255, 255, 0.03);
-        color: var(--text-dim);
-        cursor: pointer;
-      }
-      .nav-btn:hover:not(:disabled) {
-        color: var(--text);
-        background: rgba(255, 255, 255, 0.08);
-      }
-      .nav-btn:disabled {
-        opacity: 0.1;
-        cursor: default;
-      }
-      #btn-prev {
-        left: clamp(0.4rem, 1.2vw, 1.1rem);
-      }
-      #btn-next {
-        right: clamp(0.4rem, 1.2vw, 1.1rem);
       }
       .dot-nav {
         position: fixed;
@@ -1210,6 +1181,47 @@
 .fit-slide .anim-item.do-fadeinup{animation-name:fit-reveal}
 @media(max-width:1400px){.fit-side h2{font-size:2rem}.fit-fields dt{font-size:1.3rem}.fit-col p{font-size:1.2rem}.fit-fields>div{grid-template-columns:6.8rem minmax(0,1fr);gap:.9rem}.fit-fields dd{font-size:1.15rem}.fit-col h2{font-size:1.75rem}.fit-preferences th,.fit-preferences td{font-size:1.8rem}}
 
+
+/* Review against the approved course hierarchy and spacing. */
+.p7-drafts{gap:min(3rem,4cqi);align-items:start}
+.p7-draft{gap:min(1.2rem,2.8cqh)}
+.p7-draft .p7-shot{height:auto;aspect-ratio:8/5;border-top:2px solid var(--accent);border-radius:.3rem}
+.p7-draft img{object-fit:contain}
+.p7-draft figcaption{flex-direction:column;align-items:flex-start;gap:min(.6rem,1.4cqh)}
+.p7-draft h2{font-size:var(--heading)}
+.fit-side h2,.fit-col h2{font-size:var(--heading)}
+.fit-fields dt{font-size:var(--body)}
+.fit-fields dd,.fit-col p{font-size:var(--body)}
+.fit-fields>div{grid-template-columns:min(8rem,15cqi) minmax(0,1fr);gap:min(1.5rem,2cqi)}
+.fit-three{gap:min(3rem,4cqi);align-items:start}
+.fit-col{align-items:center;text-align:center;gap:min(1.5rem,3.5cqh)}
+.fit-col+.fit-col{border-left:0;padding-left:0}
+.fit-icon{width:min(10rem,23cqh);height:min(10rem,23cqh)}
+.fit-col p{max-width:18em;word-break:keep-all}
+.fit-side header .fit-icon{width:min(4.6rem,10.7cqh);height:min(4.6rem,10.7cqh)}
+.fit-slide .slide__body{padding-bottom:min(4.6rem,10cqh)}
+
+.ms-judgment{display:grid;grid-template-columns:minmax(0,1fr) min(4rem,5cqi) minmax(0,1fr) min(4rem,5cqi) minmax(0,1fr);align-items:center;gap:min(2rem,2cqi);width:min(100%,94rem);margin:auto}
+.ms-paper{position:relative;padding:min(2rem,4.6cqh);border:1px solid var(--accent);background:var(--bg-card);min-width:0;clip-path:polygon(0 0,calc(100% - 26px) 0,100% 26px,100% 100%,0 100%)}
+.ms-paper:after{content:'';position:absolute;right:0;top:0;width:26px;height:26px;background:var(--accent);opacity:.4}
+.ms-paper-kind{color:var(--accent);font-size:var(--body)}
+.ms-paper h2{color:var(--accent);font-size:var(--heading);margin:min(1rem,2cqh) 0;word-break:keep-all}
+.ms-paper p,.ms-agent p{font-size:var(--body);line-height:1.5;color:var(--text-dim);word-break:keep-all}
+.ms-paper-lines{display:flex;flex-direction:column;gap:.4rem;margin-top:min(1.6rem,3cqh)}
+.ms-paper-lines i{height:2px;width:90%;background:var(--border)}.ms-paper-lines i:nth-child(2){width:75%}.ms-paper-lines i:nth-child(3){width:50%}
+.ms-agent{text-align:center;color:var(--accent);margin:0}.ms-art{display:block;width:min(8rem,18cqh);height:min(8.3rem,19cqh);margin:auto;color:var(--accent)}
+.ms-agent h2{font-size:var(--heading);margin:min(1.2rem,2.5cqh) 0 min(.5rem,1cqh);color:var(--accent)}
+.ms-arrow{width:100%;height:auto}
+.ms-trial{width:min(70rem,100%);height:100%;position:relative}
+.ms-trial-node{position:absolute;transform:translate(-50%,-50%);text-align:center;width:max-content;color:var(--accent)}
+.ms-trial-node h2{font-size:var(--heading);margin-top:min(.9rem,2cqh)}
+.ms-trial-request,.ms-trial-output{display:flex;align-items:center;gap:min(1.2rem,2cqi);font-size:var(--body);font-weight:750}
+.ms-trial .fit-icon{width:min(5.3rem,12cqh);height:min(5.3rem,12cqh)}
+.ms-trial-wires{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke:var(--gray);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+.ms-trial-wires [data-edge="ia"]{stroke:var(--brand)}.ms-trial-wires [data-edge="ib"]{stroke:var(--purple)}.ms-trial-wires [data-edge="ao"],.ms-trial-wires [data-edge="bo"]{stroke:var(--green)}
+.ms-trial-node.anim-item.do-fadeinup{animation-name:fit-reveal}
+.choice-step-icon{position:relative;width:100%;display:flex;justify-content:center}
+.choice-step-arrow{position:absolute;width:min(6rem,8cqi);height:auto;left:calc(100% + min(3rem,4cqi)/2);top:50%;translate:-50% -50%;pointer-events:none}
 </style>
   </head>
   <body>
@@ -1247,19 +1259,13 @@
     <div class="progress-bar">
       <div class="progress-fill" id="progress"></div>
     </div>
-    <button class="nav-btn" id="btn-prev" aria-label="이전 슬라이드">
-      &#8592;
-    </button>
-    <button class="nav-btn" id="btn-next" aria-label="다음 슬라이드">
-      &#8594;
-    </button>
     <div class="dot-nav" id="dot-nav"></div>
     <div class="slide-counter">
       <span id="cur">1</span> / <span id="tot">7</span>
     </div>
     <div class="slide-deck" id="deck">
 <article class="slide active p5-reference-cover" data-index="0" data-pattern="COVER_SCENE">
-<header class="slide__header"><span class="slide__label">Part 7 · Chapter 2 · Ch02-01</span><h1 class="slide__title">같은 작업도 에이전트에 따라 결과가 갈린다</h1><p class="slide__sub">같은 의뢰를 줘도 두 에이전트가 만든 화면은 다릅니다.</p></header>
+<header class="slide__header"><span class="slide__label">Part 7 · Chapter 2 · Ch02-01</span><h1 class="slide__title">같은 작업도 에이전트에 따라 <span class="hl">결과가 갈린다</span></h1><p class="slide__sub">벤치마크 순위보다 실제 내 업무에서 가장 좋은 성능을 내는 모델을 선택합니다.</p></header>
 <main class="slide__body">
 <div class="scene scene--cover">
 <div class="scene__copy anim-item"><p class="statement">같은 요청<strong>달라지는 결과</strong></p></div>
@@ -1269,53 +1275,30 @@
 <footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
 </article>
 <article class="slide compact" data-index="1" data-pattern="SCENE_COMPARE">
-<header class="slide__header"><span class="slide__label">Part 7 · Chapter 2 · Ch02-01</span><h1 class="slide__title">같은 요청, <span class="hl">다른 결과</span></h1><p class="slide__sub">같은 지침과 같은 요청으로 만든 두 상세페이지입니다.</p></header>
+<header class="slide__header"><span class="slide__label">Part 7 · Chapter 2 · Ch02-01</span><h1 class="slide__title">같은 요청, <span class="hl">다른 결과</span></h1><p class="slide__sub">같은 상세페이지 작업에서 나온 두 시안의 표현 차이를 비교합니다.</p></header>
 <main class="slide__body">
 <div class="p7-drafts">
 <figure class="p7-draft anim-item" data-anim-step="0" style="--accent:var(--brand)">
 <div class="p7-shot"><img src="/artifacts/part7/_images/ch02-01--draft-claude.png" alt="큰 타이포와 할인율을 앞세운 시안"></div>
-<figcaption><h2>Claude Code</h2><p>큰 글자와 할인율을 먼저 보여준다</p></figcaption>
+<figcaption><h2>Claude 시안</h2><p>큰 글자·할인율 강조</p></figcaption>
 </figure>
 <figure class="p7-draft anim-item" data-anim-step="1" style="--accent:var(--purple)">
 <div class="p7-shot"><img src="/artifacts/part7/_images/ch02-01--draft-codex.png" alt="상품 이미지와 브랜드 분위기를 앞세운 시안"></div>
-<figcaption><h2>Codex</h2><p>상품과 브랜드 분위기를 먼저 보여준다</p></figcaption>
+<figcaption><h2>Codex 시안</h2><p>상품 이미지·브랜드 분위기 강조</p></figcaption>
 </figure>
 </div>
-<p class="p5-note anim-item" data-anim-step="2">1440×900, 확대율 100%에서 나란히 연 실제 결과입니다.</p>
+
 </main>
 <footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
 </article>
-<article class="slide compact" data-index="2" data-pattern="OPEN_TRIPTYCH">
-<header class="slide__header"><span class="slide__label">Part 7 · Chapter 2 · Ch02-01</span><h1 class="slide__title">왜 <span class="hl">갈리나</span></h1><p class="slide__sub">지침이 비워 둔 자리를 각자 해석하기 때문입니다.</p></header>
-<main class="slide__body">
-<div class="p7-triptych">
-<figure class="p7-col anim-item" data-anim-step="0"><h2 class="heading">다른 하네스</h2>
-<p class="copy">Claude Code와 Codex는 서로 다른 프로그램입니다.</p></figure>
-<figure class="p7-col anim-item" data-anim-step="1"><h2 class="heading">비워 둔 자리</h2>
-<p class="copy">색·레이아웃·카피는 자유롭게 정하라고 했습니다.</p></figure>
-<figure class="p7-col anim-item" data-anim-step="2"><h2 class="heading">먼저 잡는 기준</h2>
-<p class="copy">무엇을 가장 크게 보여줄지부터 서로 다릅니다.</p></figure>
-</div>
-<p class="p5-note anim-item" data-anim-step="3">성능의 우열이 아니라 해석의 차이입니다.</p>
-</main>
-<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
-</article>
+<article class="slide compact fit-slide model-selection" data-index="2" data-pattern="PROCESS_STRIP"><header class="slide__header"><span class="slide__label">Part 7 · Chapter 2 · Ch02-01</span><h1 class="slide__title"><span class="hl">모델이 판단</span>할 영역</h1><p class="slide__sub">사람이 정하지 않은 해결 방법을 모델이 선택하고 그 선택에서 결과의 차이가 드러납니다.</p></header><main class="slide__body"><div class="ms-judgment"><div class="ms-paper anim-item" data-anim-step="0" style="--accent:var(--purple)"><span class="ms-paper-kind">업무 요청</span><h2>목적·필수 조건</h2><p>사람이 명확하게 정하는 것</p><div class="ms-paper-lines"><i></i><i></i><i></i></div></div><svg class="ms-arrow anim-item" data-anim-step="1" viewBox="0 0 70 24" fill="none" stroke="var(--gray)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12H64M56 5L64 12L56 19"/></svg><figure class="ms-agent anim-item" data-anim-step="1" style="--accent:var(--brand)"><svg class="ms-art" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><figcaption><h2>해결 방법 선택</h2><p>사람이 정하지 않은 영역</p></figcaption></figure><svg class="ms-arrow anim-item" data-anim-step="2" viewBox="0 0 70 24" fill="none" stroke="var(--gray)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12H64M56 5L64 12L56 19"/></svg><div class="ms-paper anim-item" data-anim-step="2" style="--accent:var(--green)"><span class="ms-paper-kind">결과물</span><h2>결과의 차이</h2><p>모델의 선택이 만든 차이</p><div class="ms-paper-lines"><i></i><i></i><i></i></div></div></div><p class="p5-note anim-item" data-anim-step="4">목적과 필수 조건이 같아도 모델이 선택한 해결 방법에 따라 결과는 달라집니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
 <article class="slide compact fit-slide" data-index="3" data-pattern="SCENE_COMPARE">
-<header class="slide__header"><span class="slide__label">Part 7 · Chapter 2 · Ch02-01</span><h1 class="slide__title">고정 조건과 <span class="hl">자유도</span></h1><p class="slide__sub">비교의 조건은 같게, 결과를 만드는 방식은 자유롭게.</p></header>
-<main class="slide__body"><div class="fit-compare"><section class="fit-side anim-item" data-anim-step="0" style="--accent:var(--purple)"><header><svg class="fit-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="22" y="42" width="56" height="45" rx="7"/><path d="M34 42V29a16 16 0 0132 0v13"/><circle cx="50" cy="63" r="4"/><path d="M50 67v8"/></svg><h2>같게 줄 것</h2></header><dl class="fit-fields"><div><dt>목적</dt><dd>누구에게 · 무엇을 위해</dd></div><div><dt>입력 자료</dt><dd>같은 문서 · 같은 정보</dd></div><div><dt>필수 조건</dt><dd>예산 · 분량 · 금지 사항</dd></div><div><dt>완료 기준</dt><dd>반드시 담을 내용 · 기능</dd></div></dl></section><section class="fit-side anim-item" data-anim-step="1" style="--accent:var(--yellow)"><header><svg class="fit-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M24 76L65 18l17 12-41 58H18zM58 28l17 12M24 76l17 12"/><path d="M18 18v16M10 26h16M76 63v18M67 72h18"/></svg><h2>자유롭게 맡길 것</h2></header><dl class="fit-fields"><div><dt>구성</dt><dd>정보의 순서와 강조</dd></div><div><dt>문체</dt><dd>문장과 설명 방식</dd></div><div><dt>시각 표현</dt><dd>색상과 레이아웃</dd></div><div><dt>해결 방식</dt><dd>조건을 충족하는 접근법</dd></div></dl></section></div></main>
+<header class="slide__header"><span class="slide__label">Part 7 · Chapter 2 · Ch02-01</span><h1 class="slide__title"><span class="hl">목적</span>은 명확하게, <span class="hl">방법</span>은 자유롭게</h1><p class="slide__sub">목적과 필수 조건은 명확히 주고 목적을 달성하는 방법은 모델에게 맡깁니다.</p></header>
+<main class="slide__body"><div class="fit-compare"><section class="fit-side anim-item" data-anim-step="0" style="--accent:var(--purple)"><header><svg class="fit-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="22" y="42" width="56" height="45" rx="7"/><path d="M34 42V29a16 16 0 0132 0v13"/><circle cx="50" cy="63" r="4"/><path d="M50 67v8"/></svg><h2>사람이 정할 것</h2></header><dl class="fit-fields"><div><dt>업무 목적</dt><dd>누구에게 · 무엇을 위해</dd></div><div><dt>입력 자료</dt><dd>같은 문서 · 같은 정보</dd></div><div><dt>필수 조건</dt><dd>반드시 지킬 내용 · 제약</dd></div></dl></section><section class="fit-side anim-item" data-anim-step="1" style="--accent:var(--yellow)"><header><svg class="fit-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M24 76L65 18l17 12-41 58H18zM58 28l17 12M24 76l17 12"/><path d="M18 18v16M10 26h16M76 63v18M67 72h18"/></svg><h2>모델에게 맡길 것</h2></header><dl class="fit-fields"><div><dt>해결 방법</dt><dd>접근법과 작업 절차</dd></div><div><dt>정보 구성</dt><dd>선택 · 순서 · 강조</dd></div><div><dt>표현 방식</dt><dd>설명 · 문체 · 시각 표현</dd></div></dl></section></div><p class="p5-note anim-item" data-anim-step="3">세부 절차까지 정답처럼 지정하지 않고 모델이 선택할 여지를 둡니다.</p></main>
 <footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
-<article class="slide compact fit-slide" data-index="4" data-pattern="OPEN_TRIPTYCH">
-<header class="slide__header"><span class="slide__label">Part 7 · Chapter 2 · Ch02-01</span><h1 class="slide__title">내가 쓸 <span class="hl">결과의 기준</span></h1><p class="slide__sub">필수 조건을 확인한 뒤, 내가 쓰기 좋은 결과를 고릅니다.</p></header>
-<main class="slide__body"><div class="fit-three"><section class="fit-col anim-item" data-anim-step="0" style="--accent:var(--green)"><svg class="fit-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10h40l20 20v60H20zM60 10v20h20M31 42h26M31 53h18"/><path d="M39 72l10 10 25-27" stroke="var(--green)" stroke-width="4"/></svg><h2>조건 충족</h2><p>요청한 일을 빠짐없이 했는가</p></section><section class="fit-col anim-item" data-anim-step="1" style="--accent:var(--purple)"><svg class="fit-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="10" y="15" width="80" height="69" rx="5"/><path d="M21 30h42M21 42h27M21 66h58M21 74h42"/><rect x="57" y="41" width="22" height="15" fill="currentColor" opacity=".3"/></svg><h2>표현 적합</h2><p>내가 원하는 구성과 말투인가</p></section><section class="fit-col anim-item" data-anim-step="2" style="--accent:var(--yellow)"><svg class="fit-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 10h48v21M16 10v78h48V72M26 25h27M26 39h20M26 53h13"/><path d="M45 70l28-37 14 10-28 37-19 7zM69 38l14 10"/></svg><h2>수정 부담</h2><p>바로 쓰려면 얼마나 고쳐야 하나</p></section></div></main>
-<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
-<article class="slide compact fit-slide" data-index="5" data-pattern="SCENE_COMPARE">
-<header class="slide__header"><span class="slide__label">Part 7 · Chapter 2 · Ch02-01</span><h1 class="slide__title">목적에 따라 <span class="hl">다른 선택</span></h1><p class="slide__sub">같은 결과라도 쓰는 사람과 업무에 따라 만족도가 달라집니다.</p></header>
-<main class="slide__body"><table class="fit-preferences"><thead><tr class="anim-item" data-anim-step="0"><th scope="col" class="fit-purpose">사용 목적</th><th scope="col" style="--accent:var(--purple)"><svg class="fit-page" viewBox="0 0 180 120" aria-hidden="true"><rect x="24" y="5" width="132" height="110" rx="3"/><path d="M41 25h70M41 45h95M41 60h65"/><rect class="fit-fill" x="41" y="79" width="21" height="20"/><rect class="fit-fill" x="72" y="70" width="21" height="29"/><rect class="fit-fill" x="103" y="62" width="21" height="37"/></svg><span>핵심 압축형</span></th><th scope="col" style="--accent:var(--yellow)"><svg class="fit-page" viewBox="0 0 180 120" aria-hidden="true"><rect x="24" y="5" width="132" height="110" rx="3"/><path d="M41 25h70M41 43h95M41 52h95M41 61h76M41 78h95M41 87h95M41 96h69"/></svg><span>배경 설명형</span></th></tr></thead><tbody><tr class="anim-item" data-anim-step="1"><th scope="row">빠르게 보고할 때</th><td class="fit-pick">✓ 선택</td><td class="fit-muted">—</td></tr><tr class="anim-item" data-anim-step="2"><th scope="row">자세히 설명할 때</th><td class="fit-muted">—</td><td class="fit-pick">✓ 선택</td></tr></tbody></table></main>
-<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
-<article class="slide compact fit-slide" data-index="6" data-pattern="OPEN_TRIPTYCH">
-<header class="slide__header"><span class="slide__label">Part 7 · Chapter 2 · Ch02-01</span><h1 class="slide__title">내 업무에 <span class="hl">맞는 모델</span></h1><p class="slide__sub">남의 순위보다 내 업무에서의 만족도를 확인합니다.</p></header>
-<main class="slide__body"><div class="fit-three"><section class="fit-col anim-item" data-anim-step="0" style="--accent:var(--purple)"><span class="fit-number">01</span><svg class="fit-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10h40l20 20v60H20zM60 10v20h20M32 43h34M32 57h34M32 71h23"/></svg><h2>내 작업으로 요청</h2><p>같은 자료와 조건으로 비교</p></section><section class="fit-col anim-item" data-anim-step="1" style="--accent:var(--green)"><span class="fit-number">02</span><svg class="fit-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="50" cy="25" r="15"/><path d="M21 89V69c0-35 58-35 58 0v20"/><path d="M38 70l9 9 20-23" stroke="var(--green)"/></svg><h2>직접 써 보고 선택</h2><p>내 만족도와 수정 부담으로 판단</p></section><section class="fit-col anim-item" data-anim-step="2" style="--accent:var(--yellow)"><span class="fit-number">03</span><svg class="fit-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 29a35 35 0 0160 15M83 22v22H61M77 72a35 35 0 01-60-15M17 79V57h22"/><path d="M40 46h20M40 57h20"/></svg><h2>새 모델로 재비교</h2><p>쓰던 요청으로 차이를 확인</p></section></div></main>
-<footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<article class="slide compact fit-slide model-selection" data-index="4" data-pattern="STRUCTURE_BRANCH"><header class="slide__header"><span class="slide__label">Part 7 · Chapter 2 · Ch02-01</span><h1 class="slide__title"><span class="hl">같은 업무</span>로 비교</h1><p class="slide__sub">작업이 다르면 공정한 비교가 어렵기 때문에 같은 작업을 서로 다른 모델에 맡깁니다.</p></header><main class="slide__body"><div class="ms-trial"><svg class="ms-trial-wires" aria-hidden="true"><g class="anim-item" data-anim-step="1"><path data-edge="ia"/><path data-edge="ib"/></g><g class="anim-item" data-anim-step="2"><path data-edge="ao"/><path data-edge="bo"/></g></svg><div class="ms-trial-node anim-item" data-node="input" data-anim-step="0" style="left:50%;top:5%;--accent:var(--purple)"><div class="ms-trial-request"><svg class="fit-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10H60L80 30V90H20ZM60 10V30H80M32 44H67M32 58H67M32 72H56"/></svg><span>같은 업무 요청</span></div></div><div class="ms-trial-node anim-item" data-node="a" data-anim-step="1" style="left:24%;top:44%;--accent:var(--brand)"><svg class="ms-art" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><h2>모델 A</h2></div><div class="ms-trial-node anim-item" data-node="ao" data-anim-step="2" style="left:24%;top:84%;--accent:var(--green)"><div class="ms-trial-output"><svg class="fit-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10H60L80 30V90H20ZM60 10V30H80M32 44H67M32 58H67M32 72H56"/></svg><span>결과 A</span></div></div><div class="ms-trial-node anim-item" data-node="b" data-anim-step="1" style="left:76%;top:44%;--accent:var(--purple)"><svg class="ms-art" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><h2>모델 B</h2></div><div class="ms-trial-node anim-item" data-node="bo" data-anim-step="2" style="left:76%;top:84%;--accent:var(--green)"><div class="ms-trial-output"><svg class="fit-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10H60L80 30V90H20ZM60 10V30H80M32 44H67M32 58H67M32 72H56"/></svg><span>결과 B</span></div></div></div><p class="p5-note anim-item" data-anim-step="4">조건은 같게 주고 각 모델이 선택한 해결 방법과 결과를 비교합니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<article class="slide compact fit-slide model-selection" data-index="5" data-pattern="OPEN_TRIPTYCH"><header class="slide__header"><span class="slide__label">Part 7 · Chapter 2 · Ch02-01</span><h1 class="slide__title">내 업무의 <span class="hl">선택 기준</span></h1><p class="slide__sub">결과가 목적을 달성했는지 확인하고 정확성과 수정 부담까지 평가합니다.</p></header><main class="slide__body"><div class="fit-three"><section class="fit-col anim-item" data-anim-step="0" style="--accent:var(--purple)"><svg class="fit-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="50" cy="50" r="35"/><circle cx="50" cy="50" r="20"/><circle cx="50" cy="50" r="5"/><path d="M50 50L87 13M70 13H87V30"/></svg><h2>목적 달성</h2><p>내가 하려던 일을 해결했는가</p></section><section class="fit-col anim-item" data-anim-step="1" style="--accent:var(--green)"><svg class="fit-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="50" cy="50" r="35"/><path d="M30 50L44 64L72 34"/></svg><h2>정확성</h2><p>내용·계산·필수 조건이 맞는가</p></section><section class="fit-col anim-item" data-anim-step="2" style="--accent:var(--yellow)"><svg class="fit-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 10H64V31M16 10V88H64V72M26 25H53M26 39H46M26 53H39M45 70L73 33L87 43L59 80L40 87ZM69 38L83 48"/></svg><h2>수정 부담</h2><p>실제로 쓰기까지 얼마나 고치는가</p></section></div><p class="p5-note anim-item" data-anim-step="4">보기 좋은 답보다 내 업무를 제대로 끝내는 결과를 선택합니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<article class="slide compact fit-slide model-selection" data-index="6" data-pattern="PROCESS_STRIP"><header class="slide__header"><span class="slide__label">Part 7 · Chapter 2 · Ch02-01</span><h1 class="slide__title">내 기준에 맞는 <span class="hl">모델 찾는 법</span></h1><p class="slide__sub">직접 비교한 여러 결과를 바탕으로 내 업무에서 가장 잘하는 모델을 고릅니다.</p></header><main class="slide__body"><div class="fit-three model-choice-steps"><section class="fit-col anim-item" data-anim-step="0" style="--accent:var(--purple)"><span class="fit-number">01</span><div class="choice-step-icon"><svg class="fit-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10H60L80 30V90H20ZM60 10V30H80M32 44H67M32 58H67M32 72H56"/></svg><svg class="choice-step-arrow anim-item" data-anim-step="1" viewBox="0 0 80 24" fill="none" stroke="var(--gray)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12H74M66 5L74 12L66 19"/></svg></div><h2>대표 업무 선택</h2><p>내가 자주 하는 업무</p></section><section class="fit-col anim-item" data-anim-step="1" style="--accent:var(--yellow)"><span class="fit-number">02</span><div class="choice-step-icon"><svg class="fit-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="20" width="36" height="64" rx="3"/><rect x="56" y="20" width="36" height="64" rx="3"/><path d="M16 36H36M16 49H36M64 36H84M64 49H84M20 68L26 74L36 60M68 68L74 74L84 60"/></svg><svg class="choice-step-arrow anim-item" data-anim-step="2" viewBox="0 0 80 24" fill="none" stroke="var(--gray)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12H74M66 5L74 12L66 19"/></svg></div><h2>여러 결과 비교</h2><p>품질과 수정 시간 확인</p></section><section class="fit-col anim-item" data-anim-step="2" style="--accent:var(--green)"><span class="fit-number">03</span><div class="choice-step-icon"><svg class="fit-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="50" cy="50" r="35"/><path d="M30 50L44 64L72 34"/></svg></div><h2>주력 모델 선택</h2><p>내 업무에서 가장 잘하는 모델</p></section></div><p class="p5-note anim-item" data-anim-step="4">모델 순위보다 내 업무에서의 만족도로 선택합니다.</p></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
     </div>
     <script>
       // file:// 로 열었을 때만 경로를 보정한다. 정식 덱과 같은 코드다 —
@@ -1349,7 +1332,7 @@
         }
       })();
       /* 조작 규칙 (성공 기준):
-         페이지 이동은 좌우 nav-btn · 하단 dot · 키보드(←/→/스페이스)로만.
+         페이지 이동은 하단 dot · 키보드(←/→/스페이스)로만.
          #deck/body/.slide에 이동용 click 리스너를 절대 달지 않는다 —
          강의 중 화면을 가리키며 클릭해도 슬라이드가 넘어가면 안 된다. */
 // A connector uses visible icon bounds; labels are not endpoint anchors.
@@ -1512,7 +1495,6 @@ function resetPatternInteractions(slide){
           document.getElementById("tot").textContent = this.total;
           this._buildDots();
           this._bindKeys();
-          this._bindButtons();
           this._update();
           this._runSlide(this.current);
         }
@@ -1566,9 +1548,6 @@ function resetPatternInteractions(slide){
           const pct = ((this.current + 1) / this.total) * 100;
           document.getElementById("progress").style.width = pct + "%";
           document.getElementById("cur").textContent = this.current + 1;
-          document.getElementById("btn-prev").disabled = this.current === 0;
-          document.getElementById("btn-next").disabled =
-            this.current === this.total - 1;
           document
             .querySelectorAll(".dot")
             .forEach((d, i) =>
@@ -1584,14 +1563,6 @@ function resetPatternInteractions(slide){
             b.addEventListener("click", () => this._go(i));
             nav.appendChild(b);
           });
-        }
-        _bindButtons() {
-          document
-            .getElementById("btn-prev")
-            .addEventListener("click", () => this.prev());
-          document
-            .getElementById("btn-next")
-            .addEventListener("click", () => this.next());
         }
         _bindKeys() {
           document.addEventListener("keydown", (e) => {
@@ -1609,6 +1580,10 @@ function resetPatternInteractions(slide){
         }
       }
       new SlidePresentation();
+
+function drawModelTrial(){const map=document.querySelector('.slide.active .ms-trial');if(!map)return;const r=map.getBoundingClientRect(),svg=map.querySelector('.ms-trial-wires');svg.setAttribute('viewBox',`0 0 ${r.width} ${r.height}`);const box=k=>{let e=map.querySelector(`[data-node="${k}"]`),b=e.getBoundingClientRect();return{x:(b.left+b.right)/2-r.left,t:b.top-r.top,b:b.bottom-r.top}};const input=box('input');const tip=(x,y)=>`M${x-5} ${y-7}L${x} ${y}L${x+5} ${y-7}`;['a','b'].forEach(k=>{const n=box(k),o=box(k+'o'),sy=input.b+16,ey=n.t-18,mid=(sy+ey)/2;svg.querySelector(`[data-edge="i${k}"]`).setAttribute('d',`M${input.x} ${sy}V${mid}H${n.x}V${ey}`+tip(n.x,ey));svg.querySelector(`[data-edge="${k}o"]`).setAttribute('d',`M${n.x} ${n.b+18}V${o.t-18}`+tip(n.x,o.t-18));});}
+new MutationObserver(()=>requestAnimationFrame(drawModelTrial)).observe(document.getElementById('deck'),{subtree:true,attributes:true,attributeFilter:['class']});window.addEventListener('resize',drawModelTrial);document.fonts.ready.then(drawModelTrial);
+
     </script>
   </body>
 </html>

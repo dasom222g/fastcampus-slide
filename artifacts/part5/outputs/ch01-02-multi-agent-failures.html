@@ -286,35 +286,6 @@
         background: var(--brand);
         transition: width 0.3s ease;
       }
-      .nav-btn {
-        position: fixed;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 150;
-        width: clamp(1.9rem, 2.8vw, 2.5rem);
-        height: clamp(1.9rem, 2.8vw, 2.5rem);
-        display: grid;
-        place-items: center;
-        border: 1px solid var(--border);
-        border-radius: 3px;
-        background: rgba(255, 255, 255, 0.03);
-        color: var(--text-dim);
-        cursor: pointer;
-      }
-      .nav-btn:hover:not(:disabled) {
-        color: var(--text);
-        background: rgba(255, 255, 255, 0.08);
-      }
-      .nav-btn:disabled {
-        opacity: 0.1;
-        cursor: default;
-      }
-      #btn-prev {
-        left: clamp(0.4rem, 1.2vw, 1.1rem);
-      }
-      #btn-next {
-        right: clamp(0.4rem, 1.2vw, 1.1rem);
-      }
       .dot-nav {
         position: fixed;
         bottom: 1.3rem;
@@ -1198,6 +1169,20 @@
       .p5-rt b{position:absolute;z-index:2;left:50%;bottom:0;transform:translate(-50%,50%);background:var(--bg);
                padding:0 min(1rem,1.2cqi);font-size:min(1.55rem,3.6cqh);font-weight:750;
                color:var(--orange);white-space:nowrap}
+      /* 6·8장 — 연결선은 아이콘·카드의 중심에 맞추고 캡션은 아래에 둔다.
+         상단 카드가 검사 담당 열을 늘려 좌우 연결선 간격을 벌리지 않게 한다. */
+      :is(.p5-chain--completion,.p5-chain--verification){grid-template-columns:repeat(7,auto);--arrow:min(6rem,6cqi);--col-gap:min(3rem,3.4cqi)}
+      :is(.p5-chain--completion,.p5-chain--verification)>.p5-card{min-width:min(14rem,16cqi);padding-inline:min(1.7rem,2cqi)}
+      :is(.p5-chain--completion,.p5-chain--verification)>.p5-actor{position:relative;width:min(8.4rem,19.5cqh);min-width:0;justify-self:center}
+      :is(.p5-chain--completion,.p5-chain--verification)>.p5-actor>figcaption{position:absolute;top:calc(100% + min(.9rem,2cqh));left:50%;transform:translateX(-50%);width:max-content}
+      :is(.p5-chain--completion,.p5-chain--verification)>.p5-feed{width:0;min-width:0;margin-bottom:min(1.5rem,3.5cqh);gap:min(1.5rem,3.5cqh)}
+      :is(.p5-chain--completion,.p5-chain--verification)>.p5-feed>*{flex-shrink:0}
+      :is(.p5-chain--completion,.p5-chain--verification)>.p5-feed>.p5-vline{height:min(5rem,11.5cqh)}
+      :is(.p5-chain--completion,.p5-chain--verification)>.p5-conn{align-self:center;position:relative}
+      :is(.p5-chain--completion,.p5-chain--verification)>.p5-conn>b{position:absolute;bottom:min(1.2rem,2.8cqh)}
+      :is(.p5-chain--completion,.p5-chain--verification)>.p5-rt{margin-top:min(7rem,16cqh)}
+      .p5-chain--completion>.p5-rt--w:before{top:calc(-1 * (min(1.55rem,3.6cqh) * 1.2 + .35rem))}
+      .p5-chain--completion>.p5-rt--w>.p5-head{top:calc(-5px - (min(1.55rem,3.6cqh) * 1.2 + .35rem))}
       /* 4장 — 배정선은 실측 좌표로 그린 곡선이다. 직각 엘보를 쓰지 않는다 */
       .p5-dispatch{--line:2px;position:relative;display:grid;grid-template-columns:repeat(3,1fr);
                    column-gap:min(2.8rem,3.2cqi);row-gap:min(8.4rem,19cqh);
@@ -1244,6 +1229,27 @@
       .p5-rows--numbered .p5-rule{font-size:min(2.6rem,6cqh)}
       .p5-step-arrow,.p5-loop-arrow{display:flex;align-items:center;justify-content:center;align-self:center}
       @media(max-width:1300px){.p5-reason{padding:1.6rem;min-height:min(24rem,60cqh)}.p5-doc{height:min(24rem,55cqh);padding:1.7rem}}
+
+      /* 3·4장: 같은 배정 구조에서 목적 누락과 목적 공유를 비교한다. */
+      .p5-context-map{--context-accent:var(--yellow);width:min(100%,92rem);row-gap:min(4.6rem,10.7cqh)}
+      .p5-context-map--missing{--context-accent:var(--orange)}
+      .p5-context-origin{grid-column:1/-1;justify-self:center;position:relative;display:flex;flex-direction:column;align-items:center;gap:min(.5rem,1.2cqh);padding:min(1.3rem,3cqh) min(2rem,2.4cqi);border:1px solid var(--border);border-top:3px solid var(--context-accent);background:var(--bg-card)}
+      .p5-context-origin small{font-size:min(1.3rem,3cqh);color:var(--context-accent);font-weight:700}
+      .p5-context-origin h2{font-size:min(2.15rem,5cqh);font-weight:750;line-height:1.3}
+      .p5-context-coordinator{position:absolute;right:calc(100% + min(2rem,2.4cqi));top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:min(.5rem,1.2cqh);color:var(--yellow)}
+      .p5-context-coordinator .icon{width:min(5.2rem,12cqh);height:min(5.4rem,12.5cqh)}
+      .p5-context-coordinator figcaption{font-size:min(1.3rem,3cqh);font-weight:750}
+      .p5-context-map .p5-fanwires path{stroke:var(--context-accent)}
+      .p5-context-map .p5-wcol>.icon{width:min(6.2rem,14.5cqh);height:min(6.4rem,15cqh)}
+      .p5-context-map .p5-wcol>.p5-card{--accent:var(--purple);width:100%;min-width:0;max-width:min(27rem,31cqi);min-height:min(11.6rem,27cqh);padding:min(1.35rem,3.1cqh) min(1.6rem,1.9cqi);margin-top:min(.9rem,2.1cqh);justify-content:center}
+      .p5-context-map .p5-card h2{font-size:min(1.9rem,4.4cqh)}
+      .p5-context-map .p5-card p{font-size:min(1.55rem,3.6cqh)}
+      .p5-context-map--missing .p5-wcol>.p5-card{--accent:var(--orange)}
+      .p5-context-list{list-style:none;display:flex;flex-direction:column;gap:min(.45rem,1cqh);margin:0;padding:0;font-size:min(1.4rem,3.3cqh);line-height:1.4;color:var(--text-muted)}
+      .p5-context-list .is-relevant{color:var(--text);font-weight:700}
+      .p5-context-slide .p5-note{color:var(--text)}
+
+      .p5-sum-desc{font-size:min(1.35rem,3.1cqh);line-height:1.5;color:var(--text-dim);margin-top:min(.35rem,.8cqh);white-space:nowrap}
 </style>
   </head>
   <body>
@@ -1281,19 +1287,13 @@
     <div class="progress-bar">
       <div class="progress-fill" id="progress"></div>
     </div>
-    <button class="nav-btn" id="btn-prev" aria-label="이전 슬라이드">
-      &#8592;
-    </button>
-    <button class="nav-btn" id="btn-next" aria-label="다음 슬라이드">
-      &#8594;
-    </button>
     <div class="dot-nav" id="dot-nav"></div>
     <div class="slide-counter">
       <span id="cur">1</span> / <span id="tot">9</span>
     </div>
     <div class="slide-deck" id="deck">
 <article class="slide active slide--cover-revised" data-index="0" data-pattern="COVER_SCENE">
-<header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-02</span><h1 class="slide__title">멀티 에이전트가 <span class="hl">오히려 나빠지는</span> 3가지 이유</h1><p class="slide__sub">전달·완료·검증에서 발생하는 실패</p></header>
+<header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-02</span><h1 class="slide__title">멀티 에이전트가 <span class="hl">오히려 나빠지는</span> 3가지 이유</h1><p class="slide__sub">일을 나눈 뒤에도 목적 공유·인수인계·검증을 설계해야 합니다.</p></header>
 <main class="slide__body"><div class="scene scene--cover">
 <div class="scene__copy anim-item"><p class="statement">전달·완료·검증<strong>3가지 실패 지점</strong></p></div>
 <figure class="scene__visual anim-item" role="img" aria-label="코디네이터와 두 워커가 연결된 멀티 에이전트 구조. 연결 경로 세 곳에 물음표와 엑스 표시가 있다.">
@@ -1314,58 +1314,64 @@
 </div></main>
 <footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
 </article>
-<article class="slide slide--reasons" data-index="1" data-pattern="NUMBERED_TRIO"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-02</span><h1 class="slide__title">세 가지 <span class="hl">실패</span></h1><p class="slide__sub">실패는 전달·완료·검증의 서로 다른 지점에서 생깁니다.</p></header><main class="slide__body"><div class="p5-reasons"><section class="p5-reason anim-item" data-anim-step="0" style="--accent:var(--brand)"><span class="p5-reason-no">01</span><h2>맥락 붕괴</h2><p>앞 조건을 다음 담당이 받지 못함</p></section><section class="p5-reason anim-item" data-anim-step="1" style="--accent:var(--yellow)"><span class="p5-reason-no">02</span><h2>유령 위임</h2><p>완료 보고는 있지만 결과 파일이 없음</p></section><section class="p5-reason anim-item" data-anim-step="2" style="--accent:var(--purple)"><span class="p5-reason-no">03</span><h2>검증 오류</h2><p>원본 대조 없이 결론을 믿음</p></section></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
-<article class="slide slide--failure" data-index="2" data-pattern="SCENE_IMAGE"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-02 · 실패 01/03</span><h1 class="slide__title">01 <span class="hl">맥락 붕괴</span></h1><p class="slide__sub">처음 한 번 준 조건이 작업을 거치며 사라집니다.</p></header><main class="slide__body"><div class="scene scene--image"><div class="scene__copy anim-item" data-anim-step="0"><p class="statement">처음 준 조건<strong>뒤 작업에서 누락</strong></p><p class="copy">달라진 판단 기준</p></div><figure class="scene__visual anim-item" data-anim-step="1"><img src="/artifacts/part5/_images/ch01-02--context-loss-transparent.png" alt="앞 작업의 문서를 놓친 사람과 문서를 받지 못한 에이전트"></figure></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
-<article class="slide compact" data-index="3" data-pattern="TURN_SCOPED_INPUT">
-<header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-02</span><h1 class="slide__title">작업마다 <span class="hl">기준 입력</span></h1><p class="slide__sub">코디네이터가 작업을 시킬 때마다 그 작업에 필요한 기준을 함께 넣습니다.</p></header>
+<article class="slide slide--reasons" data-index="1" data-pattern="NUMBERED_TRIO"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-02</span><h1 class="slide__title">자주 겪는 멀티에이전트 <span class="hl">실패 유형</span></h1><p class="slide__sub">UC 버클리의 MAST 연구에서 분석한 실패 원인을 실무 관점에서 정리했습니다.</p></header><main class="slide__body"><div class="p5-reasons"><section class="p5-reason anim-item" data-anim-step="0" style="--accent:var(--brand)"><span class="p5-reason-no">01</span><h2>맥락 붕괴</h2><p>할 일은 알지만 목적을 모름</p></section><section class="p5-reason anim-item" data-anim-step="1" style="--accent:var(--yellow)"><span class="p5-reason-no">02</span><h2>유령 위임</h2><p>넘겼다고 생각한 일이 멈춤</p></section><section class="p5-reason anim-item" data-anim-step="2" style="--accent:var(--purple)"><span class="p5-reason-no">03</span><h2>검증 오류</h2><p>자기 결과를 스스로 통과시킴</p></section></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<article class="slide slide--failure" data-index="2" data-pattern="SCENE_IMAGE"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-02 · 실패 01/03</span><h1 class="slide__title">01 <span class="hl">맥락 붕괴</span></h1><p class="slide__sub">각 에이전트가 할 일만 알고, 전체 목적과 배경을 놓칩니다.</p></header><main class="slide__body"><div class="scene scene--image"><div class="scene__copy anim-item" data-anim-step="0"><p class="statement">전달된 작업<strong>빠진 목적·배경</strong></p><p class="copy">할 일은 알아도, 왜 하는지는 모름</p></div><figure class="scene__visual anim-item" data-anim-step="1"><img src="/artifacts/part5/_images/ch01-02--context-loss-transparent.png" alt="앞 작업의 문서를 놓친 사람과 문서를 받지 못한 에이전트"></figure></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<article class="slide slide--failure" data-index="3" data-pattern="SCENE_IMAGE"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-02 · 실패 02/03</span><h1 class="slide__title">02 <span class="hl">유령 위임</span></h1><p class="slide__sub">일을 넘겼는데 다음 담당에게 이어지지 않습니다.</p></header><main class="slide__body"><div class="scene scene--image"><div class="scene__copy anim-item" data-anim-step="0"><p class="statement">일은 넘겼는데<strong>인수인계가 끊김</strong></p><p class="copy">일을 넘겼는데, 다음 담당이 시작하지 않음</p></div><figure class="scene__visual anim-item" data-anim-step="1"><img src="/artifacts/part5/_images/ch01-02--ghost-delegation-transparent.png" alt="완료를 알리는 에이전트와 비어 있는 결과 서류함"></figure></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<article class="slide slide--failure" data-index="4" data-pattern="SCENE_IMAGE"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-02 · 실패 03/03</span><h1 class="slide__title">03 <span class="hl">검증 오류</span></h1><p class="slide__sub">작성한 에이전트가 자기 결과를 평가하며 오류를 놓칩니다.</p></header><main class="slide__body"><div class="scene scene--image"><div class="scene__copy anim-item" data-anim-step="0"><p class="statement">자기가 쓴 답안<strong>자기가 채점</strong></p><p class="copy">잘못된 결과도 스스로 통과 처리</p></div><figure class="scene__visual anim-item" data-anim-step="1"><img src="/artifacts/part5/_images/ch01-02--self-approval.png" alt="에이전트 하나가 직접 작성한 오류 문서에 스스로 승인 표시를 남기는 모습"></figure></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
+<article class="slide compact p5-context-slide" data-index="5" data-pattern="PURPOSE_SHARED">
+<header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-02 · 해결 01/03</span><h1 class="slide__title"><span class="hl">목적·배경</span> 함께 전달</h1><p class="slide__sub">Orca는 실행을 돕는 수단이며, 목적과 기준은 우리가 정해야 합니다.</p></header>
 <main class="slide__body">
-<div class="p5-dispatch">
+<div class="p5-dispatch p5-context-map">
+<div class="p5-context-origin anim-item" data-anim-step="0"><figure class="p5-context-coordinator"><svg class="icon icon--robot tone-yellow" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><figcaption>Coordinator</figcaption></figure><small>각 작업 시작 전</small><h2>전체 목표·배경</h2></div>
 <svg class="p5-fanwires anim-item" data-anim-step="1" aria-hidden="true"><path/><path/><path/></svg>
-<figure class="p5-actor p5-actor--row anim-item" data-anim-step="0" style="--accent:var(--yellow)"><svg class="icon icon--robot tone-yellow" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><figcaption><h2 class="p5-actor-name">Coordinator</h2><p class="p5-actor-sub">작업을 시킬 때마다</p></figcaption></figure>
-<figure class="p5-wcol anim-item" data-anim-step="2"><svg class="icon icon--robot tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><figcaption><h2>Worker A</h2><p>자료 조사</p></figcaption><div class="p5-card"><small>이 작업의 기준</small><h2>조사 기준</h2></div></figure><figure class="p5-wcol anim-item" data-anim-step="3"><svg class="icon icon--robot tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><figcaption><h2>Worker B</h2><p>초안 작성</p></figcaption><div class="p5-card"><small>이 작업의 기준</small><h2>작성 양식</h2></div></figure><figure class="p5-wcol anim-item" data-anim-step="4"><svg class="icon icon--robot tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><figcaption><h2>Worker C</h2><p>검토</p></figcaption><div class="p5-card"><small>이 작업의 기준</small><h2>검토 기준</h2></div></figure>
+<figure class="p5-wcol anim-item" data-anim-step="2"><svg class="icon icon--robot tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><figcaption><h2>Worker A</h2></figcaption><div class="p5-card"><h2>자료 조사</h2><p>+ 전체 목표·배경</p></div></figure><figure class="p5-wcol anim-item" data-anim-step="3"><svg class="icon icon--robot tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><figcaption><h2>Worker B</h2></figcaption><div class="p5-card"><h2>초안 작성</h2><p>+ 전체 목표·배경</p></div></figure><figure class="p5-wcol anim-item" data-anim-step="4"><svg class="icon icon--robot tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><figcaption><h2>Worker C</h2></figcaption><div class="p5-card"><h2>평가</h2><p>+ 전체 목표·배경</p></div></figure>
 </div>
-<p class="p5-note anim-item" data-anim-step="5">작업이 바뀌면 넣어 주는 기준도 바뀝니다.</p>
+<p class="p5-note anim-item" data-anim-step="5">왜 해야 하는지도 함께 전달합니다.</p>
 </main>
 <footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
 </article>
-<article class="slide slide--failure" data-index="4" data-pattern="SCENE_IMAGE"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-02 · 실패 02/03</span><h1 class="slide__title">02 <span class="hl">유령 위임</span></h1><p class="slide__sub">완료 보고 뒤에 빠진 실제 결과물</p></header><main class="slide__body"><div class="scene scene--image"><div class="scene__copy anim-item" data-anim-step="0"><p class="statement">완료 보고<strong>결과물 없음</strong></p><p class="copy">다음 작업에 넘길 파일 없음</p></div><figure class="scene__visual anim-item" data-anim-step="1"><img src="/artifacts/part5/_images/ch01-02--ghost-delegation-transparent.png" alt="완료를 알리는 에이전트와 비어 있는 결과 서류함"></figure></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
-<article class="slide compact" data-index="5" data-pattern="ARTIFACT_GATE">
-<header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-02</span><h1 class="slide__title">파일로 <span class="hl">완료 확인</span></h1><p class="slide__sub">완료 보고에 성공·실패와 남긴 파일이 함께 옵니다.</p></header>
+<article class="slide compact" data-index="6" data-pattern="ARTIFACT_GATE">
+<header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-02 · 해결 02/03</span><h1 class="slide__title"><span class="hl">인수인계</span> 확인</h1><p class="slide__sub">완료 기준과 인수인계 절차를 정하고, 후속 작업의 착수까지 확인합니다.</p></header>
 <main class="slide__body">
-<div class="p5-chain p5-chain--5">
-<figure class="p5-actor anim-item" data-anim-step="0" style="--accent:var(--brand)"><svg class="icon icon--robot tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><figcaption><h2 class="p5-actor-name">Worker</h2></figcaption></figure>
-<span class="p5-conn anim-item" data-anim-step="1" style="--accent:var(--green)"><b>완료 보고</b><span class="p5-line"><i class="p5-head p5-head--r"><svg viewBox="0 0 20 14" aria-hidden="true"><path d="M2 2L10 11L18 2"/></svg></i></span></span>
-<div class="p5-card anim-item" data-anim-step="2" style="--accent:var(--green)"><small>보고에 함께 오는 것</small><h2>성공·실패 + 남긴 파일</h2><p>진행 중 신호는 완료가 아님</p></div>
-<span class="p5-conn anim-item" data-anim-step="3" style="--accent:var(--green)"><b>성공 · 파일 있음</b><span class="p5-line"><i class="p5-head p5-head--r"><svg viewBox="0 0 20 14" aria-hidden="true"><path d="M2 2L10 11L18 2"/></svg></i></span></span>
-<div class="p5-card p5-card--lead anim-item" data-anim-step="3" style="--accent:var(--green)"><h2>다음 작업 시작</h2></div>
-<span class="p5-rt p5-rt--w anim-item" data-anim-step="4" style="grid-column:1"><i class="p5-head p5-head--u"><svg viewBox="0 0 20 14" aria-hidden="true"><path d="M2 2L10 11L18 2"/></svg></i></span><span class="p5-rt p5-rt--m anim-item" data-anim-step="4" style="grid-column:2"><b>실패 · 파일 없음</b></span><span class="p5-rt p5-rt--c anim-item" data-anim-step="4" style="grid-column:3"></span>
+<div class="p5-chain p5-chain--feed p5-chain--completion">
+<div class="p5-feed anim-item" data-anim-step="0"><div class="p5-card" style="--accent:var(--purple)"><small>완료 기준</small><h2>결과물 확인</h2><p>후속 담당 배정</p></div><span class="p5-vline" style="--accent:var(--yellow)"><i class="p5-head p5-head--d"><svg viewBox="0 0 20 14" aria-hidden="true"><path d="M2 2L10 11L18 2"/></svg></i></span></div>
+<figure class="p5-actor anim-item" data-anim-step="1" style="--accent:var(--brand)"><svg class="icon icon--robot tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><figcaption><h2 class="p5-actor-name">Worker</h2></figcaption></figure>
+<span class="p5-conn anim-item" data-anim-step="2" style="--accent:var(--green)"><b>완료 보고</b><span class="p5-line"><i class="p5-head p5-head--r"><svg viewBox="0 0 20 14" aria-hidden="true"><path d="M2 2L10 11L18 2"/></svg></i></span></span>
+<div class="p5-card anim-item" data-anim-step="3" style="--accent:var(--green)"><small>worker_done</small><h2>성공·실패 여부</h2><p>결과물 경로</p></div>
+<span class="p5-conn anim-item" data-anim-step="4" style="--accent:var(--green)"><span class="p5-line"><i class="p5-head p5-head--r"><svg viewBox="0 0 20 14" aria-hidden="true"><path d="M2 2L10 11L18 2"/></svg></i></span></span>
+<figure class="p5-actor anim-item" data-anim-step="4" style="--accent:var(--yellow)"><svg class="icon icon--robot tone-yellow" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><figcaption><h2 class="p5-actor-name">Coordinator</h2><p class="p5-actor-sub">결과물·인계 확인</p></figcaption></figure>
+<span class="p5-conn anim-item" data-anim-step="5" style="--accent:var(--green)"><b>확인 후 배정</b><span class="p5-line"><i class="p5-head p5-head--r"><svg viewBox="0 0 20 14" aria-hidden="true"><path d="M2 2L10 11L18 2"/></svg></i></span></span>
+<div class="p5-card anim-item" data-anim-step="5" style="--accent:var(--green)"><h2>다음 담당</h2><p>착수·진행 확인</p></div>
+<span class="p5-rt p5-rt--w anim-item" data-anim-step="6" style="grid-column:1"><i class="p5-head p5-head--u"><svg viewBox="0 0 20 14" aria-hidden="true"><path d="M2 2L10 11L18 2"/></svg></i></span><span class="p5-rt p5-rt--m anim-item" data-anim-step="6" style="grid-column:2"></span><span class="p5-rt p5-rt--m anim-item" data-anim-step="6" style="grid-column:3"><b>누락·실패 · 재요청</b></span><span class="p5-rt p5-rt--m anim-item" data-anim-step="6" style="grid-column:4"></span><span class="p5-rt p5-rt--c anim-item" data-anim-step="6" style="grid-column:5"></span>
+
 </div>
-<p class="p5-note anim-item" data-anim-step="5">실패로 오거나 파일이 없으면 다음 작업은 시작되지 않습니다.</p>
+<p class="p5-note anim-item" data-anim-step="7">지연·실패를 확인하면 재요청하거나 담당을 다시 배정합니다.</p>
 </main>
 <footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
 </article>
-<article class="slide slide--failure" data-index="6" data-pattern="SCENE_IMAGE"><header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-02 · 실패 03/03</span><h1 class="slide__title">03 <span class="hl">검증 오류</span></h1><p class="slide__sub">원본 대조 없이 통과한 잘못된 결과</p></header><main class="slide__body"><div class="scene scene--image"><div class="scene__copy anim-item" data-anim-step="0"><p class="statement">검사 완료<strong>원본 대조 누락</strong></p><p class="copy">잘못된 값의 통과</p></div><figure class="scene__visual anim-item" data-anim-step="1"><img src="/artifacts/part5/_images/ch01-02--verification-error-transparent.png" alt="오류가 표시된 같은 문서를 보는 두 에이전트"></figure></div></main><footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer></article>
 <article class="slide compact" data-index="7" data-pattern="QUALITY_GATE_LOOP">
-<header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-02</span><h1 class="slide__title">기준 문서로 <span class="hl">판정</span></h1><p class="slide__sub">작성한 워커가 아니라 코디네이터가 품질 기준으로 검사합니다.</p></header>
+<header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-02 · 해결 03/03</span><h1 class="slide__title">작성·평가 <span class="hl">분리</span></h1><p class="slide__sub">작성자와 평가자를 나누고, 평가자는 체크리스트로 통과 여부를 판단합니다.</p></header>
 <main class="slide__body">
-<div class="p5-chain p5-chain--5 p5-chain--feed">
-<div class="p5-feed anim-item" data-anim-step="4"><div class="p5-card" style="--accent:var(--purple)"><small>품질 기준</small><h2>검사 항목과 판정 규칙</h2><p>필수 섹션 · 근거 · 계산</p></div><span class="p5-vline" style="--accent:var(--yellow)"><i class="p5-head p5-head--d"><svg viewBox="0 0 20 14" aria-hidden="true"><path d="M2 2L10 11L18 2"/></svg></i></span></div>
-<figure class="p5-actor anim-item" data-anim-step="0" style="--accent:var(--brand)"><svg class="icon icon--robot tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><figcaption><h2 class="p5-actor-name">Worker</h2><p class="p5-actor-sub">문서 작성</p></figcaption></figure>
-<span class="p5-conn anim-item" data-anim-step="1" style="--accent:var(--green)"><b>Output</b><span class="p5-line"><i class="p5-head p5-head--r"><svg viewBox="0 0 20 14" aria-hidden="true"><path d="M2 2L10 11L18 2"/></svg></i></span></span>
-<div class="p5-card anim-item" data-anim-step="2" style="--accent:var(--green)"><small>검사 대상</small><h2>초안</h2></div>
-<span class="p5-conn anim-item" data-anim-step="3" style="--accent:var(--purple)"><b>완료 보고</b><span class="p5-line p5-line--dash"><i class="p5-head p5-head--r"><svg viewBox="0 0 20 14" aria-hidden="true"><path d="M2 2L10 11L18 2"/></svg></i></span></span>
-<figure class="p5-actor anim-item" data-anim-step="5" style="--accent:var(--yellow)"><svg class="icon icon--robot tone-yellow" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><figcaption><h2 class="p5-actor-name">Coordinator</h2><p class="p5-actor-sub">품질 기준으로 Y/N 판정</p></figcaption></figure>
-<span class="p5-rt p5-rt--w anim-item" data-anim-step="6" style="grid-column:1"><i class="p5-head p5-head--u"><svg viewBox="0 0 20 14" aria-hidden="true"><path d="M2 2L10 11L18 2"/></svg></i></span><span class="p5-rt p5-rt--m anim-item" data-anim-step="6" style="grid-column:2"></span><span class="p5-rt p5-rt--m anim-item" data-anim-step="6" style="grid-column:3"><b>반려 사유와 수정 요청</b></span><span class="p5-rt p5-rt--m anim-item" data-anim-step="6" style="grid-column:4"></span><span class="p5-rt p5-rt--c anim-item" data-anim-step="6" style="grid-column:5"></span>
+<div class="p5-chain p5-chain--feed p5-chain--verification">
+<div class="p5-feed anim-item" data-anim-step="0"><div class="p5-card" style="--accent:var(--purple)"><h2>체크리스트</h2><p>필수 항목 · 근거 · 계산</p></div><span class="p5-vline" style="--accent:var(--purple)"><i class="p5-head p5-head--d"><svg viewBox="0 0 20 14" aria-hidden="true"><path d="M2 2L10 11L18 2"/></svg></i></span></div>
+<figure class="p5-actor anim-item" data-anim-step="1" style="--accent:var(--brand)"><svg class="icon icon--robot tone-brand" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><figcaption><h2 class="p5-actor-name">작성자</h2><p class="p5-actor-sub">결과물 작성</p></figcaption></figure>
+<span class="p5-conn anim-item" data-anim-step="2" style="--accent:var(--green)"><b>작성</b><span class="p5-line"><i class="p5-head p5-head--r"><svg viewBox="0 0 20 14" aria-hidden="true"><path d="M2 2L10 11L18 2"/></svg></i></span></span>
+<div class="p5-card anim-item" data-anim-step="3" style="--accent:var(--green)"><small>검사 대상</small><h2>결과물</h2></div>
+<span class="p5-conn anim-item" data-anim-step="4" style="--accent:var(--purple)"><b>평가</b><span class="p5-line p5-line--dash"><i class="p5-head p5-head--r"><svg viewBox="0 0 20 14" aria-hidden="true"><path d="M2 2L10 11L18 2"/></svg></i></span></span>
+<figure class="p5-actor anim-item" data-anim-step="4" style="--accent:var(--purple)"><svg class="icon icon--robot tone-purple" viewBox="0 0 56 58" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="50" height="38" rx="18" fill="var(--text)" stroke="var(--gray)"/><rect x="11" y="16" width="34" height="11" rx="5.5" fill="var(--bg)" stroke="none"/><path d="M18 21.5H38" stroke-width="3.5"/><path d="M13 42C7 45 7 52 7 55H49C49 52 49 45 43 42"/></svg><figcaption><h2 class="p5-actor-name">평가자</h2><p class="p5-actor-sub">체크리스트로 확인</p></figcaption></figure>
+<span class="p5-conn anim-item" data-anim-step="5" style="--accent:var(--green)"><b>통과</b><span class="p5-line"><i class="p5-head p5-head--r"><svg viewBox="0 0 20 14" aria-hidden="true"><path d="M2 2L10 11L18 2"/></svg></i></span></span>
+<div class="p5-card anim-item" data-anim-step="5" style="--accent:var(--green)"><h2>다음 작업</h2></div>
+<span class="p5-rt p5-rt--w anim-item" data-anim-step="6" style="grid-column:1"><i class="p5-head p5-head--u"><svg viewBox="0 0 20 14" aria-hidden="true"><path d="M2 2L10 11L18 2"/></svg></i></span><span class="p5-rt p5-rt--m anim-item" data-anim-step="6" style="grid-column:2"></span><span class="p5-rt p5-rt--m anim-item" data-anim-step="6" style="grid-column:3"><b>미달 항목 · 수정 요청</b></span><span class="p5-rt p5-rt--m anim-item" data-anim-step="6" style="grid-column:4"></span><span class="p5-rt p5-rt--c anim-item" data-anim-step="6" style="grid-column:5"></span>
 </div>
-<p class="p5-note anim-item" data-anim-step="7">기준에 못 미치면 그 문서를 쓴 워커에게 돌려보냅니다.</p>
+<p class="p5-note anim-item" data-anim-step="7">체크리스트를 통과한 결과만 다음 작업으로 넘깁니다.</p>
 </main>
 <footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
 </article>
 <article class="slide compact" data-index="8" data-pattern="FAILURE_RULES">
-<header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-02</span><h1 class="slide__title">실패를 막는 <span class="hl">기준</span></h1><p class="slide__sub">문제가 생기는 지점마다 확인할 행동을 정합니다.</p></header>
+<header class="slide__header"><span class="slide__label">Part 5 · Chapter 1 · Ch01-02</span><h1 class="slide__title">협업 설계의 <span class="hl">기준</span></h1><p class="slide__sub">목적을 공유하고, 인수인계와 검증이 실제로 이루어지게 합니다.</p></header>
 <main class="slide__body">
-<div class="p5-sums"><section class="p5-sum anim-item" data-anim-step="0" style="--accent:var(--brand)"><p class="p5-sum-no">01</p><h2 class="p5-sum-fail">맥락 붕괴</h2><span class="p5-vline"><i class="p5-head p5-head--d"><svg viewBox="0 0 20 14" aria-hidden="true"><path d="M2 2L10 11L18 2"/></svg></i></span><div class="p5-card"><h2>작업마다 기준 입력</h2><p>그 작업에 필요한 기준을 참고자료로 건다</p></div></section><section class="p5-sum anim-item" data-anim-step="1" style="--accent:var(--yellow)"><p class="p5-sum-no">02</p><h2 class="p5-sum-fail">유령 위임</h2><span class="p5-vline"><i class="p5-head p5-head--d"><svg viewBox="0 0 20 14" aria-hidden="true"><path d="M2 2L10 11L18 2"/></svg></i></span><div class="p5-card"><h2>파일로 완료 확인</h2><p>성공·실패와 남긴 파일로 판단한다</p></div></section><section class="p5-sum anim-item" data-anim-step="2" style="--accent:var(--purple)"><p class="p5-sum-no">03</p><h2 class="p5-sum-fail">검증 오류</h2><span class="p5-vline"><i class="p5-head p5-head--d"><svg viewBox="0 0 20 14" aria-hidden="true"><path d="M2 2L10 11L18 2"/></svg></i></span><div class="p5-card"><h2>기준 문서로 판정</h2><p>작성한 워커가 아닌 코디네이터가 검사한다</p></div></section></div>
-<p class="p5-note anim-item" data-anim-step="3">에이전트를 늘리기 전에 이 셋부터 정합니다.</p>
+<div class="p5-sums"><section class="p5-sum anim-item" data-anim-step="0" style="--accent:var(--brand)"><p class="p5-sum-no">01</p><h2 class="p5-sum-fail">맥락 붕괴</h2><p class="p5-sum-desc">할 일은 알지만, 목적은 모름</p><span class="p5-vline"><i class="p5-head p5-head--d"><svg viewBox="0 0 20 14" aria-hidden="true"><path d="M2 2L10 11L18 2"/></svg></i></span><div class="p5-card"><h2>목적·배경 함께 전달</h2><p>전체 목표와<br>작업의 이유</p></div></section><section class="p5-sum anim-item" data-anim-step="1" style="--accent:var(--yellow)"><p class="p5-sum-no">02</p><h2 class="p5-sum-fail">유령 위임</h2><p class="p5-sum-desc">일을 넘겨도, 다음 담당은 대기</p><span class="p5-vline"><i class="p5-head p5-head--d"><svg viewBox="0 0 20 14" aria-hidden="true"><path d="M2 2L10 11L18 2"/></svg></i></span><div class="p5-card"><h2>인수인계 확인</h2><p>결과물 확인과<br>후속 담당 착수</p></div></section><section class="p5-sum anim-item" data-anim-step="2" style="--accent:var(--purple)"><p class="p5-sum-no">03</p><h2 class="p5-sum-fail">검증 오류</h2><p class="p5-sum-desc">자기 결과를 스스로 채점</p><span class="p5-vline"><i class="p5-head p5-head--d"><svg viewBox="0 0 20 14" aria-hidden="true"><path d="M2 2L10 11L18 2"/></svg></i></span><div class="p5-card"><h2>작성·평가 분리</h2><p>체크리스트로<br>통과 여부 확인</p></div></section></div>
+<p class="p5-note anim-item" data-anim-step="3">에이전트를 늘리기 전에 협업 절차부터 정합니다.</p>
 </main>
 <footer class="slide__footer"><img class="fastcampus-logo" src="/assets/fastcampus-logo-dark.svg" alt="패스트캠퍼스"></footer>
 </article>
@@ -1402,7 +1408,7 @@
         }
       })();
       /* 조작 규칙 (성공 기준):
-         페이지 이동은 좌우 nav-btn · 하단 dot · 키보드(←/→/스페이스)로만.
+         페이지 이동은 하단 dot · 키보드(←/→/스페이스)로만.
          #deck/body/.slide에 이동용 click 리스너를 절대 달지 않는다 —
          강의 중 화면을 가리키며 클릭해도 슬라이드가 넘어가면 안 된다. */
 // A connector uses visible icon bounds; labels are not endpoint anchors.
@@ -1529,7 +1535,7 @@ function drawDispatchFan(){
   const svg=map.querySelector('.p5-fanwires'); if(!svg) return;
   const r=map.getBoundingClientRect(); if(!r.width||!r.height) return;
   svg.setAttribute('viewBox',`0 0 ${r.width} ${r.height}`);
-  const src=map.querySelector('.p5-actor--row .icon'); if(!src) return;
+  const src=map.querySelector('.p5-context-origin') || map.querySelector('.p5-actor--row .icon'); if(!src) return;
   const c=src.getBoundingClientRect();
   const sx=c.left+c.width/2-r.left, sy=c.bottom-r.top+10;
   const paths=[...svg.querySelectorAll('path')];
@@ -1586,7 +1592,6 @@ function resetPatternInteractions(slide){
           document.getElementById("tot").textContent = this.total;
           this._buildDots();
           this._bindKeys();
-          this._bindButtons();
           this._update();
           this._runSlide(this.current);
         }
@@ -1640,9 +1645,6 @@ function resetPatternInteractions(slide){
           const pct = ((this.current + 1) / this.total) * 100;
           document.getElementById("progress").style.width = pct + "%";
           document.getElementById("cur").textContent = this.current + 1;
-          document.getElementById("btn-prev").disabled = this.current === 0;
-          document.getElementById("btn-next").disabled =
-            this.current === this.total - 1;
           document
             .querySelectorAll(".dot")
             .forEach((d, i) =>
@@ -1658,14 +1660,6 @@ function resetPatternInteractions(slide){
             b.addEventListener("click", () => this._go(i));
             nav.appendChild(b);
           });
-        }
-        _bindButtons() {
-          document
-            .getElementById("btn-prev")
-            .addEventListener("click", () => this.prev());
-          document
-            .getElementById("btn-next")
-            .addEventListener("click", () => this.next());
         }
         _bindKeys() {
           document.addEventListener("keydown", (e) => {
