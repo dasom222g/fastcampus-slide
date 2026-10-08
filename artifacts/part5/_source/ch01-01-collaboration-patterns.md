@@ -43,7 +43,7 @@ Ch04-01~03은 일반 에이전트에게 개별 작업을 요청하고, Ch04-04�
 
 - [판매 아이템 기획서](https://fastcampus-orca-course.vercel.app/project1-sidehustle-proposal/final/proposal-final.html): 차박용 접이식 미니 수납함의 선정 근거·실행 로드맵·예산·리스크
 - [무브펫 제안·견적서](https://fastcampus-orca-course.vercel.app/project2-ads-proposal/final/proposal-quote-final.html): 자동 순환 급수기 광고 운영 제안, Codex 작성·Claude Code 평가
-- [무드온 시안 비교](https://fastcampus-orca-course.vercel.app/project3-blackfriday-landing/final/preview.html): 동일 브리프에서 Claude 포스터형·Codex 룩북형
+- [무드오프 시안 비교](https://fastcampus-orca-course.vercel.app/project3-blackfriday-landing/final/preview.html): 동일 브리프에서 Claude 포스터형·Codex 룩북형
 - [레시피 콘텐츠](https://fastcampus-orca-course.vercel.app/project4-recipe-content/final/preview.html): 스트로베리 퐁당 케이크의 블로그·카드뉴스·스레드
 
 링크와 동일 경로의 형제 저장소 완성 HTML을 열어 내용을 확인했다. 공개본을 새로 배포하지 않는다.
@@ -184,11 +184,11 @@ Ch04-01~03은 일반 에이전트에게 개별 작업을 요청하고, Ch04-04�
   "color": "yellow",
   "statement": "같은 요청을 맡기고\n사람이 선택",
   "lines": [
-    "무드온 블랙프라이데이 랜딩페이지",
+    "무드오프 블랙프라이데이 랜딩페이지",
     "같은 요청으로 두 시안 제작 후 비교·선택"
   ],
   "link": "https://fastcampus-orca-course.vercel.app/project3-blackfriday-landing/final/preview.html",
-  "linklabel": "무드온 시안 두 개 보기"
+  "linklabel": "무드오프 시안 두 개 보기"
 }
 ```
 
@@ -359,3 +359,14 @@ Ch04-01~03은 일반 에이전트에게 개별 작업을 요청하고, Ch04-04�
 - 슬라이드: 13장, 사용자 검수 완료·확정.
 - 대본: 검수 미완료. 이번 승인은 슬라이드에 한정하며 대본을 작성·수정하지 않음.
 - 촬영·편집: 기존 상태 유지.
+
+
+## 2026-10-07 — 2장 결과물 정의 우선으로 정정
+
+- 대상: 2/13장 「설계가 어려운 이유」. 표지 문구가 아닌 2장 핵심 메시지 수정.
+- 한 문장 답: 만들고 싶은 결과물을 먼저 명확히 정의해야 합니다.
+- 상단 부제: 원하는 결과물이 명확해야 필요한 자료와 에이전트의 역할을 정할 수 있습니다.
+- 오른쪽 선언문: 에이전트를 몇 명 쓸지보다 / 무엇을 만들지 정하는 게 / 먼저입니다. 뒤의 두 줄을 강조한다.
+- 왼쪽 질문 카드의 두 빈칸은 아직 정하지 못한 상황을 보여준다. 오른쪽 선언문이 결과물 정의부터 시작하라는 답을 제시한다.
+- 근거: 2026-10-07 사용자 정정. 주고받는 정보 자체보다 원하는 결과물의 명확한 정의가 먼저다.
+- 기존 제목·질문 카드·레이아웃·등장 순서와 총 13장은 유지한다. 대본은 이번 수정 범위에 포함하지 않는다.
