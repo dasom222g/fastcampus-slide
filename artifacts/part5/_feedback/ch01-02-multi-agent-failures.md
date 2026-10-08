@@ -494,3 +494,7 @@
 
 - 사용자 제공 대본을 정답으로 그대로 반영하고 완료 처리. 대시보드 `clips.json` 대본 상태 완료로 변경·재빌드. 골든셋 76(협업 패턴)·77(실패 3유형)절에 대조 기록.
 - (해소) 7장 worker_start는 사용자 확인: 워커 시작 시점의 신호를 말한 것이므로 원고 유지. 이전 메모: 7장 「워커가 일을 시작하면 worker_start로 신호를 보내주는데」 — Orca 메시지 유형에는 worker_start가 없다(status·dispatch·worker_done·merge_ready·escalation·handoff·decision_gate·question·heartbeat). `worker-start`는 코디네이터가 워커를 띄우는 명령이고, 진행 중 신호는 heartbeat다. 원고는 그대로 둠.
+
+## 2026-10-08 — 노션 최종본과 동기화
+
+- 강사 노션 최종본 기준으로 `_script` 동기화(「무엇을」→「뭘」 등 강사 후속 다듬기). 로컬 오타 수정과 HTML 기준 장 제목은 유지. 골든셋 83절.
