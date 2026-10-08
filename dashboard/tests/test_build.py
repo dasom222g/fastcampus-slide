@@ -56,7 +56,7 @@ class WorkflowTests(unittest.TestCase):
         for (part, _), r in rows.items():
             self.assertEqual(r['차수'], 1 if part <= 4 else 2 if part <= 7 else 3)
         self.assertEqual(len(build.stage_scope(list(rows.values()), '제작')), 72)
-        self.assertEqual(len(build.stage_scope(list(rows.values()), '대본')), 29)
+        self.assertEqual(len(build.stage_scope(list(rows.values()), '대본')), 28)
 
     def test_earliest_unfinished_delivery_stays_current(self):
         batches = copy.deepcopy(self.manifest['납품차수'])
