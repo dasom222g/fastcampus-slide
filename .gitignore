@@ -35,3 +35,12 @@ artifacts/_maintenance/script-review-2nd-delivery/
 
 # 납품용 PDF — 촬영 후 생성물, 저장소에 담지 않는다
 슬라이드-pdf/
+
+# 로컬 3차 검수 캡처와 Orca 워커 실행 기록
+artifacts/_maintenance/*.png
+artifacts/_maintenance/*.jpg
+artifacts/_maintenance/*worker*.json
+artifacts/_maintenance/*audit*.json
+artifacts/_maintenance/*validation*.json
+artifacts/_maintenance/*navigation*.json
+artifacts/_maintenance/*motion*.json
