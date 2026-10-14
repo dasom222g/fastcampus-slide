@@ -1,0 +1,16 @@
+{
+  "slug": "ch01-01-mobile-role",
+  "title": "Orca 모바일로 어디서나 에이전트에게 일 시키기",
+  "slides": 5,
+  "status": "confirmed",
+  "promoted_html_sha256": "86d900ad617a7cfe463e1d0905974a35a919d90f756ee41244c785678d68cc3a",
+  "approved_visual_content_preserved": true,
+  "candidate_html_removed": true,
+  "index": "확정",
+  "dashboard_slide_status": "완료",
+  "curriculum_title_matches": true,
+  "qa": "artifacts/part9/_qa/mobile-final-validation.json",
+  "script_status": "Claude 작성 완료, 사용자 검수 전 초안",
+  "cover_highlight": "Orca 모바일",
+  "script_file": "artifacts/part9/_script/ch01-01-mobile-role.md"
+}

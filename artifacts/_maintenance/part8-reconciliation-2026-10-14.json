@@ -1,0 +1,1936 @@
+[
+  {
+    "animations": [
+      {
+        "delay": "0.15s",
+        "duration": "0.48s",
+        "opacity": "1"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "0.41s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "1"
+      },
+      {
+        "delay": "0.93s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "3"
+      },
+      {
+        "delay": "0.93s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "3"
+      },
+      {
+        "delay": "0.93s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "3"
+      }
+    ],
+    "arrowCenters": [],
+    "body": {
+      "bottom": 943.546875,
+      "h": 686.15625,
+      "right": 1808,
+      "w": 1696,
+      "x": 112,
+      "y": 257.390625
+    },
+    "collisions": [],
+    "highlightCount": 1,
+    "imageErrors": [],
+    "maxArrowCenterError": 0,
+    "missingUses": [],
+    "nestedAnimations": 0,
+    "overflow": [],
+    "paths": [],
+    "slide": 1,
+    "title": "콘텐츠팀 구조 살펴보기 (R&R 분배)",
+    "viewport": [
+      1920,
+      1080
+    ],
+    "slug": "ch01-01-content-team-rr",
+    "excludedHiddenEmptyElements": 0
+  },
+  {
+    "animations": [
+      {
+        "delay": "0.15s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "0"
+      },
+      {
+        "delay": "0.15s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "0"
+      },
+      {
+        "delay": "0.15s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "0"
+      }
+    ],
+    "arrowCenters": [],
+    "body": {
+      "bottom": 943.546875,
+      "h": 686.15625,
+      "right": 1808,
+      "w": 1696,
+      "x": 112,
+      "y": 257.390625
+    },
+    "collisions": [],
+    "highlightCount": 1,
+    "imageErrors": [],
+    "maxArrowCenterError": 0,
+    "missingUses": [],
+    "nestedAnimations": 0,
+    "overflow": [],
+    "paths": [],
+    "slide": 2,
+    "title": "플랫폼별 최종 결과물",
+    "viewport": [
+      1920,
+      1080
+    ],
+    "slug": "ch01-01-content-team-rr",
+    "excludedHiddenEmptyElements": 0
+  },
+  {
+    "animations": [
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "0.41s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "1"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "0.93s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "3"
+      },
+      {
+        "delay": "0.93s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "3"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      }
+    ],
+    "arrowCenters": [],
+    "body": {
+      "bottom": 943.546875,
+      "h": 686.15625,
+      "right": 1808,
+      "w": 1696,
+      "x": 112,
+      "y": 257.390625
+    },
+    "collisions": [],
+    "highlightCount": 1,
+    "imageErrors": [],
+    "maxArrowCenterError": 0,
+    "missingUses": [],
+    "nestedAnimations": 0,
+    "overflow": [],
+    "paths": [],
+    "slide": 3,
+    "title": "콘텐츠팀 협업 패턴",
+    "viewport": [
+      1920,
+      1080
+    ],
+    "slug": "ch01-01-content-team-rr",
+    "excludedHiddenEmptyElements": 0
+  },
+  {
+    "animations": [
+      {
+        "delay": "0.41s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "1"
+      },
+      {
+        "delay": "0.93s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "3"
+      },
+      {
+        "delay": "0.15s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "0"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      },
+      {
+        "delay": "1.71s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "6"
+      }
+    ],
+    "arrowCenters": [],
+    "body": {
+      "bottom": 943.546875,
+      "h": 686.15625,
+      "right": 1808,
+      "w": 1696,
+      "x": 112,
+      "y": 257.390625
+    },
+    "collisions": [],
+    "highlightCount": 1,
+    "imageErrors": [],
+    "maxArrowCenterError": 0,
+    "missingUses": [],
+    "nestedAnimations": 0,
+    "overflow": [],
+    "paths": [],
+    "slide": 4,
+    "title": "채널 기준 만들기",
+    "viewport": [
+      1920,
+      1080
+    ],
+    "slug": "ch01-01-content-team-rr",
+    "excludedHiddenEmptyElements": 0
+  },
+  {
+    "animations": [
+      {
+        "delay": "0.41s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "1"
+      },
+      {
+        "delay": "0.93s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "3"
+      },
+      {
+        "delay": "0.93s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "3"
+      },
+      {
+        "delay": "0.93s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "3"
+      },
+      {
+        "delay": "1.45s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "5"
+      },
+      {
+        "delay": "1.45s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "5"
+      },
+      {
+        "delay": "1.45s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "5"
+      },
+      {
+        "delay": "0.15s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "0"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      },
+      {
+        "delay": "1.45s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "5"
+      },
+      {
+        "delay": "1.45s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "5"
+      },
+      {
+        "delay": "1.45s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "5"
+      },
+      {
+        "delay": "1.97s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "7"
+      }
+    ],
+    "arrowCenters": [],
+    "body": {
+      "bottom": 943.546875,
+      "h": 686.15625,
+      "right": 1808,
+      "w": 1696,
+      "x": 112,
+      "y": 257.390625
+    },
+    "collisions": [],
+    "highlightCount": 1,
+    "imageErrors": [],
+    "maxArrowCenterError": 0,
+    "missingUses": [],
+    "nestedAnimations": 0,
+    "overflow": [],
+    "paths": [],
+    "slide": 5,
+    "title": "제작 전 소재 준비",
+    "viewport": [
+      1920,
+      1080
+    ],
+    "slug": "ch01-01-content-team-rr",
+    "excludedHiddenEmptyElements": 3
+  },
+  {
+    "animations": [
+      {
+        "delay": "0.15s",
+        "duration": "0.48s",
+        "opacity": "1"
+      },
+      {
+        "delay": "0.41s",
+        "duration": "0.48s",
+        "opacity": "1"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1"
+      }
+    ],
+    "arrowCenters": [],
+    "body": {
+      "bottom": 943.546875,
+      "h": 686.15625,
+      "right": 1808,
+      "w": 1696,
+      "x": 112,
+      "y": 257.390625
+    },
+    "collisions": [],
+    "highlightCount": 1,
+    "imageErrors": [],
+    "maxArrowCenterError": 0,
+    "missingUses": [],
+    "nestedAnimations": 0,
+    "overflow": [],
+    "paths": [],
+    "slide": 6,
+    "title": "소재 선정 기준",
+    "viewport": [
+      1920,
+      1080
+    ],
+    "slug": "ch01-01-content-team-rr",
+    "excludedHiddenEmptyElements": 0
+  },
+  {
+    "animations": [
+      {
+        "delay": "0.15s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "0"
+      },
+      {
+        "delay": "0.41s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "1"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      }
+    ],
+    "arrowCenters": [],
+    "body": {
+      "bottom": 943.546875,
+      "h": 686.15625,
+      "right": 1808,
+      "w": 1696,
+      "x": 112,
+      "y": 257.390625
+    },
+    "collisions": [],
+    "highlightCount": 1,
+    "imageErrors": [],
+    "maxArrowCenterError": 0,
+    "missingUses": [],
+    "nestedAnimations": 0,
+    "overflow": [],
+    "paths": [],
+    "slide": 7,
+    "title": "공통 자료와 콘텐츠 포맷",
+    "viewport": [
+      1920,
+      1080
+    ],
+    "slug": "ch01-01-content-team-rr",
+    "excludedHiddenEmptyElements": 0
+  },
+  {
+    "animations": [
+      {
+        "delay": "0.41s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "1"
+      },
+      {
+        "delay": "1.71s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "6"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "0.93s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "3"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      },
+      {
+        "delay": "1.45s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "5"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      },
+      {
+        "delay": "1.45s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "5"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      },
+      {
+        "delay": "1.45s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "5"
+      },
+      {
+        "delay": "1.45s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "5"
+      },
+      {
+        "delay": "0.15s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "0"
+      },
+      {
+        "delay": "0.41s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "1"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      },
+      {
+        "delay": "1.45s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "5"
+      },
+      {
+        "delay": "0.41s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "1"
+      },
+      {
+        "delay": "1.71s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "6"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "0.93s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "3"
+      }
+    ],
+    "arrowCenters": [],
+    "body": {
+      "bottom": 943.546875,
+      "h": 686.15625,
+      "right": 1808,
+      "w": 1696,
+      "x": 112,
+      "y": 257.390625
+    },
+    "collisions": [],
+    "highlightCount": 1,
+    "imageErrors": [],
+    "maxArrowCenterError": 0,
+    "missingUses": [],
+    "nestedAnimations": 0,
+    "overflow": [],
+    "paths": [],
+    "slide": 8,
+    "title": "콘텐츠팀의 구조",
+    "viewport": [
+      1920,
+      1080
+    ],
+    "slug": "ch01-01-content-team-rr",
+    "excludedHiddenEmptyElements": 0
+  },
+  {
+    "animations": [
+      {
+        "delay": "0.15s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "0"
+      },
+      {
+        "delay": "0.93s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "3"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      }
+    ],
+    "arrowCenters": [],
+    "body": {
+      "bottom": 943.546875,
+      "h": 686.15625,
+      "right": 1808,
+      "w": 1696,
+      "x": 112,
+      "y": 257.390625
+    },
+    "collisions": [],
+    "highlightCount": 1,
+    "imageErrors": [],
+    "maxArrowCenterError": 0,
+    "missingUses": [],
+    "nestedAnimations": 0,
+    "overflow": [],
+    "paths": [
+      "M508.125 235.8125C508.125 266.703125,148.03125 266.703125,148.03125 297.59375",
+      "M143.03125 290.59375L148.03125 297.59375L153.03125 290.59375",
+      "M508.125 235.8125C508.125 266.703125,508.125 266.703125,508.125 297.59375",
+      "M503.125 290.59375L508.125 297.59375L513.125 290.59375",
+      "M508.125 235.8125C508.125 266.703125,868.21875 266.703125,868.21875 297.59375",
+      "M863.21875 290.59375L868.21875 297.59375L873.21875 290.59375"
+    ],
+    "slide": 1,
+    "title": "한 명이 세 플랫폼을 다 쓰면 생기는 일",
+    "viewport": [
+      1920,
+      1080
+    ],
+    "slug": "ch03-01-platform-role-separation",
+    "excludedHiddenEmptyElements": 0
+  },
+  {
+    "animations": [
+      {
+        "delay": "0.15s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "0"
+      },
+      {
+        "delay": "0.41s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "1"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      }
+    ],
+    "arrowCenters": [],
+    "body": {
+      "bottom": 943.546875,
+      "h": 686.15625,
+      "right": 1808,
+      "w": 1696,
+      "x": 112,
+      "y": 257.390625
+    },
+    "collisions": [],
+    "highlightCount": 1,
+    "imageErrors": [],
+    "maxArrowCenterError": 0,
+    "missingUses": [],
+    "nestedAnimations": 0,
+    "overflow": [],
+    "paths": [],
+    "slide": 2,
+    "title": "플랫폼별 목적",
+    "viewport": [
+      1920,
+      1080
+    ],
+    "slug": "ch03-01-platform-role-separation",
+    "excludedHiddenEmptyElements": 0
+  },
+  {
+    "animations": [
+      {
+        "delay": "0.15s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "0"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      }
+    ],
+    "arrowCenters": [],
+    "body": {
+      "bottom": 943.546875,
+      "h": 686.15625,
+      "right": 1808,
+      "w": 1696,
+      "x": 112,
+      "y": 257.390625
+    },
+    "collisions": [],
+    "highlightCount": 1,
+    "imageErrors": [],
+    "maxArrowCenterError": 0,
+    "missingUses": [],
+    "nestedAnimations": 0,
+    "overflow": [],
+    "paths": [],
+    "slide": 3,
+    "title": "한곳에 쌓인 콘텐츠 포맷",
+    "viewport": [
+      1920,
+      1080
+    ],
+    "slug": "ch03-01-platform-role-separation",
+    "excludedHiddenEmptyElements": 0
+  },
+  {
+    "animations": [
+      {
+        "delay": "0.41s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "1"
+      },
+      {
+        "delay": "0.15s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "0"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      }
+    ],
+    "arrowCenters": [],
+    "body": {
+      "bottom": 943.546875,
+      "h": 686.15625,
+      "right": 1808,
+      "w": 1696,
+      "x": 112,
+      "y": 257.390625
+    },
+    "collisions": [],
+    "highlightCount": 1,
+    "imageErrors": [],
+    "maxArrowCenterError": 0,
+    "missingUses": [],
+    "nestedAnimations": 0,
+    "overflow": [],
+    "paths": [
+      "M608 252.421875C608 283.3125,181.328125 283.3125,181.328125 314.203125",
+      "M176.328125 307.203125L181.328125 314.203125L186.328125 307.203125",
+      "M608 252.421875C608 283.3125,607.984375 283.3125,607.984375 314.203125",
+      "M602.984375 307.203125L607.984375 314.203125L612.984375 307.203125",
+      "M608 252.421875C608 283.3125,1034.65625 283.3125,1034.65625 314.203125",
+      "M1029.65625 307.203125L1034.65625 314.203125L1039.65625 307.203125"
+    ],
+    "slide": 4,
+    "title": "담당별 콘텐츠 포맷",
+    "viewport": [
+      1920,
+      1080
+    ],
+    "slug": "ch03-01-platform-role-separation",
+    "excludedHiddenEmptyElements": 0
+  },
+  {
+    "animations": [
+      {
+        "delay": "0.15s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "0"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      }
+    ],
+    "arrowCenters": [],
+    "body": {
+      "bottom": 943.546875,
+      "h": 686.15625,
+      "right": 1808,
+      "w": 1696,
+      "x": 112,
+      "y": 257.390625
+    },
+    "collisions": [],
+    "highlightCount": 1,
+    "imageErrors": [],
+    "maxArrowCenterError": 0,
+    "missingUses": [],
+    "nestedAnimations": 0,
+    "overflow": [],
+    "paths": [],
+    "slide": 5,
+    "title": "공통 기준과 플랫폼별 표현",
+    "viewport": [
+      1920,
+      1080
+    ],
+    "slug": "ch03-01-platform-role-separation"
+  },
+  {
+    "animations": [
+      {
+        "delay": "0.15s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "0"
+      },
+      {
+        "delay": "0.41s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "1"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      }
+    ],
+    "arrowCenters": [],
+    "body": {
+      "bottom": 943.546875,
+      "h": 686.15625,
+      "right": 1808,
+      "w": 1696,
+      "x": 112,
+      "y": 257.390625
+    },
+    "collisions": [],
+    "highlightCount": 1,
+    "imageErrors": [],
+    "maxArrowCenterError": 0,
+    "missingUses": [],
+    "nestedAnimations": 0,
+    "overflow": [],
+    "paths": [],
+    "slide": 6,
+    "title": "결과물별 완료 기준",
+    "viewport": [
+      1920,
+      1080
+    ],
+    "slug": "ch03-01-platform-role-separation",
+    "excludedHiddenEmptyElements": 0
+  },
+  {
+    "animations": [
+      {
+        "delay": "0.15s",
+        "duration": "0.48s",
+        "opacity": "1"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "0.41s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "1"
+      },
+      {
+        "delay": "0.93s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "3"
+      },
+      {
+        "delay": "0.93s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "3"
+      },
+      {
+        "delay": "0.93s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "3"
+      }
+    ],
+    "arrowCenters": [],
+    "body": {
+      "bottom": 696.375,
+      "h": 472.03125,
+      "right": 1184,
+      "w": 1088,
+      "x": 96,
+      "y": 224.34375
+    },
+    "collisions": [],
+    "highlightCount": 1,
+    "imageErrors": [],
+    "maxArrowCenterError": 0,
+    "missingUses": [],
+    "nestedAnimations": 0,
+    "overflow": [],
+    "paths": [],
+    "slide": 1,
+    "title": "콘텐츠팀 구조 살펴보기 (R&R 분배)",
+    "viewport": [
+      1280,
+      800
+    ],
+    "slug": "ch01-01-content-team-rr",
+    "excludedHiddenEmptyElements": 0
+  },
+  {
+    "animations": [
+      {
+        "delay": "0.15s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "0"
+      },
+      {
+        "delay": "0.15s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "0"
+      },
+      {
+        "delay": "0.15s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "0"
+      }
+    ],
+    "arrowCenters": [],
+    "body": {
+      "bottom": 696.375,
+      "h": 472.03125,
+      "right": 1184,
+      "w": 1088,
+      "x": 96,
+      "y": 224.34375
+    },
+    "collisions": [],
+    "highlightCount": 1,
+    "imageErrors": [],
+    "maxArrowCenterError": 0,
+    "missingUses": [],
+    "nestedAnimations": 0,
+    "overflow": [],
+    "paths": [],
+    "slide": 2,
+    "title": "플랫폼별 최종 결과물",
+    "viewport": [
+      1280,
+      800
+    ],
+    "slug": "ch01-01-content-team-rr",
+    "excludedHiddenEmptyElements": 0
+  },
+  {
+    "animations": [
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "0.41s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "1"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "0.93s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "3"
+      },
+      {
+        "delay": "0.93s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "3"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      }
+    ],
+    "arrowCenters": [],
+    "body": {
+      "bottom": 696.375,
+      "h": 472.03125,
+      "right": 1184,
+      "w": 1088,
+      "x": 96,
+      "y": 224.34375
+    },
+    "collisions": [],
+    "highlightCount": 1,
+    "imageErrors": [],
+    "maxArrowCenterError": 0,
+    "missingUses": [],
+    "nestedAnimations": 0,
+    "overflow": [],
+    "paths": [],
+    "slide": 3,
+    "title": "콘텐츠팀 협업 패턴",
+    "viewport": [
+      1280,
+      800
+    ],
+    "slug": "ch01-01-content-team-rr",
+    "excludedHiddenEmptyElements": 0
+  },
+  {
+    "animations": [
+      {
+        "delay": "0.41s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "1"
+      },
+      {
+        "delay": "0.93s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "3"
+      },
+      {
+        "delay": "0.15s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "0"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      },
+      {
+        "delay": "1.71s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "6"
+      }
+    ],
+    "arrowCenters": [],
+    "body": {
+      "bottom": 696.375,
+      "h": 472.03125,
+      "right": 1184,
+      "w": 1088,
+      "x": 96,
+      "y": 224.34375
+    },
+    "collisions": [],
+    "highlightCount": 1,
+    "imageErrors": [],
+    "maxArrowCenterError": 0,
+    "missingUses": [],
+    "nestedAnimations": 0,
+    "overflow": [],
+    "paths": [],
+    "slide": 4,
+    "title": "채널 기준 만들기",
+    "viewport": [
+      1280,
+      800
+    ],
+    "slug": "ch01-01-content-team-rr",
+    "excludedHiddenEmptyElements": 0
+  },
+  {
+    "animations": [
+      {
+        "delay": "0.41s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "1"
+      },
+      {
+        "delay": "0.93s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "3"
+      },
+      {
+        "delay": "0.93s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "3"
+      },
+      {
+        "delay": "0.93s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "3"
+      },
+      {
+        "delay": "1.45s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "5"
+      },
+      {
+        "delay": "1.45s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "5"
+      },
+      {
+        "delay": "1.45s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "5"
+      },
+      {
+        "delay": "0.15s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "0"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      },
+      {
+        "delay": "1.45s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "5"
+      },
+      {
+        "delay": "1.45s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "5"
+      },
+      {
+        "delay": "1.45s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "5"
+      },
+      {
+        "delay": "1.97s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "7"
+      }
+    ],
+    "arrowCenters": [],
+    "body": {
+      "bottom": 696.375,
+      "h": 472.03125,
+      "right": 1184,
+      "w": 1088,
+      "x": 96,
+      "y": 224.34375
+    },
+    "collisions": [],
+    "highlightCount": 1,
+    "imageErrors": [],
+    "maxArrowCenterError": 0,
+    "missingUses": [],
+    "nestedAnimations": 0,
+    "overflow": [],
+    "paths": [],
+    "slide": 5,
+    "title": "제작 전 소재 준비",
+    "viewport": [
+      1280,
+      800
+    ],
+    "slug": "ch01-01-content-team-rr",
+    "excludedHiddenEmptyElements": 3
+  },
+  {
+    "animations": [
+      {
+        "delay": "0.15s",
+        "duration": "0.48s",
+        "opacity": "1"
+      },
+      {
+        "delay": "0.41s",
+        "duration": "0.48s",
+        "opacity": "1"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1"
+      }
+    ],
+    "arrowCenters": [],
+    "body": {
+      "bottom": 696.375,
+      "h": 472.03125,
+      "right": 1184,
+      "w": 1088,
+      "x": 96,
+      "y": 224.34375
+    },
+    "collisions": [],
+    "highlightCount": 1,
+    "imageErrors": [],
+    "maxArrowCenterError": 0,
+    "missingUses": [],
+    "nestedAnimations": 0,
+    "overflow": [],
+    "paths": [],
+    "slide": 6,
+    "title": "소재 선정 기준",
+    "viewport": [
+      1280,
+      800
+    ],
+    "slug": "ch01-01-content-team-rr",
+    "excludedHiddenEmptyElements": 0
+  },
+  {
+    "animations": [
+      {
+        "delay": "0.15s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "0"
+      },
+      {
+        "delay": "0.41s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "1"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      }
+    ],
+    "arrowCenters": [],
+    "body": {
+      "bottom": 696.375,
+      "h": 472.03125,
+      "right": 1184,
+      "w": 1088,
+      "x": 96,
+      "y": 224.34375
+    },
+    "collisions": [],
+    "highlightCount": 1,
+    "imageErrors": [],
+    "maxArrowCenterError": 0,
+    "missingUses": [],
+    "nestedAnimations": 0,
+    "overflow": [],
+    "paths": [],
+    "slide": 7,
+    "title": "공통 자료와 콘텐츠 포맷",
+    "viewport": [
+      1280,
+      800
+    ],
+    "slug": "ch01-01-content-team-rr",
+    "excludedHiddenEmptyElements": 0
+  },
+  {
+    "animations": [
+      {
+        "delay": "0.41s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "1"
+      },
+      {
+        "delay": "1.71s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "6"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "0.93s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "3"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      },
+      {
+        "delay": "1.45s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "5"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      },
+      {
+        "delay": "1.45s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "5"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      },
+      {
+        "delay": "1.45s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "5"
+      },
+      {
+        "delay": "1.45s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "5"
+      },
+      {
+        "delay": "0.15s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "0"
+      },
+      {
+        "delay": "0.41s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "1"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      },
+      {
+        "delay": "1.45s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "5"
+      },
+      {
+        "delay": "0.41s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "1"
+      },
+      {
+        "delay": "1.71s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "6"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "0.93s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "3"
+      }
+    ],
+    "arrowCenters": [],
+    "body": {
+      "bottom": 696.375,
+      "h": 472.03125,
+      "right": 1184,
+      "w": 1088,
+      "x": 96,
+      "y": 224.34375
+    },
+    "collisions": [],
+    "highlightCount": 1,
+    "imageErrors": [],
+    "maxArrowCenterError": 0,
+    "missingUses": [],
+    "nestedAnimations": 0,
+    "overflow": [],
+    "paths": [],
+    "slide": 8,
+    "title": "콘텐츠팀의 구조",
+    "viewport": [
+      1280,
+      800
+    ],
+    "slug": "ch01-01-content-team-rr",
+    "excludedHiddenEmptyElements": 0
+  },
+  {
+    "animations": [
+      {
+        "delay": "0.15s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "0"
+      },
+      {
+        "delay": "0.93s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "3"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      }
+    ],
+    "arrowCenters": [],
+    "body": {
+      "bottom": 696.375,
+      "h": 472.03125,
+      "right": 1184,
+      "w": 1088,
+      "x": 96,
+      "y": 224.34375
+    },
+    "collisions": [],
+    "highlightCount": 1,
+    "imageErrors": [],
+    "maxArrowCenterError": 0,
+    "missingUses": [],
+    "nestedAnimations": 0,
+    "overflow": [],
+    "paths": [
+      "M325.046875 182.546875C325.046875 196.3046875,87.015625 196.3046875,87.015625 210.0625",
+      "M82.015625 203.0625L87.015625 210.0625L92.015625 203.0625",
+      "M325.046875 182.546875C325.046875 196.3046875,325.046875 196.3046875,325.046875 210.0625",
+      "M320.046875 203.0625L325.046875 210.0625L330.046875 203.0625",
+      "M325.046875 182.546875C325.046875 196.3046875,563.078125 196.3046875,563.078125 210.0625",
+      "M558.078125 203.0625L563.078125 210.0625L568.078125 203.0625"
+    ],
+    "slide": 1,
+    "title": "한 명이 세 플랫폼을 다 쓰면 생기는 일",
+    "viewport": [
+      1280,
+      800
+    ],
+    "slug": "ch03-01-platform-role-separation",
+    "excludedHiddenEmptyElements": 0
+  },
+  {
+    "animations": [
+      {
+        "delay": "0.15s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "0"
+      },
+      {
+        "delay": "0.41s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "1"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      }
+    ],
+    "arrowCenters": [],
+    "body": {
+      "bottom": 696.375,
+      "h": 472.03125,
+      "right": 1184,
+      "w": 1088,
+      "x": 96,
+      "y": 224.34375
+    },
+    "collisions": [],
+    "highlightCount": 1,
+    "imageErrors": [],
+    "maxArrowCenterError": 0,
+    "missingUses": [],
+    "nestedAnimations": 0,
+    "overflow": [],
+    "paths": [],
+    "slide": 2,
+    "title": "플랫폼별 목적",
+    "viewport": [
+      1280,
+      800
+    ],
+    "slug": "ch03-01-platform-role-separation",
+    "excludedHiddenEmptyElements": 0
+  },
+  {
+    "animations": [
+      {
+        "delay": "0.15s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "0"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      }
+    ],
+    "arrowCenters": [],
+    "body": {
+      "bottom": 696.375,
+      "h": 472.03125,
+      "right": 1184,
+      "w": 1088,
+      "x": 96,
+      "y": 224.34375
+    },
+    "collisions": [],
+    "highlightCount": 1,
+    "imageErrors": [],
+    "maxArrowCenterError": 0,
+    "missingUses": [],
+    "nestedAnimations": 0,
+    "overflow": [],
+    "paths": [],
+    "slide": 3,
+    "title": "한곳에 쌓인 콘텐츠 포맷",
+    "viewport": [
+      1280,
+      800
+    ],
+    "slug": "ch03-01-platform-role-separation",
+    "excludedHiddenEmptyElements": 0
+  },
+  {
+    "animations": [
+      {
+        "delay": "0.41s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "1"
+      },
+      {
+        "delay": "0.15s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "0"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      }
+    ],
+    "arrowCenters": [],
+    "body": {
+      "bottom": 696.375,
+      "h": 472.03125,
+      "right": 1184,
+      "w": 1088,
+      "x": 96,
+      "y": 224.34375
+    },
+    "collisions": [],
+    "highlightCount": 1,
+    "imageErrors": [],
+    "maxArrowCenterError": 0,
+    "missingUses": [],
+    "nestedAnimations": 0,
+    "overflow": [],
+    "paths": [
+      "M544 192.140625C544 205.8984375,160 205.8984375,160 219.65625",
+      "M155 212.65625L160 219.65625L165 212.65625",
+      "M544 192.140625C544 205.8984375,544 205.8984375,544 219.65625",
+      "M539 212.65625L544 219.65625L549 212.65625",
+      "M544 192.140625C544 205.8984375,928 205.8984375,928 219.65625",
+      "M923 212.65625L928 219.65625L933 212.65625"
+    ],
+    "slide": 4,
+    "title": "담당별 콘텐츠 포맷",
+    "viewport": [
+      1280,
+      800
+    ],
+    "slug": "ch03-01-platform-role-separation",
+    "excludedHiddenEmptyElements": 0
+  },
+  {
+    "animations": [
+      {
+        "delay": "0.15s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "0"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      }
+    ],
+    "arrowCenters": [],
+    "body": {
+      "bottom": 696.375,
+      "h": 472.03125,
+      "right": 1184,
+      "w": 1088,
+      "x": 96,
+      "y": 224.34375
+    },
+    "collisions": [],
+    "highlightCount": 1,
+    "imageErrors": [],
+    "maxArrowCenterError": 0,
+    "missingUses": [],
+    "nestedAnimations": 0,
+    "overflow": [],
+    "paths": [],
+    "slide": 5,
+    "title": "공통 기준과 플랫폼별 표현",
+    "viewport": [
+      1280,
+      800
+    ],
+    "slug": "ch03-01-platform-role-separation"
+  },
+  {
+    "animations": [
+      {
+        "delay": "0.15s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "0"
+      },
+      {
+        "delay": "0.41s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "1"
+      },
+      {
+        "delay": "0.67s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "2"
+      },
+      {
+        "delay": "1.19s",
+        "duration": "0.48s",
+        "opacity": "1",
+        "step": "4"
+      }
+    ],
+    "arrowCenters": [],
+    "body": {
+      "bottom": 696.375,
+      "h": 472.03125,
+      "right": 1184,
+      "w": 1088,
+      "x": 96,
+      "y": 224.34375
+    },
+    "collisions": [],
+    "highlightCount": 1,
+    "imageErrors": [],
+    "maxArrowCenterError": 0,
+    "missingUses": [],
+    "nestedAnimations": 0,
+    "overflow": [],
+    "paths": [],
+    "slide": 6,
+    "title": "결과물별 완료 기준",
+    "viewport": [
+      1280,
+      800
+    ],
+    "slug": "ch03-01-platform-role-separation",
+    "excludedHiddenEmptyElements": 0
+  }
+]

@@ -1,0 +1,48 @@
+{
+  "deck": "artifacts/part10/outputs/ch03-01-course-wrap-up.html",
+  "slides": 7,
+  "state": "html_approved_script_handed_to_claude",
+  "references": [
+    "artifacts/part5/outputs/ch01-01-collaboration-patterns.html (7/8)",
+    "artifacts/part5/outputs/ch01-02-multi-agent-failures.html (6/7/8)",
+    "docs/confirmed-copy.md",
+    "../fastcampus-orca-course/edu-note/output/[Part 10] 토큰 최적화 전략 가이드.md (Step 4/5)"
+  ],
+  "viewports": [
+    [
+      1920,
+      1080
+    ],
+    [
+      1280,
+      800
+    ]
+  ],
+  "layout": "passed",
+  "reentry_and_animation": "7/7 at both sizes",
+  "reduced_motion": "7/7",
+  "navigation": "passed",
+  "hover": "document unchanged",
+  "script_written": false,
+  "latest_revision": "26차: 협업 패턴→실패와 대응→프로젝트 결과물 순서 확정",
+  "visual_revision_slides": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "new_diagram_label_clearance": "2/5: both viewports, no wire intersections with label bounds + 4px",
+  "html_sha256": "fc0dc7bda450cc8a0a17d27847af3fce02be2b933b159e55324a4f92f840b7b3",
+  "claude_terminal": "term_6a9dae74-70b2-4a49-ab75-ce0300b23988",
+  "script_handoff_file": "artifacts/_maintenance/course-wrap-up-claude-handoff-2026-10-14.md",
+  "slide_order": [
+    "강의 정리",
+    "사람과 팀의 역할",
+    "네 가지 협업 패턴",
+    "멀티에이전트의 실패와 대응",
+    "프로젝트 결과물",
+    "토큰 사용량을 고려한 팀 운영",
+    "결과부터 시작하는 팀 설계"
+  ]
+}

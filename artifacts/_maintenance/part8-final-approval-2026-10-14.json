@@ -1,0 +1,28 @@
+{
+  "approved_on": "2026-10-14",
+  "promoted": "artifacts/part8/outputs/ch03-01-platform-role-separation.html",
+  "removed_candidate": "artifacts/part8/outputs/ch03-01-platform-role-separation-proposal.html",
+  "approved_slide_sha256": "39c1de79f2f4b4aa7022e57a183c1eedef601a151dc8d09e88edaa5c76d9b93c",
+  "final_slide_sha256": "39c1de79f2f4b4aa7022e57a183c1eedef601a151dc8d09e88edaa5c76d9b93c",
+  "original_feedback_preserved": true,
+  "decks": {
+    "ch01-01-content-team-rr": "310ca988fe85129fb5f50777b2b95d87f5ae161ad38b5d7fdb5ec32d8943d3d4",
+    "ch03-01-platform-role-separation": "c83aeaef09ebdf64a9c7857c0387899635d8a0bd1ffe2b24e0063fab8cbe7acc"
+  },
+  "post_approval_design_request": "Ch01-01 4장 채널 기준 문서형·호버 없음",
+  "latest_user_label_revision": {
+    "ch01-01-content-team-rr": {
+      "slide": 4,
+      "label": "에이전트"
+    },
+    "ch03-01-platform-role-separation": {
+      "slide": 1,
+      "label": "에이전트"
+    }
+  },
+  "claude_scripts": "written_and_reviewed; instructor_review_pending",
+  "current_html_sha256": {
+    "ch01-01-content-team-rr": "e30808ba43c177259547e06b0af600cc662559709faa33021bf74afbae9c1b58",
+    "ch03-01-platform-role-separation": "d792c5a4b69f87dd31af8682b488b9819aeca68c591119c1ac8bb96789e6460a"
+  }
+}
