@@ -54,12 +54,26 @@ input::placeholder{color:var(--muted);opacity:1}
 /* 공개본 제목 변경: 2차 이후의 해당 텍스트에만 적용한다. */
 .published-change__text{color:#dfc291}
 .stage-stack--intro{grid-template-rows:auto 36px}
+/* 실제 시간: 계획과 대비되게 납품 차수의 강조색으로 칠한다. */
+.part{--accent:var(--accent-1)}.part[data-batch='2']{--accent:var(--accent-2)}.part[data-batch='3']{--accent:var(--accent-3)}
+.len-actual{color:var(--accent);font-weight:600}
+.batch-time--diff strong{font-weight:500}
+.overall{display:flex;align-items:center;justify-content:space-between;gap:12px 32px;flex-wrap:wrap;margin-top:14px;background:var(--paper);border:1px solid var(--line);border-top:2px solid var(--brand);border-radius:10px;padding:16px 23px}
+.overall-title{display:flex;align-items:baseline;gap:10px;font-size:18px;font-weight:600;color:var(--brand)}
+.overall-title span{font-size:14px;font-weight:400;color:var(--muted)}
+.overall-stats{display:flex;flex-wrap:wrap;gap:8px 36px;margin:0}
+.overall-stats div{display:flex;align-items:baseline;gap:10px}
+.overall-stats dt{font-size:14px;color:var(--muted)}
+.overall-stats dd{margin:0;font-size:17px;font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap}
+.overall-stats .len-actual{color:var(--brand)}
+@media(max-width:560px){.overall{padding:12px 15px;border-top-width:1px;border-left:4px solid var(--brand)}.overall-stats{display:grid;gap:4px;width:100%}.overall-stats div{justify-content:space-between}}
 </style>
 </head>
 <body>
 <div class="wrap">
 <header class="masthead"><div><p class="eyebrow">ORCA · COURSE</p><h1>강의 작업 현황</h1><p class="standfirst">자료 제작부터 편집까지</p></div><p class="stamp"><strong>10 Parts · 72 Clips</strong>업데이트 2026-10-18</p></header>
 <nav class="delivery" id="deliveries" aria-label="납품 차수 선택"></nav>
+<section class="overall" id="overall" aria-label="전체 강의 시간"></section>
 <main class="workspace">
 <div class="toolbar"><div class="scope"><h2 id="scope-title">전체 납품</h2><button class="text-button" id="reset">전체 보기</button></div><div class="filters"><label class="field-label" for="kind">클립 유형</label><select id="kind"><option value="all">모든 유형</option><option value="theory">이론</option><option value="practice">실습</option></select><label class="field-label" for="status">작업 상태</label><select id="status"><option value="all">모든 상태</option><option value="open">미완료</option><option value="done">최종 완료</option></select><label class="field-label" for="search">클립 검색</label><input id="search" type="search" placeholder="제목 · 번호 검색"></div></div>
 <section class="metrics" id="metrics" aria-label="선택한 클립의 공정 현황"></section>
@@ -71,7 +85,7 @@ input::placeholder{color:var(--muted);opacity:1}
           <h3 class="part__name">Part 1</h3>
           <span class="part__title">왜 팀이 필요한가 (강의 개요)</span>
           
-          <span class="part__tally" title="총 계획 시간 / 실제 시간" aria-label="총 계획 시간 / 실제 시간: 3클립 · 계획 34분 / 실제 26분 24초">3클립 · 계획 34분 / 실제 26분 24초</span>
+          <span class="part__tally" title="총 계획 시간 / 실제 시간" aria-label="총 계획 시간 / 실제 시간: 3클립 · 계획 34분 / 실제 26분 24초">3클립 · 계획 34분 / 실제 <span class="len-actual">26분 24초</span></span>
           <span class="part__meter" role="img" aria-label="최종 3/3 완료">
             <span class="part__meter-fill" style="width:100.0000%"></span>
           </span>
@@ -95,7 +109,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr data-key="1-Ch01-01" data-clip>
               <td class="c-clip"><code>Ch01-01</code></td>
               <td class="c-title">강의 소개와 최종 결과물</td>
-              <td class="c-len">11분 / 13분 06초</td>
+              <td class="c-len">11분 / <span class="len-actual">13분 06초</span></td>
               <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><div class="stage-stack"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--done" title="대본 완료">완료</span></div></td>
@@ -106,7 +120,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr data-key="1-Ch01-02" data-clip>
               <td class="c-clip"><code>Ch01-02</code></td>
               <td class="c-title">강의 로드맵과 선수 지식</td>
-              <td class="c-len">9분 / 5분 33초</td>
+              <td class="c-len">9분 / <span class="len-actual">5분 33초</span></td>
               <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><div class="stage-stack"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--done" title="대본 완료">완료</span></div></td>
@@ -118,7 +132,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr data-key="1-Ch02-01" data-clip>
               <td class="c-clip"><code>Ch02-01</code></td>
               <td class="c-title">에이전트 하나로 되는 일과 안 되는 일</td>
-              <td class="c-len">14분 / 7분 45초</td>
+              <td class="c-len">14분 / <span class="len-actual">7분 45초</span></td>
               <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><div class="stage-stack"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--done" title="대본 완료">완료</span></div></td>
@@ -135,7 +149,7 @@ input::placeholder{color:var(--muted);opacity:1}
           <h3 class="part__name">Part 2</h3>
           <span class="part__title">Orca 설치 및 기본 사용</span>
           
-          <span class="part__tally" title="총 계획 시간 / 실제 시간" aria-label="총 계획 시간 / 실제 시간: 5클립 · 계획 36분 / 실제 29분 22초">5클립 · 계획 36분 / 실제 29분 22초</span>
+          <span class="part__tally" title="총 계획 시간 / 실제 시간" aria-label="총 계획 시간 / 실제 시간: 5클립 · 계획 36분 / 실제 29분 22초">5클립 · 계획 36분 / 실제 <span class="len-actual">29분 22초</span></span>
           <span class="part__meter" role="img" aria-label="최종 5/5 완료">
             <span class="part__meter-fill" style="width:100.0000%"></span>
           </span>
@@ -159,7 +173,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr data-key="2-Ch01-01" data-clip>
               <td class="c-clip"><code>Ch01-01</code></td>
               <td class="c-title">터미널 여러 개의 문제</td>
-              <td class="c-len">6분 / 4분 57초</td>
+              <td class="c-len">6분 / <span class="len-actual">4분 57초</span></td>
               <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><div class="stage-stack"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--done" title="대본 완료">완료</span></div></td>
@@ -170,7 +184,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr data-key="2-Ch01-02" data-clip>
               <td class="c-clip"><code>Ch01-02</code></td>
               <td class="c-title">Orca는 어떤 도구인가</td>
-              <td class="c-len">7분 / 4분 46초</td>
+              <td class="c-len">7분 / <span class="len-actual">4분 46초</span></td>
               <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><div class="stage-stack"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--done" title="대본 완료">완료</span></div></td>
@@ -182,7 +196,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr data-key="2-Ch02-01" data-clip>
               <td class="c-clip"><code>Ch02-01</code></td>
               <td class="c-title">설치 전 준비물과 환경 체크</td>
-              <td class="c-len">5분 / 3분 34초</td>
+              <td class="c-len">5분 / <span class="len-actual">3분 34초</span></td>
               <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><div class="stage-stack"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--done" title="대본 완료">완료</span></div></td>
@@ -193,7 +207,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="2-Ch02-02" data-clip>
               <td class="c-clip"><code>Ch02-02</code></td>
               <td class="c-title">설치와 에이전트 연결하기</td>
-              <td class="c-len">10분 / 8분 03초</td>
+              <td class="c-len">10분 / <span class="len-actual">8분 03초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 촬영용 완료">촬영용 완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -204,7 +218,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="2-Ch02-03" data-clip>
               <td class="c-clip"><code>Ch02-03</code></td>
               <td class="c-title">화면 구조와 보드 읽는 법</td>
-              <td class="c-len">8분 / 8분 02초</td>
+              <td class="c-len">8분 / <span class="len-actual">8분 02초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 촬영용 완료">촬영용 완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -221,7 +235,7 @@ input::placeholder{color:var(--muted);opacity:1}
           <h3 class="part__name">Part 3</h3>
           <span class="part__title">Git과 워크트리</span>
           
-          <span class="part__tally" title="총 계획 시간 / 실제 시간" aria-label="총 계획 시간 / 실제 시간: 5클립 · 계획 48분 / 실제 80분 23초">5클립 · 계획 48분 / 실제 80분 23초</span>
+          <span class="part__tally" title="총 계획 시간 / 실제 시간" aria-label="총 계획 시간 / 실제 시간: 5클립 · 계획 48분 / 실제 80분 23초">5클립 · 계획 48분 / 실제 <span class="len-actual">80분 23초</span></span>
           <span class="part__meter" role="img" aria-label="최종 5/5 완료">
             <span class="part__meter-fill" style="width:100.0000%"></span>
           </span>
@@ -245,7 +259,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr data-key="3-Ch01-01" data-clip>
               <td class="c-clip"><code>Ch01-01</code></td>
               <td class="c-title">Git이란 - 버전 관리가 없다면</td>
-              <td class="c-len">8분 / 4분 54초</td>
+              <td class="c-len">8분 / <span class="len-actual">4분 54초</span></td>
               <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><div class="stage-stack"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--done" title="대본 완료">완료</span></div></td>
@@ -256,7 +270,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr data-key="3-Ch01-02" data-clip>
               <td class="c-clip"><code>Ch01-02</code></td>
               <td class="c-title">저장소와 작업흐름</td>
-              <td class="c-len">10분 / 11분 39초</td>
+              <td class="c-len">10분 / <span class="len-actual">11분 39초</span></td>
               <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><div class="stage-stack"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--done" title="대본 완료">완료</span></div></td>
@@ -267,7 +281,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr data-key="3-Ch01-03" data-clip>
               <td class="c-clip"><code>Ch01-03</code></td>
               <td class="c-title">브랜치와 워크트리</td>
-              <td class="c-len">10분 / 10분 50초</td>
+              <td class="c-len">10분 / <span class="len-actual">10분 50초</span></td>
               <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><div class="stage-stack"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--done" title="대본 완료">완료</span></div></td>
@@ -279,7 +293,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="3-Ch02-01" data-clip>
               <td class="c-clip"><code>Ch02-01</code></td>
               <td class="c-title">Git 설치와 GitHub 첫 연결</td>
-              <td class="c-len">14분 / 38분 22초</td>
+              <td class="c-len">14분 / <span class="len-actual">38분 22초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -290,7 +304,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="3-Ch02-02" data-clip>
               <td class="c-clip"><code>Ch02-02</code></td>
               <td class="c-title">프롬프트로 GitHub에 올리기</td>
-              <td class="c-len">6분 / 14분 38초</td>
+              <td class="c-len">6분 / <span class="len-actual">14분 38초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -307,7 +321,7 @@ input::placeholder{color:var(--muted);opacity:1}
           <h3 class="part__name">Part 4</h3>
           <span class="part__title">오케스트레이션과 스킬</span>
           
-          <span class="part__tally" title="총 계획 시간 / 실제 시간" aria-label="총 계획 시간 / 실제 시간: 8클립 · 계획 84분 / 실제 102분 49초">8클립 · 계획 84분 / 실제 102분 49초</span>
+          <span class="part__tally" title="총 계획 시간 / 실제 시간" aria-label="총 계획 시간 / 실제 시간: 8클립 · 계획 84분 / 실제 102분 49초">8클립 · 계획 84분 / 실제 <span class="len-actual">102분 49초</span></span>
           <span class="part__meter" role="img" aria-label="최종 8/8 완료">
             <span class="part__meter-fill" style="width:100.0000%"></span>
           </span>
@@ -331,7 +345,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr data-key="4-Ch01-01" data-clip>
               <td class="c-clip"><code>Ch01-01</code></td>
               <td class="c-title">오케스트레이션 구조 살펴보기</td>
-              <td class="c-len">7분 / 7분 27초</td>
+              <td class="c-len">7분 / <span class="len-actual">7분 27초</span></td>
               <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><div class="stage-stack"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--done" title="대본 완료">완료</span></div></td>
@@ -342,7 +356,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr data-key="4-Ch01-02" data-clip>
               <td class="c-clip"><code>Ch01-02</code></td>
               <td class="c-title">목표와 작업, 실행의 흐름</td>
-              <td class="c-len">8분 / 10분 02초</td>
+              <td class="c-len">8분 / <span class="len-actual">10분 02초</span></td>
               <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><div class="stage-stack"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--done" title="대본 완료">완료</span></div></td>
@@ -354,7 +368,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="4-Ch02-01" data-clip>
               <td class="c-clip"><code>Ch02-01</code></td>
               <td class="c-title">오케스트레이션 스킬 확인하기</td>
-              <td class="c-len">10분 / 7분 15초</td>
+              <td class="c-len">10분 / <span class="len-actual">7분 15초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 촬영용 완료">촬영용 완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -365,7 +379,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="4-Ch02-02" data-clip>
               <td class="c-clip"><code>Ch02-02</code></td>
               <td class="c-title">목표 하나로 요청하기</td>
-              <td class="c-len">11분 / 8분 54초</td>
+              <td class="c-len">11분 / <span class="len-actual">8분 54초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 촬영용 완료">촬영용 완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -377,7 +391,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr data-key="4-Ch03-01" data-clip>
               <td class="c-clip"><code>Ch03-01</code></td>
               <td class="c-title">스킬과 플러그인이란</td>
-              <td class="c-len">10분 / 12분 35초</td>
+              <td class="c-len">10분 / <span class="len-actual">12분 35초</span></td>
               <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><div class="stage-stack"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--done" title="대본 완료">완료</span></div></td>
@@ -388,7 +402,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr data-key="4-Ch03-02" data-clip>
               <td class="c-clip"><code>Ch03-02</code></td>
               <td class="c-title">1인 회사 운영에 유용한 스킬 모음</td>
-              <td class="c-len">10분 / 13분 45초</td>
+              <td class="c-len">10분 / <span class="len-actual">13분 45초</span></td>
               <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><div class="stage-stack"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--done" title="대본 완료">완료</span></div></td>
@@ -400,7 +414,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="4-Ch04-01" data-clip>
               <td class="c-clip"><code>Ch04-01</code></td>
               <td class="c-title">회사 문서 작성 스킬 설치하기</td>
-              <td class="c-len">14분 / 18분 11초</td>
+              <td class="c-len">14분 / <span class="len-actual">18분 11초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -411,7 +425,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="4-Ch04-02" data-clip>
               <td class="c-clip"><code>Ch04-02</code></td>
               <td class="c-title">인터뷰로 회사 문서 완성하기</td>
-              <td class="c-len">14분 / 24분 40초</td>
+              <td class="c-len">14분 / <span class="len-actual">24분 40초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -428,7 +442,7 @@ input::placeholder{color:var(--muted);opacity:1}
           <h3 class="part__name">Part 5</h3>
           <span class="part__title">기획팀: 리서치부터 기획서까지 (순차 파이프라인)</span>
           
-          <span class="part__tally" title="총 계획 시간 / 실제 시간" aria-label="총 계획 시간 / 실제 시간: 15클립 · 계획 170분 / 실제 200분 35초">15클립 · 계획 170분 / 실제 200분 35초</span>
+          <span class="part__tally" title="총 계획 시간 / 실제 시간" aria-label="총 계획 시간 / 실제 시간: 15클립 · 계획 170분 / 실제 200분 35초">15클립 · 계획 170분 / 실제 <span class="len-actual">200분 35초</span></span>
           <span class="part__meter" role="img" aria-label="최종 15/15 완료">
             <span class="part__meter-fill" style="width:100.0000%"></span>
           </span>
@@ -452,7 +466,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr data-key="5-Ch01-01" data-clip>
               <td class="c-clip"><code>Ch01-01</code></td>
               <td class="c-title">4가지 협업 패턴과 프로젝트 미리보기</td>
-              <td class="c-len">10분 / 20분 55초</td>
+              <td class="c-len">10분 / <span class="len-actual">20분 55초</span></td>
               <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><div class="stage-stack"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--done" title="대본 완료">완료</span></div></td>
@@ -463,7 +477,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr data-key="5-Ch01-02" data-clip>
               <td class="c-clip"><code>Ch01-02</code></td>
               <td class="c-title">멀티 에이전트가 오히려 나빠지는 3가지 이유</td>
-              <td class="c-len">10분 / 11분 11초</td>
+              <td class="c-len">10분 / <span class="len-actual">11분 11초</span></td>
               <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><div class="stage-stack"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--done" title="대본 완료">완료</span></div></td>
@@ -475,7 +489,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr data-key="5-Ch02-01" data-clip>
               <td class="c-clip"><code>Ch02-01</code></td>
               <td class="c-title"><span class="published-change" title="공개본: 기획팀 구조와 업무 흐름"><span class="published-change__text">기획팀 구조 살펴보기 (순차 파이프라인)</span></span></td>
-              <td class="c-len">11분 / 6분 15초</td>
+              <td class="c-len">11분 / <span class="len-actual">6분 15초</span></td>
               <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><div class="stage-stack"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--done" title="대본 완료">완료</span></div></td>
@@ -486,7 +500,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="5-Ch02-02" data-clip>
               <td class="c-clip"><code>Ch02-02</code></td>
               <td class="c-title"><span class="published-change" title="공개본: 순차 파이프라인이란"><span class="published-change__text">기획팀 작업 환경 준비하기</span></span></td>
-              <td class="c-len">11분 / 15분 32초</td>
+              <td class="c-len">11분 / <span class="len-actual">15분 32초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -497,7 +511,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="5-Ch02-03" data-clip>
               <td class="c-clip"><code>Ch02-03</code></td>
               <td class="c-title"><span class="published-change" title="공개본: 기획 전 필수 스킬 써보기"><span class="published-change__text">grill-me로 사업 조건 정하기</span></span></td>
-              <td class="c-len">11분 / 19분 03초</td>
+              <td class="c-len">11분 / <span class="len-actual">19분 03초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -509,7 +523,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="5-Ch03-01" data-clip>
               <td class="c-clip"><code>Ch03-01</code></td>
               <td class="c-title"><span class="published-change" title="공개본: 시장 조사 노트 표준화"><span class="published-change__text">시장 조사 노트·아이템 후보 비교표·판매 아이템 기획서 템플릿 세팅하기</span></span></td>
-              <td class="c-len">10분 / 23분 45초</td>
+              <td class="c-len">10분 / <span class="len-actual">23분 45초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -520,7 +534,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="5-Ch03-02" data-clip>
               <td class="c-clip"><code>Ch03-02</code></td>
               <td class="c-title"><span class="published-change" title="공개본: 아이템 후보 표준화"><span class="published-change__text">시장조사 기준 정하기</span></span></td>
-              <td class="c-len">11분 / 11분 15초</td>
+              <td class="c-len">11분 / <span class="len-actual">11분 15초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack stage-stack--intro"><small>실습자료<br>도입 슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -531,7 +545,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="5-Ch03-03" data-clip>
               <td class="c-clip"><code>Ch03-03</code></td>
               <td class="c-title"><span class="published-change" title="공개본: 판매 아이템 기획서 양식 표준화"><span class="published-change__text">시장 조사 단계 실행하기</span></span></td>
-              <td class="c-len">11분 / 15분 49초</td>
+              <td class="c-len">11분 / <span class="len-actual">15분 49초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -543,7 +557,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="5-Ch04-01" data-clip>
               <td class="c-clip"><code>Ch04-01</code></td>
               <td class="c-title"><span class="published-change" title="공개본: 시장 조사 단계 실행하기"><span class="published-change__text">판매 아이템 선정 기준 정하기</span></span></td>
-              <td class="c-len">11분 / 9분 53초</td>
+              <td class="c-len">11분 / <span class="len-actual">9분 53초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -554,7 +568,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="5-Ch04-02" data-clip>
               <td class="c-clip"><code>Ch04-02</code></td>
               <td class="c-title">아이템 후보 도출 단계 실행하기</td>
-              <td class="c-len">11분 / 7분 45초</td>
+              <td class="c-len">11분 / <span class="len-actual">7분 45초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -565,7 +579,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="5-Ch04-03" data-clip>
               <td class="c-clip"><code>Ch04-03</code></td>
               <td class="c-title">기획서 작성 단계 실행하기</td>
-              <td class="c-len">10분 / 10분 51초</td>
+              <td class="c-len">10분 / <span class="len-actual">10분 51초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -576,7 +590,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr data-key="5-Ch04-04" data-clip>
               <td class="c-clip"><code>Ch04-04</code></td>
               <td class="c-title">품질 게이트로 통과 기준 세우기</td>
-              <td class="c-len">10분 / 8분 15초</td>
+              <td class="c-len">10분 / <span class="len-actual">8분 15초</span></td>
               <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><div class="stage-stack"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--done" title="대본 완료">완료</span></div></td>
@@ -588,7 +602,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="5-Ch05-01" data-clip>
               <td class="c-clip"><code>Ch05-01</code></td>
               <td class="c-title"><span class="published-change" title="공개본: 단계와 품질 게이트를 담은 파이프라인 프롬프트 작성하기"><span class="published-change__text">단계별 품질 기준 정하기</span></span></td>
-              <td class="c-len">14분 / 12분 51초</td>
+              <td class="c-len">14분 / <span class="len-actual">12분 51초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -599,7 +613,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="5-Ch05-02" data-clip>
               <td class="c-clip"><code>Ch05-02</code></td>
               <td class="c-title">목표 하나로 처음부터 끝까지 실행하기</td>
-              <td class="c-len">15분 / 19분 09초</td>
+              <td class="c-len">15분 / <span class="len-actual">19분 09초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -610,7 +624,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="5-Ch05-03" data-clip>
               <td class="c-clip"><code>Ch05-03</code></td>
               <td class="c-title"><span class="published-change" title="공개본: 결과물 점검하고 프롬프트 다듬기"><span class="published-change__text">반려 루프로 결과물 개선하기</span></span></td>
-              <td class="c-len">14분 / 8분 06초</td>
+              <td class="c-len">14분 / <span class="len-actual">8분 06초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -627,7 +641,7 @@ input::placeholder{color:var(--muted);opacity:1}
           <h3 class="part__name">Part 6</h3>
           <span class="part__title">영업팀: 제안서·견적서 검증하기 (교차 검증)</span>
           
-          <span class="part__tally" title="총 계획 시간 / 실제 시간" aria-label="총 계획 시간 / 실제 시간: 9클립 · 계획 90분 / 실제 112분 54초">9클립 · 계획 90분 / 실제 112분 54초</span>
+          <span class="part__tally" title="총 계획 시간 / 실제 시간" aria-label="총 계획 시간 / 실제 시간: 9클립 · 계획 90분 / 실제 112분 54초">9클립 · 계획 90분 / 실제 <span class="len-actual">112분 54초</span></span>
           <span class="part__meter" role="img" aria-label="최종 9/9 완료">
             <span class="part__meter-fill" style="width:100.0000%"></span>
           </span>
@@ -651,7 +665,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr data-key="6-Ch01-01" data-clip>
               <td class="c-clip"><code>Ch01-01</code></td>
               <td class="c-title">Generator–Evaluator 패턴이란</td>
-              <td class="c-len">10분 / 5분 02초</td>
+              <td class="c-len">10분 / <span class="len-actual">5분 02초</span></td>
               <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><div class="stage-stack"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--done" title="대본 완료">완료</span></div></td>
@@ -662,7 +676,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr data-key="6-Ch01-02" data-clip>
               <td class="c-clip"><code>Ch01-02</code></td>
               <td class="c-title"><span class="published-change" title="공개본: 평가에 다른 모델을 쓰는 이유"><span class="published-change__text">영업팀 구조 살펴보기 (교차 검증)</span></span></td>
-              <td class="c-len">10분 / 8분 45초</td>
+              <td class="c-len">10분 / <span class="len-actual">8분 45초</span></td>
               <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><div class="stage-stack"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--done" title="대본 완료">완료</span></div></td>
@@ -674,7 +688,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="6-Ch02-01" data-clip>
               <td class="c-clip"><code>Ch02-01</code></td>
               <td class="c-title">영업팀 준비하기</td>
-              <td class="c-len">11분 / 13분 40초</td>
+              <td class="c-len">11분 / <span class="len-actual">13분 40초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -685,7 +699,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="6-Ch02-02" data-clip>
               <td class="c-clip"><code>Ch02-02</code></td>
               <td class="c-title">클라이언트 브리프에서 요구사항 뽑기</td>
-              <td class="c-len">11분 / 8분 32초</td>
+              <td class="c-len">11분 / <span class="len-actual">8분 32초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -696,7 +710,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="6-Ch02-03" data-clip>
               <td class="c-clip"><code>Ch02-03</code></td>
               <td class="c-title"><span class="published-change" title="공개본: 브리프 하나로 제안서 초안 만들기"><span class="published-change__text">제안서·견적서 초안 만들기</span></span></td>
-              <td class="c-len">11분 / 8분 54초</td>
+              <td class="c-len">11분 / <span class="len-actual">8분 54초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -708,7 +722,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="6-Ch03-01" data-clip>
               <td class="c-clip"><code>Ch03-01</code></td>
               <td class="c-title">통과 기준 체크리스트 만들기</td>
-              <td class="c-len">10분 / 10분 13초</td>
+              <td class="c-len">10분 / <span class="len-actual">10분 13초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -719,7 +733,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="6-Ch03-02" data-clip>
               <td class="c-clip"><code>Ch03-02</code></td>
               <td class="c-title"><span class="published-change" title="공개본: 다른 모델로 검증하고 반려 사유 받기"><span class="published-change__text">다른 모델로 평가하고 판정받기</span></span></td>
-              <td class="c-len">10분 / 16분 04초</td>
+              <td class="c-len">10분 / <span class="len-actual">16분 04초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -731,7 +745,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="6-Ch04-01" data-clip>
               <td class="c-clip"><code>Ch04-01</code></td>
               <td class="c-title">반려 사유 반영해서 다시 만들기</td>
-              <td class="c-len">9분 / 10분 08초</td>
+              <td class="c-len">9분 / <span class="len-actual">10분 08초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -742,7 +756,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="6-Ch04-02" data-clip>
               <td class="c-clip"><code>Ch04-02</code></td>
               <td class="c-title">통과할 때까지 도는 루프 완성하기</td>
-              <td class="c-len">8분 / 31분 36초</td>
+              <td class="c-len">8분 / <span class="len-actual">31분 36초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -759,7 +773,7 @@ input::placeholder{color:var(--muted);opacity:1}
           <h3 class="part__name">Part 7</h3>
           <span class="part__title">디자인팀: Best 시안 머지하기 (병렬)</span>
           
-          <span class="part__tally" title="총 계획 시간 / 실제 시간" aria-label="총 계획 시간 / 실제 시간: 10클립 · 계획 90분 / 실제 105분 56초">10클립 · 계획 90분 / 실제 105분 56초</span>
+          <span class="part__tally" title="총 계획 시간 / 실제 시간" aria-label="총 계획 시간 / 실제 시간: 10클립 · 계획 90분 / 실제 105분 56초">10클립 · 계획 90분 / 실제 <span class="len-actual">105분 56초</span></span>
           <span class="part__meter" role="img" aria-label="최종 10/10 완료">
             <span class="part__meter-fill" style="width:100.0000%"></span>
           </span>
@@ -783,7 +797,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr data-key="7-Ch01-01" data-clip>
               <td class="c-clip"><code>Ch01-01</code></td>
               <td class="c-title"><span class="published-change" title="공개본: 워크트리로 작업 공간 분리하기"><span class="published-change__text">디자인팀 구조 살펴보기 (병렬 실행)</span></span></td>
-              <td class="c-len">10분 / 4분 33초</td>
+              <td class="c-len">10분 / <span class="len-actual">4분 33초</span></td>
               <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><div class="stage-stack"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--done" title="대본 완료">완료</span></div></td>
@@ -794,7 +808,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="7-Ch01-02" data-clip>
               <td class="c-clip"><code>Ch01-02</code></td>
               <td class="c-title">Orca에서 워크트리 만들기</td>
-              <td class="c-len">7분 / 18분 48초</td>
+              <td class="c-len">7분 / <span class="len-actual">18분 48초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -806,7 +820,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr data-key="7-Ch02-01" data-clip>
               <td class="c-clip"><code>Ch02-01</code></td>
               <td class="c-title">같은 작업도 에이전트에 따라 결과가 갈린다</td>
-              <td class="c-len">7분 / 7분 02초</td>
+              <td class="c-len">7분 / <span class="len-actual">7분 02초</span></td>
               <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><div class="stage-stack"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--done" title="대본 완료">완료</span></div></td>
@@ -817,7 +831,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="7-Ch02-02" data-clip>
               <td class="c-clip"><code>Ch02-02</code></td>
               <td class="c-title">두 에이전트에 같은 작업 동시에 시키기</td>
-              <td class="c-len">9분 / 7분 28초</td>
+              <td class="c-len">9분 / <span class="len-actual">7분 28초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -829,7 +843,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="7-Ch03-01" data-clip>
               <td class="c-clip"><code>Ch03-01</code></td>
               <td class="c-title">두 결과물 눈으로 비교하고 고르기</td>
-              <td class="c-len">9분 / 11분 02초</td>
+              <td class="c-len">9분 / <span class="len-actual">11분 02초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -840,7 +854,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="7-Ch03-02" data-clip>
               <td class="c-clip"><code>Ch03-02</code></td>
               <td class="c-title">Best 시안 머지하기</td>
-              <td class="c-len">10분 / 6분 58초</td>
+              <td class="c-len">10분 / <span class="len-actual">6분 58초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -852,7 +866,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="7-Ch04-01" data-clip>
               <td class="c-clip"><code>Ch04-01</code></td>
               <td class="c-title"><span class="published-change" title="공개본: 요소 클릭과 주석으로 수정 요청하기"><span class="published-change__text">디자인 모드로 수정 요청하기</span></span></td>
-              <td class="c-len">10분 / 13분 20초</td>
+              <td class="c-len">10분 / <span class="len-actual">13분 20초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -863,7 +877,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="7-Ch04-02" data-clip>
               <td class="c-clip"><code>Ch04-02</code></td>
               <td class="c-title">diff로 반영 확인하기</td>
-              <td class="c-len">10분 / 8분 23초</td>
+              <td class="c-len">10분 / <span class="len-actual">8분 23초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -875,7 +889,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="7-Ch05-01" data-clip>
               <td class="c-clip"><code>Ch05-01</code></td>
               <td class="c-title"><span class="published-change" title="공개본: 개발자도구 켜고 요소 클릭해보기"><span class="published-change__text">개발자도구로 스타일 바꿔보기</span></span></td>
-              <td class="c-len">9분 / 9분 13초</td>
+              <td class="c-len">9분 / <span class="len-actual">9분 13초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -886,7 +900,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="7-Ch05-02" data-clip>
               <td class="c-clip"><code>Ch05-02</code></td>
               <td class="c-title">AI가 헷갈리지 않게 요소 이름으로 요청하기</td>
-              <td class="c-len">9분 / 19분 09초</td>
+              <td class="c-len">9분 / <span class="len-actual">19분 09초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -903,7 +917,7 @@ input::placeholder{color:var(--muted);opacity:1}
           <h3 class="part__name">Part 8</h3>
           <span class="part__title">콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&amp;R 분배)</span>
           
-          <span class="part__tally" title="총 계획 시간 / 실제 시간" aria-label="총 계획 시간 / 실제 시간: 11클립 · 계획 108분 / 실제 153분 26초">11클립 · 계획 108분 / 실제 153분 26초</span>
+          <span class="part__tally" title="총 계획 시간 / 실제 시간" aria-label="총 계획 시간 / 실제 시간: 11클립 · 계획 108분 / 실제 153분 26초">11클립 · 계획 108분 / 실제 <span class="len-actual">153분 26초</span></span>
           <span class="part__meter" role="img" aria-label="최종 11/11 완료">
             <span class="part__meter-fill" style="width:100.0000%"></span>
           </span>
@@ -927,7 +941,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr data-key="8-Ch01-01" data-clip>
               <td class="c-clip"><code>Ch01-01</code></td>
               <td class="c-title"><span class="published-change" title="공개본: 콘텐츠팀 구조와 업무 흐름"><span class="published-change__text">콘텐츠팀 구조 살펴보기 (R&amp;R 분배)</span></span></td>
-              <td class="c-len">9분 / 11분 51초</td>
+              <td class="c-len">9분 / <span class="len-actual">11분 51초</span></td>
               <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><div class="stage-stack"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--done" title="대본 완료">완료</span></div></td>
@@ -938,7 +952,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="8-Ch01-02" data-clip>
               <td class="c-clip"><code>Ch01-02</code></td>
               <td class="c-title">팔리는 글 쓰는 스킬 팩 설치하기</td>
-              <td class="c-len">11분 / 14분 44초</td>
+              <td class="c-len">11분 / <span class="len-actual">14분 44초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -950,7 +964,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="8-Ch02-01" data-clip>
               <td class="c-clip"><code>Ch02-01</code></td>
               <td class="c-title"><span class="published-change" title="공개본: 회차 소재 선정 기준"><span class="published-change__text">나만의 브랜드 기준 만들기</span></span></td>
-              <td class="c-len">9분 / 28분 08초</td>
+              <td class="c-len">9분 / <span class="len-actual">28분 08초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -961,7 +975,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="8-Ch02-02" data-clip>
               <td class="c-clip"><code>Ch02-02</code></td>
               <td class="c-title"><span class="published-change" title="공개본: 세 플랫폼 산출물 표준화"><span class="published-change__text">소재 브리프 작성 기준 정하기</span></span></td>
-              <td class="c-len">10분 / 7분 09초</td>
+              <td class="c-len">10분 / <span class="len-actual">7분 09초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -973,7 +987,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr data-key="8-Ch03-01" data-clip>
               <td class="c-clip"><code>Ch03-01</code></td>
               <td class="c-title">한 명이 세 플랫폼을 다 쓰면 생기는 일</td>
-              <td class="c-len">10분 / 4분 40초</td>
+              <td class="c-len">10분 / <span class="len-actual">4분 40초</span></td>
               <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><div class="stage-stack"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--done" title="대본 완료">완료</span></div></td>
@@ -984,7 +998,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="8-Ch03-02" data-clip>
               <td class="c-clip"><code>Ch03-02</code></td>
               <td class="c-title"><span class="published-change" title="공개본: 블로그 조건 정하기"><span class="published-change__text">블로그 콘텐츠 포맷 만들기</span></span></td>
-              <td class="c-len">9분 / 13분 03초</td>
+              <td class="c-len">9분 / <span class="len-actual">13분 03초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -995,7 +1009,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="8-Ch03-03" data-clip>
               <td class="c-clip"><code>Ch03-03</code></td>
               <td class="c-title"><span class="published-change" title="공개본: 카드뉴스 조건 정하기"><span class="published-change__text">카드뉴스 콘텐츠 포맷 만들기</span></span></td>
-              <td class="c-len">9분 / 7분 42초</td>
+              <td class="c-len">9분 / <span class="len-actual">7분 42초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -1006,7 +1020,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="8-Ch03-04" data-clip>
               <td class="c-clip"><code>Ch03-04</code></td>
               <td class="c-title"><span class="published-change" title="공개본: 소셜 조건 정하기"><span class="published-change__text">Threads 콘텐츠 포맷 만들기</span></span></td>
-              <td class="c-len">8분 / 11분 36초</td>
+              <td class="c-len">8분 / <span class="len-actual">11분 36초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -1018,7 +1032,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="8-Ch04-01" data-clip>
               <td class="c-clip"><code>Ch04-01</code></td>
               <td class="c-title">소재 하나를 세 플랫폼에 뿌리기</td>
-              <td class="c-len">11분 / 31분 38초</td>
+              <td class="c-len">11분 / <span class="len-actual">31분 38초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -1029,7 +1043,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="8-Ch04-02" data-clip>
               <td class="c-clip"><code>Ch04-02</code></td>
               <td class="c-title"><span class="published-change" title="공개본: 세 결과물 한 번에 받아보기"><span class="published-change__text">소재 수집부터 플랫폼 3종까지 오케스트레이션으로 실행하기</span></span></td>
-              <td class="c-len">11분 / 14분 13초</td>
+              <td class="c-len">11분 / <span class="len-actual">14분 13초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -1041,7 +1055,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="8-Ch05-01" data-clip>
               <td class="c-clip"><code>Ch05-01</code></td>
               <td class="c-title">예약 자동화로 반복 실행 걸기</td>
-              <td class="c-len">11분 / 8분 42초</td>
+              <td class="c-len">11분 / <span class="len-actual">8분 42초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -1058,7 +1072,7 @@ input::placeholder{color:var(--muted);opacity:1}
           <h3 class="part__name">Part 9</h3>
           <span class="part__title">모바일로 진행 상황 확인</span>
           
-          <span class="part__tally" title="총 계획 시간 / 실제 시간" aria-label="총 계획 시간 / 실제 시간: 2클립 · 계획 20분 / 실제 20분 28초">2클립 · 계획 20분 / 실제 20분 28초</span>
+          <span class="part__tally" title="총 계획 시간 / 실제 시간" aria-label="총 계획 시간 / 실제 시간: 2클립 · 계획 20분 / 실제 20분 28초">2클립 · 계획 20분 / 실제 <span class="len-actual">20분 28초</span></span>
           <span class="part__meter" role="img" aria-label="최종 2/2 완료">
             <span class="part__meter-fill" style="width:100.0000%"></span>
           </span>
@@ -1082,7 +1096,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr data-key="9-Ch01-01" data-clip>
               <td class="c-clip"><code>Ch01-01</code></td>
               <td class="c-title"><span class="published-change" title="공개본: 모바일의 역할"><span class="published-change__text">Orca 모바일로 어디서나 에이전트에게 일 시키기</span></span></td>
-              <td class="c-len">9분 / 3분 04초</td>
+              <td class="c-len">9분 / <span class="len-actual">3분 04초</span></td>
               <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><div class="stage-stack"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--done" title="대본 완료">완료</span></div></td>
@@ -1093,7 +1107,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="9-Ch01-02" data-clip>
               <td class="c-clip"><code>Ch01-02</code></td>
               <td class="c-title"><span class="published-change" title="공개본: 작업 상태 확인하고 승인 응답하기"><span class="published-change__text">모바일 연결하고 작업 지시하기</span></span></td>
-              <td class="c-len">11분 / 17분 24초</td>
+              <td class="c-len">11분 / <span class="len-actual">17분 24초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -1110,7 +1124,7 @@ input::placeholder{color:var(--muted);opacity:1}
           <h3 class="part__name">Part 10</h3>
           <span class="part__title">토큰 아끼는 법</span>
           
-          <span class="part__tally" title="총 계획 시간 / 실제 시간" aria-label="총 계획 시간 / 실제 시간: 4클립 · 계획 40분 / 실제 53분 32초">4클립 · 계획 40분 / 실제 53분 32초</span>
+          <span class="part__tally" title="총 계획 시간 / 실제 시간" aria-label="총 계획 시간 / 실제 시간: 4클립 · 계획 40분 / 실제 53분 32초">4클립 · 계획 40분 / 실제 <span class="len-actual">53분 32초</span></span>
           <span class="part__meter" role="img" aria-label="최종 4/4 완료">
             <span class="part__meter-fill" style="width:100.0000%"></span>
           </span>
@@ -1134,7 +1148,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr data-key="10-Ch01-01" data-clip>
               <td class="c-clip"><code>Ch01-01</code></td>
               <td class="c-title">팀을 굴리면 토큰이 몇 배로 드는가</td>
-              <td class="c-len">10분 / 8분 21초</td>
+              <td class="c-len">10분 / <span class="len-actual">8분 21초</span></td>
               <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><div class="stage-stack"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--done" title="대본 완료">완료</span></div></td>
@@ -1146,7 +1160,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="10-Ch02-01" data-clip>
               <td class="c-clip"><code>Ch02-01</code></td>
               <td class="c-title"><span class="published-change" title="공개본: 모델 분리 설계 전략"><span class="published-change__text">우리 팀 토큰 최적화 전략 세우기</span></span></td>
-              <td class="c-len">10분 / 17분 27초</td>
+              <td class="c-len">10분 / <span class="len-actual">17분 27초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -1157,7 +1171,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr class="row--practice" data-key="10-Ch02-02" data-clip>
               <td class="c-clip"><code>Ch02-02</code></td>
               <td class="c-title">극강의 미니멀리즘 스킬 - Ponytail 사용하기</td>
-              <td class="c-len">10분 / 22분 29초</td>
+              <td class="c-len">10분 / <span class="len-actual">22분 29초</span></td>
               <td class="c-count"><span class="kind kind--practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7 13 6-6 2-2 6-5-14ZM4 2v3M1 7h3M7 1v3M2 2l2 2"/></svg>실습</span></td>
               <td class="c-stage"><div class="stage-stack"><small>실습자료</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--na" title="대본 해당없음">해당 없음</span></div></td>
@@ -1169,7 +1183,7 @@ input::placeholder{color:var(--muted);opacity:1}
 <tr data-key="10-Ch03-01" data-clip>
               <td class="c-clip"><code>Ch03-01</code></td>
               <td class="c-title">강의 정리</td>
-              <td class="c-len">10분 / 5분 15초</td>
+              <td class="c-len">10분 / <span class="len-actual">5분 15초</span></td>
               <td class="c-count"><span class="kind kind--theory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6C9 3 5 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3-1-7-1-10 2Z"/><path d="M12 6v15M5 8h3M5 12h3M16 8h3M16 12h3"/></svg>이론</span></td>
               <td class="c-stage"><div class="stage-stack"><small>슬라이드</small><span class="chip chip--done" title="자료 제작 완료">완료</span></div></td>
               <td class="c-stage"><div class="stage-stack"><span class="chip chip--done" title="대본 완료">완료</span></div></td>
@@ -1182,7 +1196,7 @@ input::placeholder{color:var(--muted);opacity:1}
         </div>
       </section></div><div class="empty" id="empty" hidden><strong>조건에 맞는 클립이 없습니다.</strong>납품 차수나 필터를 바꿔보세요.</div>
 </main>
-<footer class="foot"><details><summary>상태 기준</summary><p>배포 실습자료는 사람의 최종 승인과 노션 승격 요청을 받고, 실제 노션 추가까지 확인해야 완료입니다. 초안·검토·승인 및 노션 반영 대기는 작업중으로 표시합니다.</p><p>촬영과 편집을 마치면 최종 완료입니다. ‘편집 안 함’인 클립은 촬영을 마치면 최종 완료입니다.</p><p>실습은 기본적으로 ‘편집 안 함’이며, 파일 합치기 등 편집이 필요한 클립만 편집 상태를 지정합니다. ‘편집 안 함’은 편집 집계에서 제외합니다.</p><p>납품 카드는 해당 차수 전체의 완료·미완료 클립 수와 계획·실제 시간을 보여줍니다. 실제 시간은 확인된 영상만 합산하며, 일부만 확인되면 집계된 클립 수를 표시합니다. 앞 공정이 완료되면 다음 공정은 예정이며, 실습자료의 ‘해당 없음’은 자료 제작 집계에서 제외합니다.</p><p class="check check--ok"><b>어긋난 곳 없음.</b> 소스의 장수, 덱의 실제 장수, 대본의 장수가 모두 맞는다.</p></details><span>이론 · 실습 통합 작업 보드</span></footer>
+<footer class="foot"><details><summary>상태 기준</summary><p>배포 실습자료는 사람의 최종 승인과 노션 승격 요청을 받고, 실제 노션 추가까지 확인해야 완료입니다. 초안·검토·승인 및 노션 반영 대기는 작업중으로 표시합니다.</p><p>촬영과 편집을 마치면 최종 완료입니다. ‘편집 안 함’인 클립은 촬영을 마치면 최종 완료입니다.</p><p>실습은 기본적으로 ‘편집 안 함’이며, 파일 합치기 등 편집이 필요한 클립만 편집 상태를 지정합니다. ‘편집 안 함’은 편집 집계에서 제외합니다.</p><p>납품 카드는 해당 차수 전체의 완료·미완료 클립 수와 계획·실제 시간과 계획 대비 증감을 보여줍니다. 실제 시간은 확인된 영상만 합산하며, 일부만 확인되면 집계된 클립 수를 표시합니다. 계획 대비는 실제 분량이 확인된 클립끼리만 비교합니다. 앞 공정이 완료되면 다음 공정은 예정이며, 실습자료의 ‘해당 없음’은 자료 제작 집계에서 제외합니다.</p><p class="check check--ok"><b>어긋난 곳 없음.</b> 소스의 장수, 덱의 실제 장수, 대본의 장수가 모두 맞는다.</p></details><span>이론 · 실습 통합 작업 보드</span></footer>
 </div>
 <script id="dashboard-data" type="application/json">{"rows": [{"파트번호": 1, "파트제목": "왜 팀이 필요한가 (강의 개요)", "챕터": "Chapter 1. 오리엔테이션", "클립": "Ch01-01", "제목": "강의 소개와 최종 결과물", "길이": "11분", "슬라이드": true, "도입슬라이드": false, "비고": "", "차수": 1, "편집": "완료", "계획분량_초": 660, "실제분량_초": 786, "실제분량": "13분 06초", "장수": "8장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 1, "파트제목": "왜 팀이 필요한가 (강의 개요)", "챕터": "Chapter 1. 오리엔테이션", "클립": "Ch01-02", "제목": "강의 로드맵과 선수 지식", "길이": "9분", "슬라이드": true, "도입슬라이드": false, "비고": "", "차수": 1, "편집": "완료", "계획분량_초": 540, "실제분량_초": 333, "실제분량": "5분 33초", "장수": "7장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 1, "파트제목": "왜 팀이 필요한가 (강의 개요)", "챕터": "Chapter 2. 단일 에이전트의 한계", "클립": "Ch02-01", "제목": "에이전트 하나로 되는 일과 안 되는 일", "길이": "14분", "슬라이드": true, "도입슬라이드": false, "비고": "", "차수": 1, "편집": "완료", "계획분량_초": 840, "실제분량_초": 465, "실제분량": "7분 45초", "장수": "5장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 2, "파트제목": "Orca 설치 및 기본 사용", "챕터": "Chapter 1. Orca는 왜 나왔는가", "클립": "Ch01-01", "제목": "터미널 여러 개의 문제", "길이": "6분", "슬라이드": true, "도입슬라이드": false, "비고": "", "차수": 1, "편집": "완료", "계획분량_초": 360, "실제분량_초": 297, "실제분량": "4분 57초", "장수": "5장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 2, "파트제목": "Orca 설치 및 기본 사용", "챕터": "Chapter 1. Orca는 왜 나왔는가", "클립": "Ch01-02", "제목": "Orca는 어떤 도구인가", "길이": "7분", "슬라이드": true, "도입슬라이드": false, "비고": "", "차수": 1, "편집": "완료", "계획분량_초": 420, "실제분량_초": 286, "실제분량": "4분 46초", "장수": "6장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 2, "파트제목": "Orca 설치 및 기본 사용", "챕터": "Chapter 2. Orca 설치와 첫 실행", "클립": "Ch02-01", "제목": "설치 전 준비물과 환경 체크", "길이": "5분", "슬라이드": true, "도입슬라이드": false, "비고": "", "차수": 1, "편집": "완료", "계획분량_초": 300, "실제분량_초": 214, "실제분량": "3분 34초", "장수": "3장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 2, "파트제목": "Orca 설치 및 기본 사용", "챕터": "Chapter 2. Orca 설치와 첫 실행", "클립": "Ch02-02", "제목": "설치와 에이전트 연결하기", "길이": "10분", "슬라이드": false, "도입슬라이드": false, "비고": "실습", "차수": 1, "편집": "완료", "계획분량_초": 600, "실제분량_초": 483, "실제분량": "8분 03초", "제작_표시": "촬영용 완료", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 2, "파트제목": "Orca 설치 및 기본 사용", "챕터": "Chapter 2. Orca 설치와 첫 실행", "클립": "Ch02-03", "제목": "화면 구조와 보드 읽는 법", "길이": "8분", "슬라이드": false, "도입슬라이드": false, "비고": "실습", "차수": 1, "편집": "완료", "계획분량_초": 480, "실제분량_초": 482, "실제분량": "8분 02초", "제작_표시": "촬영용 완료", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 3, "파트제목": "Git과 워크트리", "챕터": "Chapter 1. 비개발자를 위한 Git 개념", "클립": "Ch01-01", "제목": "Git이란 - 버전 관리가 없다면", "길이": "8분", "슬라이드": true, "도입슬라이드": false, "비고": "", "차수": 1, "편집": "완료", "계획분량_초": 480, "실제분량_초": 294, "실제분량": "4분 54초", "장수": "5장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 3, "파트제목": "Git과 워크트리", "챕터": "Chapter 1. 비개발자를 위한 Git 개념", "클립": "Ch01-02", "제목": "저장소와 작업흐름", "길이": "10분", "슬라이드": true, "도입슬라이드": false, "비고": "", "차수": 1, "편집": "완료", "계획분량_초": 600, "실제분량_초": 699, "실제분량": "11분 39초", "장수": "8장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 3, "파트제목": "Git과 워크트리", "챕터": "Chapter 1. 비개발자를 위한 Git 개념", "클립": "Ch01-03", "제목": "브랜치와 워크트리", "길이": "10분", "슬라이드": true, "도입슬라이드": false, "비고": "공개본 클립명: 브랜치와 워크트리 차이", "차수": 1, "편집": "완료", "계획분량_초": 600, "실제분량_초": 650, "실제분량": "10분 50초", "장수": "8장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 3, "파트제목": "Git과 워크트리", "챕터": "Chapter 2. Git 설치와 저장소 만들기", "클립": "Ch02-01", "제목": "Git 설치와 GitHub 첫 연결", "길이": "14분", "슬라이드": false, "도입슬라이드": false, "비고": "공개본 클립명: Git 설치와 초기 설정", "차수": 1, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 840, "실제분량_초": 2302, "실제분량": "38분 22초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 3, "파트제목": "Git과 워크트리", "챕터": "Chapter 2. Git 설치와 저장소 만들기", "클립": "Ch02-02", "제목": "프롬프트로 GitHub에 올리기", "길이": "6분", "슬라이드": false, "도입슬라이드": false, "비고": "공개본 클립명: GitHub 가입 및 Orca에 연결하기", "차수": 1, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 360, "실제분량_초": 878, "실제분량": "14분 38초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 4, "파트제목": "오케스트레이션과 스킬", "챕터": "Chapter 1. 오케스트레이션이란", "클립": "Ch01-01", "제목": "오케스트레이션 구조 살펴보기", "길이": "7분", "슬라이드": true, "도입슬라이드": false, "비고": "", "차수": 1, "편집": "완료", "계획분량_초": 420, "실제분량_초": 447, "실제분량": "7분 27초", "장수": "8장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 4, "파트제목": "오케스트레이션과 스킬", "챕터": "Chapter 1. 오케스트레이션이란", "클립": "Ch01-02", "제목": "목표와 작업, 실행의 흐름", "길이": "8분", "슬라이드": true, "도입슬라이드": false, "비고": "", "차수": 1, "편집": "완료", "계획분량_초": 480, "실제분량_초": 602, "실제분량": "10분 02초", "장수": "9장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 4, "파트제목": "오케스트레이션과 스킬", "챕터": "Chapter 2. 첫 오케스트레이션 돌려보기", "클립": "Ch02-01", "제목": "오케스트레이션 스킬 확인하기", "길이": "10분", "슬라이드": false, "도입슬라이드": false, "비고": "공개본 클립명: 오케스트레이션 스킬 설치하기", "차수": 1, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 600, "실제분량_초": 435, "실제분량": "7분 15초", "제작_표시": "촬영용 완료", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 4, "파트제목": "오케스트레이션과 스킬", "챕터": "Chapter 2. 첫 오케스트레이션 돌려보기", "클립": "Ch02-02", "제목": "목표 하나로 요청하기", "길이": "11분", "슬라이드": false, "도입슬라이드": false, "비고": "실습", "차수": 1, "편집": "완료", "계획분량_초": 660, "실제분량_초": 534, "실제분량": "8분 54초", "제작_표시": "촬영용 완료", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 4, "파트제목": "오케스트레이션과 스킬", "챕터": "Chapter 3. 스킬 알아보기", "클립": "Ch03-01", "제목": "스킬과 플러그인이란", "길이": "10분", "슬라이드": true, "도입슬라이드": false, "비고": "", "차수": 1, "편집": "완료", "계획분량_초": 600, "실제분량_초": 755, "실제분량": "12분 35초", "장수": "10장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 4, "파트제목": "오케스트레이션과 스킬", "챕터": "Chapter 3. 스킬 알아보기", "클립": "Ch03-02", "제목": "1인 회사 운영에 유용한 스킬 모음", "길이": "10분", "슬라이드": true, "도입슬라이드": false, "비고": "", "차수": 1, "편집": "완료", "계획분량_초": 600, "실제분량_초": 825, "실제분량": "13분 45초", "장수": "2장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 4, "파트제목": "오케스트레이션과 스킬", "챕터": "Chapter 4. 회사 문서 만들기", "클립": "Ch04-01", "제목": "회사 문서 작성 스킬 설치하기", "길이": "14분", "슬라이드": false, "도입슬라이드": false, "비고": "공개본 클립명: 스킬로 회사 소개서와 말투 규칙 만들기", "차수": 1, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 840, "실제분량_초": 1091, "실제분량": "18분 11초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 4, "파트제목": "오케스트레이션과 스킬", "챕터": "Chapter 4. 회사 문서 만들기", "클립": "Ch04-02", "제목": "인터뷰로 회사 문서 완성하기", "길이": "14분", "슬라이드": false, "도입슬라이드": false, "비고": "공개본 클립명: 회사 사규 작성하기", "차수": 1, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 840, "실제분량_초": 1480, "실제분량": "24분 40초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 1. 앞으로 만들 4가지 프로젝트", "클립": "Ch01-01", "제목": "4가지 협업 패턴과 프로젝트 미리보기", "길이": "10분", "슬라이드": true, "도입슬라이드": false, "비고": "", "차수": 2, "편집": "완료", "계획분량_초": 600, "실제분량_초": 1255, "실제분량": "20분 55초", "장수": "13장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 1. 앞으로 만들 4가지 프로젝트", "클립": "Ch01-02", "제목": "멀티 에이전트가 오히려 나빠지는 3가지 이유", "길이": "10분", "슬라이드": true, "도입슬라이드": false, "비고": "", "차수": 2, "편집": "완료", "계획분량_초": 600, "실제분량_초": 671, "실제분량": "11분 11초", "장수": "9장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 2. 기획팀 설계와 스킬 설치", "클립": "Ch02-01", "제목": "기획팀 구조 살펴보기 (순차 파이프라인)", "길이": "11분", "슬라이드": true, "도입슬라이드": false, "비고": "공개본 클립명: 기획팀 구조와 업무 흐름", "차수": 2, "편집": "완료", "계획분량_초": 660, "실제분량_초": 375, "실제분량": "6분 15초", "장수": "11장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 2. 기획팀 설계와 스킬 설치", "클립": "Ch02-02", "제목": "기획팀 작업 환경 준비하기", "길이": "11분", "슬라이드": false, "도입슬라이드": false, "비고": "공개본 클립명: 순차 파이프라인이란", "차수": 2, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 660, "실제분량_초": 932, "실제분량": "15분 32초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 2. 기획팀 설계와 스킬 설치", "클립": "Ch02-03", "제목": "grill-me로 사업 조건 정하기", "길이": "11분", "슬라이드": false, "도입슬라이드": false, "비고": "공개본 클립명: 기획 전 필수 스킬 써보기", "차수": 2, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 660, "실제분량_초": 1143, "실제분량": "19분 03초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 3. 시장조사 준비와 실행", "클립": "Ch03-01", "제목": "시장 조사 노트·아이템 후보 비교표·판매 아이템 기획서 템플릿 세팅하기", "길이": "10분", "슬라이드": false, "도입슬라이드": false, "비고": "공개본 클립명: 시장 조사 노트 표준화 / 공개본 챕터명: 산출물 표준화하기", "차수": 2, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 600, "실제분량_초": 1425, "실제분량": "23분 45초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 3. 시장조사 준비와 실행", "클립": "Ch03-02", "제목": "시장조사 기준 정하기", "길이": "11분", "슬라이드": false, "도입슬라이드": true, "비고": "공개본 클립명: 아이템 후보 표준화 / 공개본 챕터명: 산출물 표준화하기", "차수": 2, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 660, "실제분량_초": 675, "실제분량": "11분 15초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 3. 시장조사 준비와 실행", "클립": "Ch03-03", "제목": "시장 조사 단계 실행하기", "길이": "11분", "슬라이드": false, "도입슬라이드": false, "비고": "공개본 클립명: 판매 아이템 기획서 양식 표준화 / 공개본 챕터명: 산출물 표준화하기", "차수": 2, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 660, "실제분량_초": 949, "실제분량": "15분 49초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 4. 아이템 선정과 기획서 작성", "클립": "Ch04-01", "제목": "판매 아이템 선정 기준 정하기", "길이": "11분", "슬라이드": false, "도입슬라이드": false, "비고": "공개본 클립명: 시장 조사 단계 실행하기 / 공개본 챕터명: 단계별로 나눠서 실행하기", "차수": 2, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 660, "실제분량_초": 593, "실제분량": "9분 53초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 4. 아이템 선정과 기획서 작성", "클립": "Ch04-02", "제목": "아이템 후보 도출 단계 실행하기", "길이": "11분", "슬라이드": false, "도입슬라이드": false, "비고": "공개본 챕터명: 단계별로 나눠서 실행하기", "차수": 2, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 660, "실제분량_초": 465, "실제분량": "7분 45초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 4. 아이템 선정과 기획서 작성", "클립": "Ch04-03", "제목": "기획서 작성 단계 실행하기", "길이": "10분", "슬라이드": false, "도입슬라이드": false, "비고": "공개본 챕터명: 단계별로 나눠서 실행하기", "차수": 2, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 600, "실제분량_초": 651, "실제분량": "10분 51초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 4. 아이템 선정과 기획서 작성", "클립": "Ch04-04", "제목": "품질 게이트로 통과 기준 세우기", "길이": "10분", "슬라이드": true, "도입슬라이드": false, "비고": "공개본 챕터명: 단계별로 나눠서 실행하기", "차수": 2, "편집": "완료", "계획분량_초": 600, "실제분량_초": 495, "실제분량": "8분 15초", "장수": "9장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 5. 파이프라인으로 한 번에 돌리기", "클립": "Ch05-01", "제목": "단계별 품질 기준 정하기", "길이": "14분", "슬라이드": false, "도입슬라이드": false, "비고": "공개본 클립명: 단계와 품질 게이트를 담은 파이프라인 프롬프트 작성하기", "차수": 2, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 840, "실제분량_초": 771, "실제분량": "12분 51초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 5. 파이프라인으로 한 번에 돌리기", "클립": "Ch05-02", "제목": "목표 하나로 처음부터 끝까지 실행하기", "길이": "15분", "슬라이드": false, "도입슬라이드": false, "비고": "실습", "차수": 2, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 900, "실제분량_초": 1149, "실제분량": "19분 09초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 5, "파트제목": "기획팀: 리서치부터 기획서까지 (순차 파이프라인)", "챕터": "Chapter 5. 파이프라인으로 한 번에 돌리기", "클립": "Ch05-03", "제목": "반려 루프로 결과물 개선하기", "길이": "14분", "슬라이드": false, "도입슬라이드": false, "비고": "공개본 클립명: 결과물 점검하고 프롬프트 다듬기", "차수": 2, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 840, "실제분량_초": 486, "실제분량": "8분 06초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 6, "파트제목": "영업팀: 제안서·견적서 검증하기 (교차 검증)", "챕터": "Chapter 1. 교차 검증이란", "클립": "Ch01-01", "제목": "Generator–Evaluator 패턴이란", "길이": "10분", "슬라이드": true, "도입슬라이드": false, "비고": "다른 모델로 평가하는 이유 포함", "차수": 2, "편집": "완료", "계획분량_초": 600, "실제분량_초": 302, "실제분량": "5분 02초", "장수": "7장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 6, "파트제목": "영업팀: 제안서·견적서 검증하기 (교차 검증)", "챕터": "Chapter 1. 교차 검증이란", "클립": "Ch01-02", "제목": "영업팀 구조 살펴보기 (교차 검증)", "길이": "10분", "슬라이드": true, "도입슬라이드": false, "비고": "공개본 클립명: 평가에 다른 모델을 쓰는 이유", "차수": 2, "편집": "완료", "계획분량_초": 600, "실제분량_초": 525, "실제분량": "8분 45초", "장수": "10장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 6, "파트제목": "영업팀: 제안서·견적서 검증하기 (교차 검증)", "챕터": "Chapter 2. 제안서·견적서 작성하기 (Generator)", "클립": "Ch02-01", "제목": "영업팀 준비하기", "길이": "11분", "슬라이드": false, "도입슬라이드": false, "비고": "클립 추가 / 공개본 챕터명: 제안서·견적서 설계", "차수": 2, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 660, "실제분량_초": 820, "실제분량": "13분 40초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 6, "파트제목": "영업팀: 제안서·견적서 검증하기 (교차 검증)", "챕터": "Chapter 2. 제안서·견적서 작성하기 (Generator)", "클립": "Ch02-02", "제목": "클라이언트 브리프에서 요구사항 뽑기", "길이": "11분", "슬라이드": false, "도입슬라이드": false, "비고": "공개본 클립명: 클라이언트 브리프에서 요구사항 뽑기", "차수": 2, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 660, "실제분량_초": 512, "실제분량": "8분 32초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 6, "파트제목": "영업팀: 제안서·견적서 검증하기 (교차 검증)", "챕터": "Chapter 2. 제안서·견적서 작성하기 (Generator)", "클립": "Ch02-03", "제목": "제안서·견적서 초안 만들기", "길이": "11분", "슬라이드": false, "도입슬라이드": false, "비고": "공개본 클립명: 브리프 하나로 제안서 초안 만들기", "차수": 2, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 660, "실제분량_초": 534, "실제분량": "8분 54초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 6, "파트제목": "영업팀: 제안서·견적서 검증하기 (교차 검증)", "챕터": "Chapter 3. 다른 모델로 평가하기 (Evaluator)", "클립": "Ch03-01", "제목": "통과 기준 체크리스트 만들기", "길이": "10분", "슬라이드": false, "도입슬라이드": false, "비고": "공개본 클립명: 통과 기준 체크리스트 만들기 / 공개본 챕터명: 생성과 검증 붙이기", "차수": 2, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 600, "실제분량_초": 613, "실제분량": "10분 13초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 6, "파트제목": "영업팀: 제안서·견적서 검증하기 (교차 검증)", "챕터": "Chapter 3. 다른 모델로 평가하기 (Evaluator)", "클립": "Ch03-02", "제목": "다른 모델로 평가하고 판정받기", "길이": "10분", "슬라이드": false, "도입슬라이드": false, "비고": "공개본 클립명: 다른 모델로 검증하고 반려 사유 받기", "차수": 2, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 600, "실제분량_초": 964, "실제분량": "16분 04초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 6, "파트제목": "영업팀: 제안서·견적서 검증하기 (교차 검증)", "챕터": "Chapter 4. 교차 검증 루프 돌리기", "클립": "Ch04-01", "제목": "반려 사유 반영해서 다시 만들기", "길이": "9분", "슬라이드": false, "도입슬라이드": false, "비고": "실습", "차수": 2, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 540, "실제분량_초": 608, "실제분량": "10분 08초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 6, "파트제목": "영업팀: 제안서·견적서 검증하기 (교차 검증)", "챕터": "Chapter 4. 교차 검증 루프 돌리기", "클립": "Ch04-02", "제목": "통과할 때까지 도는 루프 완성하기", "길이": "8분", "슬라이드": false, "도입슬라이드": false, "비고": "실습", "차수": 2, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 480, "실제분량_초": 1896, "실제분량": "31분 36초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 7, "파트제목": "디자인팀: Best 시안 머지하기 (병렬)", "챕터": "Chapter 1. 내 책상을 복제한다는 것", "클립": "Ch01-01", "제목": "디자인팀 구조 살펴보기 (병렬 실행)", "길이": "10분", "슬라이드": true, "도입슬라이드": false, "비고": "공개본 클립명: 워크트리로 작업 공간 분리하기", "차수": 2, "편집": "완료", "계획분량_초": 600, "실제분량_초": 273, "실제분량": "4분 33초", "장수": "9장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 7, "파트제목": "디자인팀: Best 시안 머지하기 (병렬)", "챕터": "Chapter 1. 내 책상을 복제한다는 것", "클립": "Ch01-02", "제목": "Orca에서 워크트리 만들기", "길이": "7분", "슬라이드": false, "도입슬라이드": false, "비고": "실습", "차수": 2, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 420, "실제분량_초": 1128, "실제분량": "18분 48초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 7, "파트제목": "디자인팀: Best 시안 머지하기 (병렬)", "챕터": "Chapter 2. 워크트리 병렬 실행 — 다른 에이전트 + 동일 작업", "클립": "Ch02-01", "제목": "같은 작업도 에이전트에 따라 결과가 갈린다", "길이": "7분", "슬라이드": true, "도입슬라이드": false, "비고": "", "차수": 2, "편집": "완료", "계획분량_초": 420, "실제분량_초": 422, "실제분량": "7분 02초", "장수": "7장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 7, "파트제목": "디자인팀: Best 시안 머지하기 (병렬)", "챕터": "Chapter 2. 워크트리 병렬 실행 — 다른 에이전트 + 동일 작업", "클립": "Ch02-02", "제목": "두 에이전트에 같은 작업 동시에 시키기", "길이": "9분", "슬라이드": false, "도입슬라이드": false, "비고": "실습", "차수": 2, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 540, "실제분량_초": 448, "실제분량": "7분 28초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 7, "파트제목": "디자인팀: Best 시안 머지하기 (병렬)", "챕터": "Chapter 3. Best 시안 선택과 머지", "클립": "Ch03-01", "제목": "두 결과물 눈으로 비교하고 고르기", "길이": "9분", "슬라이드": false, "도입슬라이드": false, "비고": "실습", "차수": 2, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 540, "실제분량_초": 662, "실제분량": "11분 02초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 7, "파트제목": "디자인팀: Best 시안 머지하기 (병렬)", "챕터": "Chapter 3. Best 시안 선택과 머지", "클립": "Ch03-02", "제목": "Best 시안 머지하기", "길이": "10분", "슬라이드": false, "도입슬라이드": false, "비고": "실습", "차수": 2, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 600, "실제분량_초": 418, "실제분량": "6분 58초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 7, "파트제목": "디자인팀: Best 시안 머지하기 (병렬)", "챕터": "Chapter 4. 브라우저에서 직접 고치기 (디자인 모드)", "클립": "Ch04-01", "제목": "디자인 모드로 수정 요청하기", "길이": "10분", "슬라이드": false, "도입슬라이드": false, "비고": "공개본 클립명: 요소 클릭과 주석으로 수정 요청하기", "차수": 2, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 600, "실제분량_초": 800, "실제분량": "13분 20초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 7, "파트제목": "디자인팀: Best 시안 머지하기 (병렬)", "챕터": "Chapter 4. 브라우저에서 직접 고치기 (디자인 모드)", "클립": "Ch04-02", "제목": "diff로 반영 확인하기", "길이": "10분", "슬라이드": false, "도입슬라이드": false, "비고": "실습", "차수": 2, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 600, "실제분량_초": 503, "실제분량": "8분 23초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 7, "파트제목": "디자인팀: Best 시안 머지하기 (병렬)", "챕터": "Chapter 5. 개발자도구로 스타일 바꾸기", "클립": "Ch05-01", "제목": "개발자도구로 스타일 바꿔보기", "길이": "9분", "슬라이드": false, "도입슬라이드": false, "비고": "공개본 클립명: 개발자도구 켜고 요소 클릭해보기", "차수": 2, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 540, "실제분량_초": 553, "실제분량": "9분 13초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 7, "파트제목": "디자인팀: Best 시안 머지하기 (병렬)", "챕터": "Chapter 5. 개발자도구로 스타일 바꾸기", "클립": "Ch05-02", "제목": "AI가 헷갈리지 않게 요소 이름으로 요청하기", "길이": "9분", "슬라이드": false, "도입슬라이드": false, "비고": "실습", "차수": 2, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 540, "실제분량_초": 1149, "실제분량": "19분 09초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 8, "파트제목": "콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&R 분배)", "챕터": "Chapter 1. 콘텐츠팀 설계와 스킬 설치", "클립": "Ch01-01", "제목": "콘텐츠팀 구조 살펴보기 (R&R 분배)", "길이": "9분", "슬라이드": true, "도입슬라이드": false, "비고": "공개본 클립명: 콘텐츠팀 구조와 업무 흐름", "차수": 3, "편집": "완료", "계획분량_초": 540, "실제분량_초": 711, "실제분량": "11분 51초", "장수": "8장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 8, "파트제목": "콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&R 분배)", "챕터": "Chapter 1. 콘텐츠팀 설계와 스킬 설치", "클립": "Ch01-02", "제목": "팔리는 글 쓰는 스킬 팩 설치하기", "길이": "11분", "슬라이드": false, "도입슬라이드": false, "비고": "실습", "차수": 3, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 660, "실제분량_초": 884, "실제분량": "14분 44초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 8, "파트제목": "콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&R 분배)", "챕터": "Chapter 2. 브랜드 기준과 소재 브리프 기준 정하기", "클립": "Ch02-01", "제목": "나만의 브랜드 기준 만들기", "길이": "9분", "슬라이드": false, "도입슬라이드": false, "비고": "공개본 클립명: 회차 소재 선정 기준 / 공개본 챕터명: 소재 선정과 산출물 표준화", "차수": 3, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 540, "실제분량_초": 1688, "실제분량": "28분 08초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 8, "파트제목": "콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&R 분배)", "챕터": "Chapter 2. 브랜드 기준과 소재 브리프 기준 정하기", "클립": "Ch02-02", "제목": "소재 브리프 작성 기준 정하기", "길이": "10분", "슬라이드": false, "도입슬라이드": false, "비고": "공개본 클립명: 세 플랫폼 산출물 표준화 / 공개본 챕터명: 소재 선정과 산출물 표준화", "차수": 3, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 600, "실제분량_초": 429, "실제분량": "7분 09초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 8, "파트제목": "콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&R 분배)", "챕터": "Chapter 3. 플랫폼별 콘텐츠 포맷 만들기", "클립": "Ch03-01", "제목": "한 명이 세 플랫폼을 다 쓰면 생기는 일", "길이": "10분", "슬라이드": true, "도입슬라이드": false, "비고": "공개본 챕터명: 플랫폼별 조건 정하기", "차수": 3, "편집": "완료", "계획분량_초": 600, "실제분량_초": 280, "실제분량": "4분 40초", "장수": "6장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 8, "파트제목": "콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&R 분배)", "챕터": "Chapter 3. 플랫폼별 콘텐츠 포맷 만들기", "클립": "Ch03-02", "제목": "블로그 콘텐츠 포맷 만들기", "길이": "9분", "슬라이드": false, "도입슬라이드": false, "비고": "공개본 클립명: 블로그 조건 정하기 / 공개본 챕터명: 플랫폼별 조건 정하기", "차수": 3, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 540, "실제분량_초": 783, "실제분량": "13분 03초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 8, "파트제목": "콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&R 분배)", "챕터": "Chapter 3. 플랫폼별 콘텐츠 포맷 만들기", "클립": "Ch03-03", "제목": "카드뉴스 콘텐츠 포맷 만들기", "길이": "9분", "슬라이드": false, "도입슬라이드": false, "비고": "공개본 클립명: 카드뉴스 조건 정하기 / 공개본 챕터명: 플랫폼별 조건 정하기", "차수": 3, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 540, "실제분량_초": 462, "실제분량": "7분 42초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 8, "파트제목": "콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&R 분배)", "챕터": "Chapter 3. 플랫폼별 콘텐츠 포맷 만들기", "클립": "Ch03-04", "제목": "Threads 콘텐츠 포맷 만들기", "길이": "8분", "슬라이드": false, "도입슬라이드": false, "비고": "공개본 클립명: 소셜 조건 정하기 / 공개본 챕터명: 플랫폼별 조건 정하기", "차수": 3, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 480, "실제분량_초": 696, "실제분량": "11분 36초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 8, "파트제목": "콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&R 분배)", "챕터": "Chapter 4. 세 플랫폼 병렬 실행", "클립": "Ch04-01", "제목": "소재 하나를 세 플랫폼에 뿌리기", "길이": "11분", "슬라이드": false, "도입슬라이드": false, "비고": "실습", "차수": 3, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 660, "실제분량_초": 1898, "실제분량": "31분 38초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 8, "파트제목": "콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&R 분배)", "챕터": "Chapter 4. 세 플랫폼 병렬 실행", "클립": "Ch04-02", "제목": "소재 수집부터 플랫폼 3종까지 오케스트레이션으로 실행하기", "길이": "11분", "슬라이드": false, "도입슬라이드": false, "비고": "공개본 클립명: 세 결과물 한 번에 받아보기", "차수": 3, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 660, "실제분량_초": 853, "실제분량": "14분 13초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 8, "파트제목": "콘텐츠팀: 플랫폼별 콘텐츠 자동화하기 (R&R 분배)", "챕터": "Chapter 5. 매일 돌리는 공장 만들기", "클립": "Ch05-01", "제목": "예약 자동화로 반복 실행 걸기", "길이": "11분", "슬라이드": false, "도입슬라이드": false, "비고": "실습", "차수": 3, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 660, "실제분량_초": 522, "실제분량": "8분 42초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 9, "파트제목": "모바일로 진행 상황 확인", "챕터": "Chapter 1. 모바일 연결과 원격 확인", "클립": "Ch01-01", "제목": "Orca 모바일로 어디서나 에이전트에게 일 시키기", "길이": "9분", "슬라이드": true, "도입슬라이드": false, "비고": "공개본 클립명: 모바일의 역할", "차수": 3, "편집": "완료", "계획분량_초": 540, "실제분량_초": 184, "실제분량": "3분 04초", "장수": "4장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 9, "파트제목": "모바일로 진행 상황 확인", "챕터": "Chapter 1. 모바일 연결과 원격 확인", "클립": "Ch01-02", "제목": "모바일 연결하고 작업 지시하기", "길이": "11분", "슬라이드": false, "도입슬라이드": false, "비고": "공개본 클립명: 작업 상태 확인하고 승인 응답하기", "차수": 3, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 660, "실제분량_초": 1044, "실제분량": "17분 24초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 10, "파트제목": "토큰 아끼는 법", "챕터": "Chapter 1. 멀티 에이전트는 왜 비싼가", "클립": "Ch01-01", "제목": "팀을 굴리면 토큰이 몇 배로 드는가", "길이": "10분", "슬라이드": true, "도입슬라이드": false, "비고": "", "차수": 3, "편집": "완료", "계획분량_초": 600, "실제분량_초": 501, "실제분량": "8분 21초", "장수": "8장", "제작": "완료", "대본": "완료", "촬영": "완료"}, {"파트번호": 10, "파트제목": "토큰 아끼는 법", "챕터": "Chapter 2. 토큰 아끼기 - 실전", "클립": "Ch02-01", "제목": "우리 팀 토큰 최적화 전략 세우기", "길이": "10분", "슬라이드": false, "도입슬라이드": false, "비고": "공개본 클립명: 모델 분리 설계 전략", "차수": 3, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 600, "실제분량_초": 1047, "실제분량": "17분 27초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 10, "파트제목": "토큰 아끼는 법", "챕터": "Chapter 2. 토큰 아끼기 - 실전", "클립": "Ch02-02", "제목": "극강의 미니멀리즘 스킬 - Ponytail 사용하기", "길이": "10분", "슬라이드": false, "도입슬라이드": false, "비고": "실습", "차수": 3, "편집": "해당없음", "편집_표시": "편집 안 함", "계획분량_초": 600, "실제분량_초": 1349, "실제분량": "22분 29초", "장수": "—", "제작": "완료", "대본": "해당없음", "촬영": "완료"}, {"파트번호": 10, "파트제목": "토큰 아끼는 법", "챕터": "Chapter 3. 강의 마무리", "클립": "Ch03-01", "제목": "강의 정리", "길이": "10분", "슬라이드": true, "도입슬라이드": false, "비고": "", "차수": 3, "편집": "완료", "계획분량_초": 600, "실제분량_초": 315, "실제분량": "5분 15초", "장수": "7장", "제작": "완료", "대본": "완료", "촬영": "완료"}], "batches": [{"차수": 1, "납기": "", "파트": [1, 2, 3, 4]}, {"차수": 2, "납기": "", "파트": [5, 6, 7]}, {"차수": 3, "납기": "", "파트": [8, 9, 10]}]}</script>
 <script>
@@ -1202,12 +1216,23 @@ function formatBatchDuration(seconds){
  const hours=Math.floor(seconds/3600),minutes=Math.floor(seconds%3600/60),remainder=seconds%60;
  return [hours?`${hours}시간`:'',minutes||!hours?`${minutes}분`:'',remainder?`${remainder}초`:''].filter(Boolean).join(' ');
 }
-function batchTimes(pool){
+// 계획 대비는 실제 분량이 확인된 클립끼리만 비교한다.
+function timeSummary(pool){
  const planned=pool.reduce((sum,r)=>sum+r['계획분량_초'],0);
  const known=pool.filter(r=>Number.isFinite(r['실제분량_초']));
- const actual=known.length?formatBatchDuration(known.reduce((sum,r)=>sum+r['실제분량_초'],0)):'—';
- const note=known.length&&known.length<pool.length?`<span class="batch-time-note">${known.length}/${pool.length}클립 집계</span>`:'';
- return `<span class="batch-times"><span class="batch-time"><span>계획 시간</span><strong>${pool.length?formatBatchDuration(planned):'—'}</strong></span><span class="batch-time batch-time--actual"><span>실제 시간</span><strong>${actual}</strong></span>${note}</span>`;
+ if(!known.length)return {planned:pool.length?formatBatchDuration(planned):'—',actual:'—',diff:'—',known:0};
+ const diff=known.reduce((sum,r)=>sum+r['실제분량_초']-r['계획분량_초'],0);
+ return {planned:formatBatchDuration(planned),actual:formatBatchDuration(known.reduce((sum,r)=>sum+r['실제분량_초'],0)),diff:(diff>0?'+':diff<0?'−':'')+formatBatchDuration(Math.abs(diff)),known:known.length};
+}
+function batchTimes(pool){
+ const t=timeSummary(pool);
+ const note=t.known&&t.known<pool.length?`<span class="batch-time-note">${t.known}/${pool.length}클립 집계</span>`:'';
+ return `<span class="batch-times"><span class="batch-time"><span>계획 시간</span><strong>${t.planned}</strong></span><span class="batch-time batch-time--actual"><span>실제 시간</span><strong>${t.actual}</strong></span><span class="batch-time batch-time--diff"><span>계획 대비</span><strong>${t.diff}</strong></span>${note}</span>`;
+}
+function drawOverall(){
+ const t=timeSummary(rows);
+ const note=t.known&&t.known<rows.length?` (${t.known}/${rows.length}클립 집계)`:'';
+ el('overall').innerHTML=`<p class="overall-title">전체 강의<span>${rows.length}클립</span></p><dl class="overall-stats"><div><dt>계획 시간</dt><dd>${t.planned}</dd></div><div><dt>실제 시간</dt><dd class="len-actual">${t.actual}${note}</dd></div><div><dt>계획 대비</dt><dd>${t.diff}</dd></div></dl>`;
 }
 function drawBatches(){
  const configured=[1,2,3].map(n=>batches.find(b=>b['차수']===n)||{'차수':n,'파트':[],'납기':''});
@@ -1220,6 +1245,7 @@ function drawBatches(){
   return `<button class="batch" type="button" data-batch="${n}" aria-pressed="${batch===String(n)}"><span class="batch-top"><span class="batch-title">${n?n+'차 납품':'미배정'}</span><span class="batch-date">${esc(b['납기']||'')}</span></span><span class="batch-range">${range}</span><span class="batch-compare"><span class="cmp cmp--done"><small>최종 완료</small><b>${done}</b><i>클립</i></span><span class="cmp cmp--left${left?'':' is-zero'}"><small>미완료</small><b>${left}</b><i>클립</i></span></span>${batchTimes(pool)}<span class="batch-bar${left?' has-left':''}"><i style="width:${pool.length?done/pool.length*100:0}%"></i></span><span class="batch-bottom"><span>전체 ${pool.length}클립</span><span class="selected">${batch===String(n)?'선택됨':'클립 보기 →'}</span></span></button>`;
  }).join('');
 }
+const actualMarkup=actual=>actual==='—'?actual:`<span class="len-actual">${esc(actual)}</span>`;
 const formatDuration=seconds=>`${Math.floor(seconds/60)}분`+(seconds%60?` ${String(seconds%60).padStart(2,'0')}초`:'');
 function partTally(pool){
  const planned=pool.reduce((sum,r)=>sum+r['계획분량_초'],0);
@@ -1237,8 +1263,9 @@ function render(){
  document.querySelectorAll('.part').forEach(section=>{
   const clips=[...section.querySelectorAll('[data-clip]')].filter(tr=>!tr.hidden);section.hidden=!clips.length;
   const tally=section.querySelector('.part__tally');
-  tally.textContent=partTally(clips.map(tr=>byKey.get(tr.dataset.key)));
-  tally.setAttribute('aria-label',`총 계획 시간 / 실제 시간: ${tally.textContent}`);
+  const text=partTally(clips.map(tr=>byKey.get(tr.dataset.key))),[head,actual]=text.split(' / 실제 ');
+  tally.innerHTML=`${esc(head)} / 실제 ${actualMarkup(actual)}`;
+  tally.setAttribute('aria-label',`총 계획 시간 / 실제 시간: ${text}`);
   section.querySelectorAll('.chap').forEach(ch=>{let next=ch.nextElementSibling,show=false;while(next&&!next.classList.contains('chap')){if(!next.hidden)show=true;next=next.nextElementSibling;}ch.hidden=!show;});
  });
  const metrics=[['슬라이드','제작',filtered.filter(r=>r['슬라이드']),'이론'],['실습자료','제작',filtered.filter(r=>!r['슬라이드']&&r['제작']!=='해당없음'),'실습'],['대본','대본',filtered.filter(r=>r['대본']!=='해당없음'),'이론'],['촬영','촬영',filtered,'전체'],['편집','편집',filtered.filter(r=>r['편집']!=='해당없음'),'대상']];
@@ -1257,6 +1284,7 @@ el('deliveries').addEventListener('click',e=>{const b=e.target.closest('button[d
 for(const id of ['kind','status'])el(id).addEventListener('change',render);
 el('search').addEventListener('input',render);
 el('reset').addEventListener('click',()=>{batch='all';el('kind').value='all';el('status').value='all';el('search').value='';render();});
+drawOverall();
 render();
 })();
 </script>

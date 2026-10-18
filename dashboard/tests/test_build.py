@@ -128,6 +128,19 @@ class WorkflowTests(unittest.TestCase):
         self.assertIn('실제 7분 15초', build.part_tally([row]))
         self.assertEqual(build.stage_scope([row], '편집'), [])
 
+    def test_time_summary_compares_only_known_durations(self):
+        rows, _ = self.rows({
+            (4, 'Ch02-01'): {'촬영': '완료', '편집': '편집 안 함', '실제분량_초': 435},
+            (4, 'Ch02-02'): {'촬영': '완료', '편집': '편집 안 함'},
+        })
+        rows[(4, 'Ch02-02')]['실제분량_초'] = None
+        pool = [rows[(4, 'Ch02-01')], rows[(4, 'Ch02-02')]]
+        planned, actual, diff = build.time_summary(pool)
+        self.assertEqual(planned, '21분')
+        self.assertEqual(actual, '7분 15초 (1/2클립 집계)')
+        self.assertEqual(diff, '−2분 45초')
+        self.assertIn('실제 <span class="len-actual">7분 15초', build.tally_markup(build.part_tally(pool)))
+
     def test_invalid_editing_state_rejected(self):
         with self.assertRaises(SystemExit):
             self.rows({(3, 'Ch01-01'): {'편집': '오타'}})

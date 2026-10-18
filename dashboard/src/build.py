@@ -397,6 +397,36 @@ def part_tally(rows: list[dict]) -> str:
     return f"{len(rows)}클립 · 계획 {format_duration(planned)} / 실제 {actual}"
 
 
+def actual_markup(actual: str) -> str:
+    """실제 분량만 강조색으로 칠해 계획과 구분한다. 미확인(—)은 그대로 둔다."""
+    return esc(actual) if actual == "—" else f'<span class="len-actual">{esc(actual)}</span>'
+
+
+def tally_markup(tally: str) -> str:
+    head, actual = tally.split(" / 실제 ", 1)
+    return f"{esc(head)} / 실제 {actual_markup(actual)}"
+
+
+def format_long_duration(seconds: int) -> str:
+    hours, rest = divmod(seconds, 3600)
+    minutes, remainder = divmod(rest, 60)
+    parts = [f"{hours}시간" if hours else "", f"{minutes}분" if minutes or not hours else "", f"{remainder}초" if remainder else ""]
+    return " ".join(p for p in parts if p)
+
+
+def time_summary(rows: list[dict]) -> tuple[str, str, str]:
+    """계획 / 실제 / 계획 대비. 계획 대비는 실제 분량이 확인된 클립끼리만 비교한다."""
+    planned = sum(r["계획분량_초"] for r in rows)
+    known = [r for r in rows if r["실제분량_초"] is not None]
+    if not known:
+        return format_long_duration(planned), "—", "—"
+    actual = sum(r["실제분량_초"] for r in known)
+    diff = actual - sum(r["계획분량_초"] for r in known)
+    sign = "+" if diff > 0 else "−" if diff < 0 else ""
+    note = f" ({len(known)}/{len(rows)}클립 집계)" if len(known) < len(rows) else ""
+    return format_long_duration(planned), format_long_duration(actual) + note, sign + format_long_duration(abs(diff))
+
+
 def changed_public_title(row: dict, kind: str) -> str:
     """2차 이후 공개본과 다른 제목만 표시한다. 비고가 원래 이름의 출처다."""
     if row.get("차수", 0) < 2:
@@ -442,7 +472,7 @@ def render_parts(rows: list[dict], due_note: dict[int, str]) -> str:
           <h3 class="part__name">Part {no}</h3>
           <span class="part__title">{esc(rs[0]["파트제목"])}</span>
           {due_html}
-          <span class="part__tally" title="총 계획 시간 / 실제 시간" aria-label="총 계획 시간 / 실제 시간: {esc(part_tally(rs))}">{esc(part_tally(rs))}</span>
+          <span class="part__tally" title="총 계획 시간 / 실제 시간" aria-label="총 계획 시간 / 실제 시간: {esc(part_tally(rs))}">{tally_markup(part_tally(rs))}</span>
           <span class="part__meter" role="img" aria-label="최종 {done}/{total} 완료">
             <span class="part__meter-fill" style="width:{done / total * 100:.4f}%"></span>
           </span>
@@ -474,7 +504,7 @@ def render_parts(rows: list[dict], due_note: dict[int, str]) -> str:
             out.append(f"""<tr{cls} data-key="{no}-{r['클립']}" data-clip>
               <td class="c-clip"><code>{esc(r["클립"])}</code></td>
               <td class="c-title">{title_markup(r["제목"], changed_public_title(r, "클립"))}</td>
-              <td class="c-len">{esc(r["길이"])} / {esc(r["실제분량"])}</td>
+              <td class="c-len">{esc(r["길이"])} / {actual_markup(r["실제분량"])}</td>
               <td class="c-count">{kind_label(r["슬라이드"])}</td>
               <td class="c-stage"><div class="{material_class}"><small>{material_label}</small>{chip(r["제작"], "자료 제작", r.get("제작_표시"))}</div></td>
               <td class="c-stage"><div class="stage-stack">{chip(r["대본"], "대본")}</div></td>
@@ -541,6 +571,12 @@ def render_markdown(rows: list[dict], warnings: list[str], nearest: str) -> str:
         L.append(
             f"| {stage} | {scope} {len(pool)}개 | {c[DONE]} | {c[WIP]} | {c[DUE]} | {c[LATER]} |"
         )
+    L += ["", "| 범위 | 클립 | 계획 | 실제 | 계획 대비 |", "|---|---:|---:|---:|---:|"]
+    scopes = [(f"{n}차 납품", [r for r in rows if r["차수"] == n]) for n in (1, 2, 3)]
+    scopes.append(("미배정", [r for r in rows if not r["차수"]]))
+    for label, pool in scopes + [("**전체**", rows)]:
+        if pool:
+            L.append(f"| {label} | {len(pool)} | " + " | ".join(time_summary(pool)) + " |")
     L.append("")
 
     if warnings:
